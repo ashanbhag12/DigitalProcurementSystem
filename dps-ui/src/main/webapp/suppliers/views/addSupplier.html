@@ -13,9 +13,9 @@
             </md-input-container>
             <md-input-container class="md-block" flex="50">
                 <label>Initials</label>
-                <input minlength="2" required name="initials" ng-model="supplier.initials" type='text' />
+                <input maxlength="8" required name="initials" ng-model="supplier.initials" type='text' />
                 <div ng-messages="addSupplier.initials.$error" ng-show="addSupplier.initials.$touched">
-                    <div ng-message-exp="['required', 'minlength']">This is required. Should be minimum 2 characters long</div>
+                    <div ng-message-exp="['required', 'maxlength']">This is required. Should be at max 8 characters long.</div>
                 </div>
             </md-input-container>
         </div>
