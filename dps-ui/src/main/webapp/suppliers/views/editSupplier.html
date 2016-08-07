@@ -57,7 +57,7 @@
                 <tr dir-paginate="supplier in suppliers | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:10">
                     <td>{{supplier.name}}</td>
                     <td>{{supplier.initials}}</td>
-                    <td>{{supplier.contactNumber}}</td>
+                    <td>{{supplier.phoneNumber}}</td>
                     <td>{{supplier.emailId}}</td>
                     <td>
                         <md-checkbox type='checkbox' ng-model="supplier.isChecked" name="isSupplierChecked" ng-change="toggle(supplier)"
@@ -84,17 +84,17 @@
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
                     <label>Initials</label>
-                    <input minlength="2" required name="initials" ng-model="supplier.initials" type='text' />
+                    <input maxlength="8" required name="initials" ng-model="supplier.initials" type='text' />
                     <div ng-messages="editSupplier.initials.$error" ng-show="editSupplier.initials.$touched">
-                        <div ng-message-exp="['required', 'minlength']">This is required. Should be minimum 2 characters long</div>
+                        <div ng-message-exp="['required', 'maxlength']">This is required. Should be at max 8 characters long.</div>
                     </div>
                 </md-input-container>
             </div>
             <div layout="row">  
                 <md-input-container class="md-block" flex="50">
                     <label>Contact Number</label>
-                    <input maxlength="14" required name="contactNumber" ng-model="supplier.contactNumber" type='tel' ng-pattern="/^\d{14}$/"/>
-                    <div ng-messages="editSupplier.contactNumber.$error" ng-show="editSupplier.contactNumber.$touched">
+                    <input maxlength="14" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{14}$/"/>
+                    <div ng-messages="editSupplier.phoneNumber.$error" ng-show="editSupplier.phoneNumber.$touched">
                         <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 14 digits long.</div>
                     </div>
                 </md-input-container>

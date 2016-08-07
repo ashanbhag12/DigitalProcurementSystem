@@ -17,12 +17,12 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
             
             /* Suppliers Object */
-            /*$scope.suppliers = [
+            $scope.suppliers = [
                 {
                     "id": "S1",
                     "name": "Supplier 1",
                     "initials": "S1",
-                    "contactNumber": "1234567890",
+                    "phoneNumber": "12345678900000",
                     "emailId": "ss@ss.sss",
                     "isChecked": false
                 },
@@ -30,35 +30,11 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                     "id": "S2",
                     "name": "Supplier 2",
                     "initials": "S2",
-                    "contactNumber": "0987654321",
+                    "phoneNumber": "09876543211111",
                     "emailId": "kk@kk.kkk",
-                    "isChecked": false
-                },
-                {
-                    "id": "S3",
-                    "name": "Supplier 3",
-                    "initials": "S3",
-                    "contactNumber": "0987654321",
-                    "emailId": "kk@kk.kkk",
-                    "isChecked": false
-                },
-                {
-                    "id": "S4",
-                    "name": "Supplier 4",
-                    "initials": "S4",
-                    "contactNumber": "0987654321",
-                    "emailId": "kk@kk.kkk",
-                    "isChecked": false
-                },
-                {
-                    "id": "S5",
-                    "name": "Supplier 5",
-                    "initials": "S5",
-                    "contactNumber": "555555555",
-                    "emailId": "zz@zz.zzz",
                     "isChecked": false
                 }
-            ];*/
+            ];
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -133,7 +109,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                         $scope.editSupplierForm = true;
                         $scope.supplier.name = supplier.name;
                         $scope.supplier.initials = supplier.initials;
-                        $scope.supplier.contactNumber = supplier.contactNumber;
+                        $scope.supplier.phoneNumber = supplier.phoneNumber;
                         $scope.supplier.emailId = supplier.emailId;
                     }
                 });
@@ -180,7 +156,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 		if (supplier.isChecked) {
                             supplier.name = $scope.supplier.name;
                             supplier.initials = $scope.supplier.initials;
-                            supplier.contactNumber = $scope.supplier.contactNumber;
+                            supplier.phoneNumber = $scope.supplier.phoneNumber;
                             supplier.emailId = $scope.supplier.emailId;
                             
                             $scope.updateSupplierJson = angular.toJson(supplier);
@@ -207,7 +183,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 /* Service Call to retrieve searched supplier */
                 /*Asign below value to $scope.suppliers later on*/
                 
-                $scope.suppliers = getSuppliersService.get({name:$scope.searchSupplierName,initial:$scope.searchSupplierInitials});
+                //$scope.suppliers = getSuppliersService.get({supplierName:$scope.searchSupplierName,supplierInitial:$scope.searchSupplierInitials});
+                getSuppliersService.get({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
             };
 
             /* Global function to show Modal Window */
@@ -220,5 +197,15 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $rootScope.hideModal = function () {
                 angular.element(document.querySelector('.loader')).removeClass('show');
                 angular.element(document.querySelector('.modal')).css('display', "none");
+            };
+            
+            $scope.reset = function () {
+                $scope.supplier = {};
+                $scope.editSupplier.$setPristine();
+                $scope.editSupplier.name.$touched = false;
+                $scope.editSupplier.initials.$touched = false;
+                $scope.editSupplier.phoneNumber.$touched = false;
+                $scope.editSupplier.emailId.$touched = false;
+                $scope.showSuccessBox = false;
             };
         });

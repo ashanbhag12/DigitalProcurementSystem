@@ -13,9 +13,9 @@ angular.module('addSupplierApp', ['ngMessages','supplierApp'])
             $scope.submitForm = function (addSupplier) {
                 if (addSupplier.$valid) {
                 	$scope.supplierJson = angular.toJson($scope.supplier);
-        		    alert($scope.supplierJson);
+        		    //alert($scope.supplierJson);
         		    response = addSuppliersService.save($scope.supplierJson);
-        		    alert(response);
+        		    //alert(response);
         		    $scope.reset();
                 }
                 else{                    

@@ -1,3 +1,185 @@
-<div>
-    This is Edit Customer Page
+<div class="editCustomerPage">
+    <h3 class="md-headline sectionTitle">Search Customer</h3>
+    <div layout="row">
+        <md-input-container class="md-block" flex="50">
+            <label>Name</label>
+            <input type='text' name="searchCustomerName" ng-model="searchCustomerName" />
+        </md-input-container>
+        <md-input-container class="md-block" flex="50">
+            <label>Ship Mark</label>
+            <input type='text' name="searchCustomerShipmark" ng-model="searchCustomerShipmark" />
+        </md-input-container>
+    </div>
+    <div>
+        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchCustomer()">SEARCH</md-button>
+    </div>
+    <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
+        <div class="clearfix searchTable marginB10">            
+            <div class="floatR">
+                <input name="kalpesh" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+            </div>
+        </div>
+        <div class="clearfix">
+            <h4 class="floatL searchResultCount">Search results: {{customers.length}}</h4>
+            <div class="floatR">
+                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                   ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
+                <a href="javascript:;" class="deleteBtn" ng-click="showModal($index, $event)" 
+                   ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
+            </div>
+        </div>
+        <table>           
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" ng-click="sortBy = 'name';
+                            sortOrder = !sortOrder">Name
+                            <span ng-show="sortBy == 'name' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'name' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Phone Number</th>
+                    <th>Email Id</th>
+                    <th>
+                        <a href="javascript:;" ng-click="sortBy = 'shipmark';
+                            sortOrder = !sortOrder">Ship Mark
+                            <span ng-show="sortBy == 'shipmark' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'shipmark' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Additional Margin</th>
+                    <th>
+            <md-checkbox type='checkbox' aria-label='Select All Customers {{$index}}' class="md-primary"
+                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+            </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="customer in customers | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:10">
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.phoneNumber}}</td>
+                    <td>{{customer.emailId}}</td>
+                    <td>{{customer.shipmark}}</td>
+                    <td>{{customer.additionalMargin}}</td>
+                    <td>
+                        <md-checkbox type='checkbox' ng-model="customer.isChecked" name="isCustomerChecked" ng-change="toggle(customer)"
+                                 aria-label='Select All Customers {{$index}}' class='md-primary'></md-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <!-- Pagination Directive -->
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>        
+    </div>
+    <div class="editForm marginT20" ng-show="editCustomerForm">
+        <h3 class="md-headline sectionTitle">Edit Customer</h3>
+        <div class="successBox" ng-show="showSuccessBox">Customer details updated successfully</div>
+        <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+        <form name="editCustomer" ng-submit="submitForm()" novalidate>
+	        <div layout="row">
+	            <md-input-container class="md-block" flex="50">
+	                <label>Name</label>
+	                <input type='text' minlength="5" maxlength="30" required name="name" ng-model="customer.name" />
+	                <div ng-messages="editCustomer.name.$error" ng-show="editCustomer.name.$touched">
+	                    <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 5 to 30 characters long.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Phone Number</label>
+	                <input maxlength="10" required name="phoneNumber" ng-model="customer.phoneNumber" type='tel' ng-pattern="/^\d{10}$/"/>
+	                <div ng-messages="editCustomer.phoneNumber.$error" ng-show="editCustomer.phoneNumber.$touched">
+	                    <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 10 digits long.</div>
+	                </div>
+	            </md-input-container>
+	        </div>
+	        <div layout="row">        
+	            <md-input-container class="md-block" flex="50">
+	                <label>Email Id</label>
+	                <input type="email" maxlength="100" required name="emailId" ng-model="customer.emailId" ng-pattern="/^.+@.+\..+$/"/>
+	                <div ng-messages="editCustomer.emailId.$error" ng-show="editCustomer.emailId.$touched">
+	                    <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Ship Mark</label>
+	                <input maxlength="8" required name="shipmark" ng-model="customer.shipmark" />
+	                <div ng-messages="editCustomer.shipmark.$error" ng-show="editCustomer.shipmark.$touched">
+	                    <div ng-message-exp="['required', 'maxlength']">This is required. Should be at max 8 char long.</div>
+	                </div>
+	            </md-input-container>
+	        </div>
+	        <div layout="row">
+	            <md-input-container class="md-block" flex="50">
+	                <label>Additional Margin</label>
+	                <input placeholder="0.00" ng-pattern="/^[0-9](\.[0-9]{1,2})?$/" required name="additionalMargin" ng-model="customer.additionalMargin" />
+	                <div ng-messages="editCustomer.additionalMargin.$error" ng-show="editCustomer.additionalMargin.$touched">
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be between 0-9 and 2 decimal long.(e.g. - 2.55)</div>
+	                </div>
+	            </md-input-container>
+	        
+	        </div>
+	        Address:
+	        <div layout="row">
+	            <md-input-container class="md-block" flex="50">
+	                <label>Flat No.</label>
+	                <input type='text' name="flatNo" ng-model="customer.flatNo" required/>
+	                <div ng-messages="editCustomer.flatNo.$error" ng-show="editCustomer.flatNo.$touched">
+	                    <div ng-message-exp="['required']">This is required.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Building</label>
+	                <input type='text' name="building" ng-model="customer.building" required/>
+	                <div ng-messages="editCustomer.building.$error" ng-show="editCustomer.building.$touched">
+	                    <div ng-message-exp="['required']">This is required.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Street</label>
+	                <input type='text' name="street" ng-model="customer.street"/>
+	            </md-input-container>
+	        </div>  
+	        <div layout="row"> 
+	            <md-input-container class="md-block" flex="50">
+	                <label>Locality</label>
+	                <input type='text' name="locality" ng-model="customer.locality"/>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>City</label>
+	                <input type='text' name="city" ng-model="customer.city" required/>
+	                <div ng-messages="editCustomer.city.$error" ng-show="editCustomer.city.$touched">
+	                    <div ng-message-exp="['required']">This is required.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>State</label>
+	                <input type='text' name="state" ng-model="customer.state" required/>
+	                <div ng-messages="editCustomer.state.$error" ng-show="editCustomer.state.$touched">
+	                    <div ng-message-exp="['required']">This is required.</div>
+	                </div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Zip</label>
+	                <input type='text' name="zip" ng-model="customer.zip" maxlength="6" required ng-pattern="/^\d{6}$/" />
+	                <div ng-messages="editCustomer.zip.$error" ng-show="editCustomer.zip.$touched">
+	                    <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 6 digits long.</div>
+	                </div>
+	            </md-input-container>
+	        </div>
+	        <div>
+	            <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="editCustomer.$invalid" ng-click="update()">UPDATE</md-button>
+                <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
+	        </div>
+        </form>
+    </div>
+</div>
+<div class="modal" id="deleteCustomerModal">
+    <div class="modalTitle">
+        <h4 class>Delete Customer?</h4>
+    </div>
+    <div class="modalContent">Are you sure you want to delete the customer?</div>
+    <div class="modalFooter">
+        <md-button type="button" class="md-raised md-primary" ng-click="deleteCustomer()">YES</md-button>
+        <md-button type="button" class="md-raised md-warn" ng-click="hideModal()">NO</md-button>
+    </div>
 </div>
