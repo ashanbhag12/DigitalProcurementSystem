@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="logfile" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/dpsLog.log" />
+		<param name="Append" value="false" />
+		<param name="maxFileSize" value="50MB"></param>
+		<param name="maxBackupIndex" value="5"></param>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="org.springframework.beans">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="org.springframework.binding">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.transaction">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="org.springframework.orm">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.security">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.hibernate.transaction">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.transaction.jta">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.orm.jpa">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.jdbc">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework.transaction.interceptor">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="com.thegoldensource.edm.managedBean.subMenu">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.perf4j.log4j.aop">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.perf4j.aop.Profiled">
+		<level value="INFO" />
+	</logger>
+
+	
+	
+	<!-- Root Logger -->
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="console" />
+		<appender-ref ref="logfile" />
+	</root>
+	
+</log4j:configuration>

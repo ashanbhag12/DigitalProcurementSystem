@@ -1,0 +1,14 @@
+<table>
+    <thead>
+		<tr>
+			<th><a href="javascript:;" ng-click="sortBy='name';reverse=!reverse">Employee Name</a></th>
+			<th><a ng-click="sortBy='id'; reverse=!reverse">Employee Id</a></th>
+		</tr>
+    </thead>
+    <tbody>
+		<tr ng-repeat="employee in employees | filter:nameFilter | orderBy:sortBy:reverse">
+			<td>{{employee.name}}</td>
+			<td>{{employee.id}}</td>
+		</tr>
+    </tbody>
+</table>

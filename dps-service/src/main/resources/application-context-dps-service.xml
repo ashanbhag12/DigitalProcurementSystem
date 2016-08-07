@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd ">
+   
+   
+   	<import resource="classpath:/application-context-dps-dao.xml"/>
+   	
+	<bean id="customerService" class="com.dps.service.impl.CustomerServiceImpl"></bean>
+	<bean id="supplierService" class="com.dps.service.impl.SupplierServiceImpl"></bean>
+	<bean id="productService" class="com.dps.service.impl.ProductServiceImpl"></bean>
+	<bean id="customerOrderService" class="com.dps.service.impl.CustomerOrderServiceImpl"></bean>
+	<bean id="customerOrderDetailsService" class="com.dps.service.impl.CustomerOrderDetailsServiceImpl"></bean>
+	<bean id="supplierOrderService" class="com.dps.service.impl.SupplierOrderServiceImpl"></bean>
+	<bean id="supplierOrderDetailsService" class="com.dps.service.impl.SupplierOrderDetailsServiceImpl"></bean>
+	<bean id="configurationsService" class="com.dps.service.impl.ConfigurationsServiceImpl"></bean>
+	<bean id="customerProductPreferenceService" class="com.dps.service.impl.CustomerProductPreferenceServiceImpl"></bean>
+	<bean id="supplierProductInfoService" class="com.dps.service.impl.SupplierProductInfoServiceImpl"></bean>
+
+</beans>

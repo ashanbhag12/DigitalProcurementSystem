@@ -1,0 +1,43 @@
+<div class="addSupplierPage">
+    <h3 class="md-headline">Add Supplier Form</h3>
+    <div class="successBox" ng-show="showSuccessBox">Supplier added to the system</div>
+    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+    <form name="addSupplier" ng-submit="submitForm(addSupplier)" novalidate>
+        <div layout="row">
+            <md-input-container class="md-block" flex="50">
+                <label>Name</label>
+                <input type='text' minlength="5" maxlength="30" required name="name" ng-model="supplier.name" />
+                <div ng-messages="addSupplier.name.$error" ng-show="addSupplier.name.$touched">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 5 to 30 characters long.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Initials</label>
+                <input minlength="2" required name="initials" ng-model="supplier.initials" type='text' />
+                <div ng-messages="addSupplier.initials.$error" ng-show="addSupplier.initials.$touched">
+                    <div ng-message-exp="['required', 'minlength']">This is required. Should be minimum 2 characters long</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">  
+            <md-input-container class="md-block" flex="50">
+                <label>Contact Number</label>
+                <input maxlength="14" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{14}$/"/>
+                <div ng-messages="addSupplier.phoneNumber.$error" ng-show="addSupplier.phoneNumber.$touched">
+                    <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 14 digits long.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Email Id</label>
+                <input type="email" maxlength="100" required name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
+                <div ng-messages="addSupplier.emailId.$error" ng-show="addSupplier.emailId.$touched">
+                    <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div>
+            <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="addSupplier.$invalid">ADD</md-button>
+            <md-button type="reset" class="md-raised md-accent resetBtn" ng-click="reset();">CLEAR</md-button>
+        </div>
+    </form>
+</div>

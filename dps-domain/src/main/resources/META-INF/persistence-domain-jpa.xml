@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	
+	<persistence-unit name="DPSPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>com.dps.domain.entity.Customer</class>
+		<class>com.dps.domain.entity.CustomerOrder</class>
+		<class>com.dps.domain.entity.CustomerOrderDetails</class>
+		<class>com.dps.domain.entity.Configurations</class>
+		<class>com.dps.domain.entity.Product</class>
+		<class>com.dps.domain.entity.Supplier</class>
+		<class>com.dps.domain.entity.SupplierOrder</class>
+		<class>com.dps.domain.entity.SupplierOrderDetails</class>
+		<class>com.dps.domain.entity.Configurations</class>
+		<class>com.dps.domain.entity.CustomerProductPreference</class>
+		<class>com.dps.domain.entity.SupplierProductInfo</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" /> -->
+			<property name="hibernate.search.autoregister_listeners" value="true" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.jdbc.batch_size" value="30" />
+		</properties>
+	</persistence-unit>
+</persistence>

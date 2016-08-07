@@ -1,0 +1,45 @@
+<div class="dashboardPage">
+    <h3 class="md-headline sectionTitle">Global Parameters</h3>
+    <div class="successBox" ng-show="showSuccessBox">Global Parameters saved successfully</div>
+    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+    <form name="globalParameters" ng-submit="submitForm()" novalidate>
+        <div layout="row">
+            <md-input-container class="md-block" flex="33">
+                <label>*Exchange Rate</label>
+                <input type='text' name="exchangeRate" 
+                       ng-model="globals.exchangeRate" ng-readonly="isReadonly" />
+                <div ng-messages="editSupplier.name.$error" ng-show="editSupplier.name.$touched">
+                    <span ng-message="minlength">Supplier name is too short.</span>
+                    <span ng-message="maxlength">Supplier name is too long.</span>
+                    <span ng-message="required">Supplier name is required.</span>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="33">
+                <label>*Per CBM Cost</label>
+                <input name="CBMCost" ng-model="globals.CBMCost" type='text'
+                       ng-readonly="isReadonly" />
+                <div ng-messages="editSupplier.initials.$error" ng-show="editSupplier.initials.$touched">
+                    <span ng-message="minlength">Supplier initials is too short.</span>
+                    <span ng-message="required">Supplier initials is required.</span>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="33">
+                <label>*Per Gross Weight Cost</label>
+                <input name="grossWeightCost" ng-model="globals.grossWeightCost"
+                       type='text' ng-readonly="isReadonly" />
+                <div ng-messages="editSupplier.contactNumber.$error" ng-show="editSupplier.contactNumber.$touched">
+                    <span ng-message="minlength">Supplier number is too short.</span>
+                    <span ng-message="required">Supplier number is required.</span>
+                </div>
+            </md-input-container>
+        </div>
+        <div>
+            <md-button type="button" class="md-raised md-primary submitBtn" 
+                       ng-click="edit()" ng-show="showEditBtn" >EDIT</md-button>
+            <md-button type="submit" class="md-raised md-primary submitBtn" 
+                       ng-click="save()" ng-show="showSaveBtn">SAVE</md-button>            
+            <md-button type="reset" class="md-raised md-warn resetBtn" 
+                       ng-click="clear();" ng-show="showClearBtn">CLEAR</md-button>
+        </div>
+    </form>
+</div>

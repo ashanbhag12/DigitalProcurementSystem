@@ -1,0 +1,284 @@
+*{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+a{
+    text-decoration:none;
+    color:rgba(255,255,255,1);
+    cursor:pointer;
+    display:inline-block;
+}
+
+ul,ol{list-style:none;}
+
+.clearfix:after {
+    content: " "; /* Older browser do not support empty content */
+    clear: both;
+    display:block;
+}
+
+.clear{clear: both;}
+
+.floatL{float:left;}
+.floatR{float:right;}
+.marginB10{margin-bottom: 10px;}
+.marginB15{margin-bottom: 15px;}
+.marginB20{margin-bottom: 20px;}
+.marginT10{margin-top: 10px;}
+.marginT15{margin-top: 15px;}
+.marginT20{margin-top: 20px;}
+
+.disableControl{
+    xpointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+    -moz-opacity: 0.5;
+    background: #EBEBE4;
+    -ms-filter: alpha(opacity=50);
+}
+
+.loader {
+    position: fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: 5000;
+    background: #000 url(../images/loader.gif) no-repeat center center;
+    background-size: 50px 50px;
+    display: none;
+    opacity: 0.5;
+}
+
+.loader.show{display: block;}
+
+.md-toolbar-tools h1, .md-toolbar-tools h2, .md-toolbar-tools h3 {
+    color:rgba(255,255,255,1);
+}
+
+md-input-container {margin: 15px 0;}
+
+h3.sectionTitle{
+    border-bottom:1px solid #ccc;    
+    margin-bottom:10px;
+}
+
+.mainNavWrapper{
+    width:250px;
+    min-width: 250px;
+    max-width: 250px;
+    background-color: rgb(63,81,181);
+    border-top:1px solid rgb(121,134,203);
+}
+
+.mainNav > li{
+    float:left;
+    width:100%;
+    background-color: rgb(63,81,181);
+    color:rgba(255,255,255,.90);
+}
+
+.mainNav > li a{
+    padding:8px 10px;
+    display: block;    
+}
+
+.mainNav > li ol a{
+    padding:10px 8px 10px 20px; 
+}
+
+.mainNav > li a:hover{
+    background-color: rgb(40,53,147);
+}
+
+.successBox, .errorBox{
+    color:rgba(0,0,0,.8);
+    padding: 10px;
+    margin-top:10px;
+}
+
+.errorBox{
+    background: rgb(222,54,65);
+}
+
+.successBox{
+    background: #72d572;
+}
+
+.submitBtn, .resetBtn{
+    padding:5px 50px;
+    font-size:18px;
+    margin:0 25px 0 0;
+}
+
+/* Searched Results Table CSS */
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin: 0;    
+}
+
+table thead th,
+table tbody td{
+    padding:5px;
+    border:1px solid #ccc;
+    text-align:left;
+}
+
+table thead th a{
+    color: rgba(0, 0, 0, .87);
+}
+
+table tbody tr:nth-child(even){
+    background-color: #f5f5f5;
+}
+
+table tbody tr:nth-child(odd){
+    background-color: #f9f9f9;
+}
+
+.editBtn, .deleteBtn{
+    color: rgb(16,108,200);
+    padding:5px 0 4px 20px;    
+}
+
+.editBtn{
+    background: url("../images/edit.png") no-repeat left center;
+    background-size:15px;
+    margin-right:20px;
+}
+
+.deleteBtn{
+    background: url("../images/delete.png") no-repeat left center;
+    background-size:15px;
+}
+
+.searchResultCount{
+    display:inline-block;
+    padding-top:5px;
+}
+
+.searchTable input{
+    width:300px;
+    padding:10px;
+    border:1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+/* Modal Window CSS */
+.modal {
+    max-height: 250px;
+    width: 500px;
+    padding: 0 20px 10px;
+    position: fixed;
+    border: 2px solid rgb(40,53,147);
+    display: none;
+    top: 50%;
+    left: 50%;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    z-index: 6000;
+    background: #fff;
+}
+
+.modal .modalTitle {
+    padding: 10px 0;
+    border-bottom: 1px solid #CCC;
+}
+
+.modal .modalContent {
+    margin: 15px auto;
+    min-height: 50px;
+}
+
+.modal .modalFooter {
+    border-top: 1px solid #CCC;
+    padding-top: 10px;
+}
+
+.modal .modalFooter .md-button{
+    margin:0 20px 0 0;
+}
+
+/* Animate Sections (Searched results, edit form) CSS*/
+.editForm, .searchedResults{
+    transition: all ease-in-out 1s;
+}
+
+.editForm.ng-hide-remove, .searchedResults.ng-hide-remove{ /* While showing */
+    opacity:1;
+}
+
+.editForm.ng-hide, .searchedResults.ng-hide{
+    opacity:0;
+}
+
+/* CSS for Pagination */
+.pagination {
+    margin: 20px 0;
+    float:right;
+}
+
+.pagination>li {float: left;}
+
+.pagination>li:first-child>a{
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.pagination>li:last-child>a{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.pagination>li>a{
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover{
+    background-color: #ebebeb;
+}
+
+.pagination>.disabled>a{
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}

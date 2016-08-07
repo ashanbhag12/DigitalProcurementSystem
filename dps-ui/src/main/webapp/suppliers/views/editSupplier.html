@@ -1,0 +1,125 @@
+<div class="editSupplierPage">
+    <h3 class="md-headline sectionTitle">Search Supplier</h3>
+    <div layout="row">
+        <md-input-container class="md-block" flex="50">
+            <label>Name</label>
+            <input type='text' name="searchSupplierName" ng-model="searchSupplierName" />
+        </md-input-container>
+        <md-input-container class="md-block" flex="50">
+            <label>Initials</label>
+            <input type='text' name="searchSupplierInitials" ng-model="searchSupplierInitials" />
+        </md-input-container>
+    </div>
+    <div>
+        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchSupplier()">SEARCH</md-button>
+    </div>
+    <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
+        <div class="clearfix searchTable marginB10">            
+            <div class="floatR">
+                <input name="kalpesh" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+            </div>
+        </div>
+        <div class="clearfix">
+            <h4 class="floatL searchResultCount">Search results: {{suppliers.length}}</h4>
+            <div class="floatR">
+                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                   ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
+                <a href="javascript:;" class="deleteBtn" ng-click="showModal($index, $event)" 
+                   ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
+            </div>
+        </div>
+        <table>           
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" ng-click="sortBy = 'name';
+                            sortOrder = !sortOrder">Name
+                            <span ng-show="sortBy == 'name' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'name' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" ng-click="sortBy = 'initials';
+                            sortOrder = !sortOrder">Initials
+                            <span ng-show="sortBy == 'initials' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'initials' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Contact Number</th>
+                    <th>Email Id</th>
+                    <th>
+            <md-checkbox type='checkbox' aria-label='Select All Suppliers {{$index}}' class="md-primary"
+                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+            </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="supplier in suppliers | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:10">
+                    <td>{{supplier.name}}</td>
+                    <td>{{supplier.initials}}</td>
+                    <td>{{supplier.contactNumber}}</td>
+                    <td>{{supplier.emailId}}</td>
+                    <td>
+                        <md-checkbox type='checkbox' ng-model="supplier.isChecked" name="isSupplierChecked" ng-change="toggle(supplier)"
+                                 aria-label='Select All Suppliers {{$index}}' class='md-primary'></md-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <!-- Pagination Directive -->
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>        
+    </div>
+    <div class="editForm marginT20" ng-show="editSupplierForm">
+        <h3 class="md-headline sectionTitle">Edit Supplier</h3>
+        <div class="successBox" ng-show="showSuccessBox">Supplier details updated successfully</div>
+        <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+        <form name="editSupplier" ng-submit="submitForm()" novalidate>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50">
+                    <label>Name</label>
+                    <input type='text' minlength="5" maxlength="30" required name="name" ng-model="supplier.name" />
+                    <div ng-messages="editSupplier.name.$error" ng-show="editSupplier.name.$touched">
+                        <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 5 to 30 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex="50">
+                    <label>Initials</label>
+                    <input minlength="2" required name="initials" ng-model="supplier.initials" type='text' />
+                    <div ng-messages="editSupplier.initials.$error" ng-show="editSupplier.initials.$touched">
+                        <div ng-message-exp="['required', 'minlength']">This is required. Should be minimum 2 characters long</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row">  
+                <md-input-container class="md-block" flex="50">
+                    <label>Contact Number</label>
+                    <input maxlength="14" required name="contactNumber" ng-model="supplier.contactNumber" type='tel' ng-pattern="/^\d{14}$/"/>
+                    <div ng-messages="editSupplier.contactNumber.$error" ng-show="editSupplier.contactNumber.$touched">
+                        <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 14 digits long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex="50">
+                    <label>Email Id</label>
+                    <input type="email" maxlength="100" required name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
+                    <div ng-messages="editSupplier.emailId.$error" ng-show="editSupplier.emailId.$touched">
+                        <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div>
+                <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="editSupplier.$invalid" ng-click="update()">UPDATE</md-button>
+                <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal" id="deleteSupplierModal">
+    <div class="modalTitle">
+        <h4 class>Delete Supplier?</h4>
+    </div>
+    <div class="modalContent">Are you sure you want to delete the supplier?</div>
+    <div class="modalFooter">
+        <md-button type="button" class="md-raised md-primary" ng-click="deleteSupplier()">YES</md-button>
+        <md-button type="button" class="md-raised md-warn" ng-click="hideModal()">NO</md-button>
+    </div>
+</div>
