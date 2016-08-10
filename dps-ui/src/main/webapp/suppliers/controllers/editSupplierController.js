@@ -16,7 +16,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
             
-            /* Suppliers Object */
+            
+            /* Suppliers Object 
             $scope.suppliers = [
                 {
                     "id": "S1",
@@ -34,7 +35,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                     "emailId": "kk@kk.kkk",
                     "isChecked": false
                 }
-            ];
+            ];*/
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -184,7 +185,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 /*Asign below value to $scope.suppliers later on*/
                 
                 //$scope.suppliers = getSuppliersService.get({supplierName:$scope.searchSupplierName,supplierInitial:$scope.searchSupplierInitials});
-                getSuppliersService.get({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
+                $scope.suppliers = getSuppliersService.get({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
             };
 
             /* Global function to show Modal Window */
