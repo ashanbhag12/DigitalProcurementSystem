@@ -1,3 +1,101 @@
-<div>
-    This is Add Product Page
+<div class="addProductPage">
+    <h3 class="md-headline">Add Product Form</h3>
+    <div class="successBox" ng-show="showSuccessBox">Product added to the system</div>
+    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+    <form name="addProduct" ng-submit="submitForm(addProduct)" novalidate>
+        <div layout="row">
+            <md-input-container class="md-block" flex="50">
+                <label>Product code</label>
+                <input type='text' required name="productCode" ng-model="product.productCode" />
+                <div ng-messages="addProduct.productCode.$error" ng-show="addProduct.productCode.$touched">
+                    <div ng-message-exp="['required']">This is required.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Price</label>
+                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.price.$error" ng-show="addProduct.price.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">  
+            <md-input-container class="md-block" flex="50">
+                <label>Cartoon quantity</label>
+                <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
+                <div ng-messages="addProduct.cartoonQuantity.$error" ng-show="addProduct.cartoonQuantity.$touched">
+                    <div ng-message-exp="['required']">This is required.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>CBM</label>
+                <input required placeholder="0.000" name="cbm" ng-model="product.cbm" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.cbm.$error" ng-show="addProduct.cbm.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+        	<md-input-container class="md-block" flex="50">
+                <label>Weight</label>
+                <input required placeholder="0.000" name="weight" ng-model="product.weight" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.weight.$error" ng-show="addProduct.weight.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Description</label>
+                <input type='text' required name="description" ng-model="product.description" />
+                <div ng-messages="addProduct.description.$error" ng-show="addProduct.description.$touched">
+                    <div ng-message-exp="['required']">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">  
+            <md-input-container class="md-block" flex="50">
+                <label>MOQ</label>
+                <input min="0" max="9" required name="moq" ng-model="product.moq" type='number'/>
+                <div ng-messages="addProduct.moq.$error" ng-show="addProduct.moq.$touched">
+                    <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-9.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Default margin</label>
+                <input required placeholder="0.000" name="defaultMargin" ng-model="product.defaultMargin" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.defaultMargin.$error" ng-show="addProduct.defaultMargin.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+			<md-input-container class="md-block" flex="50">
+		        <label>Supplier initials</label>
+		        <md-select name="supplierInitials" ng-model="product.supplierInitials">
+		          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
+		            {{si.abbrev}}
+		          </md-option>
+		        </md-select>
+      		</md-input-container>
+            <md-input-container class="md-block" flex="50">
+                <label>Supplier product code</label>
+                <input type='text' required name="supplierProductCode" ng-model="product.supplierProductCode"/>
+                <div ng-messages="addProduct.supplierProductCode.$error" ng-show="addProduct.supplierProductCode.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+		<div layout="row">
+			<md-input-container class="md-block" flex="50">
+			    <md-radio-group layout="row" name="isValid" ng-model="product.isValid" ng-pattern="/yes/">
+			    <b>Is Valid:&nbsp;&nbsp;&nbsp;</b>
+			      <md-radio-button value="yes" class="md-primary">Yes</md-radio-button>
+			      <md-radio-button value="no">No</md-radio-button>
+			    </md-radio-group>
+		    </md-input-container>
+		</div>
+        <div>
+            <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="addProduct.$invalid">ADD</md-button>
+            <md-button type="reset" class="md-raised md-accent resetBtn" ng-click="reset();">CLEAR</md-button>
+        </div>
+    </form>
 </div>

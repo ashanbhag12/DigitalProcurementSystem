@@ -179,9 +179,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	     * Note: no break; concept for angularJs forEach */
 	    
 	    $scope.updateCustomerJson = {};
-	    
-	    var keepGoing = true;
+	   
 	    $scope.update = function () {
+	    	var keepGoing = true;
 	        angular.forEach($scope.customers, function (customer) {
 	        	if(keepGoing) {
 	        		if (customer.isChecked) {

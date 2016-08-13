@@ -13,5 +13,9 @@ supplierServiceApp.factory('getSuppliersService', function ($resource) {
 });
 
 supplierServiceApp.factory('deleteSuppliersService', function ($resource) {
-    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplier/delete/:supplierId', {supplierId:'@supplierId'});
+    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplier/delete/:supplierId', {supplierId:'@supplierId'}, {
+    	remove:{
+            method:'POST'
+            }
+    });
 });

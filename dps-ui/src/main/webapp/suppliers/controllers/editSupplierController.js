@@ -16,27 +16,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
             
-            
-            /* Suppliers Object 
-            $scope.suppliers = [
-                {
-                    "id": "S1",
-                    "name": "Supplier 1",
-                    "initials": "S1",
-                    "phoneNumber": "12345678900000",
-                    "emailId": "ss@ss.sss",
-                    "isChecked": false
-                },
-                {
-                    "id": "S2",
-                    "name": "Supplier 2",
-                    "initials": "S2",
-                    "phoneNumber": "09876543211111",
-                    "emailId": "kk@kk.kkk",
-                    "isChecked": false
-                }
-            ];*/
-            
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
                 console.log("page loaded")
@@ -118,18 +97,12 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
 
             /* Function to delete the selected Suppliers */
             $scope.deleteSupplier = function () {
-                var newSuppliers = [];
-                var deleteSuppliers = []; /* To be sent to server for Delete operation */
                 angular.element(document.querySelector('.loader')).addClass('show');
                 angular.element(document.querySelector('.modal')).css('display', "block");
 
                 angular.forEach($scope.suppliers, function (supplier) {
-                    if (!supplier.isChecked) {
-                        newSuppliers.push(supplier);
-                    }
-                    else{
-                    	response = deleteSuppliersService.remove({supplierId : supplier.id});
-                        deleteSuppliers.push(supplier);                       
+                    if (supplier.isChecked) {
+                    	response = deleteSuppliersService.remove({supplierId : supplier.id});                   
                     }
                 });
 
@@ -137,7 +110,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 $timeout(function () {
                     angular.element(document.querySelector('.loader')).removeClass('show');
                     $scope.selectAll = false;
-                    $scope.suppliers = newSuppliers;
+                    // WS call to get all suppliers.
+                    $scope.suppliers = getSuppliersService.query({name:'',initials:''});
                     $scope.selectedRows = [];
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = true;
@@ -150,8 +124,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             
             $scope.updateSupplierJson = {};
             
-            var keepGoing = true;
             $scope.update = function () {
+            	var keepGoing = true;
                 angular.forEach($scope.suppliers, function (supplier) {
                 	if(keepGoing) {
                 		if (supplier.isChecked) {
@@ -159,6 +133,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                             supplier.initials = $scope.supplier.initials;
                             supplier.phoneNumber = $scope.supplier.phoneNumber;
                             supplier.emailId = $scope.supplier.emailId;
+                            delete supplier.isChecked;
                             
                             $scope.updateSupplierJson = angular.toJson(supplier);
                             
@@ -168,8 +143,10 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 });
                 
                 /* Service call to update supplier */
-                // alert($scope.updateSupplierJson);
     		    response = modifySuppliersService.save($scope.updateSupplierJson);
+
+                // WS call to get all suppliers.
+                $scope.suppliers = getSuppliersService.query({name:'',initials:''});
                 
                 $scope.editSupplierForm = false;
             };
@@ -184,8 +161,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 /* Service Call to retrieve searched supplier */
                 /*Asign below value to $scope.suppliers later on*/
                 
-                //$scope.suppliers = getSuppliersService.get({supplierName:$scope.searchSupplierName,supplierInitial:$scope.searchSupplierInitials});
-                $scope.suppliers = getSuppliersService.get({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
+                $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
             };
 
             /* Global function to show Modal Window */
