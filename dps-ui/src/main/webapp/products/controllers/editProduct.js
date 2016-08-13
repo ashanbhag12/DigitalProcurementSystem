@@ -1,4 +1,4 @@
-angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination','productApp'])
+angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination'])
         .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, modifyProductsService, deleteProductsService) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
