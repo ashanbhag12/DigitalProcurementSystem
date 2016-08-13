@@ -1,4 +1,4 @@
-angular.module('addSupplierApp', ['ngMessages','supplierApp'])
+angular.module('addSupplierApp', ['ngMessages'])
         .controller('addSupplierController', function ($scope, addSuppliersService) {
             $scope.showSuccessBox = true;
             $scope.showErrorBox = true;

@@ -1,4 +1,35 @@
 <div class="dashboardPage">
+	<h3 class="md-headline sectionTitle">Dashboard</h3>
+    <div layout="row">
+        <md-whiteframe class="md-whiteframe-5dp card-primary" flex="25" layout layout-align="center center">
+            <div flex="40">Dollar</div>
+            <div flex="60" class="alignCenter">
+                <div class="md-display-1">{{66.67 | currency}}</div>
+                <div class="marginT10">Exchange Rate</div>
+            </div>
+        </md-whiteframe>
+        <md-whiteframe class="md-whiteframe-5dp card-green" flex="25" layout layout-align="center center">
+            <div flex="40">Pro</div>
+            <div flex="60" class="alignCenter">
+                <div class="md-display-1">120</div>
+                <div class="marginT10">Products</div>
+            </div>
+        </md-whiteframe>
+        <md-whiteframe class="md-whiteframe-5dp card-yellow" flex="25" layout layout-align="center center">
+            <div flex="40">Cus</div>
+            <div flex="60" class="alignCenter">
+                <div class="md-display-1">66</div>
+                <div class="marginT10">Customers</div>
+            </div>
+        </md-whiteframe>
+        <md-whiteframe class="md-whiteframe-5dp card-pink" flex="25" layout layout-align="center center">
+            <div flex="40">Sup</div>
+            <div flex="60" class="alignCenter">
+                <div class="md-display-1">3</div>
+                <div class="marginT10">Suppliers</div>
+            </div>
+        </md-whiteframe>
+    </div>
     <h3 class="md-headline sectionTitle">Global Parameters</h3>
     <div class="successBox" ng-show="showSuccessBox">Global Parameters saved successfully</div>
     <div class="errorBox" ng-show="showErrorBox">There is some error</div>

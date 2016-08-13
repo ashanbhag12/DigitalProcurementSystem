@@ -1,5 +1,5 @@
-angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPagination','supplierApp'])
-        .controller('editSupplierController', function ($rootScope, $scope, $timeout, getSuppliersService, modifySuppliersService, deleteSuppliersService) {
+angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
+        .controller('editSupplierController', function ($rootScope, $scope, $timeout, getSuppliersService, modifySuppliersService, deleteSuppliersService, smoothScroll) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -84,8 +84,10 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
 
             /* Function to edit the selected Supplier */
             $scope.edit = function () {
+            	var element = document.getElementById("editSupplierForm");
                 angular.forEach($scope.suppliers, function (supplier) {
                     if (supplier.isChecked) {
+                        smoothScroll(element); /* Scroll to the form */
                         $scope.editSupplierForm = true;
                         $scope.supplier.name = supplier.name;
                         $scope.supplier.initials = supplier.initials;
@@ -164,18 +166,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
             };
 
-            /* Global function to show Modal Window */
-            $rootScope.showModal = function () {
-                angular.element(document.querySelector('.loader')).addClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "block");
-            };
-
-            /* Global function to hide Modal Window */
-            $rootScope.hideModal = function () {
-                angular.element(document.querySelector('.loader')).removeClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "none");
-            };
-            
             $scope.reset = function () {
                 $scope.supplier = {};
                 $scope.editSupplier.$setPristine();

@@ -4,8 +4,13 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
     'addSupplierApp', 'editSupplierApp', 'deleteSupplierApp',
     'addProductApp', 'editProductApp', 'deleteProductApp',
     'buildOrderApp', 'placeOrderApp'])
-        .config(function ($stateProvider, $urlRouterProvider) {
-
+        .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+        	
+        	$mdThemingProvider.theme('default')
+            /*.primaryPalette('indigo')*/
+            .warnPalette('red')
+            .accentPalette('amber'); 
+        	
             $urlRouterProvider.otherwise("/dashboard");
 
             $stateProvider
@@ -86,4 +91,18 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         templateUrl: "placeOrder/views/placeOrder.html",
                         controller: "placeOrderController"
                     });
+        }).run(function ($rootScope) {
+            
+            /* Global function to show Modal Window */
+            $rootScope.showModal = function () {
+                angular.element(document.querySelector('.loader')).addClass('show');
+                angular.element(document.querySelector('.modal')).css('display', "block");
+            };
+
+            /* Global function to hide Modal Window */
+            $rootScope.hideModal = function () {
+                angular.element(document.querySelector('.loader')).removeClass('show');
+                angular.element(document.querySelector('.modal')).css('display', "none");
+            };
+            
         });

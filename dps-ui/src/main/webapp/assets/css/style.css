@@ -33,6 +33,11 @@ ul,ol{list-style:none;}
 .marginT10{margin-top: 10px;}
 .marginT15{margin-top: 15px;}
 .marginT20{margin-top: 20px;}
+.paddingB10{padding-bottom: 10px;}
+.paddingT10{padding-top: 10px}
+.alignCenter{text-align: center !important;}
+.inlineBlock{display:inline-block;}
+.paddingT5{padding-top:5px;}
 
 .disableControl{
     xpointer-events: none;
@@ -63,6 +68,10 @@ ul,ol{list-style:none;}
 }
 
 md-input-container {margin: 15px 0;}
+
+md-autocomplete[md-floating-label] md-input-container {
+    padding-bottom: 0;
+}
 
 h3.sectionTitle{
     border-bottom:1px solid #ccc;    
@@ -100,7 +109,7 @@ h3.sectionTitle{
 .successBox, .errorBox{
     color:rgba(0,0,0,.8);
     padding: 10px;
-    margin-top:10px;
+    margin:10px 0;
 }
 
 .errorBox{
@@ -118,29 +127,33 @@ h3.sectionTitle{
 }
 
 /* Searched Results Table CSS */
-table{
+.customTable{
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
     margin: 0;    
 }
 
-table thead th,
-table tbody td{
+.customTable tbody tr.success{
+    background-color:#72d572 !important;   
+}
+
+.customTable thead th,
+.customTable td{
     padding:5px;
     border:1px solid #ccc;
     text-align:left;
 }
 
-table thead th a{
+.customTable thead th a{
     color: rgba(0, 0, 0, .87);
 }
 
-table tbody tr:nth-child(even){
+.customTable tbody tr:nth-child(even){
     background-color: #f5f5f5;
 }
 
-table tbody tr:nth-child(odd){
+.customTable tbody tr:nth-child(odd){
     background-color: #f9f9f9;
 }
 
@@ -153,6 +166,22 @@ table tbody tr:nth-child(odd){
     background: url("../images/edit.png") no-repeat left center;
     background-size:15px;
     margin-right:20px;
+}
+
+.editRow{
+    background: url("../images/edit.png") no-repeat left center;
+    background-size:18px;
+    height:18px;
+    width:18px;
+    color: rgb(16,108,200);
+}
+
+.updateRow{
+    background: url("../images/update.png") no-repeat left center;
+    background-size:18px;
+    height:18px;
+    width:18px;
+    color: rgb(16,108,200);
 }
 
 .deleteBtn{
@@ -221,21 +250,24 @@ table tbody tr:nth-child(odd){
 }
 
 /* Animate Sections (Searched results, edit form) CSS*/
-.editForm, .searchedResults{
+.editForm, .searchedResults, .animateSection{
     transition: all ease-in-out 1s;
 }
 
-.editForm.ng-hide-remove, .searchedResults.ng-hide-remove{ /* While showing */
+.editForm.ng-hide-remove, .searchedResults.ng-hide-remove, .animateSection.ng-hide-remove{ /* While showing */
     opacity:1;
 }
 
-.editForm.ng-hide, .searchedResults.ng-hide{
+.editForm.ng-hide, .searchedResults.ng-hide, .animateSection.ng-hide{
     opacity:0;
 }
 
 /* CSS for Pagination */
-.pagination {
-    margin: 20px 0;
+.paginationWrapper{
+    margin: 10px 0;
+}
+
+.paginationWrapper .pagination{
     float:right;
 }
 
@@ -281,4 +313,54 @@ table tbody tr:nth-child(odd){
     cursor: default;
     background-color: #337ab7;
     border-color: #337ab7;
+}
+
+.datepickerContainer label{
+    display:inline-block;
+    margin-left:15px;
+    font-size:13px;
+}
+
+.bottomDashedBorder{
+    border-bottom:2px dashed rgb(63,81,181);
+}
+
+.topDashedBorder{
+    border-top:2px dashed rgb(63,81,181);
+}
+
+.orderSummarySection input, .orderSummarySection select{
+    width:inherit;
+    padding:5px;
+    border:1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.dashboardPage .md-whiteframe-5dp{    
+    margin:10px 0;
+    height: 125px;
+    padding:0 15px;
+    color:#fff;
+}
+
+.dashboardPage .md-whiteframe-5dp + .md-whiteframe-5dp{    
+    margin-left:50px;
+}
+
+.dashboardPage .md-whiteframe-5dp.card-primary{
+    background-color: #673AB7;
+}
+
+.dashboardPage .md-whiteframe-5dp.card-green{
+    background-color: #4CAF50;
+}
+
+.dashboardPage .md-whiteframe-5dp.card-yellow{
+    background-color: #FF9800;
+}
+
+.dashboardPage .md-whiteframe-5dp.card-pink{
+    background-color: #795548;
 }

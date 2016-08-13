@@ -1,3 +1,194 @@
-<div>
-    This is Build Order Page
+<div class="buildOrderPage" id='buildOrderPage'>
+    <div class="successBox" ng-show="showSuccessBox">{{successMessage}}</div>
+    <h3 class="md-headline sectionTitle">Build Order</h3>
+    <div layout="row" class="paddingB10 bottomDashedBorder">
+        <div flex="30">
+            <md-input-container>
+                <label>Customer</label>
+                <md-select ng-model="customerName" md-on-close='showSearchSection()'>
+                    <md-option ng-repeat="customer in customers" value="{{customer}}">
+                        {{customer}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>        
+        <div flex="30" class="datepickerContainer">
+            <label>Order Date</label>
+            <md-content>
+                <md-datepicker ng-model="orderDate" md-placeholder="Select date"></md-datepicker>
+            </md-content>
+        </div>
+    </div>
+    <div layout="row" class="marginT10 paddingB10" ng-show="searchProductSection" id="searchProductSection">
+        <div flex="30">
+            <md-autocomplete flex
+                             md-input-name="autocompleteProductField"
+                             md-input-minlength="2"
+                             md-input-maxlength="18"
+                             md-no-cache="false"
+                             md-selected-item="searchedProduct"
+                             md-selected-item-change="getProductDetails()"
+                             md-search-text="searchText"
+                             md-items="product in querySearch(searchText)"
+                             md-item-text="product.text"
+                             md-floating-label="Search Product">
+                <md-item-template>
+                    <span md-highlight-text="searchText">{{product.text}}</span>
+                </md-item-template>
+                <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                    <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                    <div ng-message="minlength">Your entry is not long enough.</div>
+                    <div ng-message="maxlength">Your entry is too long.</div>
+                </div>
+            </md-autocomplete>
+        </div>
+    </div>
+    <div class="animateSection bottomDashedBorder" ng-show="productDetailsSection" id="productDetailsSection">
+        <h3 class="md-headline sectionTitle">Product Details</h3>
+        <div layout="row">
+            <md-input-container class="md-block" flex="25">
+                <label>Product Code</label>
+                <input type='text' name="productCode" ng-model="productDetails.productCode" />
+            </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>Supplier Code</label>
+                <md-select ng-model="productDetails.supplierCode">
+                    <md-option ng-repeat="supplier in suppliers" value="{{supplier}}">{{supplier}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>Price Per Piece</label>
+                <input type='text' name="pricePerPiece" ng-model="productDetails.pricePerPiece" />
+            </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>MOQ</label>
+                <input type="text" name="productMOQ" ng-model="productDetails.productMOQ" />
+            </md-input-container>
+        </div>
+        <div layout="row" layout-align="center stretch">  
+            <md-input-container class="md-block" flex="50">
+                <label>Remarks</label>
+                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125"></textarea>
+            </md-input-container>
+            <md-input-container class="md-block" flex="25" flex-offset="5">
+                <label>Quantity</label>
+                <input type="text" name="productQuantity" ng-model="productDetails.productQuantity" />
+            </md-input-container>
+            <div flex="15" flex-offset="5">
+                <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn">ADD</md-button>
+                <md-button class="md-raised md-primary submitBtn" ng-click="updateProduct()" ng-show="!showAddBtn">UPDATE</md-button>
+            </div>
+        </div>
+    </div>
+    <div class="animateSection paddingT10 marginB10 bottomDashedBorder" ng-show="addedProductsSection" id="addedProductsSection">
+        <h3 class="md-headline sectionTitle">Added Products List</h3>
+        <table class="customTable">           
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'productCode';
+                            sortOrder = !sortOrder">Product Code
+                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'supplierCode';
+                            sortOrder = !sortOrder">Supplier Code
+                            <span ng-show="sortType == 'supplierCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'supplierCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Price Per Piece</th>
+                    <th>MOQ</th>
+                    <th>Quantity</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:1">
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.supplierCode}}</td>
+                    <td>{{product.pricePerPiece | currency:"&euro;"}}</td>
+                    <td>{{product.productMOQ}}</td>
+                    <td>{{product.productQuantity}}</td>
+                    <td class='alignCenter'>
+                        <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="editProduct(product, $index)"
+                         aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editDisabled"></md-checkbox>
+                    </td>                    
+                </tr>
+            </tbody>            
+        </table>
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div> 
+        <div layout='row' layout-align='end center' class='marginT10 marginB20'>
+            <md-button type="button" class="md-raised md-primary resetBtn" ng-click="submitCart();">SUBMIT</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 submitBtn" ng-click="cancelCart()">CANCEL</md-button>
+        </div>
+    </div>
+    <div class="animateSection orderSummarySection" ng-show="orderSummarySection" id="orderSummarySection">
+        <h3 class="md-headline sectionTitle">Customer Order Summary</h3>
+        <table class="customTable">           
+            <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Supplier Code</th>
+                    <th>MOQ</th>
+                    <th>Quantity</th>
+                    <th>Margin</th> 
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in orderSummary | itemsPerPage:1" ng-class="{'success':product.productMOQ > 2}">
+                    <td>{{product.productCode}}</td>
+                    <td>                        
+                        <div ng-hide="editOrderSummmaryRow[$index]">{{product.supplierCode}}</div>
+                        <div ng-show="editOrderSummmaryRow[$index]">
+                            <select ng-model="product.supplierCode" ng-options="supplier for supplier in suppliers"></select>  
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-hide="editOrderSummmaryRow[$index]">{{product.productMOQ}}</div>
+                        <div ng-show="editOrderSummmaryRow[$index]">
+                            <input type="text" ng-model="product.productMOQ" />
+                        </div>                        
+                    </td> 
+                    <td>{{product.productQuantity}}</td> 
+                    <td>
+                        <div ng-hide="editOrderSummmaryRow[$index]">{{product.productMargin | number}}</div>
+                        <div ng-show="editOrderSummmaryRow[$index]">
+                            <input type='text' ng-model="product.productMargin" placeholder="Margin" />  
+                        </div>
+                    </td>
+                    <td class='alignCenter'>
+                        <a href="javascript:;" class="editRow" ng-click="editCartRow($index, $event)" 
+                           title='Edit Row' ng-hide="editOrderSummmaryRow[$index]"></a>
+                        <a href="javascript:;" class="updateRow" ng-click="updateCartRow($index, $event)" 
+                           title='Update Row' ng-show="editOrderSummmaryRow[$index]"></a>
+                    </td>                    
+                </tr>
+            </tbody>
+        </table>
+        <div class='clearfix'>
+            <h4 class="floatR inlineBlock paddingT5">Grand Total: {{orderSummary.length}}</h4>          
+        </div>
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>
+        <div layout='row' layout-align='end center' class='marginT10'>
+            <md-button type="button" class="md-raised md-primary resetBtn" ng-click="saveOrder();">SAVE ORDER</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 submitBtn" ng-click="showModal()">CANCEL ORDER</md-button>            
+        </div>
+    </div>
+</div>
+<div class="modal" id="deleteSupplierModal">
+    <div class="modalTitle">
+        <h4 class>Cancel Order?</h4>
+    </div>
+    <div class="modalContent">Canceling the order will reset all the data. 
+        Are you sure you want to cancel the order?</div>
+    <div class="modalFooter">
+        <md-button type="button" class="md-raised md-primary" ng-click="cancelOrder()">YES</md-button>
+        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal()">NO</md-button>
+    </div>
 </div>

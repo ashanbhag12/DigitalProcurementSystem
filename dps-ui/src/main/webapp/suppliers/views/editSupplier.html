@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="clearfix">
-            <h4 class="floatL searchResultCount">Search results: {{suppliers.length}}</h4>
+            <h4 class="floatL inlineBlock paddingT5">Search results: {{suppliers.length}}</h4>
             <div class="floatR">
                 <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
@@ -28,7 +28,7 @@
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
             </div>
         </div>
-        <table>           
+        <table class="customTable">           
             <thead>
                 <tr>
                     <th>
@@ -67,9 +67,9 @@
             </tbody>
         </table> 
         <!-- Pagination Directive -->
-        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>        
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>       
     </div>
-    <div class="editForm marginT20" ng-show="editSupplierForm">
+    <div class="editForm marginT20" ng-show="editSupplierForm" id="editSupplierForm">
         <h3 class="md-headline sectionTitle">Edit Supplier</h3>
         <div class="successBox" ng-show="showSuccessBox">Supplier details updated successfully</div>
         <div class="errorBox" ng-show="showErrorBox">There is some error</div>
