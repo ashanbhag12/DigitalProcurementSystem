@@ -16,42 +16,6 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.searchCustomerName = ''; /* Name for customer search */
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    
-	    /* Customers Object */
-	    $scope.customers = [
-	        {
-	            id: "S1",
-	            name: "Customer 1",
-		    	phoneNumber: "1234567890",
-		    	emailId: "customer1@gmail.com",
-		    	shipmark: "1Ship",
-		    	additionalMargin: "1.1",
-		    	flatNo: "1",
-			    building: "xyz",
-			    street: "road",
-			    locality: "abc",
-			    city: "Mu",
-			    state: "MH",
-			    zip: "567765",
-	            isChecked: false
-	        },
-	        {
-	            id: "S2",
-	            name: "Customer 2",
-		    	phoneNumber: "0987654321",
-		    	emailId: "customer2@gmail.com",
-		    	shipmark: "2Ship",
-		    	additionalMargin: "2.2",
-		    	flatNo: "2",
-			    building: "aaa",
-			    street: "",
-			    locality: "",
-			    city: "Pu",
-			    state: "MH",
-			    zip: "123456",
-	            isChecked: false
-	        }
-	    ];
-	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {   
 	        console.log("page loaded")
@@ -148,18 +112,12 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	
 	    /* Function to delete the selected Customers */
 	    $scope.deleteCustomer = function () {
-	        var newCustomers = [];
-	        var deleteCustomers = []; /* To be sent to server for Delete operation */
 	        angular.element(document.querySelector('.loader')).addClass('show');
 	        angular.element(document.querySelector('.modal')).css('display', "block");
 	
 	        angular.forEach($scope.customers, function (customer) {
-	            if (!customer.isChecked) {
-	                newCustomers.push(customer);
-	            }
-	            else{
-	            	response = deleteCustomersService.remove({customerId : customer.id});
-	                deleteCustomers.push(customer);                       
+	            if (customer.isChecked) {
+	            	response = deleteCustomersService.remove({customerId : customer.id});                    
 	            }
 	        });
 	
@@ -167,7 +125,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $timeout(function () {
 	            angular.element(document.querySelector('.loader')).removeClass('show');
 	            $scope.selectAll = false;
-	            $scope.customers = newCustomers;
+	            // WS call to get all Customers
+	            $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
 	            $scope.selectedRows = [];
 	            $scope.editDisabled = true;
 	            $scope.deleteDisabled = true;
@@ -206,8 +165,10 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        });
 	        
 	        /* Service call to update customer */
-	        // alert($scope.updateCustomerJson);
 		    response = modifyCustomersService.save($scope.updateCustomerJson);
+		    
+		    // WS call to get all Customers
+		    $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
 	        
 	        $scope.editCustomerForm = false;
 	    };
@@ -220,13 +181,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $scope.deleteDisabled = true;
 	        
 	        /* Service Call to retrieve searched customer */
-	        /*Asign below value to $scope.customers later on*/
-	        
-	        //$scope.customers = getCustomersService.get({customerName:$scope.searchCustomerName,customerInitial:$scope.searchCustomerShipmark});
-	        
-	        var response = getCustomersService.get({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
-	        
-	        //alert(response);
+	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
 	    };
 	
 	    /* Global function to show Modal Window */

@@ -9,5 +9,9 @@ customerServiceApp.factory('getCustomersService', function ($resource) {
 });
 
 customerServiceApp.factory('deleteCustomersService', function ($resource) {
-    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customer/delete/:customerId', {customerId:'@customerId'});
+    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customer/delete/:customerId', {customerId:'@customerId'}, {
+    	remove:{
+            method:'POST'
+            }
+    });
 });
