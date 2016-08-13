@@ -1,5 +1,5 @@
 angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination'])
-        .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, modifyProductsService, deleteProductsService) {
+        .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, modifyProductsService, deleteProductsService, getSuppliersInitialsService) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -12,38 +12,11 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Array of all Products */
             
-            $scope.allSupplierInitials = ['aa','bb'].map(function (initial) { return { abbrev: initial }; });
+            getSuppliersInitialsService.query().$promise.then(function(data) {
+            	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
+            });
             
             $scope.searchProductCode = ''; /* Code for product search */
-            
-            /* Products Object */
-            $scope.products = [{
-            	id:"p1",
-            	productCode:"p1",
-        		cartoonQuantity:5,
-        		cbm:"1.11",
-        		price:"111",
-        		weight:"1.1",
-        		description:"Product 1",
-        		moq:1,
-        		defaultMargin:"1.1",
-        		supplierInitials:"aa",
-        		supplierProductCode:"S1P1",
-        		isValid:""
-            }, {
-            	id:"p2",
-            	productCode:"p2",
-        		cartoonQuantity:6,
-        		cbm:"2.22",
-        		price:"222",
-        		weight:"2",
-        		description:"Product 2",
-        		moq:2,
-        		defaultMargin:"2.2",
-        		supplierInitials:"bb",
-        		supplierProductCode:"S2P2",
-        		isValid:""
-            }];
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -140,18 +113,12 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
 
             /* Function to delete the selected Products */
             $scope.deleteProduct = function () {
-                var newProducts = [];
-                var deleteProducts = []; /* To be sent to server for Delete operation */
                 angular.element(document.querySelector('.loader')).addClass('show');
                 angular.element(document.querySelector('.modal')).css('display', "block");
 
                 angular.forEach($scope.products, function (product) {
-                    if (!product.isChecked) {
-                        newProducts.push(product);
-                    }
-                    else{
+                    if (product.isChecked) {
                     	response = deleteProductsService.remove({productId : product.id});
-                        deleteProducts.push(product);                       
                     }
                 });
 
@@ -159,7 +126,8 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $timeout(function () {
                     angular.element(document.querySelector('.loader')).removeClass('show');
                     $scope.selectAll = false;
-                    $scope.products = newProducts;
+                    // WS call to get all Product.
+                    $scope.products = getProductsService.query({code:$scope.searchProductCode});
                     $scope.selectedRows = [];
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = true;
@@ -197,8 +165,10 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 });
                 
                 /* Service call to update product */
-                // alert($scope.updateProductJson);
     		    response = modifyProductsService.save($scope.updateProductJson);
+    		    
+    		    // WS call to get all Product.
+    		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
                 
                 $scope.editProductForm = false;
             };
@@ -211,10 +181,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.deleteDisabled = true;
                 
                 /* Service Call to retrieve searched product */
-                /*Asign below value to $scope.products later on*/
-                
-                //$scope.products = getProductsService.get({code:$scope.searchProductCode});
-                getProductsService.get({code:$scope.searchProductCode});
+                $scope.products = getProductsService.query({code:$scope.searchProductCode});
             };
 
             /* Global function to show Modal Window */

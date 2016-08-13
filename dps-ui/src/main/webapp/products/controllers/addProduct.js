@@ -1,9 +1,11 @@
 angular.module('addProductApp', ['ngMessages'])
-        .controller('addProductController', function ($scope, addProductsService) {
+        .controller('addProductController', function ($scope, addProductsService, getSuppliersInitialsService) {
             $scope.showSuccessBox = true;
             $scope.showErrorBox = true;
             // WebService should be called to fetch initials for Suppliers
-            $scope.allSupplierInitials = ['aa','bb'].map(function (initial) { return { abbrev: initial }; });
+            getSuppliersInitialsService.query().$promise.then(function(data) {
+            	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
+            });
 
             $scope.product = {                	
             		productCode:"",
