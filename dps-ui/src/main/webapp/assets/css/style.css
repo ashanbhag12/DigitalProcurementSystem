@@ -1,3 +1,9 @@
+html,body{
+    min-height: 100%;
+    height: 100%;
+    background-color: rgb(63,81,181);    
+}
+
 *{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -71,6 +77,12 @@ md-input-container {margin: 15px 0;}
 
 md-autocomplete[md-floating-label] md-input-container {
     padding-bottom: 0;
+}
+
+.contentSection{
+    min-height: calc(100% - 64px);
+    max-height: inherit !important; 
+    background-color:#fff;
 }
 
 h3.sectionTitle{
@@ -349,18 +361,38 @@ h3.sectionTitle{
     margin-left:50px;
 }
 
-.dashboardPage .md-whiteframe-5dp.card-primary{
-    background-color: #673AB7;
-}
-
 .dashboardPage .md-whiteframe-5dp.card-green{
     background-color: #4CAF50;
 }
 
-.dashboardPage .md-whiteframe-5dp.card-yellow{
-    background-color: #FF9800;
+.dashboardPage .md-whiteframe-5dp.card-purple{
+    background-color: #673AB7;
 }
 
-.dashboardPage .md-whiteframe-5dp.card-pink{
-    background-color: #795548;
+.dashboardPage .md-whiteframe-5dp.card-orange{
+    background-color: #FB8C00;
+}
+
+.dashboardPage .md-whiteframe-5dp.card-red{
+    background-color: #F44336;
+}
+
+.dashboardPage .md-whiteframe-5dp .icon-holder{
+    height:65px;
+    width:65px;
+}
+
+.dashboardPage .md-whiteframe-5dp .icon-holder.currency{
+    background:url("../images/coins-2.png") no-repeat center center;
+    background-size:65px;
+}
+
+.dashboardPage .md-whiteframe-5dp .icon-holder.products{
+    background:url("../images/shopping-cart.png") no-repeat center center;
+    background-size:65px;
+}
+
+.dashboardPage .md-whiteframe-5dp .icon-holder.person{
+    background:url("../images/supplier.png") no-repeat center center;
+    background-size:65px;
 }
