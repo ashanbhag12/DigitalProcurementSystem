@@ -84,14 +84,14 @@
         <form name="editProduct" ng-submit="submitForm()" novalidate>
 	        <div layout="row">
 	            <md-input-container class="md-block" flex="50">
-	                <label>Product code</label>
+	                <label>*Product code</label>
 	                <input type='text' required name="productCode" ng-model="product.productCode" />
 	                <div ng-messages="editProduct.productCode.$error" ng-show="editProduct.productCode.$touched">
 	                    <div ng-message-exp="['required']">This is required.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Price</label>
+	                <label>*Price</label>
 	                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.price.$error" ng-show="editProduct.price.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
@@ -100,14 +100,14 @@
 	        </div>
 	        <div layout="row">  
 	            <md-input-container class="md-block" flex="50">
-	                <label>Cartoon quantity</label>
+	                <label>*Cartoon quantity</label>
 	                <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
 	                <div ng-messages="editProduct.cartoonQuantity.$error" ng-show="editProduct.cartoonQuantity.$touched">
 	                    <div ng-message-exp="['required']">This is required.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>CBM</label>
+	                <label>*CBM</label>
 	                <input required placeholder="0.000" name="cbm" ng-model="product.cbm" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.cbm.$error" ng-show="editProduct.cbm.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
@@ -116,14 +116,14 @@
 	        </div>
 	        <div layout="row">
 	        	<md-input-container class="md-block" flex="50">
-	                <label>Weight</label>
+	                <label>*Weight</label>
 	                <input required placeholder="0.000" name="weight" ng-model="product.weight" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.weight.$error" ng-show="editProduct.weight.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Description</label>
+	                <label>*Description</label>
 	                <input type='text' required name="description" ng-model="product.description" />
 	                <div ng-messages="editProduct.description.$error" ng-show="editProduct.description.$touched">
 	                    <div ng-message-exp="['required']">This is required.</div>
@@ -132,14 +132,14 @@
 	        </div>
 	        <div layout="row">  
 	            <md-input-container class="md-block" flex="50">
-	                <label>MOQ</label>
+	                <label>*MOQ</label>
 	                <input min="0" max="9" required name="moq" ng-model="product.moq" type='number'/>
 	                <div ng-messages="editProduct.moq.$error" ng-show="editProduct.moq.$touched">
 	                    <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-9.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Default margin</label>
+	                <label>*Default margin</label>
 	                <input required placeholder="0.000" name="defaultMargin" ng-model="product.defaultMargin" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.defaultMargin.$error" ng-show="editProduct.defaultMargin.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
@@ -148,15 +148,18 @@
 	        </div>
 	        <div layout="row">
 				<md-input-container class="md-block" flex="50">
-			        <label>Supplier initials</label>
-			        <md-select name="supplierInitials" ng-model="product.supplierInitials">
+			        <label>*Supplier initials</label>
+			        <md-select name="supplierInitials" ng-model="product.supplierInitials" required>
 			          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
 			            {{si.abbrev}}
 			          </md-option>
 			        </md-select>
+			        <div ng-messages="editProduct.supplierInitials.$error" ng-show="editProduct.supplierInitials.$touched">
+                    	<div ng-message-exp="['required']">This is required.</div>
+                	</div>
 	      		</md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Supplier product code</label>
+	                <label>*Supplier product code</label>
 	                <input type='text' required name="supplierProductCode" ng-model="product.supplierProductCode"/>
 	                <div ng-messages="editProduct.supplierProductCode.$error" ng-show="editProduct.supplierProductCode.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required.</div>
