@@ -1,4 +1,4 @@
-angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPagination','customerApp'])
+angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPagination'])
 	.controller('editCustomerController', function ($rootScope, $scope, $timeout, getCustomersService, modifyCustomersService, deleteCustomersService) {
 	    /* Initialize the page variables */
 	    $scope.showSuccessBox = false; /* Hide the error messages */

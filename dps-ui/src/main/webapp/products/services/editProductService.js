@@ -1,8 +1,4 @@
-var productServiceApp = angular.module('productApp', []);
-
-productServiceApp.factory('addProductsService', function ($resource) {
-            return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/product/add');
-        });
+var productServiceApp = angular.module('editProductApp');
 
 productServiceApp.factory('modifyProductsService', function ($resource) {
     return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/product/modify');

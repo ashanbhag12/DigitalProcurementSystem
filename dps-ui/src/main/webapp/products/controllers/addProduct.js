@@ -1,4 +1,4 @@
-angular.module('addProductApp', ['ngMessages','productApp'])
+angular.module('addProductApp', ['ngMessages'])
         .controller('addProductController', function ($scope, addProductsService) {
             $scope.showSuccessBox = true;
             $scope.showErrorBox = true;

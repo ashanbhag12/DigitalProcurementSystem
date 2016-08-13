@@ -113,7 +113,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                     angular.element(document.querySelector('.loader')).removeClass('show');
                     $scope.selectAll = false;
                     // WS call to get all suppliers.
-                    $scope.suppliers = getSuppliersService.query({name:'',initials:''});
+                    $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
                     $scope.selectedRows = [];
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = true;
@@ -148,7 +148,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
     		    response = modifySuppliersService.save($scope.updateSupplierJson);
 
                 // WS call to get all suppliers.
-                $scope.suppliers = getSuppliersService.query({name:'',initials:''});
+                $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
                 
                 $scope.editSupplierForm = false;
             };

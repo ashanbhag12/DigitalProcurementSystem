@@ -1,4 +1,4 @@
-angular.module('addCustomerApp', ['ngMessages','customerApp'])
+angular.module('addCustomerApp', ['ngMessages'])
 		.controller('addCustomerController', function ($scope, addCustomersService) {
 		    $scope.showSuccessBox = true;
 		    $scope.showErrorBox = true;
