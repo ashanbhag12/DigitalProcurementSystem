@@ -1,7 +1,7 @@
 angular.module('addSupplierApp', ['ngMessages'])
         .controller('addSupplierController', function ($scope, addSuppliersService) {
-            $scope.showSuccessBox = true;
-            $scope.showErrorBox = true;
+            $scope.showSuccessBox = false;
+            $scope.showErrorBox = false;
 
             $scope.supplier = {
                 name: "",
@@ -17,6 +17,8 @@ angular.module('addSupplierApp', ['ngMessages'])
         		    response = addSuppliersService.save($scope.supplierJson);
         		    //alert(response);
         		    $scope.reset();
+        		    $scope.showSuccessBox = true;
+                    $scope.showErrorBox = false;
                 }
                 else{                    
                     console.log("form invalid");

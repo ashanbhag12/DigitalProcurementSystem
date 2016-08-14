@@ -16,6 +16,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.searchCustomerName = ''; /* Name for customer search */
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    
+	    $scope.showSuccessBox = false;
+        $scope.showErrorBox = false;
+	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {   
 	        console.log("page loaded")
@@ -171,6 +174,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
 	        
 	        $scope.editCustomerForm = false;
+	        $scope.showSuccessBox = true;
+            $scope.showErrorBox = false;
 	    };
 	
 	    /* Function to search for Customers */

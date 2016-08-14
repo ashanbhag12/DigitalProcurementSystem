@@ -18,6 +18,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             
             $scope.searchProductCode = ''; /* Code for product search */
             
+            $scope.showSuccessBox = false;
+            $scope.showErrorBox = false;
+            
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
                 console.log("page loaded")
@@ -171,6 +174,8 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
                 
                 $scope.editProductForm = false;
+                $scope.showSuccessBox = true;
+                $scope.showErrorBox = false;
             };
 
             /* Function to search for Products */

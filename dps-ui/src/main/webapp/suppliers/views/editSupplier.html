@@ -1,5 +1,7 @@
 <div class="editSupplierPage">
     <h3 class="md-headline sectionTitle">Search Supplier</h3>
+    <div class="successBox" ng-show="showSuccessBox">Supplier details updated successfully</div>
+    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
     <div layout="row">
         <md-input-container class="md-block" flex="50">
             <label>Name</label>
@@ -71,8 +73,6 @@
     </div>
     <div class="editForm marginT20" ng-show="editSupplierForm" id="editSupplierForm">
         <h3 class="md-headline sectionTitle">Edit Supplier</h3>
-        <div class="successBox" ng-show="showSuccessBox">Supplier details updated successfully</div>
-        <div class="errorBox" ng-show="showErrorBox">There is some error</div>
         <form name="editSupplier" ng-submit="submitForm()" novalidate>
             <div layout="row">
                 <md-input-container class="md-block" flex="50">

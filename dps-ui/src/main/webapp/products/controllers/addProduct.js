@@ -1,7 +1,7 @@
 angular.module('addProductApp', ['ngMessages'])
         .controller('addProductController', function ($scope, addProductsService, getSuppliersInitialsService) {
-            $scope.showSuccessBox = true;
-            $scope.showErrorBox = true;
+            $scope.showSuccessBox = false;
+            $scope.showErrorBox = false;
             // WebService should be called to fetch initials for Suppliers
             getSuppliersInitialsService.query().$promise.then(function(data) {
             	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
@@ -28,6 +28,8 @@ angular.module('addProductApp', ['ngMessages'])
         		    response = addProductsService.save($scope.productJson);
         		    //alert(response);
         		    $scope.reset();
+        		    $scope.showSuccessBox = true;
+                    $scope.showErrorBox = false;
                 }
                 else{                    
                     console.log("form invalid");

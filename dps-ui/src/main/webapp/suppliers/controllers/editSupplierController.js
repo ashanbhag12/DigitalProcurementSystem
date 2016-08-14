@@ -16,6 +16,9 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
             
+            $scope.showSuccessBox = false;
+            $scope.showErrorBox = false;
+            
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
                 console.log("page loaded")
@@ -151,6 +154,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
                 
                 $scope.editSupplierForm = false;
+                $scope.showSuccessBox = true;
+                $scope.showErrorBox = false;
             };
 
             /* Function to search for Suppliers */

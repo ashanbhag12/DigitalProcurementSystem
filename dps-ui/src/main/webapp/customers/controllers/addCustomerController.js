@@ -1,7 +1,7 @@
 angular.module('addCustomerApp', ['ngMessages'])
 		.controller('addCustomerController', function ($scope, addCustomersService) {
-		    $scope.showSuccessBox = true;
-		    $scope.showErrorBox = true;
+		    $scope.showSuccessBox = false;
+		    $scope.showErrorBox = false;
 		
 		    $scope.customer = {
 		        name: "",
@@ -25,6 +25,8 @@ angular.module('addCustomerApp', ['ngMessages'])
 				    response = addCustomersService.save($scope.customerJson);
 				    //alert(response);
 				    $scope.reset();
+				    $scope.showSuccessBox = true;
+				    $scope.showErrorBox = false;
 		        }
 		        else{                    
 		            console.log("form invalid");
