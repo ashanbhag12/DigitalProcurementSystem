@@ -50,11 +50,11 @@
                         </a>
                     </th>
                     <th>Additional Margin</th>
-                    <th>
-            <md-checkbox type='checkbox' aria-label='Select All Customers {{$index}}' class="md-primary"
+                    <th class="alignCenter">
+            			<md-checkbox type='checkbox' aria-label='Select All Customers {{$index}}' class="md-primary"
                          ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
-            </th>
-            </tr>
+            		</th>
+            	</tr>
             </thead>
             <tbody>
                 <tr dir-paginate="customer in customers | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:10">
@@ -63,7 +63,7 @@
                     <td>{{customer.emailId}}</td>
                     <td>{{customer.shipmark}}</td>
                     <td>{{customer.additionalMargin}}</td>
-                    <td>
+                    <td class="alignCenter">
                         <md-checkbox type='checkbox' ng-model="customer.isChecked" name="isCustomerChecked" ng-change="toggle(customer)"
                                  aria-label='Select All Customers {{$index}}' class='md-primary'></md-checkbox>
                     </td>

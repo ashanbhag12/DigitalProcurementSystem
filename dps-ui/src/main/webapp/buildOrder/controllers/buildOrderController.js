@@ -18,7 +18,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 "pricePerPiece": "24",
                 "productMOQ": 3,
                 "remarks": "",
-                "productQuantity": ""
+                "productQuantity": "",
+                "cartoonQuantity": ""
             };
             $scope.customers = ["Customer1", "Customer2", "Customer3"]; /* List of all Customers */
             $scope.suppliers = ["Supplier1", "Supplier2", "Supplier3"]; /* List of all Suppliers */
@@ -48,6 +49,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     "supplierCode": "S101",
                     "productMOQ": 3,
                     "productQuantity": 4,
+                    "cartoonQuantity": 24,
+                    "productCost": 24,
                     "productMargin": 1.00
                 },
                 {
@@ -55,6 +58,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     "supplierCode": "S102",
                     "productMOQ": 2,
                     "productQuantity": 3,
+                    "cartoonQuantity": 20,
+                    "productCost": 24,
                     "productMargin": .98
                 }
             ];
@@ -62,7 +67,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
 
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
-                console.log("page loaded");
             });
 
             $scope.showSearchSection = function () {
@@ -125,15 +129,17 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     "productMOQ": $scope.productDetails.productMOQ,
                     "remarks": $scope.productDetails.remarks,
                     "productQuantity": $scope.productDetails.productQuantity,
+                    "cartoonQuantity": $scope.productDetails.cartoonQuantity,
                     "isSelected": false
                 });
                 $scope.searchText = null;
-                $scope.productDetails.productCode = null;
+                $scope.productDetails.productCode = "";
                 $scope.productDetails.supplierCode = "";
                 $scope.productDetails.pricePerPiece = "";
                 $scope.productDetails.productMOQ = "";
                 $scope.productDetails.remarks = "";
                 $scope.productDetails.productQuantity = "";
+                $scope.productDetails.cartoonQuantity = "";
                 $scope.addedProductsSection = true;
                 smoothScroll(document.getElementById('addedProductsSection')); /* Scroll to the added products section */
             };
@@ -145,6 +151,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.productDetails.productMOQ = product.productMOQ;
                 $scope.productDetails.remarks = product.remarks;
                 $scope.productDetails.productQuantity = product.productQuantity;
+                $scope.productDetails.cartoonQuantity = product.cartoonQuantity;
                 $scope.showAddBtn = false; /* Show Update Button & hide Add Button */
                 $scope.editDisabled = true;
                 smoothScroll(document.getElementById('productDetailsSection')); /* Scroll to the product details section */
@@ -159,9 +166,17 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         product.productMOQ = $scope.productDetails.productMOQ;
                         product.remarks = $scope.productDetails.remarks;
                         product.productQuantity = $scope.productDetails.productQuantity;
+                        product.cartoonQuantity = $scope.productDetails.cartoonQuantity;
                         product.isChecked = false;
                     }
                 });
+                $scope.productDetails.productCode = "";
+                $scope.productDetails.supplierCode = "";
+                $scope.productDetails.pricePerPiece = "";
+                $scope.productDetails.productMOQ = "";
+                $scope.productDetails.remarks = "";
+                $scope.productDetails.productQuantity = "";
+                $scope.productDetails.cartoonQuantity = "";
                 $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
                 $scope.editDisabled = false;
             };
@@ -169,9 +184,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.submitCart = function () {
                 $scope.orderSummarySection = true;
                 smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
-            };
-
-            $scope.cancelCart = function () {
             };
 
             $scope.saveOrder = function () {

@@ -1,5 +1,5 @@
 <div class="addCustomerPage">
-    <h3 class="md-headline">Add Customer Form</h3>
+    <h3 class="md-headline sectionTitle">Add Customer Form</h3>
     <div class="successBox" ng-show="showSuccessBox">Customer added to the system</div>
     <div class="errorBox" ng-show="showErrorBox">There is some error</div>
     <form name="addCustomer" ng-submit="submitForm(addCustomer)" novalidate>
@@ -44,7 +44,7 @@
                 </div>
             </md-input-container>
         </div>
-        Address:
+       	<h4 class="md-title sectionTitle">Address</h4>
         <div layout="row">
             <md-input-container class="md-block" flex="50">
                 <label>*Flat No.</label>
@@ -95,7 +95,7 @@
         
         <div>
             <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="addCustomer.$invalid">ADD</md-button>
-            <md-button type="reset" class="md-raised md-accent resetBtn" ng-click="reset();">CLEAR</md-button>
+            <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
         </div>
     </form>
 </div>

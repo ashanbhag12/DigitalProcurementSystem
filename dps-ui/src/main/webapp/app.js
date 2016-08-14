@@ -1,9 +1,8 @@
 'use strict';
-angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 'dashboardApp',
-    'customersApp', 'addCustomerApp', 'editCustomerApp', 'deleteCustomerApp',
-    'addSupplierApp', 'editSupplierApp', 'deleteSupplierApp',
-    'addProductApp', 'editProductApp', 'deleteProductApp',
-    'buildOrderApp', 'placeOrderApp'])
+angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
+                           'dashboardApp', 'addCustomerApp', 'editCustomerApp',
+                           'addSupplierApp', 'editSupplierApp', 'addProductApp', 'editProductApp',
+                           'buildOrderApp', 'placeOrderApp'])
         .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         	
         	$mdThemingProvider.theme('default')
@@ -31,18 +30,6 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         templateUrl: "products/views/editProduct.html",
                         controller: "editProductController"
                     })
-
-                    .state('deleteProduct', {
-                        url: "/deleteProduct",
-                        templateUrl: "products/views/deleteProduct.html",
-                        controller: "deleteProductController"
-                    })
-
-                    .state('customers', {
-                        url: "/customers",
-                        templateUrl: "customers/views/customers.html",
-                        controller: "customersCtrl"
-                    })
                     
                     .state('addCustomer', {
                         url: "/addCustomer",
@@ -55,12 +42,6 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         templateUrl: "customers/views/editCustomer.html",
                         controller: "editCustomerController"
                     })
-                    
-                    .state('deleteCustomer', {
-                        url: "/deleteCustomer",
-                        templateUrl: "customers/views/deleteCustomer.html",
-                        controller: "deleteCustomerController"
-                    })
 
                     .state('addSupplier', {
                         url: "/addSupplier",
@@ -72,12 +53,6 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         url: "/editSupplier",
                         templateUrl: "suppliers/views/editSupplier.html",
                         controller: "editSupplierController"
-                    })
-
-                    .state('deleteSupplier', {
-                        url: "/deleteSupplier",
-                        templateUrl: "suppliers/views/deleteSupplier.html",
-                        controller: "deleteSupplierController"
                     })
                     
                     .state('buildOrder', {

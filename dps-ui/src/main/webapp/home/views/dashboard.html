@@ -4,8 +4,8 @@
         <md-whiteframe class="md-whiteframe-5dp card-green" flex="25" layout layout-align="center center">
             <div flex="40" class="icon-holder currency"></div>
             <div flex="60" class="alignCenter">
-                <div class="md-display-1">{{66.67 | currency}}</div>
-                <div class="marginT10">Exchange Rate</div>
+                <div class="md-display-1">{{66.67}}</div>
+                <div class="marginT10">ER</div>
             </div>
         </md-whiteframe>
         <md-whiteframe class="md-whiteframe-5dp card-purple" flex="25" layout layout-align="center center">
@@ -30,7 +30,7 @@
             </div>
         </md-whiteframe>
     </div>
-    <h3 class="md-headline sectionTitle">Global Parameters</h3>
+    <h3 class="md-headline sectionTitle marginT20">Global Parameters</h3>
     <div class="successBox" ng-show="showSuccessBox">Global Parameters saved successfully</div>
     <div class="errorBox" ng-show="showErrorBox">There is some error</div>
     <form name="globalParameters" ng-submit="submitForm()" novalidate>

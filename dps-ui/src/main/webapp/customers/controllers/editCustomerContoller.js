@@ -21,7 +21,6 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {   
-	        console.log("page loaded")
 	    });
 	
 	    /* Customer object to be edited */

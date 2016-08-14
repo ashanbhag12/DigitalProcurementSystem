@@ -1,5 +1,5 @@
 <div class="addSupplierPage">
-    <h3 class="md-headline">Add Supplier Form</h3>
+    <h3 class="md-headline sectionTitle">Add Supplier Form</h3>
     <div class="successBox" ng-show="showSuccessBox">Supplier added to the system</div>
     <div class="errorBox" ng-show="showErrorBox">There is some error</div>
     <form name="addSupplier" ng-submit="submitForm(addSupplier)" novalidate>
@@ -37,7 +37,7 @@
         </div>
         <div>
             <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="addSupplier.$invalid">ADD</md-button>
-            <md-button type="reset" class="md-raised md-accent resetBtn" ng-click="reset();">CLEAR</md-button>
+            <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
         </div>
     </form>
 </div>

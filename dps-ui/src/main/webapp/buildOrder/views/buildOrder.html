@@ -65,14 +65,18 @@
                 <input type="text" name="productMOQ" ng-model="productDetails.productMOQ" />
             </md-input-container>
         </div>
-        <div layout="row" layout-align="center stretch">  
-            <md-input-container class="md-block" flex="50">
-                <label>Remarks</label>
-                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125"></textarea>
+        <div layout="row" layout-align="center stretch">              
+            <md-input-container class="md-block" flex="20">
+                <label>Cartoon Quantity</label>
+                <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" />
             </md-input-container>
-            <md-input-container class="md-block" flex="25" flex-offset="5">
+            <md-input-container class="md-block" flex="20">
                 <label>Quantity</label>
                 <input type="text" name="productQuantity" ng-model="productDetails.productQuantity" />
+            </md-input-container>
+            <md-input-container class="md-block" flex="40">
+                <label>Remarks</label>
+                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125"></textarea>
             </md-input-container>
             <div flex="15" flex-offset="5">
                 <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn">ADD</md-button>
@@ -100,18 +104,22 @@
                         </a>
                     </th>
                     <th>Price Per Piece</th>
-                    <th>MOQ</th>
+                    <th>Cartoon Quantity</th>
                     <th>Quantity</th>
+                    <th>Remarks</th>
+                    <th>Cost</th>
                     <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:1">
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:1" pagination-id="addedProductsList">
                     <td>{{product.productCode}}</td>
                     <td>{{product.supplierCode}}</td>
                     <td>{{product.pricePerPiece | currency:"&euro;"}}</td>
-                    <td>{{product.productMOQ}}</td>
+                    <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.productQuantity}}</td>
+                    <td>{{product.remarks}}</td>
+                    <td>{{product.cost}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="editProduct(product, $index)"
                          aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editDisabled"></md-checkbox>
@@ -120,10 +128,10 @@
             </tbody>            
         </table>
         <!-- Pagination Directive -->
-        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div> 
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="addedProductsList"></div> 
         <div layout='row' layout-align='end center' class='marginT10 marginB20'>
-            <md-button type="button" class="md-raised md-primary resetBtn" ng-click="submitCart();">SUBMIT</md-button>
-            <md-button type="button" class="md-raised md-warn md-hue-2 submitBtn" ng-click="cancelCart()">CANCEL</md-button>
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="submitCart();">SUBMIT</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="showModal()">CANCEL</md-button>
         </div>
     </div>
     <div class="animateSection orderSummarySection" ng-show="orderSummarySection" id="orderSummarySection">
@@ -132,35 +140,35 @@
             <thead>
                 <tr>
                     <th>Product Code</th>
-                    <th>Supplier Code</th>
-                    <th>MOQ</th>
+                    <th>Supplier Code</th>                    
                     <th>Quantity</th>
                     <th>Margin</th> 
+                    <th>Cost</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in orderSummary | itemsPerPage:1" ng-class="{'success':product.productMOQ > 2}">
+                <tr dir-paginate="product in orderSummary | itemsPerPage:10" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
                     <td>{{product.productCode}}</td>
                     <td>                        
                         <div ng-hide="editOrderSummmaryRow[$index]">{{product.supplierCode}}</div>
                         <div ng-show="editOrderSummmaryRow[$index]">
                             <select ng-model="product.supplierCode" ng-options="supplier for supplier in suppliers"></select>  
                         </div>
-                    </td>
+                    </td>                     
                     <td>
-                        <div ng-hide="editOrderSummmaryRow[$index]">{{product.productMOQ}}</div>
+                    <div ng-hide="editOrderSummmaryRow[$index]">{{product.productQuantity | number}}</div>
                         <div ng-show="editOrderSummmaryRow[$index]">
-                            <input type="text" ng-model="product.productMOQ" />
-                        </div>                        
+                            <input type='text' ng-model="product.productQuantity" placeholder="Quantity" />  
+                        </div>
                     </td> 
-                    <td>{{product.productQuantity}}</td> 
                     <td>
                         <div ng-hide="editOrderSummmaryRow[$index]">{{product.productMargin | number}}</div>
                         <div ng-show="editOrderSummmaryRow[$index]">
                             <input type='text' ng-model="product.productMargin" placeholder="Margin" />  
                         </div>
                     </td>
+                    <td>{{product.cost}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" class="editRow" ng-click="editCartRow($index, $event)" 
                            title='Edit Row' ng-hide="editOrderSummmaryRow[$index]"></a>
@@ -174,10 +182,10 @@
             <h4 class="floatR inlineBlock paddingT5">Grand Total: {{orderSummary.length}}</h4>          
         </div>
         <!-- Pagination Directive -->
-        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="orderSummary"></div>
         <div layout='row' layout-align='end center' class='marginT10'>
-            <md-button type="button" class="md-raised md-primary resetBtn" ng-click="saveOrder();">SAVE ORDER</md-button>
-            <md-button type="button" class="md-raised md-warn md-hue-2 submitBtn" ng-click="showModal()">CANCEL ORDER</md-button>            
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveOrder();">SAVE ORDER</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="showModal()">CANCEL ORDER</md-button>            
         </div>
     </div>
 </div>

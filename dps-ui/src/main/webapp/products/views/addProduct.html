@@ -1,5 +1,5 @@
 <div class="addProductPage">
-    <h3 class="md-headline">Add Product Form</h3>
+    <h3 class="md-headline sectionTitle">Add Product Form</h3>
     <div class="successBox" ng-show="showSuccessBox">Product added to the system</div>
     <div class="errorBox" ng-show="showErrorBox">There is some error</div>
     <form name="addProduct" ng-submit="submitForm(addProduct)" novalidate>
@@ -92,13 +92,13 @@
 			    <md-radio-group layout="row" name="isValid" ng-model="product.isValid" ng-pattern="/yes/">
 			    <b>Is Valid:&nbsp;&nbsp;&nbsp;</b>
 			      <md-radio-button value="yes" class="md-primary">Yes</md-radio-button>
-			      <md-radio-button value="no">No</md-radio-button>
+			      <md-radio-button value="no" class="md-warn">No</md-radio-button>
 			    </md-radio-group>
 		    </md-input-container>
 		</div>
         <div>
             <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="addProduct.$invalid">ADD</md-button>
-            <md-button type="reset" class="md-raised md-accent resetBtn" ng-click="reset();">CLEAR</md-button>
+            <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
         </div>
     </form>
 </div>

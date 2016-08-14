@@ -49,11 +49,11 @@
                     </th>
                     <th>Contact Number</th>
                     <th>Email Id</th>
-                    <th>
-            <md-checkbox type='checkbox' aria-label='Select All Suppliers {{$index}}' class="md-primary"
-                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
-            </th>
-            </tr>
+                    <th class="alignCenter">
+		           		 <md-checkbox type='checkbox' aria-label='Select All Suppliers {{$index}}' class="md-primary"
+                         	ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+		            </th>
+	            </tr>
             </thead>
             <tbody>
                 <tr dir-paginate="supplier in suppliers | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:10">
@@ -61,7 +61,7 @@
                     <td>{{supplier.initials}}</td>
                     <td>{{supplier.phoneNumber}}</td>
                     <td>{{supplier.emailId}}</td>
-                    <td>
+                    <td class="alignCenter">
                         <md-checkbox type='checkbox' ng-model="supplier.isChecked" name="isSupplierChecked" ng-change="toggle(supplier)"
                                  aria-label='Select All Suppliers {{$index}}' class='md-primary'></md-checkbox>
                     </td>

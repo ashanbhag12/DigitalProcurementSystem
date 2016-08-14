@@ -23,7 +23,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
-                console.log("page loaded")
             });
 
             /* Product object to be edited */

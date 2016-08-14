@@ -21,7 +21,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
-                console.log("page loaded")
             });
 
             /* Supplier object to be edited */

@@ -85,7 +85,7 @@ md-autocomplete[md-floating-label] md-input-container {
     background-color:#fff;
 }
 
-h3.sectionTitle{
+h3.sectionTitle, h4.sectionTitle{
     border-bottom:1px solid #ccc;    
     margin-bottom:10px;
 }
@@ -135,7 +135,11 @@ h3.sectionTitle{
 .submitBtn, .resetBtn{
     padding:5px 50px;
     font-size:18px;
-    margin:0 25px 0 0;
+    margin:0;
+}
+
+.submitBtn + .resetBtn{
+    margin-left:25px;
 }
 
 /* Searched Results Table CSS */
@@ -146,13 +150,21 @@ h3.sectionTitle{
     margin: 0;    
 }
 
+.customTable tbody tr:nth-child(even){
+    background-color: #f5f5f5;
+}
+
+.customTable tbody tr:nth-child(odd){
+    background-color: #f9f9f9;
+}
+
 .customTable tbody tr.success{
-    background-color:#72d572 !important;   
+    background-color:#4CAF50 !important;   
 }
 
 .customTable thead th,
-.customTable td{
-    padding:5px;
+.customTable tbody td{
+    padding:8px 5px;
     border:1px solid #ccc;
     text-align:left;
 }
@@ -161,12 +173,10 @@ h3.sectionTitle{
     color: rgba(0, 0, 0, .87);
 }
 
-.customTable tbody tr:nth-child(even){
-    background-color: #f5f5f5;
-}
-
-.customTable tbody tr:nth-child(odd){
-    background-color: #f9f9f9;
+.customTable thead th md-checkbox,
+.customTable tbody td md-checkbox{
+   max-width:20px;
+   margin-bottom:0;
 }
 
 .editBtn, .deleteBtn{
