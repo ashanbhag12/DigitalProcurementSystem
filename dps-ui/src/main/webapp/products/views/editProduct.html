@@ -14,11 +14,11 @@
     <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
         <div class="clearfix searchTable marginB10">            
             <div class="floatR">
-                <input name="kalpesh" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
             </div>
         </div>
         <div class="clearfix">
-            <h4 class="floatL searchResultCount">Search results: {{products.length}}</h4>
+            <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
             <div class="floatR">
                 <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
@@ -67,9 +67,9 @@
             </tbody>
         </table> 
         <!-- Pagination Directive -->
-        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>        
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>
     </div>
-    <div class="editForm marginT20" ng-show="editProductForm" id="editProductForm">
+    <div class="editForm marginT20" ng-show="editProductForm">
         <h3 class="md-headline sectionTitle">Edit Product</h3>
         <form name="editProduct" ng-submit="submitForm()" novalidate>
 	        <div layout="row">

@@ -2,7 +2,7 @@
 angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
                            'dashboardApp', 'addCustomerApp', 'editCustomerApp',
                            'addSupplierApp', 'editSupplierApp', 'addProductApp', 'editProductApp',
-                           'buildOrderApp', 'placeOrderApp'])
+                           'productPreferencesApp', 'buildOrderApp', 'placeOrderApp'])
         .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         	
         	$mdThemingProvider.theme('default')
@@ -29,6 +29,12 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         url: "/editProduct",
                         templateUrl: "products/views/editProduct.html",
                         controller: "editProductController"
+                    })
+                    
+                    .state('productPreferences', {
+                        url: "/productPreferences",
+                        templateUrl: "products/views/productPreferences.html",
+                        controller: "productPreferencesController"
                     })
                     
                     .state('addCustomer', {

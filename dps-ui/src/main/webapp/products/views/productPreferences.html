@@ -1,0 +1,72 @@
+<div class="editProductPage">
+    <h3 class="md-headline sectionTitle">Search Customer</h3>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">Product margin for Customer updated successfully</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">There is some error</div>
+    <div layout="row">
+        <md-input-container flex="30">
+            <label>Customer</label>
+            <md-select ng-model="customerName">
+                <md-option ng-repeat="customer in customers" value="{{customer}}">
+                    {{customer}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <div flex-offset="5">
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH</md-button>
+        </div>
+    </div>    
+    <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
+        <div class="clearfix searchTable marginB10">      
+            <h4 class="floatL marginT15">Search results: {{products.length}}</h4>
+            <div class="floatR">
+                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+            </div>
+        </div>        
+        <table class="customTable">           
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'productCode';
+                            sortOrder = !sortOrder">Product Code
+                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Price Per Item</th>
+                    <th>Product Margin</th>
+                    <th>Customer Margin</th>
+                    <th>Customer Specific Product Margin</th>
+                    <th>Cost</th>
+                    <th class='alignCenter'>Action</th>
+            	</tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:10">
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.pricePerItem}}</td>
+                    <td>{{product.productMargin | number:2}}</td>
+                    <td>{{product.customerMargin | number:2}}</td>
+                    <td>
+                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:2}}</div>
+                        <div ng-show="editProductDetailsRow[$index]">
+                            <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
+                        </div>
+                    </td>                    
+                    <td>{{product.cost}}</td>
+                    <td class='alignCenter'>
+                        <a href="javascript:;" class="editRow" ng-click="editProductDetails($index, product)" 
+                           title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>
+                        <a href="javascript:;" class="updateRow" ng-click="updateProductDetails($index, product)" 
+                           title='Update Row' ng-show="editProductDetailsRow[$index]"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
+        <div layout='row' layout-align='end center' class='marginT10'>
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">SAVE</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
+        </div>
+    </div>    
+</div>

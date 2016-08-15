@@ -91,9 +91,9 @@ h3.sectionTitle, h4.sectionTitle{
 }
 
 .mainNavWrapper{
-    width:250px;
-    min-width: 250px;
-    max-width: 250px;
+    width:200px;
+    min-width: 200px;
+    max-width: 200px;
     background-color: rgb(63,81,181);
     border-top:1px solid rgb(121,134,203);
 }
@@ -125,7 +125,7 @@ h3.sectionTitle, h4.sectionTitle{
 }
 
 .errorBox{
-    background: rgb(222,54,65);
+    background: rgb(222,54,65); 
 }
 
 .successBox{
@@ -271,16 +271,19 @@ h3.sectionTitle, h4.sectionTitle{
     margin:0 20px 0 0;
 }
 
-/* Animate Sections (Searched results, edit form) CSS*/
-.editForm, .searchedResults, .animateSection{
+/* Animate Sections (Searched results, edit form) CSS */
+.editForm, .searchedResults,
+.animateSection, .animateMessages{
     transition: all ease-in-out 1s;
 }
 
-.editForm.ng-hide-remove, .searchedResults.ng-hide-remove, .animateSection.ng-hide-remove{ /* While showing */
+.editForm.ng-hide-remove, .searchedResults.ng-hide-remove, 
+.animateSection.ng-hide-remove, .animateMessages.ng-hide-remove{ /* While showing */
     opacity:1;
 }
 
-.editForm.ng-hide, .searchedResults.ng-hide, .animateSection.ng-hide{
+.editForm.ng-hide, .searchedResults.ng-hide, 
+.animateSection.ng-hide, .animateMessages.ng-hide{
     opacity:0;
 }
 
@@ -351,7 +354,7 @@ h3.sectionTitle, h4.sectionTitle{
     border-top:2px dashed rgb(63,81,181);
 }
 
-.orderSummarySection input, .orderSummarySection select{
+.customTable input, .customTable select{
     width:inherit;
     padding:5px;
     border:1px solid #ccc;
