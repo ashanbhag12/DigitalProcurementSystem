@@ -3,12 +3,14 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
 
             $scope.showSuccessBox = false; /* Hide the success box */
             $scope.successMessage = ""; /* Set success message to blank */
+            $scope.editDisabled = true; /* Enable the Edit button for products added table */
+            $scope.deleteDisabled = true; /* Disable the Delete button for products added table */
             $scope.searchProductSection = false; /* Hide the search product section */
             $scope.productDetailsSection = false; /* Hide the Products details section */
             $scope.addedProductsSection = false; /* Hide the products' added table */
             $scope.orderSummarySection = false; /* Hide Customer order summary section */
             $scope.productsList = []; /* List of Products Added in the table */
-            $scope.editDisabled = false; /* Enable the product edit button in added products table */
+            $scope.editProductsListRowDisabled = false; /* Enable the product edit button in added products table */
             $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortType = 'productCode'; /* set the default sort type */
@@ -130,7 +132,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     "remarks": $scope.productDetails.remarks,
                     "productQuantity": $scope.productDetails.productQuantity,
                     "cartoonQuantity": $scope.productDetails.cartoonQuantity,
-                    "isSelected": false
+                    "isChecked": false
                 });
                 $scope.searchText = null;
                 $scope.productDetails.productCode = "";
@@ -143,21 +145,39 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.addedProductsSection = true;
                 smoothScroll(document.getElementById('addedProductsSection')); /* Scroll to the added products section */
             };
-
-            $scope.editProduct = function (product) {/* Function to edit the Product from added products table */
-                $scope.productDetails.productCode = product.productCode;
-                $scope.productDetails.supplierCode = product.supplierCode;
-                $scope.productDetails.pricePerPiece = product.pricePerPiece;
-                $scope.productDetails.productMOQ = product.productMOQ;
-                $scope.productDetails.remarks = product.remarks;
-                $scope.productDetails.productQuantity = product.productQuantity;
-                $scope.productDetails.cartoonQuantity = product.cartoonQuantity;
-                $scope.showAddBtn = false; /* Show Update Button & hide Add Button */
-                $scope.editDisabled = true;
-                smoothScroll(document.getElementById('productDetailsSection')); /* Scroll to the product details section */
+            
+            /* Function to select/unselect the Supplier */
+            $scope.toggle = function (element) {
+                if (element.isChecked) {
+                    $scope.editDisabled = false;
+                    $scope.deleteDisabled = false;
+                    $scope.editProductsListRowDisabled = true; /* Disable all the rows in Products list table */
+                }
+                else {
+                    $scope.editDisabled = true;
+                    $scope.deleteDisabled = true;
+                    $scope.editProductsListRowDisabled = false; /* Enable all the rows in Products list table */
+                }
             };
 
-            $scope.updateProduct = function () {/* Function to update the Product in products added table */
+            $scope.editAddedProductsListRow = function () {/* Function to edit the Product in added products table */
+                angular.forEach($scope.productsList, function (product) {
+                    if (product.isChecked) {                        
+                        $scope.productDetails.productCode = product.productCode;
+                        $scope.productDetails.supplierCode = product.supplierCode;
+                        $scope.productDetails.pricePerPiece = product.pricePerPiece;
+                        $scope.productDetails.productMOQ = product.productMOQ;
+                        $scope.productDetails.remarks = product.remarks;
+                        $scope.productDetails.productQuantity = product.productQuantity;
+                        $scope.productDetails.cartoonQuantity = product.cartoonQuantity;
+                        $scope.showAddBtn = false; /* Show Update Button & hide Add Button */
+                        $scope.editProductsListRowDisabled = true;
+                        smoothScroll(document.getElementById('productDetailsSection')); /* Scroll to the product details section */
+                    }
+                });
+            };
+
+            $scope.updateAddedProductsListRow = function () {/* Function to update the Product in added products table */
                 angular.forEach($scope.productsList, function (product) {
                     if (product.isChecked) {
                         product.productCode = $scope.productDetails.productCode;
@@ -178,12 +198,32 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.productDetails.productQuantity = "";
                 $scope.productDetails.cartoonQuantity = "";
                 $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
-                $scope.editDisabled = false;
+                $scope.editProductsListRowDisabled = false;
+                $scope.editDisabled = true;
+                $scope.deleteDisabled = true;
+            };
+            
+            /* Function to delete the selected product from added products table */
+            $scope.deleteAddedProductsListRow = function () {
+                var newProductsList = [];      
+                angular.forEach($scope.productsList, function (product) {
+                    if (!product.isChecked) {
+                        newProductsList.push(product);            
+                    }
+                });
+                $scope.productsList = newProductsList;
+                $scope.editProductsListRowDisabled = false;
+                $scope.editDisabled = true;
+                $scope.deleteDisabled = true;
             };
 
             $scope.submitCart = function () {
                 $scope.orderSummarySection = true;
                 smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
+            };
+
+            $scope.cancelCart = function () {
+                $scope.showModal('cancelOrderModal');                
             };
 
             $scope.saveOrder = function () {
@@ -197,7 +237,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             };
 
             $scope.cancelOrder = function () {
-                $rootScope.hideModal();
+                $rootScope.hideModal('cancelOrderModal');
                 $scope.customerName = "";
                 $scope.productsList = [];
                 $scope.orderSummary = [];

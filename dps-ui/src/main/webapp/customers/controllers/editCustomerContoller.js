@@ -1,5 +1,5 @@
-angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPagination'])
-	.controller('editCustomerController', function ($rootScope, $scope, $timeout, getCustomersService, modifyCustomersService, deleteCustomersService) {
+angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
+	.controller('editCustomerController', function ($rootScope, $scope, $timeout, getCustomersService, modifyCustomersService, deleteCustomersService, smoothScroll) {
 	    /* Initialize the page variables */
 	    $scope.showSuccessBox = false; /* Hide the error messages */
 	    $scope.showErrorBox = false; /* Hide the success messages */
@@ -95,6 +95,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.edit = function () {
 	        angular.forEach($scope.customers, function (customer) {
 	            if (customer.isChecked) {
+	            	smoothScroll(document.getElementById("editCustomerForm")); /* Scroll to the form */
 	                $scope.editCustomerForm = true;
 	                $scope.customer.name = customer.name;
 	                $scope.customer.phoneNumber = customer.phoneNumber;

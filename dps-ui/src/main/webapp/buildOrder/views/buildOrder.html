@@ -80,12 +80,21 @@
             </md-input-container>
             <div flex="15" flex-offset="5">
                 <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn">ADD</md-button>
-                <md-button class="md-raised md-primary submitBtn" ng-click="updateProduct()" ng-show="!showAddBtn">UPDATE</md-button>
+                <md-button class="md-raised md-primary submitBtn" ng-click="updateAddedProductsListRow()" ng-show="!showAddBtn">UPDATE</md-button>
             </div>
         </div>
     </div>
     <div class="animateSection paddingT10 marginB10 bottomDashedBorder" ng-show="addedProductsSection" id="addedProductsSection">
         <h3 class="md-headline sectionTitle">Added Products List</h3>
+        <div class="clearfix">
+            <h4 class="floatL inlineBlock paddingT5">Products Added: {{productsList.length}}</h4>
+            <div class="floatR">
+                <a href="javascript:;" class="editBtn" ng-click="editAddedProductsListRow()" 
+                   ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
+                <a href="javascript:;" class="deleteBtn" ng-click="deleteAddedProductsListRow()" 
+                   ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
+            </div>
+        </div>
         <table class="customTable">           
             <thead>
                 <tr>
@@ -108,11 +117,11 @@
                     <th>Quantity</th>
                     <th>Remarks</th>
                     <th>Cost</th>
-                    <th>Edit</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:1" pagination-id="addedProductsList">
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:10" pagination-id="addedProductsList">
                     <td>{{product.productCode}}</td>
                     <td>{{product.supplierCode}}</td>
                     <td>{{product.pricePerPiece | currency:"&euro;"}}</td>
@@ -121,8 +130,8 @@
                     <td>{{product.remarks}}</td>
                     <td>{{product.cost}}</td>
                     <td class='alignCenter'>
-                        <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="editProduct(product, $index)"
-                         aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editDisabled"></md-checkbox>
+                        <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
+                         aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editProductsListRowDisabled"></md-checkbox>
                     </td>                    
                 </tr>
             </tbody>            
@@ -131,7 +140,7 @@
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="addedProductsList"></div> 
         <div layout='row' layout-align='end center' class='marginT10 marginB20'>
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="submitCart();">SUBMIT</md-button>
-            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="showModal()">CANCEL</md-button>
+            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelCart()">CANCEL</md-button>
         </div>
     </div>
     <div class="animateSection orderSummarySection" ng-show="orderSummarySection" id="orderSummarySection">
@@ -185,11 +194,11 @@
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="orderSummary"></div>
         <div layout='row' layout-align='end center' class='marginT10'>
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveOrder();">SAVE ORDER</md-button>
-            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="showModal()">CANCEL ORDER</md-button>            
+            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="showModal('cancelOrderModal')">CANCEL ORDER</md-button>            
         </div>
     </div>
 </div>
-<div class="modal" id="deleteSupplierModal">
+<div class="modal" id="cancelOrderModal">
     <div class="modalTitle">
         <h4 class>Cancel Order?</h4>
     </div>
@@ -197,6 +206,6 @@
         Are you sure you want to cancel the order?</div>
     <div class="modalFooter">
         <md-button type="button" class="md-raised md-primary" ng-click="cancelOrder()">YES</md-button>
-        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal()">NO</md-button>
+        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('cancelOrderModal')">NO</md-button>
     </div>
 </div>

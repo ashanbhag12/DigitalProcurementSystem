@@ -1,5 +1,6 @@
-angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination'])
-        .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, modifyProductsService, deleteProductsService, getSuppliersInitialsService) {
+angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
+        .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, 
+        		modifyProductsService, deleteProductsService, getSuppliersInitialsService, smoothScroll) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -105,6 +106,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.edit = function () {
                 angular.forEach($scope.products, function (product) {
                     if (product.isChecked) {
+                    	smoothScroll(document.getElementById("editProductForm")); /* Scroll to the form */
                         $scope.editProductForm = true;
                         $scope.product.productCode = product.productCode;
                         $scope.product.cartoonQuantity = product.cartoonQuantity;

@@ -86,10 +86,9 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
 
             /* Function to edit the selected Supplier */
             $scope.edit = function () {
-            	var element = document.getElementById("editSupplierForm");
                 angular.forEach($scope.suppliers, function (supplier) {
                     if (supplier.isChecked) {
-                        smoothScroll(element); /* Scroll to the form */
+                        smoothScroll(document.getElementById("editSupplierForm")); /* Scroll to the form */
                         $scope.editSupplierForm = true;
                         $scope.supplier.name = supplier.name;
                         $scope.supplier.initials = supplier.initials;
@@ -101,18 +100,14 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
 
             /* Function to delete the selected Suppliers */
             $scope.deleteSupplier = function () {
-                angular.element(document.querySelector('.loader')).addClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "block");
-
                 angular.forEach($scope.suppliers, function (supplier) {
                     if (supplier.isChecked) {
                     	response = deleteSuppliersService.remove({supplierId : supplier.id});                   
                     }
                 });
-
-                angular.element(document.querySelector('.modal')).css('display', "none");
+                
                 $timeout(function () {
-                    angular.element(document.querySelector('.loader')).removeClass('show');
+                    $rootScope.hideModal('deleteSupplierModal');
                     $scope.selectAll = false;
                     // WS call to get all suppliers.
                     $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});

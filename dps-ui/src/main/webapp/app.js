@@ -69,15 +69,16 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
         }).run(function ($rootScope) {
             
             /* Global function to show Modal Window */
-            $rootScope.showModal = function () {
+            $rootScope.showModal = function (modalId) {
+                console.log(modalId);
                 angular.element(document.querySelector('.loader')).addClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "block");
+                angular.element(document.getElementById(modalId)).css('display', "block");
             };
 
             /* Global function to hide Modal Window */
-            $rootScope.hideModal = function () {
+            $rootScope.hideModal = function (modalId) {
                 angular.element(document.querySelector('.loader')).removeClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "none");
+                angular.element(document.getElementById(modalId)).css('display', "none");
             };
             
         });
