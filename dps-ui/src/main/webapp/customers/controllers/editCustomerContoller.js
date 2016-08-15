@@ -159,6 +159,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                    customer.city = $scope.customer.city;
 	                    customer.state = $scope.customer.state;
 	                    customer.zip = $scope.customer.zip;
+	                    delete customer.isChecked;
 	                    
 	                    $scope.updateCustomerJson = angular.toJson(customer);
 	                    
