@@ -37,4 +37,13 @@ public class ConfigurationsServiceImpl extends BaseServiceImpl<Configurations> i
 		cache = new CacheImpl<>(1);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.service.ConfigurationsService#getConfigurations()
+	 */
+	@Override
+	public Configurations getConfigurations()
+	{
+		return configurationsDao.getConfigurations();
+	}
+
 }

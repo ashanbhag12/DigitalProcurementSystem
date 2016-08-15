@@ -30,4 +30,10 @@ public interface SupplierDao extends BaseDao<Supplier>
 	 */
 	List<String> getAllSupplierInitials();
 
+	/**
+	 * Returns the count of the number of suppliers in the system.
+	 * @return the count of the number of suppliers in the system.
+	 */
+	int getSupplierCount();
+
 }

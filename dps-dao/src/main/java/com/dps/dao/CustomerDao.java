@@ -30,4 +30,10 @@ public interface CustomerDao extends BaseDao<Customer>
 	 */
 	List<String> getAllCustomerShipmarks();
 
+	/**
+	 * Returns the count of total number of customers present in the system.
+	 * @return the count of total number of customers present in the system.
+	 */
+	int getCustomerCount();
+
 }

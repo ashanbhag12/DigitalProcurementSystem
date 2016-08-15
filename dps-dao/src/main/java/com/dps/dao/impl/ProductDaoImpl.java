@@ -31,6 +31,12 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao
 	public List<Product> findByCode(String code)
 	{
 		List<JpaEntityId> productCodeId = null;
+		
+		if(StringUtils.isBlank(code))
+		{
+			return findAll(findAll());
+		}
+		
 		if(StringUtils.isNotBlank(code))
 		{
 			Map<String, Object> parameters = new HashMap<>();
@@ -54,6 +60,13 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao
 	{
 		TypedQuery<String> query = entityManager.createNamedQuery(Product.GET_ALL_PRODUCT_CODE, String.class);
 		return query.getResultList();
+	}
+
+	@Override
+	public int getProductCount() 
+	{
+		TypedQuery<Long> query = entityManager.createNamedQuery(Product.GET_PRODUCT_COUNT, Long.class);
+		return query.getSingleResult().intValue();
 	}
 
 }

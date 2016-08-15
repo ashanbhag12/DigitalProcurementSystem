@@ -26,7 +26,8 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_INITIALS, query="SELECT S.id FROM Supplier S WHERE S.initials = :initials"),
 	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_NAME, query="SELECT S.id FROM Supplier S WHERE S.name LIKE :name"),
-	@NamedQuery(name=Supplier.GET_ALL_SUPPLIER_INITIALS, query="SELECT S.initials FROM Supplier S")
+	@NamedQuery(name=Supplier.GET_ALL_SUPPLIER_INITIALS, query="SELECT S.initials FROM Supplier S"),
+	@NamedQuery(name=Supplier.GET_SUPPLIER_COUNT, query="SELECT COUNT(S) from Supplier S")
 })
 public class Supplier extends EntityBase
 {
@@ -34,6 +35,7 @@ public class Supplier extends EntityBase
 	public static final String FIND_SUPPLIER_BY_INITIALS = "Supplier.FindSupplierByInitials";
 	public static final String FIND_SUPPLIER_BY_NAME = "Supplier.FindSupplierByName";
 	public static final String GET_ALL_SUPPLIER_INITIALS = "Supplier.GetAllSupplierInitials";
+	public static final String GET_SUPPLIER_COUNT = "Supplier.GetSupplierCount";
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_SUPP_SEQ")

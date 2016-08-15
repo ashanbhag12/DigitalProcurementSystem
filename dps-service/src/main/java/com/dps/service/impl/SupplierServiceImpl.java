@@ -57,4 +57,13 @@ public class SupplierServiceImpl extends BaseServiceImpl<Supplier> implements Su
 		return supplierDao.getAllSupplierInitials();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.service.SupplierService#getSupplierCount()
+	 */
+	@Override
+	public int getSupplierCount()
+	{
+		return supplierDao.getSupplierCount();
+	}
+
 }

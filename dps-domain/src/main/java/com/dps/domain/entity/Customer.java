@@ -30,7 +30,8 @@ import com.dps.domain.constants.Constants;
 @NamedQueries({
 	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name"),
 	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark"),
-	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C")
+	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C"),
+	@NamedQuery(name=Customer.GET_CUSTOMER_COUNT, query="SELECT Count(c) from Customer c")
 })
 public class Customer extends EntityBase
 {
@@ -38,6 +39,7 @@ public class Customer extends EntityBase
 	public static final String FIND_CUSTOMER_BY_NAME = "Customer.FindCustomerByName";
 	public static final String FIND_CUSTOMER_BY_SHIPMARK = "Customer.FindCustomerByShipmark";
 	public static final String GET_ALL_CUSTOMER_SHIPMARK = "Customer.GetAllCustomerShipmark";
+	public static final String GET_CUSTOMER_COUNT = "Customer.getCustomerCount";
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_CUST_SEQ")

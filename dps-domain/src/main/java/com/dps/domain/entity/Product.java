@@ -31,13 +31,15 @@ import javax.persistence.Table;
 //@SequenceGenerator(name = "DPS_PROD_SEQ", sequenceName = "DPS_PROD_SEQ", initialValue = 1, allocationSize = 1)
 @NamedQueries({
 	@NamedQuery(name=Product.FIND_PRODUCT_BY_CODE, query="SELECT p.id from Product p where p.productCode like :code"),
-	@NamedQuery(name=Product.GET_ALL_PRODUCT_CODE, query="SELECT p.productCode from Product p")
+	@NamedQuery(name=Product.GET_ALL_PRODUCT_CODE, query="SELECT p.productCode from Product p"),
+	@NamedQuery(name=Product.GET_PRODUCT_COUNT, query="SELECT count(p) from Product p")
 })
 public class Product extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_PRODUCT_BY_CODE = "Product.FindProductByCode";
 	public static final String GET_ALL_PRODUCT_CODE = "Product.GetAllProductCode";
+	public static final String GET_PRODUCT_COUNT = "Product.GetProductCount";
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_PROD_SEQ")

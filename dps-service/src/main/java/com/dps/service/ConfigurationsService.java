@@ -13,5 +13,9 @@ import com.dps.domain.entity.Configurations;
  */
 public interface ConfigurationsService extends BaseService<Configurations>
 {
-
+	/**
+	 * Returns the configuration object.
+	 * @return the configurations object.
+	 */
+	Configurations getConfigurations();
 }

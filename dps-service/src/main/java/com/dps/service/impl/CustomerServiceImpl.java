@@ -57,4 +57,13 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
 		return customerDao.getAllCustomerShipmarks();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerService#getCustomerCount()
+	 */
+	@Override
+	public int getCustomerCount()
+	{
+		return customerDao.getCustomerCount();
+	}
+
 }

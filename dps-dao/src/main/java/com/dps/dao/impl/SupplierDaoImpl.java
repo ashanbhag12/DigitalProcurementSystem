@@ -83,4 +83,14 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDa
 		TypedQuery<String> query = entityManager.createNamedQuery(Supplier.GET_ALL_SUPPLIER_INITIALS, String.class);
 		return query.getResultList();
 	}
+
+	/* (non-Javadoc)
+	 * @see com.dps.dao.SupplierDao#getSupplierCount()
+	 */
+	@Override
+	public int getSupplierCount()
+	{
+		TypedQuery<Long> query = entityManager.createNamedQuery(Supplier.GET_SUPPLIER_COUNT, Long.class);
+		return query.getSingleResult().intValue();
+	}
 }

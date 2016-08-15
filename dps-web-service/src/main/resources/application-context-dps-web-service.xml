@@ -14,5 +14,7 @@
         <bean id="supplierContoller" class = "com.dps.web.service.controller.SupplierController"/>
         <bean id="customerContoller" class = "com.dps.web.service.controller.CustomerController"/>
         <bean id="productController" class = "com.dps.web.service.controller.ProductController"/>
-
+		<bean id="configController" class="com.dps.web.service.controller.ConfigController"/>
+		<bean id="dashboardController" class = "com.dps.web.service.controller.DashboardController"/>
+		
 </beans>

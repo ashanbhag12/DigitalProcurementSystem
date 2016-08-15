@@ -13,5 +13,10 @@ import com.dps.domain.entity.Configurations;
  */
 public interface ConfigurationsDao extends BaseDao<Configurations>
 {
+	/**
+	 * Returns the configuration object.
+	 * @return the configurations object.
+	 */
+	Configurations getConfigurations();
 
 }

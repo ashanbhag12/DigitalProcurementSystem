@@ -57,4 +57,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 		return productDao.getAllProductCodes();
 	}
 
+	@Override
+	public int getProductCount() 
+	{
+		return productDao.getProductCount();
+	}
+
 }

@@ -29,5 +29,11 @@ public interface CustomerService extends BaseService<Customer>
 	 * @return - {@link List} Shipping marks of all the customers present in the system.
 	 */
 	List<String> getAllCustomerShipmarks();
+	
+	/**
+	 * Returns the count of total number of customers present in the system.
+	 * @return the count of total number of customers present in the system.
+	 */
+	int getCustomerCount();
 
 }

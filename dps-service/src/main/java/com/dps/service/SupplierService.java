@@ -30,4 +30,9 @@ public interface SupplierService extends BaseService<Supplier>
 	 */
 	List<String> getAllSupplierInitials();
 
+	/**
+	 * Returns the count of the number of suppliers in the system.
+	 * @return the count of the number of suppliers in the system.
+	 */
+	int getSupplierCount();
 }

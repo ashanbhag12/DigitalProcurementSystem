@@ -85,4 +85,14 @@ public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDa
 		return query.getResultList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.dao.CustomerDao#getCustomerCount()
+	 */
+	@Override
+	public int getCustomerCount()
+	{
+		TypedQuery<Long> query = entityManager.createNamedQuery(Customer.GET_CUSTOMER_COUNT, Long.class);
+		return query.getSingleResult().intValue();
+	}
+
 }

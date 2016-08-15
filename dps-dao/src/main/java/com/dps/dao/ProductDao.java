@@ -29,4 +29,10 @@ public interface ProductDao extends BaseDao<Product>
 	 */
 	List<String> getAllProductCodes();
 
+	/**
+	 * Returns the count of all the products that are stored in the system.
+	 * @return the count of all the products that are stored in the system.
+	 */
+	int getProductCount();
+
 }

@@ -29,4 +29,9 @@ public interface ProductService extends BaseService<Product>
 	 */
 	List<String> getAllProductCodes();
 
+	/**
+	 * Returns the count of all the products that are stored in the system.
+	 * @return the count of all the products that are stored in the system.
+	 */
+	int getProductCount();
 }
