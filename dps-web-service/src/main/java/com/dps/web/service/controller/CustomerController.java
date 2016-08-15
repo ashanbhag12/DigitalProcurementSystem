@@ -140,6 +140,7 @@ public class CustomerController
 		address.setFlatNo(custDto.getFlatNo());
 		address.setLocality(custDto.getLocality());
 		address.setState(custDto.getState());
+		address.setStreet(custDto.getStreet());
 		address.setZip(custDto.getZip());
 		cust.setAddress(address);
 		
