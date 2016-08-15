@@ -8,17 +8,25 @@ angular.module('addProductApp', ['ngMessages'])
             });
 
             $scope.product = {                	
-            		productCode:"",
-            		cartoonQuantity:"",
-            		cbm:"",
-            		price:"",
-            		weight:"",
-            		description:"",
-            		moq:"",
-            		defaultMargin:"",
-            		supplierInitials:"",
-            		supplierProductCode:"",
-            		isValid:"no"
+            		"productCode":"",
+            		"cartoonQuantity":"",
+            		"cbm":"",
+            		"price":"",
+            		"weight":"",
+            		"description":"",
+            		"moq":"",
+            		"defaultMargin":"",
+            		"supplierProductInfoList": [{
+            			"supplierInitials": "",
+            			"supplierProductCode": ""
+            		}, {
+            			"supplierInitials": "",
+            			"supplierProductCode": ""
+            		}, {
+            			"supplierInitials": "",
+            			"supplierProductCode": ""
+            		}],
+            		"isValid":"false"
             };
 
             $scope.submitForm = function (addProduct) {
@@ -38,7 +46,7 @@ angular.module('addProductApp', ['ngMessages'])
 
             $scope.reset = function () {
                 $scope.product = {};
-                $scope.product.isValid="no";
+                $scope.product.isValid="false";
                 $scope.addProduct.$setPristine();
                 $scope.addProduct.productCode.$touched = false;
                 $scope.addProduct.cartoonQuantity.$touched = false;
@@ -48,8 +56,12 @@ angular.module('addProductApp', ['ngMessages'])
                 $scope.addProduct.description.$touched = false;
                 $scope.addProduct.moq.$touched = false;
                 $scope.addProduct.defaultMargin.$touched = false;
-                $scope.addProduct.supplierInitials.$touched = false;
-                $scope.addProduct.supplierProductCode.$touched = false;
+                $scope.addProduct.supplierInitials1.$touched = false;
+                $scope.addProduct.supplierProductCode1.$touched = false;
+                $scope.addProduct.supplierInitials2.$touched = false;
+                $scope.addProduct.supplierProductCode2.$touched = false;
+                $scope.addProduct.supplierInitials3.$touched = false;
+                $scope.addProduct.supplierProductCode3.$touched = false;
                 $scope.addProduct.isValid.$touched = false;
                 $scope.showSuccessBox = false;
             };

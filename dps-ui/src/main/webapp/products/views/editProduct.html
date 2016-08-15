@@ -43,14 +43,6 @@
                     <th>Description</th>
                     <th>MOQ</th>
                     <th>Default Margin</th>
-                    <th>
-                        <a href="javascript:;" ng-click="sortBy = 'supplierInitials';
-                            sortOrder = !sortOrder">Supplier Initials
-                            <span ng-show="sortBy == 'supplierInitials' && sortOrder">&#9662;</span>
-                            <span ng-show="sortBy == 'supplierInitials' && !sortOrder">&#9652;</span>
-                        </a>
-                    </th>
-                    <th>Supplier Product Code</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
                          ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
@@ -67,8 +59,6 @@
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
                     <td>{{product.defaultMargin}}</td>
-                    <td>{{product.supplierInitials}}</td>
-                    <td>{{product.supplierProductCode}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
                                  aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>
@@ -91,7 +81,7 @@
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>*Price</label>
+	                <label>*Price per item</label>
 	                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.price.$error" ng-show="editProduct.price.$touched">
 	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
@@ -149,29 +139,54 @@
 	        <div layout="row">
 				<md-input-container class="md-block" flex="50">
 			        <label>*Supplier initials</label>
-			        <md-select name="supplierInitials" ng-model="product.supplierInitials" required>
+			        <md-select name="supplierInitials1" ng-model="product.supplierProductInfoList[0].supplierInitials" required>
 			          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
 			            {{si.abbrev}}
 			          </md-option>
 			        </md-select>
-			        <div ng-messages="editProduct.supplierInitials.$error" ng-show="editProduct.supplierInitials.$touched">
+			        <div ng-messages="editProduct.supplierInitials1.$error" ng-show="editProduct.supplierInitials1.$touched">
                     	<div ng-message-exp="['required']">This is required.</div>
                 	</div>
 	      		</md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>*Supplier product code</label>
-	                <input type='text' required name="supplierProductCode" ng-model="product.supplierProductCode"/>
-	                <div ng-messages="editProduct.supplierProductCode.$error" ng-show="editProduct.supplierProductCode.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required.</div>
-	                </div>
+	                <label>Supplier product code</label>
+	                <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode"/>
+	            </md-input-container>
+	        </div>
+	        <div layout="row">
+				<md-input-container class="md-block" flex="50">
+			        <label>Supplier initials</label>
+			        <md-select name="supplierInitials2" ng-model="product.supplierProductInfoList[1].supplierInitials">
+			          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
+			            {{si.abbrev}}
+			          </md-option>
+			        </md-select>
+	      		</md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Supplier product code</label>
+	                <input type='text' name="supplierProductCode2" ng-model="product.supplierProductInfoList[1].supplierProductCode"/>
+	            </md-input-container>
+	        </div>
+	        <div layout="row">
+				<md-input-container class="md-block" flex="50">
+			        <label>Supplier initials</label>
+			        <md-select name="supplierInitials3" ng-model="product.supplierProductInfoList[2].supplierInitials">
+			          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
+			            {{si.abbrev}}
+			          </md-option>
+			        </md-select>
+	      		</md-input-container>
+	            <md-input-container class="md-block" flex="50">
+	                <label>Supplier product code</label>
+	                <input type='text' name="supplierProductCode3" ng-model="product.supplierProductInfoList[2].supplierProductCode"/>
 	            </md-input-container>
 	        </div>
 			<div layout="row">
 				<md-input-container class="md-block" flex="50">
-				    <md-radio-group layout="row" name="isValid" ng-model="product.isValid" ng-pattern="/yes/">
+				    <md-radio-group layout="row" name="isValid" ng-model="product.isValid">
 				    <b>Is Valid:&nbsp;&nbsp;&nbsp;</b>
-				      <md-radio-button value="yes" class="md-primary">Yes</md-radio-button>
-				      <md-radio-button value="no">No</md-radio-button>
+				      <md-radio-button value="true" class="md-primary">Yes</md-radio-button>
+				      <md-radio-button value="false">No</md-radio-button>
 				    </md-radio-group>
 			    </md-input-container>
 			</div>
