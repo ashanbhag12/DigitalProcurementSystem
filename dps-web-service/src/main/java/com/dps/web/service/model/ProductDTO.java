@@ -111,8 +111,7 @@ public class ProductDTO
 	{
 		return supplierProductInfoList;
 	}
-	public void setSupplierProductInfoList(
-			List<SuppProdInfo> supplierProductInfoList)
+	public void setSupplierProductInfoList(List<SuppProdInfo> supplierProductInfoList)
 	{
 		this.supplierProductInfoList = supplierProductInfoList;
 	}

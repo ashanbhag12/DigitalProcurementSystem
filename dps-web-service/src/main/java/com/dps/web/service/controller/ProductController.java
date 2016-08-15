@@ -80,7 +80,7 @@ public class ProductController
 		Product prod = new Product();
 		try
 		{
-			prod = productFromProductDto(prod, prodDto);
+			prod = productFromProductDtoAdd(prod, prodDto);
 		}
 		catch(Exception e)
 		{
@@ -102,7 +102,7 @@ public class ProductController
 	public Response modifyProduct(ProductDTO prodDto)
 	{
 		Product prod = productService.find(new JpaEntityId(prodDto.getId()));
-		prod = productFromProductDto(prod, prodDto);
+		prod = productFromProductDtoUpdate(prod, prodDto);
 		try
 		{
 			productService.merge(prod);
@@ -129,17 +129,9 @@ public class ProductController
 		return Response.status(Response.Status.OK).build();
 	}
 	
-	private Product productFromProductDto(Product prod, ProductDTO prodDto)
+	private Product productFromProductDtoAdd(Product prod, ProductDTO prodDto)
 	{
-		prod.setCartoonQuantity(prodDto.getCartoonQuantity());
-		prod.setCbm(prodDto.getCbm());
-		prod.setDefaultMargin(prodDto.getDefaultMargin());
-		prod.setDescription(prodDto.getDescription());
-		prod.setIsValid(prodDto.getIsValid());
-		prod.setMoq(prodDto.getMoq());
-		prod.setPrice(prodDto.getPrice());
-		prod.setProductCode(prodDto.getProductCode());
-		prod.setWeight(prod.getWeight());
+		productFromProductDtoCommon(prod, prodDto);
 		
 		for(SuppProdInfo spii : prodDto.getSupplierProductInfoList())
 		{
@@ -153,7 +145,49 @@ public class ProductController
 				throw new RuntimeException("Invalid Supplier");
 			}
 			spi.setSupplier(supplierList.get(0));
+			
+			prod.getSuppProdInfo().add(spi);
 		}
+		
+		return prod;
+	}
+	
+	private Product productFromProductDtoUpdate(Product prod, ProductDTO prodDto)
+	{
+		productFromProductDtoCommon(prod, prodDto);
+		
+		prod.getSuppProdInfo().clear();
+		
+		for(SuppProdInfo spii : prodDto.getSupplierProductInfoList())
+		{
+			SupplierProductInfo spi = new SupplierProductInfo();
+			spi.setProduct(prod);
+			spi.setSupplierProductName(spii.getSupplierProductCode());
+			
+			List<Supplier> supplierList = supplierService.findByInitialsAndName(spii.getSupplierInitials(), null);
+			if(supplierList == null || supplierList.size() == 0)
+			{
+				throw new RuntimeException("Invalid Supplier");
+			}
+			spi.setSupplier(supplierList.get(0));
+			
+			prod.getSuppProdInfo().add(spi);
+		}
+		
+		return prod;
+	}
+	
+	private Product productFromProductDtoCommon(Product prod, ProductDTO prodDto)
+	{
+		prod.setCartoonQuantity(prodDto.getCartoonQuantity());
+		prod.setCbm(prodDto.getCbm());
+		prod.setDefaultMargin(prodDto.getDefaultMargin());
+		prod.setDescription(prodDto.getDescription());
+		prod.setIsValid(prodDto.getIsValid());
+		prod.setMoq(prodDto.getMoq());
+		prod.setPrice(prodDto.getPrice());
+		prod.setProductCode(prodDto.getProductCode());
+		prod.setWeight(prodDto.getWeight());
 		
 		return prod;
 	}

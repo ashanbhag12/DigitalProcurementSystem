@@ -170,7 +170,7 @@ public class CustomerController
 		custDto.setShipmark(cust.getShipmark());
 		custDto.setState(cust.getAddress().getState());
 		custDto.setStreet(cust.getAddress().getStreet());
-		custDto.setZip(cust.getAddress().getStreet());
+		custDto.setZip(cust.getAddress().getZip());
 		
 		return custDto;
 	}
