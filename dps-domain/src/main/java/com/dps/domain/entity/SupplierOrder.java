@@ -56,6 +56,12 @@ private static final long serialVersionUID = 1L;
 	
 	@Column(name="FX_RATE")
 	private BigDecimal exchangeRate;
+	
+	@Column(name="WEIGHT_RATE")
+	private BigDecimal weightRate;
+	
+	@Column(name="CBM_RATE")
+	private BigDecimal cbmRate;
 
 	public Long getId()
 	{
@@ -110,6 +116,31 @@ private static final long serialVersionUID = 1L;
 	public void setExchangeRate(BigDecimal exchangeRate)
 	{
 		this.exchangeRate = exchangeRate;
+	}
+
+	public BigDecimal getWeightRate()
+	{
+		return weightRate;
+	}
+
+	public void setWeightRate(BigDecimal weightRate)
+	{
+		this.weightRate = weightRate;
+	}
+
+	public BigDecimal getCbmRate()
+	{
+		return cbmRate;
+	}
+
+	public void setCbmRate(BigDecimal cbmRate)
+	{
+		this.cbmRate = cbmRate;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 
 	@Override

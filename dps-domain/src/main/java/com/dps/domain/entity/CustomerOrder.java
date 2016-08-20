@@ -3,7 +3,7 @@ package com.dps.domain.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -44,16 +44,24 @@ public class CustomerOrder extends EntityBase
 	private Customer customer;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="ORDER_DATE")
 	private Date orderDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="ORDER_COMPLETED_DATE")
 	private Date orderCompletedDate;
 	
 	@Enumerated(EnumType.STRING)
 	private CustomerOrderStatus Status = CustomerOrderStatus.NO_ITEMS_ORDERED;
 	
-	@Basic
+	@Column(name="FX_RATE")
 	private BigDecimal exchangeRate;
+	
+	@Column(name="WEIGHT_RATE")
+	private BigDecimal weightRate;
+	
+	@Column(name="CBM_RATE")
+	private BigDecimal cbmRate;
 
 	@Override
 	public Long getId()
@@ -114,6 +122,26 @@ public class CustomerOrder extends EntityBase
 	public void setExchangeRate(BigDecimal exchangeRate)
 	{
 		this.exchangeRate = exchangeRate;
+	}
+
+	public BigDecimal getWeightRate()
+	{
+		return weightRate;
+	}
+
+	public void setWeightRate(BigDecimal weightRate)
+	{
+		this.weightRate = weightRate;
+	}
+
+	public BigDecimal getCbmRate()
+	{
+		return cbmRate;
+	}
+
+	public void setCbmRate(BigDecimal cbmRate)
+	{
+		this.cbmRate = cbmRate;
 	}
 
 	@Override

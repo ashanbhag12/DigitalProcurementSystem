@@ -64,6 +64,10 @@ public class CustomerOrderDetails extends EntityBase
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="ORDR_RCVD_DATE")
 	private Date orderReceivedDate;
+	
+	@Column(name="RCVD_QNTY")
+	private Integer receivedQuantity;
+	
 
 	public Long getId()
 	{
@@ -143,6 +147,16 @@ public class CustomerOrderDetails extends EntityBase
 	public void setOrderReceivedDate(Date orderReceivedDate)
 	{
 		this.orderReceivedDate = orderReceivedDate;
+	}
+
+	public Integer getReceivedQuantity()
+	{
+		return receivedQuantity;
+	}
+
+	public void setReceivedQuantity(Integer receivedQuantity)
+	{
+		this.receivedQuantity = receivedQuantity;
 	}
 
 	@Override

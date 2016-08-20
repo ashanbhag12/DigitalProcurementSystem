@@ -12,5 +12,6 @@ package com.dps.domain.constants;
 public enum SupplierOrderDetailStatus
 {
 	ITEM_NOT_RECEIVED,
-	ITEM_RECEIVED;
+	ITEM_PARTIALLY_RECEIVED,
+	ITEM_COMPLETELY_RECEIVED;
 }
