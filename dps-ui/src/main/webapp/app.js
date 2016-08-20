@@ -33,7 +33,7 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                     
                     .state('productPreferences', {
                         url: "/productPreferences",
-                        templateUrl: "products/views/productPreferences.html",
+                        templateUrl: "customers/views/productPreferences.html",
                         controller: "productPreferencesController"
                     })
                     
