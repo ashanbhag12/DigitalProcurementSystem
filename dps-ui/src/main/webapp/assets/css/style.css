@@ -283,17 +283,29 @@ h3.sectionTitle, h4.sectionTitle{
 
 /* Animate Sections (Searched results, edit form) CSS */
 .editForm, .searchedResults,
-.animateSection, .animateMessages{
+.animateSection{
     transition: all ease-in-out 1s;
 }
 
 .editForm.ng-hide-remove, .searchedResults.ng-hide-remove, 
-.animateSection.ng-hide-remove, .animateMessages.ng-hide-remove{ /* While showing */
+.animateSection.ng-hide-remove{ /* While showing */
     opacity:1;
 }
 
 .editForm.ng-hide, .searchedResults.ng-hide, 
-.animateSection.ng-hide, .animateMessages.ng-hide{
+.animateSection.ng-hide{
+    opacity:0;
+}
+
+.animateMessages{
+    transition: all ease-in-out .1s;
+}
+
+.animateMessages.ng-hide-remove{ /* While showing */
+    opacity:1;
+}
+
+.animateMessages.ng-hide{
     opacity:0;
 }
 
