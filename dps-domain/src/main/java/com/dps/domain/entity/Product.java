@@ -1,6 +1,7 @@
 package com.dps.domain.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -79,7 +80,7 @@ public class Product extends EntityBase
 	
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@OrderColumn(name="PREF_NO")
-	private List<SupplierProductInfo> suppProdInfo;
+	private List<SupplierProductInfo> suppProdInfo = new ArrayList<>();
 	
 	public Long getId()
 	{

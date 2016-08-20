@@ -115,8 +115,4 @@ public class ProductDTO
 	{
 		this.supplierProductInfoList = supplierProductInfoList;
 	}
-	public void addSupplierProductInfo(SuppProdInfo supplierProductInfo)
-	{
-		this.supplierProductInfoList.add(supplierProductInfo);
-	}
 }

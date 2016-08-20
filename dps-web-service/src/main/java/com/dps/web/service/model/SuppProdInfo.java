@@ -14,6 +14,7 @@ public class SuppProdInfo
 	private String supplierInitials;
 	private String productCode;
 	private String supplierProductCode;
+	
 	public String getSupplierInitials()
 	{
 		return supplierInitials;
