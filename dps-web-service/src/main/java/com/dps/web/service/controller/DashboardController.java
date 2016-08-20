@@ -49,7 +49,7 @@ public class DashboardController
 		
 		DashboardDTO dashboardDto = new DashboardDTO();
 		dashboardDto.setCustomerCount(customerCount);
-		dashboardDto.setExchangeRate(config.getExchangeRate().doubleValue());
+		dashboardDto.setExchangeRate(config.getExchangeRate());
 		dashboardDto.setProductsCount(productCount);
 		dashboardDto.setSupplierCount(supplierCount);
 		

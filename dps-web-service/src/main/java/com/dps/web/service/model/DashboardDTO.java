@@ -1,5 +1,7 @@
 package com.dps.web.service.model;
 
+import java.math.BigDecimal;
+
 /**
  * The simple dashboard entity that will be sent to the UI form.
  *
@@ -11,14 +13,14 @@ package com.dps.web.service.model;
  */
 public class DashboardDTO 
 {
-	private double exchangeRate;
+	private BigDecimal exchangeRate;
 	private int productsCount;
 	private int supplierCount;
 	private int customerCount;
-	public double getExchangeRate() {
+	public BigDecimal getExchangeRate() {
 		return exchangeRate;
 	}
-	public void setExchangeRate(double exchangeRate) {
+	public void setExchangeRate(BigDecimal exchangeRate) {
 		this.exchangeRate = exchangeRate;
 	}
 	public int getProductsCount() {
