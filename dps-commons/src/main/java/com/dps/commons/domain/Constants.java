@@ -1,9 +1,9 @@
-package com.dps.domain.constants;
+package com.dps.commons.domain;
 
 import java.math.BigDecimal;
 
 /**
- * This class contains values for all constants that will be used in the domain project.
+ * This class contains values for all constants that will be used in the project.
  *
  * @see
  *

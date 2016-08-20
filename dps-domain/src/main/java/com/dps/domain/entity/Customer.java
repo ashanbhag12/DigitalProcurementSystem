@@ -13,7 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.dps.domain.constants.Constants;
+import com.dps.commons.domain.Constants;
 
 /**
  * This class holds customer information.

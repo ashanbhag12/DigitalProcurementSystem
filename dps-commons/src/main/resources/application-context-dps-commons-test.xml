@@ -25,12 +25,19 @@
 		<property name="password" value="admin@123" />
 	</bean> -->
 	
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://www.dineshindustries.net.in:3306/sql_dps" />
+		<property name="username" value="dpsdbuser" />
+		<property name="password" value="dpsdbuser@123" />
+	</bean>  -->
+	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/dps" />
 		<property name="username" value="root" />
 		<property name="password" value="root@123" />
-	</bean>
+	 </bean> 
     
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence-domain-jpa.xml" />

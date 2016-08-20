@@ -1,5 +1,8 @@
 package com.dps.service.impl;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,16 @@ public class CustomerProductPreferenceServiceImpl extends BaseServiceImpl<Custom
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(10);
+		cache = new CacheImpl<>(1);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerProductPreferenceService#findPreferencesForCustomer(java.lang.Long)
+	 */
+	@Override
+	public Map<Long, BigDecimal> findPreferencesForCustomer(Long id)
+	{
+		return customerProductPreferenceDao.findPreferenceForCustomer(id);
 	}
 
 }
