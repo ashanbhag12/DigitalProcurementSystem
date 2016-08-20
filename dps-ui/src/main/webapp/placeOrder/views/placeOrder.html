@@ -1,3 +1,68 @@
-<div>
-    This is Place Order Page
+<div class="placeOrderPage">
+    <h3 class="md-headline sectionTitle">Place Order</h3>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">Order imported to excel successfully</div>
+    <div class="animateMessages infoBox" ng-show="showInfoBox">Please wait while we import order to excel</div>
+    <div class="clearfix marginT15">
+        <div class="clearfix searchTable marginB10">            
+            <div class="floatR">
+                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+            </div>
+        </div>
+        <div class="clearfix">
+            <h4 class="floatL inlineBlock paddingT5 paddingB5">Products pending to be ordered: {{products.length}}</h4>
+        </div>
+        <table class="customTable">           
+            <thead>
+                <tr>   
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'shipMark';
+                            sortOrder = !sortOrder">Ship Mark
+                            <span ng-show="sortType == 'shipMark' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'shipMark' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'supplierInitials';
+                            sortOrder = !sortOrder">Supplier Initials
+                            <span ng-show="sortType == 'supplierInitials' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'supplierInitials' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" ng-click="sortType = 'productCode';
+                            sortOrder = !sortOrder">Product Code
+                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>MOQ</th>
+                    <th>Quantity</th>
+                    <th>Remarks</th>
+                    <th class="alignCenter">
+                        <md-checkbox type='checkbox' aria-label='Select All Products' class="md-primary"
+                           ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:25" ng-class="{'success':product.isMOQFulfilled}">                    
+                    <td>{{product.shipMark}}</td>
+                    <td>{{product.supplierInitials}}</td>
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.MOQ}}</td>
+                    <td>{{product.productQuantity}}</td>
+                    <td>{{product.remarks}}</td>
+                    <td class="alignCenter">
+                        <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
+                            aria-label='Select All Product {{$index}}' class='md-primary'></md-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>  
+        <div layout='row' layout-align='end center' class='marginT10 marginB20'>
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="placeOrder();">Place Order</md-button>
+        </div>
+    </div>    
 </div>
