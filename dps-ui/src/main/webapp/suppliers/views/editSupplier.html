@@ -26,7 +26,7 @@
             <div class="floatR">
                 <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
-                <a href="javascript:;" class="deleteBtn" ng-click="showModal('deleteSupplierModal')" 
+                <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteSupplierModal')" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
             </div>
         </div>

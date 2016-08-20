@@ -3,7 +3,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
-            $scope.editDisabled = false; /* Enable the Edit button */
+            $scope.editDisabled = true; /* Disable the Edit button */
             $scope.deleteDisabled = true; /* Disable the Delete button */
             $scope.editSupplierForm = false; /* Hide the edit Supplier Form */
             $scope.searchedResults = false; /* Hide the search results container */
@@ -39,6 +39,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                     $scope.selectAll = true;
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = false;
+                    $scope.selectedRows = [];
                     angular.forEach($scope.suppliers, function (supplier) {
                         supplier.isChecked = $scope.selectAll;
                         $scope.selectedRows.push(1);

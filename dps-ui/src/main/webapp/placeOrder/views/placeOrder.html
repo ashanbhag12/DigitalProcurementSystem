@@ -13,14 +13,7 @@
         </div>
         <table class="customTable">           
             <thead>
-                <tr>   
-                    <th>
-                        <a href="javascript:;" ng-click="sortType = 'shipMark';
-                            sortOrder = !sortOrder">Ship Mark
-                            <span ng-show="sortType == 'shipMark' && sortOrder">&#9662;</span>
-                            <span ng-show="sortType == 'shipMark' && !sortOrder">&#9652;</span>
-                        </a>
-                    </th>
+                <tr>  
                     <th>
                         <a href="javascript:;" ng-click="sortType = 'supplierInitials';
                             sortOrder = !sortOrder">Supplier Initials
@@ -28,6 +21,7 @@
                             <span ng-show="sortType == 'supplierInitials' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
+                    <th>Customers</th>                    
                     <th>
                         <a href="javascript:;" ng-click="sortType = 'productCode';
                             sortOrder = !sortOrder">Product Code
@@ -45,9 +39,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:25" ng-class="{'success':product.isMOQFulfilled}">                    
-                    <td>{{product.shipMark}}</td>
+                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:25" ng-class="{'success':product.isMOQFulfilled}">                                        
                     <td>{{product.supplierInitials}}</td>
+                    <td>{{product.shipMark}}</td>
                     <td>{{product.productCode}}</td>
                     <td>{{product.MOQ}}</td>
                     <td>{{product.productQuantity}}</td>

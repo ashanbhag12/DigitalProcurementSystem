@@ -51,8 +51,9 @@ angular.module('placeOrderApp', [])
             $scope.toggleAll = function () {
                 if ($scope.selectAll) {
                     $scope.selectAll = true;
+                    $scope.selectedRows = [];
                     angular.forEach($scope.products, function (product) {
-                        product.isChecked = $scope.selectAll;
+                        product.isChecked = $scope.selectAll;                        
                         $scope.selectedRows.push(1);
                     });
                 }
@@ -60,7 +61,7 @@ angular.module('placeOrderApp', [])
                     $scope.selectAll = false;
                     angular.forEach($scope.products, function (product) {
                         product.isChecked = $scope.selectAll;
-                        $scope.selectedRows = [];
+                        $scope.selectedRows.pop();
                     });
                 }
             };
@@ -73,12 +74,7 @@ angular.module('placeOrderApp', [])
                 else {
                     $scope.selectedRows.pop();
                 }
-                if ($scope.products.length === $scope.selectedRows.length) {
-                    $scope.selectAll = true;
-                }
-                else {
-                    $scope.selectAll = false;
-                }
+                $scope.selectAll = ($scope.selectedRows.length === $scope.products.length);
             };
 
             $scope.placeOrder = function () {

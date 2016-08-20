@@ -47,7 +47,6 @@ ul,ol{list-style:none;}
 .paddingB5{padding-bottom:5px;}
 
 .disableControl{
-    xpointer-events: none;
     cursor: not-allowed;
     opacity: 0.5;
     -moz-opacity: 0.5;
@@ -78,6 +77,10 @@ md-input-container {margin: 15px 0;}
 
 md-autocomplete[md-floating-label] md-input-container {
     padding-bottom: 0;
+}
+
+md-autocomplete md-autocomplete-wrap md-progress-linear .md-mode-indeterminate {
+    top:3px;
 }
 
 .contentSection{
