@@ -84,7 +84,8 @@ public class ProductController
 		}
 		catch(Exception e)
 		{
-			return Response.status(Response.Status.BAD_REQUEST).build();
+			throw e;
+			//return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		try
 		{
@@ -213,7 +214,7 @@ public class ProductController
 			spii.setSupplierInitials(spi.getSupplier().getInitials());
 			spii.setProductCode(prod.getProductCode());
 			spii.setSupplierProductCode(spi.getSupplierProductName());
-			prodDto.addSupplierProductInfo(spii);
+			prodDto.getSupplierProductInfoList().add(spii);
 		}
 		return prodDto;
 	}

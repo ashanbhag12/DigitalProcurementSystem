@@ -1,5 +1,7 @@
 package com.dps.web.service.model;
 
+import java.math.BigDecimal;
+
 /**
  * Single config DTO object that stores the global configurations
  *
@@ -11,31 +13,31 @@ package com.dps.web.service.model;
  */
 public class ConfigDTO
 {
-	private double exchangeRate;
-	private double costPerCbm;
-	private double costPerGrossWeight;
+	private BigDecimal exchangeRate;
+	private BigDecimal costPerCbm;
+	private BigDecimal costPerGrossWeight;
 	
-	public double getExchangeRate()
+	public BigDecimal getExchangeRate()
 	{
 		return exchangeRate;
 	}
-	public void setExchangeRate(double exchangeRate)
+	public void setExchangeRate(BigDecimal exchangeRate)
 	{
 		this.exchangeRate = exchangeRate;
 	}
-	public double getCostPerCbm()
+	public BigDecimal getCostPerCbm()
 	{
 		return costPerCbm;
 	}
-	public void setCostPerCbm(double costPerCbm)
+	public void setCostPerCbm(BigDecimal costPerCbm)
 	{
 		this.costPerCbm = costPerCbm;
 	}
-	public double getCostPerGrossWeight()
+	public BigDecimal getCostPerGrossWeight()
 	{
 		return costPerGrossWeight;
 	}
-	public void setCostPerGrossWeight(double costPerGrossWeight)
+	public void setCostPerGrossWeight(BigDecimal costPerGrossWeight)
 	{
 		this.costPerGrossWeight = costPerGrossWeight;
 	}

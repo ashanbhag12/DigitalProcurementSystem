@@ -1,6 +1,5 @@
 package com.dps.web.service.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +125,7 @@ public class CustomerController
 	 */
 	private Customer customerFromCustomerDTO(Customer cust, CustomerDTO custDto)
 	{
-		cust.setAdditionalMargin(new BigDecimal(custDto.getAdditionalMargin()));
+		cust.setAdditionalMargin(custDto.getAdditionalMargin());
 		cust.setName(custDto.getName());
 		cust.setShipmark(custDto.getShipmark());
 		
@@ -160,7 +159,7 @@ public class CustomerController
 	{
 		CustomerDTO custDto = new CustomerDTO();
 		custDto.setId(cust.getId());
-		custDto.setAdditionalMargin(cust.getAdditionalMargin().doubleValue());
+		custDto.setAdditionalMargin(cust.getAdditionalMargin());
 		custDto.setBuilding(cust.getAddress().getBuilding());
 		custDto.setCity(cust.getAddress().getCity());
 		custDto.setEmailId(cust.getContactDetails().getEmailId());

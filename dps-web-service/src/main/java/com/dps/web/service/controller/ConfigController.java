@@ -1,7 +1,5 @@
 package com.dps.web.service.controller;
 
-import java.math.BigDecimal;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,9 +36,9 @@ public class ConfigController
 		ConfigDTO configDto = new ConfigDTO();
 		if(config != null)
 		{
-			configDto.setCostPerCbm(config.getPricePerCbm().doubleValue());
-			configDto.setCostPerGrossWeight(config.getPricePerWeight().doubleValue());
-			configDto.setExchangeRate(config.getExchangeRate().doubleValue());
+			configDto.setCostPerCbm(config.getPricePerCbm());
+			configDto.setCostPerGrossWeight(config.getPricePerWeight());
+			configDto.setExchangeRate(config.getExchangeRate());
 		}
 		
 		return configDto;
@@ -52,9 +50,9 @@ public class ConfigController
 	{
 		Configurations config = configService.getConfigurations();
 		
-		config.setExchangeRate(new BigDecimal(configDto.getExchangeRate()));
-		config.setPricePerWeight(new BigDecimal(configDto.getCostPerGrossWeight()));
-		config.setPricePerCbm(new BigDecimal(configDto.getCostPerCbm()));
+		config.setExchangeRate(configDto.getExchangeRate());
+		config.setPricePerWeight(configDto.getCostPerGrossWeight());
+		config.setPricePerCbm(configDto.getCostPerCbm());
 		
 		configService.merge(config);
 	}

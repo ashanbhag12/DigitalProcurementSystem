@@ -1,5 +1,7 @@
 package com.dps.web.service.model;
 
+import java.math.BigDecimal;
+
 /**
  * The simple customer entity that will be sent from the UI form.
  *
@@ -14,7 +16,7 @@ public class CustomerDTO
 	private Long id;
 	private String name;
 	private String shipmark;
-	private Double additionalMargin;
+	private BigDecimal additionalMargin;
 	private String flatNo;
 	private String building;
 	private String street;
@@ -55,12 +57,12 @@ public class CustomerDTO
 		this.shipmark = shipmark;
 	}
 
-	public Double getAdditionalMargin()
+	public BigDecimal getAdditionalMargin()
 	{
 		return additionalMargin;
 	}
 
-	public void setAdditionalMargin(Double additionalMargin)
+	public void setAdditionalMargin(BigDecimal additionalMargin)
 	{
 		this.additionalMargin = additionalMargin;
 	}
