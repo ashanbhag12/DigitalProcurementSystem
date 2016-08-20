@@ -2,17 +2,15 @@
     <div class="successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <h3 class="md-headline sectionTitle">Build Order</h3>
     <div layout="row" class="paddingB10 bottomDashedBorder">
-        <div flex="30">
-            <md-input-container>
-                <label>Customer</label>
-                <md-select ng-model="customerName" md-on-close='showSearchSection()'>
-                    <md-option ng-repeat="customer in customers" value="{{customer}}">
-                        {{customer}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-        </div>        
-        <div flex="30" class="datepickerContainer">
+        <md-input-container flex="20">
+            <label>Customer</label>
+            <md-select ng-model="customerName" md-on-close='showSearchSection()'>
+                <md-option ng-repeat="customer in customers" value="{{customer}}">
+                    {{customer}}
+                </md-option>
+            </md-select>
+        </md-input-container>  
+        <div class="datepickerContainer" flex="30" flex-offset="5">
             <label>Order Date</label>
             <md-content>
                 <md-datepicker ng-model="orderDate" md-placeholder="Select date"></md-datepicker>
@@ -121,7 +119,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:10" pagination-id="addedProductsList">
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:10 track by $index" pagination-id="addedProductsList">
                     <td>{{product.productCode}}</td>
                     <td>{{product.supplierCode}}</td>
                     <td>{{product.pricePerPiece | currency:"&euro;"}}</td>
@@ -151,13 +149,13 @@
                     <th>Product Code</th>
                     <th>Supplier Code</th>                    
                     <th>Quantity</th>
-                    <th>Margin</th> 
+                    <th>Customer Specific Product Margin</th> 
                     <th>Cost</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in orderSummary | itemsPerPage:10" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
+                <tr dir-paginate="product in orderSummary | itemsPerPage:10 track by $index" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
                     <td>{{product.productCode}}</td>
                     <td>                        
                         <div ng-hide="editOrderSummmaryRow[$index]">{{product.supplierCode}}</div>
@@ -171,13 +169,8 @@
                             <input type='text' ng-model="product.productQuantity" placeholder="Quantity" />  
                         </div>
                     </td> 
-                    <td>
-                        <div ng-hide="editOrderSummmaryRow[$index]">{{product.productMargin | number}}</div>
-                        <div ng-show="editOrderSummmaryRow[$index]">
-                            <input type='text' ng-model="product.productMargin" placeholder="Margin" />  
-                        </div>
-                    </td>
-                    <td>{{product.cost}}</td>
+                    <td>{{product.productMargin | number:2}}</td>
+                    <td>{{product.productCost * product.productQuantity | currency:"Rs."}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" class="editRow" ng-click="editCartRow($index, $event)" 
                            title='Edit Row' ng-hide="editOrderSummmaryRow[$index]"></a>
@@ -186,10 +179,12 @@
                     </td>                    
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th class='alignRight' colspan="6">Grand Total: {{calculateGrandTotal() |currency:"Rs."}}</th>                    
+                </tr>
+            </tfoot>
         </table>
-        <div class='clearfix'>
-            <h4 class="floatR inlineBlock paddingT5">Grand Total: {{orderSummary.length}}</h4>          
-        </div>
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="orderSummary"></div>
         <div layout='row' layout-align='end center' class='marginT10'>

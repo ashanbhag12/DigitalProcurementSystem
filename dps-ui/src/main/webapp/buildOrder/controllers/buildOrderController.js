@@ -225,6 +225,15 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.cancelCart = function () {
                 $scope.showModal('cancelOrderModal');                
             };
+            
+            /* Function to calculate Grand Total of Order Summary */
+            $scope.calculateGrandTotal = function(){
+                var total = 0;
+                angular.forEach($scope.orderSummary, function(product){
+                  total += product.productCost * product.productQuantity;                  
+                });
+                return total;
+            };
 
             $scope.saveOrder = function () {
                 angular.element(document.querySelector('.loader')).addClass('show');
