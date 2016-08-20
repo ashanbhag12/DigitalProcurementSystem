@@ -114,8 +114,7 @@
                     <th>Cartoon Quantity</th>
                     <th>Quantity</th>
                     <th>Remarks</th>
-                    <th>Cost</th>
-                    <th>Action</th>
+                    <th class='alignCenter'>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -126,7 +125,6 @@
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.productQuantity}}</td>
                     <td>{{product.remarks}}</td>
-                    <td>{{product.cost}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
                          aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editProductsListRowDisabled"></md-checkbox>
