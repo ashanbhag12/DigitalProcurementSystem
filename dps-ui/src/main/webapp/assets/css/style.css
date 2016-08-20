@@ -42,6 +42,7 @@ ul,ol{list-style:none;}
 .paddingB10{padding-bottom: 10px;}
 .paddingT10{padding-top: 10px}
 .alignCenter{text-align: center !important;}
+.alignRight{text-align: right !important;}
 .inlineBlock{display:inline-block;}
 .paddingT5{padding-top:5px;}
 .paddingB5{padding-bottom:5px;}
@@ -171,7 +172,8 @@ h3.sectionTitle, h4.sectionTitle{
 }
 
 .customTable thead th,
-.customTable tbody td{
+.customTable tbody td,
+.customTable tfoot th{
     padding:8px 5px;
     border:1px solid #ccc;
     text-align:left;
@@ -374,8 +376,12 @@ h3.sectionTitle, h4.sectionTitle{
 .dashboardPage .md-whiteframe-5dp{    
     margin:10px 0;
     height: 125px;
-    padding:0 15px;
+    padding:0 15px 0 10px;
     color:#fff;
+}
+
+.dashboardPage .md-whiteframe-5dp .md-display-1{    
+   font-size:30px;
 }
 
 .dashboardPage .md-whiteframe-5dp + .md-whiteframe-5dp{    
