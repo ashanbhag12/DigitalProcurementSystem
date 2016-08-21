@@ -40,4 +40,14 @@ public class CustomerOrderDetailsDaoImpl extends BaseDaoImpl<CustomerOrderDetail
 		return results;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.dao.CustomerOrderDetailsDao#getUnorderedProducts()
+	 */
+	@Override
+	public List<CustomerOrderDetails> getUnorderedProducts()
+	{
+		TypedQuery<CustomerOrderDetails> query = entityManager.createNamedQuery(CustomerOrderDetails.GET_UNORDERED_PRODUCT_DETAILS, CustomerOrderDetails.class);
+		return query.getResultList();
+	}
+
 }

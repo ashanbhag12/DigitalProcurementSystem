@@ -33,12 +33,14 @@ import com.dps.domain.constants.CustomerOrderDetailStatus;
 @Entity
 @Table(name = "DPS_CUST_ORDR_DETL")
 @NamedQueries({
-	@NamedQuery(name=CustomerOrderDetails.GET_UNORDERED_PRODUCT_COUNT, query="SELECT d.product.id, sum(d.quantity) from CustomerOrderDetails d where d.status = 'NOT_ORDERED' and d.product.id in (:idList) group by d.product.id")
+	@NamedQuery(name=CustomerOrderDetails.GET_UNORDERED_PRODUCT_COUNT, query="SELECT d.product.id, sum(d.quantity) from CustomerOrderDetails d where d.status = 'NOT_ORDERED' and d.product.id in (:idList) group by d.product.id"),
+	@NamedQuery(name=CustomerOrderDetails.GET_UNORDERED_PRODUCT_DETAILS, query="SELECT d from CustomerOrderDetails d where d.status = 'NOT_ORDERED'")
 })
 public class CustomerOrderDetails extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 	public static final String GET_UNORDERED_PRODUCT_COUNT = "CustomerOrderDetails.getUnorderedProductCount";
+	public static final String GET_UNORDERED_PRODUCT_DETAILS = "CustomerOrderDetails.GetUnorderedProductDetails";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,6 +83,9 @@ public class CustomerOrderDetails extends EntityBase
 	
 	@Column(name="CBM_RATE")
 	private BigDecimal cbmRate;
+	
+	@Basic
+	private String remarks;
 	
 
 	public Long getId()
@@ -201,6 +206,16 @@ public class CustomerOrderDetails extends EntityBase
 	public void setCbmRate(BigDecimal cbmRate)
 	{
 		this.cbmRate = cbmRate;
+	}
+
+	public String getRemarks()
+	{
+		return remarks;
+	}
+
+	public void setRemarks(String remarks)
+	{
+		this.remarks = remarks;
 	}
 
 	@Override

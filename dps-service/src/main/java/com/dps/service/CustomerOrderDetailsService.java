@@ -23,4 +23,10 @@ public interface CustomerOrderDetailsService extends BaseService<CustomerOrderDe
 	 * @return {@link Map} containing the product id and the cumulative sum of unordered quantity for the specified products.
 	 */
 	Map<Long,Integer> getUnorderedQuantityForProducts(List<Long> productId);
+	
+	/**
+	 * Returns a {@link List} of {@link CustomerOrderDetails} that have not been ordered, yet.
+	 * @return a {@link List} of {@link CustomerOrderDetails} that have not been ordered, yet.
+	 */
+	List<CustomerOrderDetails> getUnorderedProducts();
 }

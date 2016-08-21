@@ -1,17 +1,22 @@
 package com.dps.domain.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +45,9 @@ private static final long serialVersionUID = 1L;
 	@ManyToOne
 	@JoinColumn(name="SUPP_ID")
 	private Supplier supplier;
+	
+	@OneToMany(mappedBy="supplierOrder", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<SupplierOrderDetails> supplierOrderDetails = new ArrayList<>();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="ORDER_DATE")
@@ -136,9 +144,15 @@ private static final long serialVersionUID = 1L;
 		this.cbmRate = cbmRate;
 	}
 
-	public void setId(Long id)
+	public List<SupplierOrderDetails> getSupplierOrderDetails()
 	{
-		this.id = id;
+		return supplierOrderDetails;
+	}
+
+	public void setSupplierOrderDetails(
+			List<SupplierOrderDetails> supplierOrderDetails)
+	{
+		this.supplierOrderDetails = supplierOrderDetails;
 	}
 
 	@Override

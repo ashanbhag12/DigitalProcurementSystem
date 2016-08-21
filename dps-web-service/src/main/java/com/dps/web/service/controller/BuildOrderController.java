@@ -154,7 +154,7 @@ public class BuildOrderController
 	}
 	
 	@POST
-	@Path("/calculate")
+	@Path("/saveorder")
 	public void saveCustomerOrder(BuildOrderWrapperDTO wrapper)
 	{
 		try
@@ -212,6 +212,7 @@ public class BuildOrderController
 				det.setProduct(prodMap.get(item.getProductId()));
 				det.setQuantity(item.getQuantity());
 				det.setSupplier(suppliers.get(item.getSelectedSupplierInitials()));
+				det.setRemarks(item.getRemarks());
 				lineItems.add(det);
 			}
 			

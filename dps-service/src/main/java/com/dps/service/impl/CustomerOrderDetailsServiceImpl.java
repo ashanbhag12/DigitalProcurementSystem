@@ -49,4 +49,13 @@ public class CustomerOrderDetailsServiceImpl extends BaseServiceImpl<CustomerOrd
 		return customerOrderDetailsDao.getUnorderedQuantityForProducts(productId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerOrderDetailsService#getUnorderedProducts()
+	 */
+	@Override
+	public List<CustomerOrderDetails> getUnorderedProducts()
+	{
+		return customerOrderDetailsDao.getUnorderedProducts();
+	}
+
 }

@@ -51,6 +51,7 @@
 		<rest-api-version>3.0.5.Final</rest-api-version>
 		<jackson-version>2.6.3</jackson-version>
 		<jersey.version>1.8</jersey.version>
+		<apache-poi-version>3.14</apache-poi-version>
 	</properties>  	
   	
   	<dependencies>
@@ -307,6 +308,12 @@
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache-poi-version}</version>
 		</dependency>
 
 	</dependencies>
