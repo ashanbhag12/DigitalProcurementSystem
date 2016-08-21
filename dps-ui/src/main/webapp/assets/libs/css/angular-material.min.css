@@ -1407,7 +1407,8 @@ md-calendar {
     padding: 0;
     border: none;
     font-weight: normal;
-    height: 40px; }
+    height: 40px; 
+    box-sizing: content-box;}
     .md-calendar-day-header th:first-child {
       padding-left: 16px; }
     .md-calendar-day-header th:last-child {
