@@ -86,7 +86,6 @@ public class CustomerOrderDetails extends EntityBase
 	
 	@Basic
 	private String remarks;
-	
 
 	public Long getId()
 	{
@@ -178,6 +177,16 @@ public class CustomerOrderDetails extends EntityBase
 		this.receivedQuantity = receivedQuantity;
 	}
 
+	public String getRemarks()
+	{
+		return remarks;
+	}
+
+	public void setRemarks(String remarks)
+	{
+		this.remarks = remarks;
+	}
+	
 	public BigDecimal getExchangeRate()
 	{
 		return exchangeRate;
@@ -206,16 +215,6 @@ public class CustomerOrderDetails extends EntityBase
 	public void setCbmRate(BigDecimal cbmRate)
 	{
 		this.cbmRate = cbmRate;
-	}
-
-	public String getRemarks()
-	{
-		return remarks;
-	}
-
-	public void setRemarks(String remarks)
-	{
-		this.remarks = remarks;
 	}
 
 	@Override

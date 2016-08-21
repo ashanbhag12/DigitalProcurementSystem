@@ -20,7 +20,7 @@ import com.dps.domain.entity.CustomerOrderDetails;
  */
 public class CustomerOrderDetailsDaoImpl extends BaseDaoImpl<CustomerOrderDetails> implements CustomerOrderDetailsDao
 {
-
+	
 	/* (non-Javadoc)
 	 * @see com.dps.dao.CustomerOrderDetailsDao#getUnorderedQuantityForProducts(java.util.List)
 	 */

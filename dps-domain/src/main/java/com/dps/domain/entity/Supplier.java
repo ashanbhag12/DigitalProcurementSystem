@@ -22,6 +22,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DPS_SUPP")
+//@SequenceGenerator(name = "DPS_SUPP_SEQ", sequenceName = "DPS_SUPP_SEQ", initialValue = 1, allocationSize = 1)
 @NamedQueries({
 	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_INITIALS, query="SELECT S.id FROM Supplier S WHERE S.initials = :initials"),
 	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_NAME, query="SELECT S.id FROM Supplier S WHERE S.name LIKE :name"),
@@ -37,6 +38,7 @@ public class Supplier extends EntityBase
 	public static final String GET_SUPPLIER_COUNT = "Supplier.GetSupplierCount";
 
 	@Id
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_SUPP_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

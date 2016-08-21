@@ -46,6 +46,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	            $scope.selectAll = true;
 	            $scope.editDisabled = true;
 	            $scope.deleteDisabled = false;
+	            $scope.selectedRows = [];
 	            angular.forEach($scope.customers, function (customer) {
 	                customer.isChecked = $scope.selectAll;
 	                $scope.selectedRows.push(1);

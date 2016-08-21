@@ -41,21 +41,21 @@ public class CustomerOrderDetailsServiceImpl extends BaseServiceImpl<CustomerOrd
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dps.service.CustomerOrderDetailsService#getUnorderedQuantityForProducts(java.util.List)
-	 */
-	@Override
-	public Map<Long, Integer> getUnorderedQuantityForProducts(List<Long> productId)
-	{
-		return customerOrderDetailsDao.getUnorderedQuantityForProducts(productId);
-	}
-
-	/* (non-Javadoc)
 	 * @see com.dps.service.CustomerOrderDetailsService#getUnorderedProducts()
 	 */
 	@Override
 	public List<CustomerOrderDetails> getUnorderedProducts()
 	{
 		return customerOrderDetailsDao.getUnorderedProducts();
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerOrderDetailsService#getUnorderedQuantityForProducts(java.util.List)
+	 */
+	@Override
+	public Map<Long, Integer> getUnorderedQuantityForProducts(List<Long> productId)
+	{
+		return customerOrderDetailsDao.getUnorderedQuantityForProducts(productId);
 	}
 
 }

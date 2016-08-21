@@ -57,6 +57,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     $scope.selectAll = true;
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = false;
+                    $scope.selectedRows = [];
                     angular.forEach($scope.products, function (product) {
                         product.isChecked = $scope.selectAll;
                         $scope.selectedRows.push(1);

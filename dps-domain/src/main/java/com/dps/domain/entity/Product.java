@@ -29,6 +29,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DPS_PROD")
+//@SequenceGenerator(name = "DPS_PROD_SEQ", sequenceName = "DPS_PROD_SEQ", initialValue = 1, allocationSize = 1)
 @NamedQueries({
 	@NamedQuery(name=Product.FIND_PRODUCT_BY_CODE, query="SELECT p.id from Product p where p.productCode like :code"),
 	@NamedQuery(name=Product.GET_ALL_PRODUCT_CODE, query="SELECT p.productCode from Product p"),
@@ -42,6 +43,7 @@ public class Product extends EntityBase
 	public static final String GET_PRODUCT_COUNT = "Product.GetProductCount";
 
 	@Id
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_PROD_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
