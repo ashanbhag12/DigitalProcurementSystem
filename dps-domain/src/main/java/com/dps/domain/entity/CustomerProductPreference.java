@@ -24,7 +24,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DPS_CUST_PROD_PREF")
-//@SequenceGenerator(name = "DPS_CUST_PROD_PREF_SEQ", sequenceName = "DPS_CUST_PROD_PREF_SEQ", initialValue = 1, allocationSize = 1)
 @NamedQueries({
 	@NamedQuery(name=CustomerProductPreference.GET_PREFERENCES_FOR_CUSTOMER, query="SELECT C.id FROM CustomerProductPreference C where C.customer.id = :id")
 })
@@ -34,7 +33,6 @@ public class CustomerProductPreference extends EntityBase
 	public static final String GET_PREFERENCES_FOR_CUSTOMER = "CustomerProductPreference.GetPreferencesForCustomer";
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_CUST_PROD_PREF_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

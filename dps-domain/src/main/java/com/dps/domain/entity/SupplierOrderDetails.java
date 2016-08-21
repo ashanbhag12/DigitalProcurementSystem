@@ -24,13 +24,11 @@ import com.dps.domain.constants.SupplierOrderDetailStatus;
  */
 @Entity
 @Table(name = "DPS_SUPP_ORDR_DETL")
-//@SequenceGenerator(name = "DPS_SUPP_ORDR_DETL_SEQ", sequenceName = "DPS_SUPP_ORDR_DETL_SEQ", initialValue = 1, allocationSize = 1)
 public class SupplierOrderDetails extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_SUPP_ORDR_DETL_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

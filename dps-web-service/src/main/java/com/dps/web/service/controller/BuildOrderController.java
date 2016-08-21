@@ -15,13 +15,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
+import com.dps.domain.constants.CustomerOrderStatus;
 import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.Customer;
+import com.dps.domain.entity.CustomerOrder;
+import com.dps.domain.entity.CustomerOrderDetails;
 import com.dps.domain.entity.Product;
+import com.dps.domain.entity.Supplier;
 import com.dps.service.ConfigurationsService;
+import com.dps.service.CustomerOrderDetailsService;
+import com.dps.service.CustomerOrderService;
 import com.dps.service.CustomerProductPreferenceService;
 import com.dps.service.CustomerService;
 import com.dps.service.ProductService;
+import com.dps.service.SupplierService;
 import com.dps.web.service.model.BuildOrderDTO;
 import com.dps.web.service.model.BuildOrderWrapperDTO;
 
@@ -49,6 +56,15 @@ public class BuildOrderController
 	@Autowired
 	private ConfigurationsService configService;
 	
+	@Autowired
+	private CustomerOrderDetailsService custOrderDetService;
+	
+	@Autowired
+	private SupplierService supplierService;
+	
+	@Autowired
+	private CustomerOrderService custOrderService;
+	
 	
 	@POST
 	@Path("/calculate")
@@ -74,9 +90,11 @@ public class BuildOrderController
 			
 			//Get all the products that are in the line item
 			List<JpaEntityId> idList = new ArrayList<>();
+			List<Long> longIdList = new ArrayList<>();
 			for(BuildOrderDTO item : orderItems)
 			{
 				idList.add(new JpaEntityId(item.getProductId()));
+				longIdList.add(item.getProductId());
 			}
 			List<Product> prodList = productService.findAll(idList);
 
@@ -88,7 +106,7 @@ public class BuildOrderController
 			}
 			
 			//Get all the unordered quantity of the products.
-			//TODO: Add this functionality here.
+			Map<Long, Integer> unorderedProductQuantity = custOrderDetService.getUnorderedQuantityForProducts(longIdList);
 			
 			//Calculate the price of each item
 			for(BuildOrderDTO item : orderItems)
@@ -114,9 +132,92 @@ public class BuildOrderController
 				
 				item.setUnitCost(unitPrice);
 				
+				//Check if the MOQ is fulfilled
+				Integer unorderedQuantity = unorderedProductQuantity.get(product.getId());
+				unorderedQuantity = unorderedQuantity == null ? 0 : unorderedQuantity; 
+				unorderedQuantity += item.getQuantity();
+				
+				if(unorderedQuantity >= product.getMoq())
+				{
+					item.setIsMoqSatisfied(true);
+				}
+				
 			}
 			
 			return wrapper;
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		
+	}
+	
+	@POST
+	@Path("/calculate")
+	public void saveCustomerOrder(BuildOrderWrapperDTO wrapper)
+	{
+		try
+		{
+			//Get customer information
+			Customer cust = customerService.findByShipmarkAndName(wrapper.getCustomerShipmark(), null).get(0);
+			
+			//Get global constants
+			Configurations config = configService.findAll().get(0);
+			
+			//Get all suppliers
+			List<Supplier> suppliersList = supplierService.findAll();
+			
+			//Store the suppliers in a map for faster access.
+			Map<String, Supplier> suppliers = new HashMap<>();
+			for(Supplier s : suppliersList)
+			{
+				suppliers.put(s.getInitials(), s);
+			}
+			
+			List<BuildOrderDTO> orderItems = wrapper.getOrderItems();
+			
+			//Get all the products that are in the line item
+			List<JpaEntityId> idList = new ArrayList<>();
+			List<Long> longIdList = new ArrayList<>();
+			for(BuildOrderDTO item : orderItems)
+			{
+				idList.add(new JpaEntityId(item.getProductId()));
+				longIdList.add(item.getProductId());
+			}
+			List<Product> prodList = productService.findAll(idList);
+
+			//Store all the products in a map for faster access
+			Map<Long, Product> prodMap = new HashMap<>();
+			for(Product p : prodList)
+			{
+				prodMap.put(p.getId(), p);
+			}
+			
+			//Create parent customer order object and set the parameters.
+			CustomerOrder custOrder = new CustomerOrder();
+			custOrder.setCustomer(cust);
+			custOrder.setCbmRate(config.getPricePerCbm());
+			custOrder.setWeightRate(config.getPricePerWeight());
+			custOrder.setExchangeRate(config.getExchangeRate());
+			custOrder.setOrderDate(wrapper.getOrderDate());
+			custOrder.setStatus(CustomerOrderStatus.NO_ITEMS_ORDERED);
+			
+			//Create new line items for this order
+			List<CustomerOrderDetails> lineItems = new ArrayList<>();
+			for(BuildOrderDTO item : orderItems)
+			{
+				CustomerOrderDetails det = new CustomerOrderDetails();
+				det.setCustomerOrder(custOrder);
+				det.setProduct(prodMap.get(item.getProductId()));
+				det.setQuantity(item.getQuantity());
+				det.setSupplier(suppliers.get(item.getSelectedSupplierInitials()));
+				lineItems.add(det);
+			}
+			
+			custOrder.setLineItems(lineItems);
+			
+			custOrderService.persist(custOrder);
 		}
 		catch(Exception e)
 		{

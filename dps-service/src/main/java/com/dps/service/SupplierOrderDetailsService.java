@@ -13,5 +13,5 @@ import com.dps.domain.entity.SupplierOrderDetails;
  */
 public interface SupplierOrderDetailsService extends BaseService<SupplierOrderDetails>
 {
-
+	
 }

@@ -20,13 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DPS_CONFIG")
-//@SequenceGenerator(name = "DPS_CONFIG_SEQ", sequenceName = "DPS_CONFIG_SEQ", initialValue = 1, allocationSize = 1)
 public class Configurations extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_CONFIG_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

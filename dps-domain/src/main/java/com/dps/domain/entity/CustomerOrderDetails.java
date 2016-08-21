@@ -1,5 +1,6 @@
 package com.dps.domain.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -12,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,13 +32,15 @@ import com.dps.domain.constants.CustomerOrderDetailStatus;
  */
 @Entity
 @Table(name = "DPS_CUST_ORDR_DETL")
-//@SequenceGenerator(name = "DPS_CUST_ORDR_DETL_SEQ", sequenceName = "DPS_CUST_ORDR_DETL_SEQ", initialValue = 1, allocationSize = 1)
+@NamedQueries({
+	@NamedQuery(name=CustomerOrderDetails.GET_UNORDERED_PRODUCT_COUNT, query="SELECT d.product.id, sum(d.quantity) from CustomerOrderDetails d where d.status = 'NOT_ORDERED' and d.product.id in (:idList) group by d.product.id")
+})
 public class CustomerOrderDetails extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
+	public static final String GET_UNORDERED_PRODUCT_COUNT = "CustomerOrderDetails.getUnorderedProductCount";
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_CUST_ORDR_DETL_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -67,6 +72,15 @@ public class CustomerOrderDetails extends EntityBase
 	
 	@Column(name="RCVD_QNTY")
 	private Integer receivedQuantity;
+	
+	@Column(name="FX_RATE")
+	private BigDecimal exchangeRate;
+	
+	@Column(name="WEIGHT_RATE")
+	private BigDecimal weightRate;
+	
+	@Column(name="CBM_RATE")
+	private BigDecimal cbmRate;
 	
 
 	public Long getId()
@@ -157,6 +171,36 @@ public class CustomerOrderDetails extends EntityBase
 	public void setReceivedQuantity(Integer receivedQuantity)
 	{
 		this.receivedQuantity = receivedQuantity;
+	}
+
+	public BigDecimal getExchangeRate()
+	{
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(BigDecimal exchangeRate)
+	{
+		this.exchangeRate = exchangeRate;
+	}
+
+	public BigDecimal getWeightRate()
+	{
+		return weightRate;
+	}
+
+	public void setWeightRate(BigDecimal weightRate)
+	{
+		this.weightRate = weightRate;
+	}
+
+	public BigDecimal getCbmRate()
+	{
+		return cbmRate;
+	}
+
+	public void setCbmRate(BigDecimal cbmRate)
+	{
+		this.cbmRate = cbmRate;
 	}
 
 	@Override

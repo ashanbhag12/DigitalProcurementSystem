@@ -1,5 +1,8 @@
 package com.dps.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,15 @@ public class CustomerOrderDetailsServiceImpl extends BaseServiceImpl<CustomerOrd
 	protected void initializeCache()
 	{
 		cache = new CacheImpl<>(1);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerOrderDetailsService#getUnorderedQuantityForProducts(java.util.List)
+	 */
+	@Override
+	public Map<Long, Integer> getUnorderedQuantityForProducts(List<Long> productId)
+	{
+		return customerOrderDetailsDao.getUnorderedQuantityForProducts(productId);
 	}
 
 }

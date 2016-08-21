@@ -26,7 +26,6 @@ import com.dps.commons.domain.Constants;
  */
 @Entity
 @Table(name = "DPS_CUST")
-//@SequenceGenerator(name = "DPS_CUST_SEQ", sequenceName = "DPS_CUST_SEQ", initialValue = 1, allocationSize = 1)
 @NamedQueries({
 	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name"),
 	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark"),
@@ -42,7 +41,6 @@ public class Customer extends EntityBase
 	public static final String GET_CUSTOMER_COUNT = "Customer.getCustomerCount";
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_CUST_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

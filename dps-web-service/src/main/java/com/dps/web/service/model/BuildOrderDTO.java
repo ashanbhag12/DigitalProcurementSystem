@@ -20,6 +20,7 @@ public class BuildOrderDTO
 	private Integer quantity;
 	private String remarks;
 	private BigDecimal unitCost;
+	private Boolean isMoqSatisfied = Boolean.FALSE;
 
 	public String getProductCode()
 	{
@@ -79,6 +80,16 @@ public class BuildOrderDTO
 	public void setUnitCost(BigDecimal unitCost)
 	{
 		this.unitCost = unitCost;
+	}
+
+	public Boolean getIsMoqSatisfied()
+	{
+		return isMoqSatisfied;
+	}
+
+	public void setIsMoqSatisfied(Boolean isMoqSatisfied)
+	{
+		this.isMoqSatisfied = isMoqSatisfied;
 	}
 
 }

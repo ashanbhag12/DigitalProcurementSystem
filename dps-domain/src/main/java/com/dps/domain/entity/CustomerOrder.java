@@ -2,16 +2,20 @@ package com.dps.domain.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,19 +33,20 @@ import com.dps.domain.constants.CustomerOrderStatus;
  */
 @Entity
 @Table(name="DPS_CUST_ORDR")
-//@SequenceGenerator(name="DPS_CUST_ORDR_SEQ", sequenceName="DPS_CUST_ORDR_SEQ", initialValue=1, allocationSize=1)
 public class CustomerOrder extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DPS_CUST_ORDR_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="CUST_ID")
 	private Customer customer;
+	
+	@OneToMany(mappedBy="customerOrder", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<CustomerOrderDetails> lineItems;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="ORDER_DATE")
@@ -142,6 +147,16 @@ public class CustomerOrder extends EntityBase
 	public void setCbmRate(BigDecimal cbmRate)
 	{
 		this.cbmRate = cbmRate;
+	}
+
+	public List<CustomerOrderDetails> getLineItems()
+	{
+		return lineItems;
+	}
+
+	public void setLineItems(List<CustomerOrderDetails> lineItems)
+	{
+		this.lineItems = lineItems;
 	}
 
 	@Override
