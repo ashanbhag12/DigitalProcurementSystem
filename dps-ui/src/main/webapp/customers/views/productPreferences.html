@@ -5,9 +5,9 @@
     <div layout="row">
         <md-input-container flex="30">
             <label>Customer</label>
-            <md-select ng-model="customerName">
-                <md-option ng-repeat="customer in customers" value="{{customer}}">
-                    {{customer}}
+            <md-select ng-model="customerShipmark">
+                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
+                    {{customer.name+" - "+customer.shipmark}}
                 </md-option>
             </md-select>
         </md-input-container>
@@ -41,9 +41,9 @@
             	</tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:10">
+                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:10">
                     <td>{{product.productCode}}</td>
-                    <td>{{product.pricePerItem}}</td>
+                    <td>{{product.productPrice}}</td>
                     <td>{{product.productMargin | number:2}}</td>
                     <td>{{product.customerMargin | number:2}}</td>
                     <td>

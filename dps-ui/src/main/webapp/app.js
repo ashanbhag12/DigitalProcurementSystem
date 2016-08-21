@@ -31,12 +31,6 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         controller: "editProductController"
                     })
                     
-                    .state('productPreferences', {
-                        url: "/productPreferences",
-                        templateUrl: "customers/views/productPreferences.html",
-                        controller: "productPreferencesController"
-                    })
-                    
                     .state('addCustomer', {
                         url: "/addCustomer",
                         templateUrl: "customers/views/addCustomer.html",
@@ -47,6 +41,12 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         url: "/editCustomer",
                         templateUrl: "customers/views/editCustomer.html",
                         controller: "editCustomerController"
+                    })
+                    
+                    .state('productPreferences', {
+                        url: "/productPreferences",
+                        templateUrl: "customers/views/productPreferences.html",
+                        controller: "productPreferencesController"
                     })
 
                     .state('addSupplier', {
