@@ -217,6 +217,9 @@ public class BuildOrderController
 				det.setProduct(prodMap.get(item.getProductId()));
 				det.setQuantity(item.getQuantity());
 				det.setSupplier(suppliers.get(item.getSelectedSupplierInitials()));
+				det.setCbmRate(config.getPricePerCbm());
+				det.setWeightRate(config.getPricePerWeight());
+				det.setExchangeRate(config.getExchangeRate());
 				lineItems.add(det);
 			}
 			
