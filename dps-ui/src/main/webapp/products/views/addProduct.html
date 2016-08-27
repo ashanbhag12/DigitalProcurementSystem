@@ -1,69 +1,65 @@
 <div class="addProductPage">
     <h3 class="md-headline sectionTitle">Add Product Form</h3>
-    <div class="successBox" ng-show="showSuccessBox">Product added to the system</div>
-    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">Product added successfully</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">Product could not be added. Please try again after some time</div>
     <form name="addProduct" ng-submit="submitForm(addProduct)" novalidate>
         <div layout="row">
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*Product code</label>
                 <input type='text' required name="productCode" ng-model="product.productCode" />
                 <div ng-messages="addProduct.productCode.$error" ng-show="addProduct.productCode.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*Price per item</label>
-                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <input required placeholder="0.00" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.price.$error" ng-show="addProduct.price.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 2 decimals long. Ex: 20.50</div>
                 </div>
             </md-input-container>
-        </div>
-        <div layout="row">  
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*Cartoon quantity</label>
                 <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
                 <div ng-messages="addProduct.cartoonQuantity.$error" ng-show="addProduct.cartoonQuantity.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*CBM</label>
                 <input required placeholder="0.000" name="cbm" ng-model="product.cbm" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.cbm.$error" ng-show="addProduct.cbm.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. Ex: 1.123</div>
                 </div>
             </md-input-container>
         </div>
         <div layout="row">
-        	<md-input-container class="md-block" flex="50">
+        	<md-input-container class="md-block" flex="25">
                 <label>*Weight</label>
                 <input required placeholder="0.000" name="weight" ng-model="product.weight" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.weight.$error" ng-show="addProduct.weight.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*Description</label>
                 <input type='text' required name="description" ng-model="product.description" />
                 <div ng-messages="addProduct.description.$error" ng-show="addProduct.description.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
                 </div>
             </md-input-container>
-        </div>
-        <div layout="row">  
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*MOQ</label>
                 <input min="0" max="9" required name="moq" ng-model="product.moq" type='number'/>
                 <div ng-messages="addProduct.moq.$error" ng-show="addProduct.moq.$touched">
                     <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-9.</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="25">
                 <label>*Default margin</label>
                 <input required placeholder="0.000" name="defaultMargin" ng-model="product.defaultMargin" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.defaultMargin.$error" ng-show="addProduct.defaultMargin.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. Ex: 1.123</div>
                 </div>
             </md-input-container>
         </div>

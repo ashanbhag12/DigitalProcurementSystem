@@ -1,13 +1,9 @@
-angular.module('addProductApp', ['ngMessages'])
-        .controller('addProductController', function ($scope, addProductsService, getSuppliersInitialsService) {
-            $scope.showSuccessBox = false;
-            $scope.showErrorBox = false;
-            // WebService should be called to fetch initials for Suppliers
-            getSuppliersInitialsService.query().$promise.then(function(data) {
-            	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
-            });
-
-            $scope.product = {                	
+angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
+        .controller('addProductController', function ($scope, $timeout, addProductsService, getSuppliersInitialsService, smoothScroll) {
+            $scope.showSuccessBox = false; /* Hide the Success Box */
+            $scope.showErrorBox = false; /* Hide the Error Box */
+            
+            $scope.product = { /* Product Object */                	
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
@@ -28,24 +24,59 @@ angular.module('addProductApp', ['ngMessages'])
             		}],
             		"isValid":"false"
             };
+            
+            /* Function will be executed after the page is loaded */
+    	    $scope.$on('$viewContentLoaded', function () {
+    	    	// WebService should be called to fetch initials for Suppliers
+                getSuppliersInitialsService.query().$promise.then(function(data) {
+                	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
+                });
+    	    });
 
             $scope.submitForm = function (addProduct) {
                 if (addProduct.$valid) {
-                	$scope.productJson = angular.toJson($scope.product);
-        		    //alert($scope.productJson);
-        		    response = addProductsService.save($scope.productJson);
-        		    //alert(response);
-        		    $scope.reset();
-        		    $scope.showSuccessBox = true;
-                    $scope.showErrorBox = false;
-                }
-                else{                    
-                    console.log("form invalid");
-                }                
+                	angular.element(document.querySelector('.loader')).addClass('show'); 
+        		    response = addProductsService.save($scope.product, function(){/* Success Callback */
+        		    	$timeout(function () {                            
+        		    		$scope.reset();
+                		    $scope.showSuccessBox = true;
+                            $scope.showErrorBox = false;
+                            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    					    angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);        		    	
+        		    }, function(){/* Error Callback */        		    	
+        		    	$timeout(function () {
+        		    		$scope.showErrorBox = true; 
+    				    	$scope.showSuccessBox = false;
+        		    		smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);        		    	
+        		    });  
+                }               
             };
 
             $scope.reset = function () {
-                $scope.product = {};
+            	$scope.product = { /* Reset the Product Object */                	
+                		"productCode":"",
+                		"cartoonQuantity":"",
+                		"cbm":"",
+                		"price":"",
+                		"weight":"",
+                		"description":"",
+                		"moq":"",
+                		"defaultMargin":"",
+                		"supplierProductInfoList": [{
+                			"supplierInitials": "",
+                			"supplierProductCode": ""
+                		}, {
+                			"supplierInitials": "",
+                			"supplierProductCode": ""
+                		}, {
+                			"supplierInitials": "",
+                			"supplierProductCode": ""
+                		}],
+                		"isValid":"false"
+                };
                 $scope.product.isValid="false";
                 $scope.addProduct.$setPristine();
                 $scope.addProduct.productCode.$touched = false;
@@ -64,5 +95,7 @@ angular.module('addProductApp', ['ngMessages'])
                 $scope.addProduct.supplierProductCode3.$touched = false;
                 $scope.addProduct.isValid.$touched = false;
                 $scope.showSuccessBox = false;
+                $scope.showErrorBox = false;
+                
             };
         });

@@ -21,17 +21,17 @@ angular.module('addCustomerApp', ['ngMessages'])
 		    $scope.submitForm = function (addCustomer) {
 		        if (addCustomer.$valid) {
 		        	angular.element(document.querySelector('.loader')).addClass('show'); 
-				    response = addCustomersService.save($scope.customer, function(){				    
+				    response = addCustomersService.save($scope.customer, function(){/* Success Callback */				    
 					    $timeout(function () {                            
                             $scope.reset();
                             $scope.showSuccessBox = true;
     					    $scope.showErrorBox = false;
     					    angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
-				    }, function(error){
-				    	$scope.showErrorBox = true; 
-				    	$scope.showSuccessBox = false;
+				    }, function(error){/* Error Callback */				    	
         		    	$timeout(function () {
+        		    		$scope.showErrorBox = true; 
+    				    	$scope.showSuccessBox = false;
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
 				    });				    

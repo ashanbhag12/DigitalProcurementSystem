@@ -103,7 +103,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                     if (supplier.isChecked) {
                     	angular.element(document.querySelector('.loader')).addClass('show');
                     	response = deleteSuppliersService.remove({supplierId : supplier.id}, function(){/* Success Callback */
-	                		angular.element(document.querySelector('.modal')).css('display', "none");                            
+                    		angular.element(document.querySelector('.modal')).css('display', "none");                            
 	                    	$timeout(function () {
 	                    		/* WS call to get all suppliers */
 	                            $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
@@ -142,6 +142,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 angular.forEach($scope.suppliers, function (supplier) {
                 	if(keepGoing) {
                 		if (supplier.isChecked) {
+                			angular.element(document.querySelector('.loader')).addClass('show');
                             supplier.name = $scope.supplier.name;
                             supplier.initials = $scope.supplier.initials;
                             supplier.phoneNumber = $scope.supplier.phoneNumber;

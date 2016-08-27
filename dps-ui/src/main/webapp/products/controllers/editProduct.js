@@ -1,9 +1,10 @@
 angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, 
         		modifyProductsService, deleteProductsService, getSuppliersInitialsService, smoothScroll) {
-            /* Initialize the page variables */
-            $scope.showSuccessBox = false; /* Hide the error messages */
-            $scope.showErrorBox = false; /* Hide the success messages */
+            $scope.showSuccessBox = false; /* Hide the Success Box */
+            $scope.showErrorBox = false; /* Hide the Error Box */
+            $scope.successMessage = "";
+            $scope.errorMessage = "";
             $scope.editDisabled = false; /* Enable the Edit button */
             $scope.deleteDisabled = true; /* Disable the Delete button */
             $scope.editProductForm = false; /* Hide the edit Product Form */
@@ -11,23 +12,18 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortBy = 'name'; /* set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.products = []; /* Array of all Products */
-            
-            getSuppliersInitialsService.query().$promise.then(function(data) {
-            	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
-            });
-            
+            $scope.products = []; /* Array of all Products */            
             $scope.searchProductCode = ''; /* Code for product search */
-            
-            $scope.showSuccessBox = false;
-            $scope.showErrorBox = false;
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
+            	getSuppliersInitialsService.query().$promise.then(function(data) {
+                	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
+                });
             });
 
             /* Product object to be edited */
-            /* changed name from editProduct with product bcos it was conflicting with form name*/
+            /* changed name from editProduct with product because it was conflicting with form name */
             $scope.product = {                	
             		"id":"",
             		"productCode":"",
@@ -129,39 +125,50 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             };
 
             /* Function to delete the selected Products */
-            $scope.deleteProduct = function () {
-                angular.element(document.querySelector('.loader')).addClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "block");
-
+            $scope.deleteProduct = function () {                
                 angular.forEach($scope.products, function (product) {
                     if (product.isChecked) {
-                    	response = deleteProductsService.remove({productId : product.id});
+                    	angular.element(document.querySelector('.loader')).addClass('show');
+                    	response = deleteProductsService.remove({productId : product.id}, function(){/* Success Callback */
+                    		angular.element(document.querySelector('.modal')).css('display', "none");
+    	        	        $timeout(function () {	        	            
+    	        	            $scope.selectAll = false;
+    	        	            /* WS call to get all Products */
+    	                        $scope.products = getProductsService.query({code:$scope.searchProductCode});
+    	        	            $scope.selectedRows = [];
+    	        	            $scope.editDisabled = true;
+    	        	            $scope.deleteDisabled = true;
+    	        	            $scope.showSuccessBox = true;
+    	    			        $scope.successMessage = "Products deleted successfully";
+    	    		            $scope.showErrorBox = false;
+    	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	        }, 500);
+                    	}, function(){/* Error Callback */
+                    		$timeout(function () {	
+    	            			$scope.selectAll = false;
+    	        	            $scope.selectedRows = [];
+    	        	            $scope.editDisabled = true;
+    	        	            $scope.deleteDisabled = true;
+    					    	$scope.showSuccessBox = false;
+    				            $scope.showErrorBox = true;
+    				            $scope.errorMessage = "Products could not be deleted. Please try again after some time";
+    				            angular.element(document.querySelector('.loader')).removeClass('show');
+    					    }, 500);
+                    	});
                     }
                 });
-
-                angular.element(document.querySelector('.modal')).css('display', "none");
-                $timeout(function () {
-                    angular.element(document.querySelector('.loader')).removeClass('show');
-                    $scope.selectAll = false;
-                    // WS call to get all Product.
-                    $scope.products = getProductsService.query({code:$scope.searchProductCode});
-                    $scope.selectedRows = [];
-                    $scope.editDisabled = true;
-                    $scope.deleteDisabled = true;
-                }, 1000);
             };
 
             /* Function to update the selected Product */
-            /* added keepgoing check for performance. Bcos for very first product if isChecked condition is true, that product will be updated and for loop breaks
+            /* added keepgoing check for performance. Because for very first product if isChecked condition is true, that product will be updated and for loop breaks
              * Note: no break; concept for angularJs forEach */
-            
-            $scope.updateProductJson = {};
             
             $scope.update = function () {
             	var keepGoing = true;
                 angular.forEach($scope.products, function (product) {
                 	if(keepGoing) {
                 		if (product.isChecked) {
+                			angular.element(document.querySelector('.loader')).addClass('show');
                             product.productCode = $scope.product.productCode;
                             product.cartoonQuantity = $scope.product.cartoonQuantity;
                             product.cbm = $scope.product.cbm;
@@ -176,24 +183,43 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                             product.supplierProductInfoList[1].supplierProductCode = $scope.product.supplierProductInfoList[1].supplierProductCode;
                             product.supplierProductInfoList[2].supplierInitials = $scope.product.supplierProductInfoList[2].supplierInitials;
                             product.supplierProductInfoList[2].supplierProductCode = $scope.product.supplierProductInfoList[2].supplierProductCode;
-                            product.isValid = $scope.product.isValid;
-                            
-                            $scope.updateProductJson = angular.toJson(product);
-                            
+                            product.isValid = $scope.product.isValid;   
+                            delete product.isChecked;	
                             keepGoing = false;
+                            $scope.updateProductJson = angular.toJson(product); 
                         }                    
                 	}
                 });
                 
                 /* Service call to update product */
-    		    response = modifyProductsService.save($scope.updateProductJson);
-    		    
-    		    // WS call to get all Product.
-    		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
-                
-                $scope.editProductForm = false;
-                $scope.showSuccessBox = true;
-                $scope.showErrorBox = false;
+    		    response = modifyProductsService.save($scope.updateProductJson, function(){/* Success Callback */
+    		    	$timeout(function () {		   
+    		    		/* WS call to get all Products */
+    	    		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
+    	    		    $scope.editProductForm = false;
+    	                $scope.showSuccessBox = true;
+    	                $scope.showErrorBox = false;
+    			        $scope.selectAll = false;
+        	            $scope.selectedRows = [];
+        	            $scope.editDisabled = true;
+        	            $scope.deleteDisabled = true;
+    			        $scope.successMessage = "Product details updated successfully";		            
+    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    }, function(){/* Error Callback */
+    		    	$timeout(function () {		   
+    			    	$scope.showSuccessBox = false;
+    			    	$scope.showErrorBox = true;
+    			    	$scope.selectAll = false;
+        	            $scope.selectedRows = [];
+        	            $scope.editDisabled = true;
+        	            $scope.deleteDisabled = true;
+    			        $scope.errorMessage = "Product details could not be updated. Please try again after some time";	            
+    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    });
             };
 
             /* Function to search for Products */
@@ -237,8 +263,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.editProduct.supplierProductCode2.$touched = false;
                 $scope.editProduct.supplierInitials3.$touched = false;
                 $scope.editProduct.supplierProductCode3.$touched = false;
-                $scope.editProduct.isValid.$touched = false;
-                
+                $scope.editProduct.isValid.$touched = false;                
                 $scope.showSuccessBox = false;
             };
         });
