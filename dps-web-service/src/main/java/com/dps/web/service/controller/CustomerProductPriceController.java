@@ -82,6 +82,7 @@ public class CustomerProductPriceController
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
 			cost = cost.multiply(prod.getPrice());
+			cost.setScale(2, BigDecimal.ROUND_HALF_UP);
 			custProdPriceDto.setCost(cost);
 			
 			custPrices.add(custProdPriceDto);
