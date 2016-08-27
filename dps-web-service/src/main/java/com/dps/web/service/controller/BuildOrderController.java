@@ -74,7 +74,10 @@ public class BuildOrderController
 		try
 		{
 			//Get customer information
-			Customer cust = customerService.findByShipmarkAndName(wrapper.getCustomerShipmark(), null).get(0);
+			List<Customer> custList = customerService.findByShipmarkAndName(wrapper.getCustomerShipmark(), null);
+			System.out.println(custList.size());
+			System.out.println(customerService);
+			Customer cust = custList.get(0);
 			BigDecimal custAddMargin = cust.getAdditionalMargin();
 			
 			//Get customer preferences

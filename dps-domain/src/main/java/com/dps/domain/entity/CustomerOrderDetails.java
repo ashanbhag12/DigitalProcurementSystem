@@ -51,7 +51,7 @@ public class CustomerOrderDetails extends EntityBase
 	private CustomerOrder customerOrder;
 
 	@ManyToOne
-	@JoinColumn(name = "PROD_ID")
+	@JoinColumn(name = "PRD_ID")
 	private Product product;
 
 	@ManyToOne
