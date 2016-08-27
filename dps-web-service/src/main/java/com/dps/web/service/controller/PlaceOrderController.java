@@ -110,8 +110,11 @@ public class PlaceOrderController
 				
 				for(CustomerOrderDetails det : details)
 				{
-					remark.append(det.getRemarks());
-					remark.append(", ");
+					if(StringUtils.isNotBlank(det.getRemarks()))
+					{
+						remark.append(det.getRemarks());
+						remark.append(", ");
+					}
 					cust.append(det.getCustomerOrder().getCustomer().getShipmark());
 					cust.append(":");
 					cust.append(det.getQuantity());
@@ -122,7 +125,10 @@ public class PlaceOrderController
 				}
 				
 				PlaceOrderDTO order = new PlaceOrderDTO();
-				order.setCustomerDetails(cust.toString().substring(0, cust.toString().length()-2));
+				if(cust.length() > 1)
+				{
+					order.setCustomerDetails(cust.toString().substring(0, cust.toString().length()-2));
+				}
 				order.setRemarks(remark.toString().substring(0, remark.toString().length()-2));
 				order.setMoq(product.getMoq());
 				order.setProductCode(product.getProductCode());
