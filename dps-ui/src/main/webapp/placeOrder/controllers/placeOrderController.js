@@ -1,40 +1,16 @@
 angular.module('placeOrderApp', [])
-        .controller('placeOrderController', function ($scope, $timeout) {
+        .controller('placeOrderController', function ($scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
             $scope.showSuccessBox = false; /* Hide the Success box */
             $scope.showInfoBox = false; /* Hide the Info box */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.products = [{/* Object containing all products data */
-                    "shipMark": "C101",
-                    "supplierInitials": "S101",
-                    "productCode": "P101",
-                    "MOQ": "3",
-                    "productQuantity": "5",
-                    "remarks": "Good",
-                    "isMOQFulfilled": true,
-                    "isChecked": true
-                },
-                {
-                    "shipMark": "C103",
-                    "supplierInitials": "S103",
-                    "productCode": "P103",
-                    "MOQ": "3",
-                    "productQuantity": "5",
-                    "remarks": "Good",
-                    "isMOQFulfilled": false,
-                    "isChecked": false
-                },
-                {
-                    "shipMark": "C102",
-                    "supplierInitials": "S102",
-                    "productCode": "P102",
-                    "MOQ": "5",
-                    "productQuantity": "5",
-                    "remarks": "Good",
-                    "isMOQFulfilled": true,
-                    "isChecked": true
-                }];
+            $scope.products = []; /* Object containing all products data */
+            
+            getPlaceOrderService.query().$promise.then(function(data) {
+            	$scope.products = data;
+            }); 
+            
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
                 /* WS call to fetch the data */
@@ -79,6 +55,8 @@ angular.module('placeOrderApp', [])
 
             $scope.placeOrder = function () {
                 /* WS Call to fetch excel from Products selected */
+            	savePlaceOrderService.save($scope.products);
+            	
                 $scope.showInfoBox = true;
                 angular.element(document.querySelector('.loader')).addClass('show');
                 $timeout(function () {
