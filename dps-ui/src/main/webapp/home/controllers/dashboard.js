@@ -27,22 +27,22 @@ angular.module('dashboardApp', ["ngMessages"])
             $scope.submitForm = function (globalParameters) {
             	if (globalParameters.$valid) {
             		angular.element(document.querySelector('.loader')).addClass('show');                    
-        		    response = modifyDashboardConfigService.save($scope.global, function(){/* Success Callback */
-        		    	$scope.showSuccessBox = true;
-            		    $scope.successMessage = "Global Parameters saved successfully"            		   
-            		    $scope.showEditBtn = true;
-                        $scope.showSaveBtn = false;
-                        $scope.showClearBtn = false;
-                        $scope.isReadonly = true; /* Should be the last line */
+        		    response = modifyDashboardConfigService.save($scope.global, function(){/* Success Callback */        		    	
                         $timeout(function () {
-                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        	$scope.showSuccessBox = true;
+                		    $scope.successMessage = "Global Parameters saved successfully";          		   
+                		    $scope.showEditBtn = true;
+                            $scope.showSaveBtn = false;
+                            $scope.showClearBtn = false;
+                            $scope.isReadonly = true; /* Should be the last line */                            
                             $scope.dashboard.exchangeRate = response.exchangeRate; 
-                        }, 500);
-        		    }, function(error){/* Error Callback */
-        		    	$scope.showErrorBox = true;
-            		    $scope.errorMessage = "Could not save global parameters. Please try again after some time"    
-        		    	$timeout(function () {
                             angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+        		    }, function(error){/* Error Callback */        		    	    
+        		    	$timeout(function () {
+                            $scope.showErrorBox = true;
+                		    $scope.errorMessage = "Could not save global parameters. Please try again after some time";
+                		    angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
         		    });        		    
                 }                   

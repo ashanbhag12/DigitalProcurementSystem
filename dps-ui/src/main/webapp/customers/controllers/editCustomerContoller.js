@@ -3,6 +3,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    /* Initialize the page variables */
 	    $scope.showSuccessBox = false; /* Hide the error messages */
 	    $scope.showErrorBox = false; /* Hide the success messages */
+	    $scope.successMessage = "";
+        $scope.errorMessage = "";
 	    $scope.editDisabled = false; /* Enable the Edit button */
 	    $scope.deleteDisabled = true; /* Disable the Delete button */
 	    $scope.editCustomerForm = false; /* Hide the edit Customer Form */
@@ -10,18 +12,13 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.sortOrder = false; /* set the default sort order */
 	    $scope.sortBy = 'name'; /* set the default sort type */
 	    $scope.selectedRows = []; /* Array for toggleAll function */
-	    $scope.customers = []; /* Array of all Customers */
-	    
+	    $scope.customers = []; /* Array of all Customers */	    
 	    
 	    $scope.searchCustomerName = ''; /* Name for customer search */
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    
-	    $scope.showSuccessBox = false;
-        $scope.showErrorBox = false;
-	    
 	    /* Function will be executed after the page is loaded */
-	    $scope.$on('$viewContentLoaded', function () {   
-	    });
+	    $scope.$on('$viewContentLoaded', function () {});
 	
 	    /* Customer object to be edited */
 	    /* changed name from editCustomer with customer bcos it was conflicting with form name*/
@@ -116,38 +113,45 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	
 	    /* Function to delete the selected Customers */
 	    $scope.deleteCustomer = function () {
-	        angular.element(document.querySelector('.loader')).addClass('show');
-	        angular.element(document.querySelector('.modal')).css('display', "block");
-	
 	        angular.forEach($scope.customers, function (customer) {
-	            if (customer.isChecked) {
-	            	response = deleteCustomersService.remove({customerId : customer.id});                    
+	            if (customer.isChecked) { 
+	            	angular.element(document.querySelector('.loader')).addClass('show');
+	            	response = deleteCustomersService.remove({customerId : customer.id}, function(){/* Success Callback */
+	            		angular.element(document.querySelector('.modal')).css('display', "none");
+	        	        $timeout(function () {	        	            
+	        	            $scope.selectAll = false;
+	        	            // WS call to get all Customers
+	        	            $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
+	        	            $scope.selectedRows = [];
+	        	            $scope.editDisabled = true;
+	        	            $scope.deleteDisabled = true;
+	        	            $scope.showSuccessBox = true;
+	    			        $scope.successMessage = "Customers deleted successfully";
+	    		            $scope.showErrorBox = false;
+	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+	        	        }, 500);
+	            	}, function(error){/* Error Callback */
+	            		$timeout(function () {		            		
+					    	$scope.showSuccessBox = false;
+				            $scope.showErrorBox = true;
+				            $scope.errorMessage = "Customers could not be deleted. Please try again after some time";
+				            angular.element(document.querySelector('.loader')).removeClass('show');
+					    }, 500);
+	            	});
 	            }
-	        });
-	
-	        angular.element(document.querySelector('.modal')).css('display', "none");
-	        $timeout(function () {
-	            angular.element(document.querySelector('.loader')).removeClass('show');
-	            $scope.selectAll = false;
-	            // WS call to get all Customers
-	            $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
-	            $scope.selectedRows = [];
-	            $scope.editDisabled = true;
-	            $scope.deleteDisabled = true;
-	        }, 1000);
+	        });        
 	    };
 	
 	    /* Function to update the selected Customer */
-	    /* added keepgoing check for performance. Bcos for very first customer if isChecked condition is true, that customer will be updated and for loop breaks
+	    /* added keepgoing check for performance. Because for very first customer if isChecked condition is true, that customer will be updated and for loop breaks
 	     * Note: no break; concept for angularJs forEach */
-	    
-	    $scope.updateCustomerJson = {};
 	   
 	    $scope.update = function () {
 	    	var keepGoing = true;
 	        angular.forEach($scope.customers, function (customer) {
 	        	if(keepGoing) {
 	        		if (customer.isChecked) {
+	        			angular.element(document.querySelector('.loader')).addClass('show');
 	                    customer.name = $scope.customer.name;
 	                    customer.phoneNumber = $scope.customer.phoneNumber;
 	                    customer.emailId = $scope.customer.emailId;
@@ -160,24 +164,35 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                    customer.city = $scope.customer.city;
 	                    customer.state = $scope.customer.state;
 	                    customer.zip = $scope.customer.zip;
-	                    delete customer.isChecked;
-	                    
-	                    $scope.updateCustomerJson = angular.toJson(customer);
-	                    
+	                    delete customer.isChecked;	                    
 	                    keepGoing = false;
+	                    $scope.selectedRows = [];
+	                    $scope.updateCustomerJson = angular.toJson(customer);	
 	                }                    
 	        	}
 	        });
 	        
 	        /* Service call to update customer */
-		    response = modifyCustomersService.save($scope.updateCustomerJson);
-		    
-		    // WS call to get all Customers
-		    $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
-	        
-	        $scope.editCustomerForm = false;
-	        $scope.showSuccessBox = true;
-            $scope.showErrorBox = false;
+		    response = modifyCustomersService.save($scope.updateCustomerJson, function(){/* Success Callback */		    	
+		    	$timeout(function () {		   
+		    		/* WS call to get all Customers */
+			    	$scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
+			        $scope.editCustomerForm = false;
+			        $scope.showSuccessBox = true;
+			        $scope.showErrorBox = false;
+			        $scope.successMessage = "Customer details updated successfully";		            
+		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+		    		angular.element(document.querySelector('.loader')).removeClass('show');
+		    	}, 500);
+		    }, function(error){/* Error Callback */
+		    	$timeout(function () {		   
+			    	$scope.showSuccessBox = false;
+			    	$scope.showErrorBox = true;
+			        $scope.errorMessage = "Customer details could not be updated. Please try again after some time";	            
+		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+		    		angular.element(document.querySelector('.loader')).removeClass('show');
+		    	}, 500);
+		    });
 	    };
 	
 	    /* Function to search for Customers */
@@ -185,22 +200,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $scope.selectAll = false;
 	        $scope.searchedResults = true;
 	        $scope.editDisabled = true;
-	        $scope.deleteDisabled = true;
-	        
+	        $scope.deleteDisabled = true;	        
 	        /* Service Call to retrieve searched customer */
 	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
-	    };
-	
-	    /* Global function to show Modal Window */
-	    $rootScope.showModal = function () {
-	        angular.element(document.querySelector('.loader')).addClass('show');
-	        angular.element(document.querySelector('.modal')).css('display', "block");
-	    };
-	
-	    /* Global function to hide Modal Window */
-	    $rootScope.hideModal = function () {
-	        angular.element(document.querySelector('.loader')).removeClass('show');
-	        angular.element(document.querySelector('.modal')).css('display', "none");
 	    };
 	    
 	    $scope.reset = function () {
@@ -217,8 +219,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $scope.editCustomer.locality.$touched = false;
 	        $scope.editCustomer.city.$touched = false;
 	        $scope.editCustomer.state.$touched = false;
-	        $scope.editCustomer.zip.$touched = false;
-	        
+	        $scope.editCustomer.zip.$touched = false;	        
 	        $scope.showSuccessBox = false;
+	        $scope.showErrorBox = false;
 	    };
 });

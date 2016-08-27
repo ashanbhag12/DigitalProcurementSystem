@@ -1,9 +1,9 @@
 angular.module('addCustomerApp', ['ngMessages'])
-		.controller('addCustomerController', function ($scope, addCustomersService) {
-		    $scope.showSuccessBox = false;
-		    $scope.showErrorBox = false;
+		.controller('addCustomerController', function ($scope, $timeout, addCustomersService) {
+		    $scope.showSuccessBox = false; /* Hide the success box */
+		    $scope.showErrorBox = false; /* Hide the error box */
 		
-		    $scope.customer = {
+		    $scope.customer = {/* Customer Object */
 		        name: "",
 		        phoneNumber: "",
 		        emailId: "",
@@ -20,17 +20,22 @@ angular.module('addCustomerApp', ['ngMessages'])
 		
 		    $scope.submitForm = function (addCustomer) {
 		        if (addCustomer.$valid) {
-		        	$scope.customerJson = angular.toJson($scope.customer);
-				    //alert($scope.customerJson);
-				    response = addCustomersService.save($scope.customerJson);
-				    //alert(response);
-				    $scope.reset();
-				    $scope.showSuccessBox = true;
-				    $scope.showErrorBox = false;
-		        }
-		        else{                    
-		            console.log("form invalid");
-		        }                
+		        	angular.element(document.querySelector('.loader')).addClass('show'); 
+				    response = addCustomersService.save($scope.customer, function(){				    
+					    $timeout(function () {
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                            $scope.reset();
+                            $scope.showSuccessBox = true;
+    					    $scope.showErrorBox = false;
+                        }, 500);
+				    }, function(error){
+				    	$scope.showErrorBox = true; 
+				    	$scope.showSuccessBox = false;
+        		    	$timeout(function () {
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+				    });				    
+		        }               
 		    };
 		
 		    $scope.reset = function () {
@@ -49,5 +54,6 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        $scope.addCustomer.state.$touched = false;
 		        $scope.addCustomer.zip.$touched = false;
 		        $scope.showSuccessBox = false;
+		        $scope.showErrorBox = false;
 		    };
 });

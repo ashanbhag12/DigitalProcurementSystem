@@ -76,7 +76,6 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
             
             /* Global function to show Modal Window */
             $rootScope.showModal = function (modalId) {
-                console.log(modalId);
                 angular.element(document.querySelector('.loader')).addClass('show');
                 angular.element(document.getElementById(modalId)).css('display', "block");
             };
