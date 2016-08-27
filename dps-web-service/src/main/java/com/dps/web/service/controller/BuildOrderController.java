@@ -218,6 +218,7 @@ public class BuildOrderController
 				det.setCbmRate(config.getPricePerCbm());
 				det.setWeightRate(config.getPricePerWeight());
 				det.setExchangeRate(config.getExchangeRate());
+				det.setRemarks(item.getRemarks());
 				lineItems.add(det);
 			}
 			
