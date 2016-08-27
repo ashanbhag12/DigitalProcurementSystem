@@ -7,13 +7,13 @@ angular.module('placeOrderApp', [])
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Object containing all products data */
             
-            getPlaceOrderService.query().$promise.then(function(data) {
-            	$scope.products = data;
-            }); 
-            
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
                 /* WS call to fetch the data */
+            	getPlaceOrderService.query().$promise.then(function(data) {
+            		console.log(data)
+                	$scope.products = data;
+                });
 
                 /* To select the rows which fulfills MOQ */
                 angular.forEach($scope.products, function (product) {
@@ -54,15 +54,21 @@ angular.module('placeOrderApp', [])
             };
 
             $scope.placeOrder = function () {
+            	angular.element(document.querySelector('.loader')).addClass('show');
+            	$scope.showInfoBox = true;
                 /* WS Call to fetch excel from Products selected */
-            	savePlaceOrderService.save($scope.products);
-            	
-                $scope.showInfoBox = true;
-                angular.element(document.querySelector('.loader')).addClass('show');
-                $timeout(function () {
-                    $scope.showSuccessBox = true;
-                    $scope.showInfoBox = false;
-                    angular.element(document.querySelector('.loader')).removeClass('show');
-                }, 3000);
+            	response = savePlaceOrderService.save($scope.products, function(){ /* Success Callback */
+            		$timeout(function(){ 
+                        $scope.showSuccessBox = true;
+                        $scope.showInfoBox = false;
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                        console.log(response)
+            		}, 500)
+            	}, function(error){/* Error Callback */
+            		$timeout(function(){ 
+                        console.log(error)
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+            		}, 500)
+            	});
             };
         });
