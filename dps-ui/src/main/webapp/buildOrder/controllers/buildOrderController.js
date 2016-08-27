@@ -1,6 +1,6 @@
 angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('buildOrderController', function ($scope, $rootScope, $timeout, $q, smoothScroll, getCustomersForBuildOrderService, 
-        		getSuppliersForBuildOrderService, getProductsForBuildOrderService, buildOrderCalculateService) {
+        		getSuppliersForBuildOrderService, getProductsForBuildOrderService, buildOrderCalculateService, saveOrderService) {
 
             $scope.showSuccessBox = false; /* Hide the success box */
             $scope.successMessage = ""; /* Set success message to blank */
@@ -34,9 +34,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             }); 
             
             /* List of all Suppliers */
-            getSuppliersForBuildOrderService.query().$promise.then(function(data) {
+            /*getSuppliersForBuildOrderService.query().$promise.then(function(data) {
             	$scope.suppliers = data;
-            });
+            });*/
             
             $scope.orderDate = new Date(); /* By default set todays date as order date */
             $scope.querySearch = querySearch; /* Call the querySearch function for autocomplete */
@@ -274,12 +274,15 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.calculateGrandTotal = function(){
                 var total = 0;
                 angular.forEach($scope.orderSummary, function(product){
-                  total += product.productCost * product.productQuantity;                  
+                  total += product.unitCost * product.quantity;                  
                 });
                 return total;
             };
 
             $scope.saveOrder = function () {
+            	
+            	saveOrderService.save($scope.orderSummary);
+            	
                 angular.element(document.querySelector('.loader')).addClass('show');
                 $scope.successMessage = "Order saved successfully!";
                 $scope.showSuccessBox = true;
