@@ -122,8 +122,8 @@ public class PlaceOrderController
 				}
 				
 				PlaceOrderDTO order = new PlaceOrderDTO();
-				order.setCustomerDetails(cust.toString().substring(0, cust.toString().length()-1));
-				order.setRemarks(remark.toString().substring(0, remark.toString().length()-1));
+				order.setCustomerDetails(cust.toString().substring(0, cust.toString().length()-2));
+				order.setRemarks(remark.toString().substring(0, remark.toString().length()-2));
 				order.setMoq(product.getMoq());
 				order.setProductCode(product.getProductCode());
 				order.setProductId(product.getId());
