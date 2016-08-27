@@ -41,6 +41,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.updateProductDetails = function (index, product) {
                 product.cost = (product.productPrice * product.productMargin * product.customerMargin * product.customerProductMargin).toFixed(2);
                 $scope.editProductDetailsRow[index] = false;
+                
             };
 
             $scope.saveProductDetails = function () {
