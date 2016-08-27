@@ -50,8 +50,10 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     $scope.showSuccessBox = false;
                 }, 5000);
                 
-                modifyProductPreferencesService.save($scope.products);
-                $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark})
+                modifyProductPreferencesService.save($scope.products,
+                	function(successResult) {
+                		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark})
+                	});
             };
 
             $scope.cancelChanges = function () {/* Cancel the changes and hide the table */
