@@ -17,6 +17,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
+import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.entity.Customer;
 import com.dps.domain.entity.CustomerProductPreference;
 import com.dps.domain.entity.Product;
@@ -122,6 +123,7 @@ public class CustomerProductPriceController
 			
 			//These will be merged to the database.
 			List<CustomerProductPreference> customerUpdatedPreferences = new ArrayList<>();
+			List<JpaEntityId> toDeletePreferences = new ArrayList<>();
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
@@ -150,9 +152,18 @@ public class CustomerProductPriceController
 						customerUpdatedPreferences.add(pref);
 					}
 				}
+				else
+				{
+					CustomerProductPreference existingPreference = custProdPrefObj.get(custProdPrice.getProductCode());
+					if(existingPreference != null)
+					{
+						toDeletePreferences.add(new JpaEntityId(existingPreference.getId()));
+					}
+				}
 			}
 			
 			custProdPrefService.mergeAll(customerUpdatedPreferences);
+			custProdPrefService.removeAll(toDeletePreferences);
 		}
 		catch(Exception e)
 		{
