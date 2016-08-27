@@ -125,11 +125,14 @@ public class PlaceOrderController
 				}
 				
 				PlaceOrderDTO order = new PlaceOrderDTO();
-				if(cust.length() > 1)
+				if(cust.length() > 2)
 				{
 					order.setCustomerDetails(cust.toString().substring(0, cust.toString().length()-2));
 				}
-				order.setRemarks(remark.toString().substring(0, remark.toString().length()-2));
+				if(remark.length() > 2)
+				{
+					order.setRemarks(remark.toString().substring(0, remark.toString().length()-2));
+				}
 				order.setMoq(product.getMoq());
 				order.setProductCode(product.getProductCode());
 				order.setProductId(product.getId());
