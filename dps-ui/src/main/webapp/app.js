@@ -72,7 +72,17 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         templateUrl: "placeOrder/views/placeOrder.html",
                         controller: "placeOrderController"
                     });
-        }).run(function ($rootScope) {
+        }).run(function ($rootScope, $state, $timeout) {
+        	
+        	$rootScope.$on('$stateChangeStart',function(){
+        		angular.element(document.querySelector('.loader')).addClass('show');
+        	 });
+        	
+        	  $rootScope.$on('$stateChangeSuccess',function(){
+        		  $timeout(function(){
+        			  angular.element(document.querySelector('.loader')).removeClass('show');  
+        		  }, 500)        		  
+        	 });
             
             /* Global function to show Modal Window */
             $rootScope.showModal = function (modalId) {
