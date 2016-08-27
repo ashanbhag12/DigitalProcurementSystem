@@ -17,7 +17,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
-import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.entity.Customer;
 import com.dps.domain.entity.CustomerProductPreference;
 import com.dps.domain.entity.Product;
@@ -79,7 +78,7 @@ public class CustomerProductPriceController
 			custProdPriceDto.setCustomerMargin(cust.getAdditionalMargin());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
-			cost = cost.multiply(custProdPriceDto.getCustomerMargin());
+			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
 			cost = cost.multiply(prod.getPrice());
@@ -108,16 +107,7 @@ public class CustomerProductPriceController
 			Customer cust = custList.get(0);
 			
 			//Get all the preferences for that customer.
-			Map<Long, BigDecimal> custProdPrefs = custProdPrefService.findPreferencesForCustomer(cust.getId());
-			
-			//Get all the existing preferences objects.
-			List<JpaEntityId> idList = new ArrayList<>(custProdPrefs.size());
-			for(Long id : custProdPrefs.keySet())
-			{
-				idList.add(new JpaEntityId(id));
-			}
-			
-			List<CustomerProductPreference> customerPreferences = custProdPrefService.findAll(idList);
+			List<CustomerProductPreference> customerPreferences = custProdPrefService.findAllPreferencesForCustomer(cust.getId());
 			
 			//Save fetched preferences in a map for ease of future access
 			Map<String, CustomerProductPreference> custProdPrefObj = new HashMap<>();
@@ -136,7 +126,13 @@ public class CustomerProductPriceController
 			{
 				if(!Constants.BIG_DECIMAL_ONE.equals(custProdPrice.getCustomerProductMargin()))
 				{
-					BigDecimal existingDiscount = custProdPrefObj.get(custProdPrice.getProductCode()).getDiscount();
+					BigDecimal existingDiscount = Constants.BIG_DECIMAL_ONE; 
+					CustomerProductPreference existingPreference = custProdPrefObj.get(custProdPrice.getProductCode());
+					if(existingPreference != null)
+					{
+						existingDiscount = existingPreference.getDiscount();
+					}
+					
 					if(!ObjectUtils.equals(existingDiscount, custProdPrice.getCustomerProductMargin()))
 					{
 						CustomerProductPreference pref = custProdPrefObj.get(custProdPrice.getProductCode());
@@ -148,7 +144,7 @@ public class CustomerProductPriceController
 							Product product = productService.findByCode(custProdPrice.getProductCode()).get(0);
 							pref.setProduct(product);
 						}
-						pref.setDiscount(custProdPrice.getCustomerMargin());
+						pref.setDiscount(custProdPrice.getCustomerProductMargin());
 						
 						customerUpdatedPreferences.add(pref);
 					}
@@ -159,7 +155,7 @@ public class CustomerProductPriceController
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 }

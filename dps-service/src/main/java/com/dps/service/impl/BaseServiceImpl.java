@@ -330,7 +330,10 @@ public abstract class BaseServiceImpl<E extends EntityBase> implements BaseServi
 			List<E> nonCachedEntities = fetchAllFromDatabase(objectsToBeFetchedFromDatabase);
 			for(E entity : nonCachedEntities)
 			{
-				cache.put(entity.getId(), entity);
+				if(entity!= null)
+				{
+					cache.put(entity.getId(), entity);
+				}
 			}
 			finalObjectList.addAll(nonCachedEntities);
 		}

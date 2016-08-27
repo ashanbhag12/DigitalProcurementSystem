@@ -1,6 +1,7 @@
 package com.dps.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +38,7 @@ public class CustomerProductPreferenceServiceImpl extends BaseServiceImpl<Custom
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(1);
+		cache = new CacheImpl<>(10);
 	}
 
 	/* (non-Javadoc)
@@ -47,6 +48,15 @@ public class CustomerProductPreferenceServiceImpl extends BaseServiceImpl<Custom
 	public Map<Long, BigDecimal> findPreferencesForCustomer(Long id)
 	{
 		return customerProductPreferenceDao.findPreferenceForCustomer(id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dps.service.CustomerProductPreferenceService#findAllPreferencesForCustomer(java.lang.Long)
+	 */
+	@Override
+	public List<CustomerProductPreference> findAllPreferencesForCustomer(Long id)
+	{
+		return customerProductPreferenceDao.findAllPreferencesForCustomer(id);
 	}
 
 }

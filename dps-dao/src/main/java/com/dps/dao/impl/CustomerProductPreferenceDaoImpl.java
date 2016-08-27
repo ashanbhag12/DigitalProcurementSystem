@@ -28,6 +28,8 @@ public class CustomerProductPreferenceDaoImpl extends BaseDaoImpl<CustomerProduc
 	public Map<Long, BigDecimal> findPreferenceForCustomer(Long id)
 	{
 		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("id",id);
+		
 		Map<Long, BigDecimal> custProdPrefs = new HashMap<>();
 		List<JpaEntityId> idList = findAllByNamedQuery(CustomerProductPreference.GET_PREFERENCES_FOR_CUSTOMER, parameters);
 		List<CustomerProductPreference> custProdPrefList =  findAll(idList);
@@ -38,6 +40,20 @@ public class CustomerProductPreferenceDaoImpl extends BaseDaoImpl<CustomerProduc
 		}
 		
 		return custProdPrefs;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.dps.dao.CustomerProductPreferenceDao#findAllPreferencesForCustomer(java.lang.Long)
+	 */
+	@Override
+	public List<CustomerProductPreference> findAllPreferencesForCustomer(Long id)
+	{
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("id",id);
+		
+		List<JpaEntityId> idList = findAllByNamedQuery(CustomerProductPreference.GET_PREFERENCES_FOR_CUSTOMER, parameters);
+		List<CustomerProductPreference> custProdPrefList =  findAll(idList);
+		return custProdPrefList;
 	}
 
 }
