@@ -5,7 +5,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
             $scope.errorMessage = "";
-            $scope.editDisabled = false; /* Enable the Edit button */
+            $scope.editDisabled = true; /* Disable the Edit button */
             $scope.deleteDisabled = true; /* Disable the Delete button */
             $scope.editProductForm = false; /* Hide the edit Product Form */
             $scope.searchedResults = false; /* Hide the search results container */
@@ -14,6 +14,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Array of all Products */            
             $scope.searchProductCode = ''; /* Code for product search */
+            $scope.selectAll = false; /* Set toggle all to false */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -223,26 +224,20 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             };
 
             /* Function to search for Products */
-            $scope.searchProduct = function () {
-                $scope.selectAll = false;
-                $scope.searchedResults = true;
-                $scope.editDisabled = true;
-                $scope.deleteDisabled = true;
-                
+            $scope.searchProduct = function () {    
+            	angular.element(document.querySelector('.loader')).addClass('show');
                 /* Service Call to retrieve searched product */
-                $scope.products = getProductsService.query({code:$scope.searchProductCode});
-            };
-
-            /* Global function to show Modal Window */
-            $rootScope.showModal = function () {
-                angular.element(document.querySelector('.loader')).addClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "block");
-            };
-
-            /* Global function to hide Modal Window */
-            $rootScope.hideModal = function () {
-                angular.element(document.querySelector('.loader')).removeClass('show');
-                angular.element(document.querySelector('.modal')).css('display', "none");
+                $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
+    	        	$timeout(function(){
+    	        		$scope.searchedResults = true;
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        }, function(){ /* Error Callback */
+    	        	$timeout(function(){
+    	        		$scope.errorMessage = "Product not found. Please try again";
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        });
             };
             
             $scope.reset = function () {

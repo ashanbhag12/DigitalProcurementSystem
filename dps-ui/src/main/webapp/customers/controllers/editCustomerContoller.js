@@ -5,17 +5,17 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.showErrorBox = false; /* Hide the success messages */
 	    $scope.successMessage = "";
         $scope.errorMessage = "";
-	    $scope.editDisabled = false; /* Enable the Edit button */
+	    $scope.editDisabled = true; /* Disable the Edit button */
 	    $scope.deleteDisabled = true; /* Disable the Delete button */
 	    $scope.editCustomerForm = false; /* Hide the edit Customer Form */
 	    $scope.searchedResults = false; /* Hide the search results container */
 	    $scope.sortOrder = false; /* set the default sort order */
 	    $scope.sortBy = 'name'; /* set the default sort type */
 	    $scope.selectedRows = []; /* Array for toggleAll function */
-	    $scope.customers = []; /* Array of all Customers */	    
-	    
+	    $scope.customers = []; /* Array of all Customers */	    	    
 	    $scope.searchCustomerName = ''; /* Name for customer search */
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
+	    $scope.selectAll = false; /* Set toggle all to false */
 	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {});
@@ -209,12 +209,19 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	
 	    /* Function to search for Customers */
 	    $scope.searchCustomer = function () {
-	        $scope.selectAll = false;
-	        $scope.searchedResults = true;
-	        $scope.editDisabled = true;
-	        $scope.deleteDisabled = true;	        
+	    	angular.element(document.querySelector('.loader')).addClass('show'); 
 	        /* Service Call to retrieve searched customer */
-	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
+	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark}, function(){/* Success Callback */
+	        	$timeout(function(){
+	        		$scope.searchedResults = true;
+	        		angular.element(document.querySelector('.loader')).removeClass('show');
+	        	}, 500);
+	        }, function(){ /* Error Callback */
+	        	$timeout(function(){
+	        		$scope.errorMessage = "Customer not found. Please try again";
+	        		angular.element(document.querySelector('.loader')).removeClass('show');
+	        	}, 500);
+	        });
 	    };
 	    
 	    $scope.reset = function () {

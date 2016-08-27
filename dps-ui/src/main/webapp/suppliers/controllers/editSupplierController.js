@@ -12,13 +12,12 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortBy = 'name'; /* set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.suppliers = []; /* Array of all Suppliers */            
-            
+            $scope.suppliers = []; /* Array of all Suppliers */ 
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
-            
+            $scope.selectAll = false; /* Set toggle all to false */
             /* Function will be executed after the page is loaded */
-            $scope.$on('$viewContentLoaded', function () {   
+            $scope.$on('$viewContentLoaded', function () {
             });
 
             /* Supplier object to be edited */
@@ -186,16 +185,20 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             };
 
             /* Function to search for Suppliers */
-            $scope.searchSupplier = function () {
-                $scope.selectAll = false;
-                $scope.searchedResults = true;
-                $scope.editDisabled = true;
-                $scope.deleteDisabled = true;
-                
-                /* Service Call to retrieve searched supplier */
-                /*Asign below value to $scope.suppliers later on*/
-                
-                $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
+            $scope.searchSupplier = function () {    
+            	angular.element(document.querySelector('.loader')).addClass('show'); 
+                /* Service Call to retrieve searched supplier */                
+                $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials}, function(){/* Success Callback */
+    	        	$timeout(function(){
+    	        		$scope.searchedResults = true;
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        }, function(){ /* Error Callback */
+    	        	$timeout(function(){
+    	        		$scope.errorMessage = "Supplier not found. Please try again";
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        });
             };
 
             $scope.reset = function () {
