@@ -12,6 +12,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.JpaEntityId;
@@ -161,6 +162,10 @@ public class ProductController
 		
 		for(SuppProdInfo spii : prodDto.getSupplierProductInfoList())
 		{
+			if(StringUtils.isBlank(spii.getSupplierInitials()))
+			{
+				continue;
+			}
 			SupplierProductInfo spi = new SupplierProductInfo();
 			spi.setProduct(prod);
 			spi.setSupplierProductName(spii.getSupplierProductCode());
