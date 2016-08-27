@@ -145,6 +145,8 @@ public class BuildOrderController
 					item.setIsMoqSatisfied(true);
 				}
 				
+				//Add customer product margin
+				item.setCustProdDiscount(custProdMargin);
 			}
 			
 			return wrapper;
