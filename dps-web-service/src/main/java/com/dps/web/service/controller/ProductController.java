@@ -1,8 +1,15 @@
 package com.dps.web.service.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,8 +20,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.entity.Product;
 import com.dps.domain.entity.Supplier;
@@ -23,6 +35,7 @@ import com.dps.service.ProductService;
 import com.dps.service.SupplierService;
 import com.dps.web.service.model.ProductDTO;
 import com.dps.web.service.model.SuppProdInfo;
+import com.sun.jersey.multipart.FormDataParam;
 
 /**
  * Controller class that handles all the web service requests for product crud operations.
@@ -129,6 +142,123 @@ public class ProductController
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Response.Status.OK).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Path("/upload")
+	public void importFromExcel(@FormDataParam("file") InputStream uploadedInputStream)
+	{
+		List<Supplier> suppliersList = supplierService.findAll();
+		Map<String, Supplier> supplierMap = new HashMap<>();
+		
+		for(Supplier supplier : suppliersList)
+		{
+			supplierMap.put(supplier.getInitials(), supplier);
+		}
+		
+		try
+		{
+			XSSFWorkbook workbook = new XSSFWorkbook(uploadedInputStream);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			List<Product> productList = new ArrayList<>();
+			
+			int rowCount = 0;
+			Iterator<Row> rowIterator = sheet.iterator();
+			while(rowIterator.hasNext())
+			{
+				Row row = rowIterator.next();
+				
+				//Ignore the first row
+				if(rowCount++ == 0)
+				{
+					continue;
+				}
+				
+				Iterator<Cell> cellIterator = row.cellIterator();
+				Object[] values = new Object[15];
+				int cellCount = 0;
+				
+				while(cellIterator.hasNext())
+				{
+					Cell cell = cellIterator.next();
+					values[cellCount++] = getCellData(cell);
+				}
+				
+				if(values[0] == null)
+				{
+					break;
+				}
+				
+				Product product = new Product();
+				product.setProductCode(values[0].toString());
+				product.setPrice(new BigDecimal(values[1].toString()));
+				product.setCartoonQuantity(((Double)values[2]).intValue());
+				product.setCbm(new BigDecimal(values[3].toString()));
+				product.setWeight(new BigDecimal(values[4].toString()));
+				product.setDescription(values[5].toString());
+				product.setMoq(((Double)values[6]).intValue());
+				BigDecimal margin = values[7] != null ? new BigDecimal(values[7].toString()) : Constants.BIG_DECIMAL_ONE;
+				product.setDefaultMargin(margin);
+				product.setIsValid("Valid".equalsIgnoreCase((String)values[8]));
+				
+				List<SupplierProductInfo> suppProdInfoList = new ArrayList<>();
+				
+				if(values[9] != null)
+				{
+					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+					String supplierInitials = (String)values[9];
+					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+					suppProdInfo.setSupplierProductName((String)values[10]);
+					suppProdInfo.setProduct(product);
+					suppProdInfoList.add(suppProdInfo);
+				}
+				
+				if(values[11] != null)
+				{
+					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+					String supplierInitials = (String)values[11];
+					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+					suppProdInfo.setSupplierProductName((String)values[12]);
+					suppProdInfo.setProduct(product);
+					suppProdInfoList.add(suppProdInfo);
+				}
+				
+				if(values[13] != null)
+				{
+					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+					String supplierInitials = (String)values[13];
+					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+					suppProdInfo.setSupplierProductName((String)values[14]);
+					suppProdInfo.setProduct(product);
+					suppProdInfoList.add(suppProdInfo);
+				}
+				
+				product.setSuppProdInfo(suppProdInfoList);
+				productList.add(product);
+			}
+			
+			productService.persistAll(productList);
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+	
+	private Object getCellData(Cell cell)
+	{
+		switch(cell.getCellType()) 
+		{
+			case Cell.CELL_TYPE_BOOLEAN:
+				return cell.getBooleanCellValue();
+			case Cell.CELL_TYPE_NUMERIC:
+				return cell.getNumericCellValue();
+			case Cell.CELL_TYPE_STRING:
+				return cell.getStringCellValue();
+		}
+		return null;
 	}
 	
 	private Product productFromProductDtoAdd(Product prod, ProductDTO prodDto)

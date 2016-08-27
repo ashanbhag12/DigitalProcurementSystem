@@ -51,7 +51,7 @@
 		<rest-api-version>3.0.5.Final</rest-api-version>
 		<jackson-version>2.6.3</jackson-version>
 		<jersey.version>1.8</jersey.version>
-		<apache-poi-version>3.14</apache-poi-version>
+		<apache-poi-version>3.9</apache-poi-version>
 	</properties>  	
   	
   	<dependencies>
@@ -315,6 +315,19 @@
 			<artifactId>poi</artifactId>
 			<version>${apache-poi-version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apache-poi-version}</version>
+		</dependency>
+		
 
 	</dependencies>
   	
