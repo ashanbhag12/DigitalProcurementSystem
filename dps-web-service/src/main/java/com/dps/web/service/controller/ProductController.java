@@ -267,6 +267,11 @@ public class ProductController
 		
 		for(SuppProdInfo spii : prodDto.getSupplierProductInfoList())
 		{
+			if(StringUtils.isBlank(spii.getSupplierInitials()))
+			{
+				continue;
+			}
+				
 			SupplierProductInfo spi = new SupplierProductInfo();
 			spi.setProduct(prod);
 			spi.setSupplierProductName(spii.getSupplierProductCode());
