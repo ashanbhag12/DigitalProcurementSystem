@@ -131,7 +131,11 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    		            angular.element(document.querySelector('.loader')).removeClass('show');
 	        	        }, 500);
 	            	}, function(error){/* Error Callback */
-	            		$timeout(function () {		            		
+	            		$timeout(function () {	
+	            			$scope.selectAll = false;
+	        	            $scope.selectedRows = [];
+	        	            $scope.editDisabled = true;
+	        	            $scope.deleteDisabled = true;
 					    	$scope.showSuccessBox = false;
 				            $scope.showErrorBox = true;
 				            $scope.errorMessage = "Customers could not be deleted. Please try again after some time";
@@ -180,6 +184,10 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 			        $scope.editCustomerForm = false;
 			        $scope.showSuccessBox = true;
 			        $scope.showErrorBox = false;
+			        $scope.selectAll = false;
+    	            $scope.selectedRows = [];
+    	            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = true;
 			        $scope.successMessage = "Customer details updated successfully";		            
 		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    		angular.element(document.querySelector('.loader')).removeClass('show');
@@ -188,6 +196,10 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    	$timeout(function () {		   
 			    	$scope.showSuccessBox = false;
 			    	$scope.showErrorBox = true;
+			    	$scope.selectAll = false;
+    	            $scope.selectedRows = [];
+    	            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = true;
 			        $scope.errorMessage = "Customer details could not be updated. Please try again after some time";	            
 		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    		angular.element(document.querySelector('.loader')).removeClass('show');

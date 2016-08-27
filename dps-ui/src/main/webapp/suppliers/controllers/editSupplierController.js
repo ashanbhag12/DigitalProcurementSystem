@@ -1,8 +1,10 @@
 angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('editSupplierController', function ($rootScope, $scope, $timeout, getSuppliersService, modifySuppliersService, deleteSuppliersService, smoothScroll) {
             /* Initialize the page variables */
-            $scope.showSuccessBox = false; /* Hide the error messages */
-            $scope.showErrorBox = false; /* Hide the success messages */
+            $scope.showSuccessBox = false; /* Hide the Success Box */
+            $scope.showErrorBox = false; /* Hide the Error Box */
+            $scope.successMessage = "";
+            $scope.errorMessage = "";
             $scope.editDisabled = true; /* Disable the Edit button */
             $scope.deleteDisabled = true; /* Disable the Delete button */
             $scope.editSupplierForm = false; /* Hide the edit Supplier Form */
@@ -10,22 +12,18 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortBy = 'name'; /* set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.suppliers = []; /* Array of all Suppliers */
-            
+            $scope.suppliers = []; /* Array of all Suppliers */            
             
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
-            
-            $scope.showSuccessBox = false;
-            $scope.showErrorBox = false;
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
             });
 
             /* Supplier object to be edited */
-            /* changed name from editSupplier with supplier bcos it was conflicting with form name*/
-            $scope.supplier = {
+            /* changed name from editSupplier with supplier because it was conflicting with form name*/
+            $scope.supplier = {/* Supplier Object */
                 "id": "",
                 "name": "",
                 "initials": "",
@@ -103,26 +101,41 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.deleteSupplier = function () {
                 angular.forEach($scope.suppliers, function (supplier) {
                     if (supplier.isChecked) {
-                    	response = deleteSuppliersService.remove({supplierId : supplier.id});                   
+                    	angular.element(document.querySelector('.loader')).addClass('show');
+                    	response = deleteSuppliersService.remove({supplierId : supplier.id}, function(){/* Success Callback */
+	                		angular.element(document.querySelector('.modal')).css('display', "none");                            
+	                    	$timeout(function () {
+	                    		/* WS call to get all suppliers */
+	                            $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
+		        	            $scope.selectAll = false;
+		        	            $scope.selectedRows = [];
+		        	            $scope.editDisabled = true;
+		        	            $scope.deleteDisabled = true;
+		        	            $scope.showSuccessBox = true;
+		    			        $scope.successMessage = "Suppliers deleted successfully";
+		    		            $scope.showErrorBox = false;
+		    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+		    		            angular.element(document.querySelector('.loader')).removeClass('show');
+		        	        }, 500);
+	                	}, function(){/* Error Callback */
+	                    	$timeout(function () {	
+	                    		$scope.selectedRows = [];
+		        	            $scope.editDisabled = true;
+		        	            $scope.deleteDisabled = true;
+						    	$scope.showSuccessBox = false;
+					            $scope.showErrorBox = true;
+					            $scope.errorMessage = "Suppliers could not be deleted. Please try again after some time";
+					            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+					            angular.element(document.querySelector('.loader')).removeClass('show');
+						    }, 500);
+	                    }); 
                     }
-                });
-                
-                $timeout(function () {
-                    $rootScope.hideModal('deleteSupplierModal');
-                    $scope.selectAll = false;
-                    // WS call to get all suppliers.
-                    $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
-                    $scope.selectedRows = [];
-                    $scope.editDisabled = true;
-                    $scope.deleteDisabled = true;
-                }, 1000);
+                });                      
             };
 
             /* Function to update the selected Supplier */
-            /* added keepgoing check for performance. Bcos for very first supplier if isChecked condition is true, that supplier will be updated and for loop breaks
+            /* added keepgoing check for performance. Because for very first supplier if isChecked condition is true, that supplier will be updated and for loop breaks
              * Note: no break; concept for angularJs forEach */
-            
-            $scope.updateSupplierJson = {};
             
             $scope.update = function () {
             	var keepGoing = true;
@@ -133,24 +146,42 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                             supplier.initials = $scope.supplier.initials;
                             supplier.phoneNumber = $scope.supplier.phoneNumber;
                             supplier.emailId = $scope.supplier.emailId;
-                            delete supplier.isChecked;
-                            
-                            $scope.updateSupplierJson = angular.toJson(supplier);
-                            
+                            delete supplier.isChecked;                            
+                            $scope.updateSupplierJson = angular.toJson(supplier);                            
                             keepGoing = false;
                         }                    
                 	}
                 });
                 
                 /* Service call to update supplier */
-    		    response = modifySuppliersService.save($scope.updateSupplierJson);
-
-                // WS call to get all suppliers.
-                $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});
-                
-                $scope.editSupplierForm = false;
-                $scope.showSuccessBox = true;
-                $scope.showErrorBox = false;
+    		    response = modifySuppliersService.save($scope.updateSupplierJson, function(){ /* Success Callback */    		    	
+                    $timeout(function () {		 
+                    	// WS call to get all suppliers.
+                        $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials});                        
+                        $scope.editSupplierForm = false;
+    			        $scope.showSuccessBox = true;
+    			        $scope.showErrorBox = false;
+    			        $scope.selectAll = false;
+        	            $scope.selectedRows = [];
+        	            $scope.editDisabled = true;
+        	            $scope.deleteDisabled = true;
+    			        $scope.successMessage = "Supplier details updated successfully";		            
+    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    }, function(){/* Error Callback */
+    		    	$timeout(function () {		   
+    			    	$scope.showSuccessBox = false;
+    			    	$scope.showErrorBox = true;
+    			    	$scope.selectAll = false;
+        	            $scope.selectedRows = [];
+        	            $scope.editDisabled = true;
+        	            $scope.deleteDisabled = true;
+    			        $scope.errorMessage = "Supplier details could not be updated. Please try again after some time";	            
+    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    });
             };
 
             /* Function to search for Suppliers */
@@ -174,5 +205,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 $scope.editSupplier.phoneNumber.$touched = false;
                 $scope.editSupplier.emailId.$touched = false;
                 $scope.showSuccessBox = false;
+                $scope.showErrorBox = false;
             };
         });

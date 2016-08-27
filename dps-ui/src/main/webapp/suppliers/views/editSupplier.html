@@ -1,7 +1,7 @@
 <div class="editSupplierPage">
     <h3 class="md-headline sectionTitle">Search Supplier</h3>
-    <div class="successBox" ng-show="showSuccessBox">Supplier details updated successfully</div>
-    <div class="errorBox" ng-show="showErrorBox">There is some error</div>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
         <md-input-container class="md-block" flex="50">
             <label>Name</label>
