@@ -73,16 +73,17 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         controller: "placeOrderController"
                     });
         }).run(function ($rootScope, $state, $timeout) {
-        	
+        	/* Show loader on route change start */
         	$rootScope.$on('$stateChangeStart',function(){
         		angular.element(document.querySelector('.loader')).addClass('show');
         	 });
         	
-        	  $rootScope.$on('$stateChangeSuccess',function(){
-        		  $timeout(function(){
-        			  angular.element(document.querySelector('.loader')).removeClass('show');  
-        		  }, 500)        		  
-        	 });
+        	/* Hide loader on route change success after 500ms delay */
+        	$rootScope.$on('$stateChangeSuccess',function(){
+	    		  $timeout(function(){
+	    			  angular.element(document.querySelector('.loader')).removeClass('show');  
+	    		  }, 500)        		  
+	    	 });
             
             /* Global function to show Modal Window */
             $rootScope.showModal = function (modalId) {
