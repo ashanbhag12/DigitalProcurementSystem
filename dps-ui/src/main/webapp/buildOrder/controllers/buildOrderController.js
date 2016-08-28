@@ -100,7 +100,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     $timeout(function () {
                     	$scope.productDetails.id = $scope.searchedProduct.id;
                     	$scope.productDetails.productCode = $scope.searchedProduct.productCode;
-                    	//$scope.productDetails.supplierInitials = $scope.searchedProduct.supplierInitials;
+                    	$scope.productDetails.supplierProductInfoList = $scope.searchedProduct.supplierProductInfoList
                     	$scope.productDetails.price = $scope.searchedProduct.price;
                     	$scope.productDetails.moq = $scope.searchedProduct.moq;
                     	$scope.productDetails.cartoonQuantity = $scope.searchedProduct.cartoonQuantity;
@@ -128,6 +128,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         "cartoonQuantity": $scope.productDetails.cartoonQuantity,
                         "remarks": $scope.productDetails.remarks,
                         "unitCost": $scope.productDetails.price,
+                        "moq" : $scope.productDetails.moq,
+                        "supplierProductInfoList" : $scope.productDetails.supplierProductInfoList
                     });
                     
                     $scope.calcProductsList.push({
@@ -164,14 +166,15 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
 
             $scope.editAddedProductsListRow = function () {/* Function to edit the Product in added products table */
                 angular.forEach($scope.productsList, function (product) {
-                    if (product.isChecked) {                        
+                    if (product.isChecked) {
                         $scope.productDetails.productCode = product.productCode;
-                        $scope.productDetails.supplierCode = product.supplierCode;
-                        $scope.productDetails.pricePerPiece = product.pricePerPiece;
-                        $scope.productDetails.productMOQ = product.productMOQ;
-                        $scope.productDetails.remarks = product.remarks;
-                        $scope.productDetails.productQuantity = product.productQuantity;
+                        $scope.productDetails.supplierInitials = product.selectedSupplierInitials;
+                        $scope.productDetails.price = product.unitCost;
+                        $scope.productDetails.moq = product.moq;
                         $scope.productDetails.cartoonQuantity = product.cartoonQuantity;
+                        $scope.productDetails.productQuantity = product.quantity;
+                        $scope.productDetails.remarks = product.remarks;
+                        $scope.productDetails.supplierProductInfoList = product.supplierProductInfoList
                         $scope.showAddBtn = false; /* Show Update Button & hide Add Button */
                         $scope.editProductsListRowDisabled = true;
                         $scope.productDetailsSection = true;
@@ -184,11 +187,11 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 angular.forEach($scope.productsList, function (product) {
                     if (product.isChecked) {
                         product.productCode = $scope.productDetails.productCode;
-                        product.supplierCode = $scope.productDetails.supplierCode;
-                        product.pricePerPiece = $scope.productDetails.pricePerPiece;
-                        product.productMOQ = $scope.productDetails.productMOQ;
+                        product.selectedSupplierInitials = $scope.productDetails.supplierInitials;
+                        product.unitCost = $scope.productDetails.price;
+                        product.moq = $scope.productDetails.moq;
                         product.remarks = $scope.productDetails.remarks;
-                        product.productQuantity = $scope.productDetails.productQuantity;
+                        product.quantity = $scope.productDetails.productQuantity;
                         product.cartoonQuantity = $scope.productDetails.cartoonQuantity;
                         product.isChecked = false;
                     }
