@@ -256,6 +256,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             	angular.element(document.querySelector('.loader')).addClass('show');
             	saveOrderService.save($scope.orderSummary, function(){/* Success Callback */            		 
                      $timeout(function () {
+                    	 $scope.productsList = [];
+                    	 $scope.calcProductsList = [];
                     	 $scope.successMessage = "Order saved successfully";
                          $scope.showSuccessBox = true;
                          $scope.showErrorBox = false;
