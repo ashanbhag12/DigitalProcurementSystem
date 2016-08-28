@@ -438,7 +438,7 @@ h3.sectionTitle, h4.sectionTitle{
 
 .separator{
 	position:relative;
-	margin:15px auto;
+	margin:0 auto 15px;
 	text-align:center;
 	font-size:30px;
 }

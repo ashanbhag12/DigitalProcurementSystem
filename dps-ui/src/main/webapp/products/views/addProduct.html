@@ -1,8 +1,23 @@
-<div class="addProductPage">
-    <h3 class="md-headline sectionTitle">Add Product Form</h3>
+<div class="addProductPage">    
     <div class="animateMessages successBox" ng-show="showSuccessBox">Product added successfully</div>
-    <div class="animateMessages errorBox" ng-show="showErrorBox">Product could not be added. Please try again after some time</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">Product could not be added. Please try again after some time</div>   
+	<form name="uploadExcelForm" action="http://localhost:8080/dps-web-service-0.0.1/rest/product/upload" method="post" enctype="multipart/form-data">
+		<h3 class="md-headline sectionTitle">Upload Excel</h3>
+		<div layout="row">
+			<md-input-container class="md-block" flex="60">
+                <input type="file" name="fileUpload" id="fileUpload" placeholder="" />
+		    </md-input-container>
+		    <div flex="35" flex-offset="5">
+	   			<md-button type="submit" class="md-raised md-primary submitBtn">Upload</md-button>
+			</div>
+		</div>
+	</form>    
+ 	<div class="separator">
+    	<span></span>
+    	<span>OR</span>
+    </div>
     <form name="addProduct" ng-submit="submitForm(addProduct)" novalidate>
+    	<h3 class="md-headline sectionTitle">Add Product Form</h3>
         <div layout="row">
             <md-input-container class="md-block" flex="25">
                 <label>*Product code</label>
@@ -122,19 +137,5 @@
             <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
         </div>
     </form>
-    <div class="separator">
-    	<span></span>
-    	<span>OR</span>
-    </div>
-	<form name="uploadExcelForm" action="http://localhost:8080/dps-web-service-0.0.1/rest/product/upload" method="post" enctype="multipart/form-data">
-		<h3 class="md-headline sectionTitle">Upload Excel</h3>
-		<div layout="row">
-			<md-input-container class="md-block" flex="60">
-                <input type="file" name="fileUpload" id="fileUpload" placeholder="" />
-		    </md-input-container>
-		    <div flex="35" flex-offset="5">
-	   			<md-button type="submit" class="md-raised md-primary submitBtn">Upload</md-button>
-			</div>
-		</div>
-	</form>    
+    
 </div>
