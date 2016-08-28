@@ -35,11 +35,6 @@
                 <md-item-template>
                     <span md-highlight-text="searchText">{{product.productCode}}</span>
                 </md-item-template>
-                <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
-                    <div ng-message="required">You <b>must</b> have a favorite state.</div>
-                    <div ng-message="minlength">Your entry is not long enough.</div>
-                    <div ng-message="maxlength">Your entry is too long.</div>
-                </div>
             </md-autocomplete>
         </div>
     </div>
@@ -48,7 +43,7 @@
         <div layout="row">
             <md-input-container class="md-block" flex="25">
                 <label>Product Code</label>
-                <input type='text' name="productCode" ng-model="productDetails.productCode" />
+                <input type='text' name="productCode" ng-model="productDetails.productCode" ng-readonly="true" />
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>Supplier Initials</label>
@@ -58,7 +53,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>Price Per Item</label>
-                <input type='text' name="pricePerPiece" ng-model="productDetails.price" />
+                <input type='text' name="pricePerPiece" ng-model="productDetails.price" ng-readonly="true" />
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>MOQ</label>
@@ -68,7 +63,7 @@
         <div layout="row" layout-align="center stretch">              
             <md-input-container class="md-block" flex="20">
                 <label>Cartoon Quantity</label>
-                <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" />
+                <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" ng-readonly="true" />
             </md-input-container>
             <md-input-container class="md-block" flex="20">
                 <label>Quantity</label>
