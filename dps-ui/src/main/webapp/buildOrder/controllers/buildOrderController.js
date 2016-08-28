@@ -69,28 +69,20 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.editOrderSummmaryRow[index] = false;
             };
 
-            /**
-             * Search for products... use $timeout to simulate
-             * remote dataservice call.
-             */
+            /* Search for products */
             function querySearch(query) {
-                //var results = query ? $scope.allProducts.filter(createFilterFor(query)) : $scope.allProducts;
-            	var results = $scope.allProducts;
-            	//console.log(results)
+                var results = query ? $scope.allProducts.filter(createFilterFor(query)) : $scope.allProducts;
                 var deferred = $q.defer();
                 $timeout(function () {
                     deferred.resolve(results);
-                }, Math.random() * 1000, false);
+                }, Math.random() * 800, false);
                 return deferred.promise;
             }
 
-            /**
-             * Create filter function for a query string
-             */
+            /* Create filter function for a query string */
             function createFilterFor(query) {
-                var lowercaseQuery = angular.lowercase(query);
                 return function filterFn(product) {
-                    return (product.value.indexOf(lowercaseQuery) === 0);
+                    return (product.productCode.indexOf(query) === 0);
                 };
             }
 
