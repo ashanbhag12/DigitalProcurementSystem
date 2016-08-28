@@ -435,3 +435,24 @@ h3.sectionTitle, h4.sectionTitle{
     background:url("../images/supplier.png") no-repeat center center;
     background-size:65px;
 }
+
+.separator{
+	position:relative;
+	margin:15px auto;
+	text-align:center;
+	font-size:30px;
+}
+
+.separator span:first-child{
+	position:absolute;
+	width:100%;
+	top:50%;
+	left:0;
+	height:1px;
+	background:#ccc;
+}
+
+.separator span:last-child{
+	position:relative;
+	background:#fff;
+}

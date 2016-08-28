@@ -122,15 +122,19 @@
             <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
         </div>
     </form>
+    <div class="separator">
+    	<span></span>
+    	<span>OR</span>
+    </div>
+	<form name="uploadExcelForm" action="http://localhost:8080/dps-web-service-0.0.1/rest/product/upload" method="post" enctype="multipart/form-data">
+		<h3 class="md-headline sectionTitle">Upload Excel</h3>
+		<div layout="row">
+			<md-input-container class="md-block" flex="60">
+                <input type="file" name="fileUpload" id="fileUpload" placeholder="" />
+		    </md-input-container>
+		    <div flex="35" flex-offset="5">
+	   			<md-button type="submit" class="md-raised md-primary submitBtn">Upload</md-button>
+			</div>
+		</div>
+	</form>    
 </div>
-
-<h1>File Upload with Jersey</h1>
-
-	<form action="http://localhost:8080/dps-web-service-0.0.1/rest/product/upload" method="post" enctype="multipart/form-data">
-
-	   <p>
-		Select a file : <input type="file" name="file" size="45" />
-	   </p>
-
-	   <input type="submit" value="Upload It" />
-	</form>
