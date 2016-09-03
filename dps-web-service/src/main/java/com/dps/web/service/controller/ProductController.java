@@ -147,7 +147,7 @@ public class ProductController
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Path("/upload")
-	public void importFromExcel(@FormDataParam("file") InputStream uploadedInputStream)
+	public void importFromExcel(@FormDataParam("fileUpload") InputStream uploadedInputStream)
 	{
 		List<Supplier> suppliersList = supplierService.findAll();
 		Map<String, Supplier> supplierMap = new HashMap<>();
@@ -179,7 +179,7 @@ public class ProductController
 				Object[] values = new Object[15];
 				int cellCount = 0;
 				
-				while(cellIterator.hasNext())
+				while(cellCount < 15)
 				{
 					Cell cell = cellIterator.next();
 					values[cellCount++] = getCellData(cell);

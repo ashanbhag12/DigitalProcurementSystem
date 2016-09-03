@@ -34,7 +34,7 @@ public class CustomerOrderDetailsDaoImpl extends BaseDaoImpl<CustomerOrderDetail
 		Map<Long, Integer> results = new HashMap<>();
 		for(Object[] result : resultList)
 		{
-			results.put((Long)result[0], (Integer)result[1]);
+			results.put((Long)result[0], ((Long)result[1]).intValue());
 		}
 		
 		return results;
