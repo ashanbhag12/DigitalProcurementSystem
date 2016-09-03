@@ -57,11 +57,21 @@ angular.module('placeOrderApp', [])
             	angular.element(document.querySelector('.loader')).addClass('show');
             	$scope.showInfoBox = true;
                 /* WS Call to fetch excel from Products selected */
-            	response = savePlaceOrderService.save($scope.products, function(){ /* Success Callback */
+            	response = savePlaceOrderService.save($scope.products, function(data){ /* Success Callback */
             		$timeout(function(){ 
                         $scope.showSuccessBox = true;
                         $scope.showInfoBox = false;
                         angular.element(document.querySelector('.loader')).removeClass('show');
+                        
+                        var blob = new Blob([data], {});
+                        saveAs(blob, 'Placed_Order' + '.xls')
+                        
+                        /* To reload data in to the table by removing placed order items. */ 
+                        getPlaceOrderService.query().$promise.then(function(data) {
+                    		console.log(data)
+                        	$scope.products = data;
+                        });
+                        
                         console.log(response)
             		}, 500)
             	}, function(error){/* Error Callback */
