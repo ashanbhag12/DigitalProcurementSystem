@@ -1,5 +1,5 @@
 angular.module('placeOrderApp', [])
-        .controller('placeOrderController', function ($scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
+        .controller('placeOrderController', function ($http, $scope, $timeout, getPlaceOrderService) {
             $scope.showSuccessBox = false; /* Hide the Success box */
             $scope.showInfoBox = false; /* Hide the Info box */
             $scope.sortOrder = false; /* Set the default sort order */
@@ -57,24 +57,34 @@ angular.module('placeOrderApp', [])
             	angular.element(document.querySelector('.loader')).addClass('show');
             	$scope.showInfoBox = true;
                 /* WS Call to fetch excel from Products selected */
-            	response = savePlaceOrderService.save($scope.products, function(data){ /* Success Callback */
+            	$http({
+            	    url: 'http://localhost:8080/dps-web-service-0.0.1/rest/placeorder/save',
+            	    method: 'POST',
+            	    responseType: 'arraybuffer',
+            	    data: $scope.products, //this is your json data string
+            	    headers: {
+            	        'Content-type': 'application/json'
+            	    }
+            	}).success(function(data){
             		$timeout(function(){ 
-                        $scope.showSuccessBox = true;
-                        $scope.showInfoBox = false;
-                        angular.element(document.querySelector('.loader')).removeClass('show');
-                        
-                        var blob = new Blob([data], {});
-                        saveAs(blob, 'Placed_Order' + '.xls')
-                        
-                        /* To reload data in to the table by removing placed order items. */ 
+	            	    var blob = new Blob([data], {
+	            	        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+	            	    });
+	            	    saveAs(blob, 'File_Name_With_Some_Unique_Id_Time' + '.xls');
+	            	    
+	            	    $scope.showSuccessBox = true;
+	                    $scope.showInfoBox = false;
+	                    angular.element(document.querySelector('.loader')).removeClass('show');
+	                    
+	                    /* To reload data in to the table by removing placed order items. */ 
                         getPlaceOrderService.query().$promise.then(function(data) {
                     		console.log(data)
                         	$scope.products = data;
                         });
                         
-                        console.log(response)
+	                    console.log(data);
             		}, 500)
-            	}, function(error){/* Error Callback */
+            	}).error(function(error){/* Error Callback */
             		$timeout(function(){ 
                         console.log(error)
                         angular.element(document.querySelector('.loader')).removeClass('show');
