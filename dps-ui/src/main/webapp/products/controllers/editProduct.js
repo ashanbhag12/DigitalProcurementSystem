@@ -114,12 +114,15 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         $scope.product.description = product.description;
                         $scope.product.moq = product.moq;
                         $scope.product.defaultMargin = product.defaultMargin;
-                        $scope.product.supplierProductInfoList[0].supplierInitials = product.supplierProductInfoList[0].supplierInitials;
-                        $scope.product.supplierProductInfoList[0].supplierProductCode = product.supplierProductInfoList[0].supplierProductCode;
-                        $scope.product.supplierProductInfoList[1].supplierInitials = product.supplierProductInfoList[1].supplierInitials;
-                        $scope.product.supplierProductInfoList[1].supplierProductCode = product.supplierProductInfoList[1].supplierProductCode;
-                        $scope.product.supplierProductInfoList[2].supplierInitials = product.supplierProductInfoList[2].supplierInitials;
-                        $scope.product.supplierProductInfoList[2].supplierProductCode = product.supplierProductInfoList[2].supplierProductCode;
+                        for(i=0;i<3;i++){
+                        	if(product.supplierProductInfoList[i] != undefined){
+                            	$scope.product.supplierProductInfoList[i].supplierInitials = product.supplierProductInfoList[i].supplierInitials;
+                                $scope.product.supplierProductInfoList[i].supplierProductCode = product.supplierProductInfoList[i].supplierProductCode;
+                            }else{
+                            	$scope.product.supplierProductInfoList[i].supplierInitials = "";
+                                $scope.product.supplierProductInfoList[i].supplierProductCode = ""
+                            }
+                        }
                         $scope.product.isValid = "false";
                     }
                 });
@@ -170,6 +173,19 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 	if(keepGoing) {
                 		if (product.isChecked) {
                 			angular.element(document.querySelector('.loader')).addClass('show');
+                			
+                			/* So that supplierProductInfoList is of size 3, having 3 objs */
+                			product.supplierProductInfoList = [{
+								                    			"supplierInitials": "",
+								                    			"supplierProductCode": ""
+								                    		}, {
+								                    			"supplierInitials": "",
+								                    			"supplierProductCode": ""
+								                    		}, {
+								                    			"supplierInitials": "",
+								                    			"supplierProductCode": ""
+								                    		}],
+                			
                             product.productCode = $scope.product.productCode;
                             product.cartoonQuantity = $scope.product.cartoonQuantity;
                             product.cbm = $scope.product.cbm;
