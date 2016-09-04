@@ -93,6 +93,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     	$scope.productDetails.id = $scope.searchedProduct.id;
                     	$scope.productDetails.productCode = $scope.searchedProduct.productCode;
                     	$scope.productDetails.supplierProductInfoList = $scope.searchedProduct.supplierProductInfoList
+                    	$scope.productDetails.supplierInitials =  $scope.searchedProduct.supplierProductInfoList[0].supplierInitials;
                     	$scope.productDetails.price = $scope.searchedProduct.price;
                     	$scope.productDetails.moq = $scope.searchedProduct.moq;
                     	$scope.productDetails.cartoonQuantity = $scope.searchedProduct.cartoonQuantity;
