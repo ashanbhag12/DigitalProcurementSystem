@@ -6,20 +6,25 @@ angular.module('placeOrderApp', [])
             $scope.sortType = 'productCode'; /* Set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Object containing all products data */
+            $scope.selectAll = false; /* Set toggle all to false */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
                 /* WS call to fetch the data */
-            	getPlaceOrderService.query().$promise.then(function(data) {
-            		console.log(data)
+            	getPlaceOrderService.query().$promise.then(function(data) {            		
                 	$scope.products = data;
-                });
-
-                /* To select the rows which fulfills MOQ */
-                angular.forEach($scope.products, function (product) {
-                    if (product.isChecked) {
-                        $scope.selectedRows.push(1);
-                    }
+                	console.log($scope.products)
+                	
+                	/* To select the rows which fulfills MOQ */
+	                angular.forEach($scope.products, function (product) {
+	                    if (product.toOrder) {
+	                        $scope.selectedRows.push(1);
+	                    }
+	                });
+	                /* Set selectAll true if all products are selected */
+	                if ($scope.products.length === $scope.selectedRows.length && $scope.products.length !== 0) {
+	    	            $scope.selectAll = true;	    	            
+	    	        }
                 });
             });
 
@@ -29,22 +34,23 @@ angular.module('placeOrderApp', [])
                     $scope.selectAll = true;
                     $scope.selectedRows = [];
                     angular.forEach($scope.products, function (product) {
-                        product.isChecked = $scope.selectAll;                        
+                        product.toOrder = $scope.selectAll;                        
                         $scope.selectedRows.push(1);
                     });
                 }
                 else {
                     $scope.selectAll = false;
                     angular.forEach($scope.products, function (product) {
-                        product.isChecked = $scope.selectAll;
+                        product.toOrder = $scope.selectAll;
                         $scope.selectedRows.pop();
                     });
+                    $scope.selectedRows = [];
                 }
             };
 
             /* Function to select/unselect the Supplier */
             $scope.toggle = function (element) {
-                if (element.isChecked) {
+                if (element.toOrder) {
                     $scope.selectedRows.push(1);
                 }
                 else {
@@ -80,8 +86,8 @@ angular.module('placeOrderApp', [])
                         getPlaceOrderService.query().$promise.then(function(data) {
                     		console.log(data)
                         	$scope.products = data;
-                        });
-                        
+                    		$scope.selectAll = false;
+                        });                        
 	                    console.log(data);
             		}, 500)
             	}).error(function(error){/* Error Callback */

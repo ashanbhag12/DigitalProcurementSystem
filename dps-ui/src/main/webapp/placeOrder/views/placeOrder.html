@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:25" ng-class="{'success':product.isMOQFulfilled}">                                        
+                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:25" ng-class="{'success':product.quantity >= product.moq}">                                        
                     <td>{{product.supplierInitials}}</td>
                     <td>{{product.customerDetails}}</td>
                     <td>{{product.productCode}}</td>
