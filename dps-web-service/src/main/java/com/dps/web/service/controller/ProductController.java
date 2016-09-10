@@ -196,20 +196,20 @@ public class ProductController
 				product.setCartoonQuantity(((Double)values[2]).intValue());
 				product.setCbm(new BigDecimal(values[3].toString()));
 				product.setWeight(new BigDecimal(values[4].toString()));
-				product.setDescription(values[5].toString());
+				product.setDescription(values[5] != null ? values[5].toString() : "");
 				product.setMoq(((Double)values[6]).intValue());
 				BigDecimal margin = values[7] != null ? new BigDecimal(values[7].toString()) : Constants.BIG_DECIMAL_ONE;
 				product.setDefaultMargin(margin);
-				product.setIsValid("Valid".equalsIgnoreCase((String)values[8]));
+				product.setIsValid("Valid".equalsIgnoreCase((String)values[8]) || "Y".equalsIgnoreCase((String)values[8]));
 				
 				List<SupplierProductInfo> suppProdInfoList = new ArrayList<>();
 				
 				if(values[9] != null)
 				{
 					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = (String)values[9];
+					String supplierInitials = values[9].toString();
 					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName((String)values[10]);
+					suppProdInfo.setSupplierProductName(values[10].toString());
 					suppProdInfo.setProduct(product);
 					suppProdInfoList.add(suppProdInfo);
 				}
@@ -217,9 +217,9 @@ public class ProductController
 				if(values[11] != null)
 				{
 					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = (String)values[11];
+					String supplierInitials = values[11].toString();
 					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName((String)values[12]);
+					suppProdInfo.setSupplierProductName(values[12].toString());
 					suppProdInfo.setProduct(product);
 					suppProdInfoList.add(suppProdInfo);
 				}
@@ -227,9 +227,9 @@ public class ProductController
 				if(values[13] != null)
 				{
 					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = (String)values[13];
+					String supplierInitials = values[13].toString();
 					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName((String)values[14]);
+					suppProdInfo.setSupplierProductName(values[14].toString());
 					suppProdInfo.setProduct(product);
 					suppProdInfoList.add(suppProdInfo);
 				}
