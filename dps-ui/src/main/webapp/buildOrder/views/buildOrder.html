@@ -13,9 +13,9 @@
         </md-input-container>  
         <div class="datepickerContainer" flex="30" flex-offset="5">
             <label>Order Date</label>
-            <md-content>
-                <md-datepicker ng-model="orderDate" md-placeholder="Select date" md-open-on-focus></md-datepicker>
-            </md-content>
+            <div>
+                <md-datepicker ng-model="orderDate" md-placeholder="Select date" md-open-on-focus md-hide-icons="triangle"></md-datepicker>
+            </div>
         </div>
     </div>
     <div layout="row" class="marginT10 paddingB10" ng-show="searchProductSection" id="searchProductSection">
