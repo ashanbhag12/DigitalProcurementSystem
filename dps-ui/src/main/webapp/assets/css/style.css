@@ -359,6 +359,8 @@ h3.sectionTitle, h4.sectionTitle{
     border-color: #337ab7;
 }
 
+md-datepicker {background: #FAFAFA;}
+
 .datepickerContainer label{
     display:inline-block;
     margin-left:15px;

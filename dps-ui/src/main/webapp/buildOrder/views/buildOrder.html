@@ -12,7 +12,7 @@
             </md-select>
         </md-input-container>  
         <div class="datepickerContainer" flex="30" flex-offset="5">
-            <label>Order Date (MM/DD/YYYY)</label>
+            <label>Order Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderDate" md-placeholder="Select date" md-open-on-focus></md-datepicker>
             </div>
@@ -20,7 +20,7 @@
     </div>
     <div layout="row" class="marginT10 paddingB10" ng-show="searchProductSection" id="searchProductSection">
         <div flex="30">
-            <md-autocomplete flex
+            <md-autocomplete flex md-input-id="autocompleteProductField"
                              md-input-name="autocompleteProductField"
                              md-input-minlength="1"
                              md-input-maxlength="18"
@@ -68,7 +68,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex="20">
                 <label>Quantity</label>
-                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" />
+                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" />
                 <div ng-messages="selectedProductDetails.productQuantity.$error" ng-show="selectedProductDetails.productQuantity.$touched">
                     <div ng-message-exp="['required', 'min']">This is required. Should be more than 0.</div>
                 </div>

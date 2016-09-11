@@ -105,6 +105,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                             product.isChecked = false; /* Uncheck the checkbox */
                         });
                         angular.element(document.querySelector('.loader')).removeClass('show');
+                        $timeout(function () {
+	                        angular.element(document.querySelector('#productQuantity')).focus();
+                        }, 100);
                     }, 500);
                 }
             };
@@ -140,6 +143,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     $scope.productDetailsSection = false;                   
                     smoothScroll(document.getElementById('addedProductsSection')); /* Scroll to the added products section */
                     angular.element(document.querySelector('.loader')).removeClass('show');
+                    $timeout(function () {
+                        angular.element(document.querySelector('#autocompleteProductField')).focus();
+                    }, 100);
             	}, 500);                
             };
             
