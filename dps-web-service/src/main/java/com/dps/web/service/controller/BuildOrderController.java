@@ -115,6 +115,7 @@ public class BuildOrderController
 				Product product = prodMap.get(item.getProductId());
 				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()) : Constants.BIG_DECIMAL_ONE;
 				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin();
+				BigDecimal cartoonQuantity  = new BigDecimal(product.getCartoonQuantity().intValue());
 				
 				BigDecimal price = product.getPrice();
 				price = price.multiply(productMargin);
@@ -124,9 +125,11 @@ public class BuildOrderController
 				
 				BigDecimal cbmPrice = cbmrt;
 				cbmPrice = cbmPrice.multiply(product.getCbm());
+				cbmPrice = cbmPrice.divide(cartoonQuantity);
 				
 				BigDecimal gwPrice = gwrt;
 				gwPrice = gwPrice.multiply(product.getWeight());
+				gwPrice.divide(cartoonQuantity);
 				
 				BigDecimal unitPrice = price.add(cbmPrice);
 				unitPrice = unitPrice.add(gwPrice);
