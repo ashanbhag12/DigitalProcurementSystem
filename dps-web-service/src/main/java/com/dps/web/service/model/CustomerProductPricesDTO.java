@@ -16,10 +16,14 @@ public class CustomerProductPricesDTO
 {
 	private String productCode;
 	private BigDecimal productPrice; 
-	private BigDecimal customerMargin;
 	private BigDecimal productMargin;
 	private BigDecimal customerProductMargin;
 	private BigDecimal cost;
+	private String productDescription;
+	private Integer cartoonQuantity;
+	private BigDecimal grossWeight;
+	private BigDecimal cbm;
+	private boolean toExport = false;
 
 	public String getProductCode()
 	{
@@ -39,16 +43,6 @@ public class CustomerProductPricesDTO
 	public void setProductPrice(BigDecimal productPrice)
 	{
 		this.productPrice = productPrice;
-	}
-
-	public BigDecimal getCustomerMargin()
-	{
-		return customerMargin;
-	}
-
-	public void setCustomerMargin(BigDecimal customerMargin)
-	{
-		this.customerMargin = customerMargin;
 	}
 
 	public BigDecimal getProductMargin()
@@ -81,4 +75,53 @@ public class CustomerProductPricesDTO
 		this.customerProductMargin = customerProductMargin;
 	}
 
+	public boolean isToExport()
+	{
+		return toExport;
+	}
+
+	public void setToExport(boolean toExport)
+	{
+		this.toExport = toExport;
+	}
+
+	public String getProductDescription()
+	{
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription)
+	{
+		this.productDescription = productDescription;
+	}
+
+	public Integer getCartoonQuantity()
+	{
+		return cartoonQuantity;
+	}
+
+	public void setCartoonQuantity(Integer cartoonQuantity)
+	{
+		this.cartoonQuantity = cartoonQuantity;
+	}
+
+	public BigDecimal getGrossWeight()
+	{
+		return grossWeight;
+	}
+
+	public void setGrossWeight(BigDecimal grossWeight)
+	{
+		this.grossWeight = grossWeight;
+	}
+
+	public BigDecimal getCbm()
+	{
+		return cbm;
+	}
+
+	public void setCbm(BigDecimal cbm)
+	{
+		this.cbm = cbm;
+	}
 }

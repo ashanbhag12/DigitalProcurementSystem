@@ -39,6 +39,7 @@ public class ConfigController
 			configDto.setCostPerCbm(config.getPricePerCbm());
 			configDto.setCostPerGrossWeight(config.getPricePerWeight());
 			configDto.setExchangeRate(config.getExchangeRate());
+			configDto.setBasePath(config.getBasePath());
 		}
 		
 		return configDto;
@@ -53,6 +54,7 @@ public class ConfigController
 		config.setExchangeRate(configDto.getExchangeRate());
 		config.setPricePerWeight(configDto.getCostPerGrossWeight());
 		config.setPricePerCbm(configDto.getCostPerCbm());
+		config.setBasePath(configDto.getBasePath());
 		
 		configService.merge(config);
 	}

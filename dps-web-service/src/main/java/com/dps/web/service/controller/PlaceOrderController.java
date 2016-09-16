@@ -3,6 +3,8 @@ package com.dps.web.service.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,8 +16,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -149,8 +149,7 @@ public class PlaceOrderController
 	
 	@POST
 	@Path("/save")
-	@Produces("application/vnd.ms-excel")
-	public Response saveSupplierOrder(List<PlaceOrderDTO> orderList) throws IOException
+	public void saveSupplierOrder(List<PlaceOrderDTO> orderList) throws IOException
 	{
 		List<JpaEntityId> idList = new ArrayList<>();
 		Map<String, List<PlaceOrderDTO>> ordersPerSupplier = new HashMap<>();
@@ -234,27 +233,19 @@ public class PlaceOrderController
 		supplierOrderService.persistAll(supplierOrderList);
 		custOrderDetService.mergeAll(custOrderDetList);
 		
-		HSSFWorkbook workbook = createExcel(ordersPerSupplier);
-		
-		String filePath = System.getProperty("java.io.tmpdir");
-		filePath = filePath + new Date().getTime()  + ".xls";
-		File file = new File(filePath);
-		FileOutputStream out = new FileOutputStream(file);
-		workbook.write(out);
-		out.close();
-
-		ResponseBuilder response = Response.ok((Object) file);
-		response.header("Content-Disposition", "attachment; filename="+filePath);
-		return response.build();
+		createExcel(ordersPerSupplier, config);
 	}
 
-	private HSSFWorkbook createExcel(Map<String, List<PlaceOrderDTO>> ordersPerSupplier)
+	private HSSFWorkbook createExcel(Map<String, List<PlaceOrderDTO>> ordersPerSupplier, Configurations config) throws IOException
 	{
-		HSSFWorkbook workbook = new HSSFWorkbook();
+		Date date = new Date();
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		String dateStr = df.format(date);
 		
 		for(String suppInitials : ordersPerSupplier.keySet())
 		{
 			//Create a new sheet for each supplier
+			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet sheet = workbook.createSheet(suppInitials);
 			
 			//Create header Row
@@ -282,8 +273,15 @@ public class PlaceOrderController
 				cell = row.createCell(3);
 				cell.setCellValue(order.getCustomerDetails());
 			}
+			
+			String filePath = config.getBasePath() + "supplier" + File.separator;
+			filePath = filePath + suppInitials + "_" + dateStr  + ".xls";
+			File file = new File(filePath);
+			FileOutputStream out = new FileOutputStream(file);
+			workbook.write(out);
+			out.close();
 		}
 		
-		return workbook;
+		return null;
 	}
 }

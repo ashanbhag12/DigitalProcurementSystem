@@ -1,7 +1,12 @@
 package com.dps.web.service.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +23,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
+import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.Customer;
 import com.dps.domain.entity.CustomerProductPreference;
 import com.dps.domain.entity.Product;
+import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerProductPreferenceService;
 import com.dps.service.CustomerService;
 import com.dps.service.ProductService;
 import com.dps.web.service.model.CustomerProductPricesDTO;
 import com.dps.web.service.model.CustomerProductPricesWrapperDTO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * This is a controller class that computes the price of a product for a customer and also saves the discount for a customer.
@@ -47,6 +62,9 @@ public class CustomerProductPriceController
 	
 	@Autowired
 	private CustomerProductPreferenceService custProdPrefService;
+	
+	@Autowired
+	private ConfigurationsService configService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -76,7 +94,10 @@ public class CustomerProductPriceController
 			custProdPriceDto.setCustomerProductMargin(custProdPrefs.get(prod.getId()) != null ? custProdPrefs.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
 			custProdPriceDto.setProductMargin(prod.getDefaultMargin());
 			custProdPriceDto.setProductPrice(prod.getPrice());
-			custProdPriceDto.setCustomerMargin(cust.getAdditionalMargin());
+			custProdPriceDto.setProductDescription(prod.getDescription());
+			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
+			custProdPriceDto.setGrossWeight(prod.getWeight());
+			custProdPriceDto.setCbm(prod.getCbm());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
@@ -164,6 +185,104 @@ public class CustomerProductPriceController
 			
 			custProdPrefService.mergeAll(customerUpdatedPreferences);
 			custProdPrefService.removeAll(toDeletePreferences);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/export")
+	public void generatePdfReport(CustomerProductPricesWrapperDTO wrapper)
+	{
+		try
+		{
+			//Get the configurations
+			Configurations config = configService.findAll().get(0);
+			
+			//Get the customer
+			List<Customer> custList = customerService.findByShipmarkAndName(wrapper.getShipmark(), null);
+			Customer cust = custList.get(0);
+			
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			String dateStr = df.format(date);
+			
+			String reportPath = config.getBasePath() + "customer" + File.separator;
+			String imagePath = config.getBasePath() + "images"  + File.separator;
+			
+			Document document = new Document();
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
+			document.open();
+			document.add(new Paragraph("Product details"));
+			
+			PdfPTable table = new PdfPTable(3); 
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(10f);
+			table.setSpacingAfter(10f);
+			
+			
+			float[] columnWidths = {1f, 1f, 1f};
+			table.setWidths(columnWidths);
+			
+			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
+			{
+				if(custProdPrice.isToExport())
+				{
+					PdfPCell cell = new PdfPCell();
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);	
+					cell.setPadding(10f);
+					
+					StringBuffer sb = new StringBuffer();
+					sb.append("Product code : ");
+					sb.append(custProdPrice.getProductCode());
+					sb.append("\n");
+					
+					sb.append("Description : ");
+					sb.append(custProdPrice.getProductDescription());
+					sb.append("\n");
+					
+					sb.append("Packaageing : ");
+					sb.append(custProdPrice.getCartoonQuantity());
+					sb.append("\n");
+					
+					sb.append("CBM : ");
+					sb.append(custProdPrice.getCbm());
+					sb.append("\n");
+					
+					sb.append("Weight : ");
+					sb.append(custProdPrice.getGrossWeight());
+					sb.append("\n");
+					
+					sb.append("Price : Rs. ");
+					sb.append(custProdPrice.getCost().setScale(2));
+					sb.append("\n");
+					
+					Paragraph para = new Paragraph(sb.toString());
+					cell.addElement(para);
+					
+					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".png");
+					image.scaleAbsolute(100f, 75f);
+					image.setBorderWidth(2);
+					image.setBorder(Rectangle.BOX);
+					
+					cell.addElement(image);
+					table.addCell(cell);
+					
+					System.out.println("Hello");
+				}
+			}
+			
+			table.completeRow();
+			
+			document.add(table);
+			
+			document.close();
+			writer.flush();
+			writer.close();
 		}
 		catch(Exception e)
 		{

@@ -16,7 +16,16 @@ public class ConfigDTO
 	private BigDecimal exchangeRate;
 	private BigDecimal costPerCbm;
 	private BigDecimal costPerGrossWeight;
+	private String basePath;
 	
+	public String getBasePath()
+	{
+		return basePath;
+	}
+	public void setBasePath(String basePath)
+	{
+		this.basePath = basePath;
+	}
 	public BigDecimal getExchangeRate()
 	{
 		return exchangeRate;

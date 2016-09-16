@@ -36,6 +36,9 @@ public class Configurations extends EntityBase
 	
 	@Column(name="WEIGHT_RATE")
 	private BigDecimal pricePerWeight;
+	
+	@Column(name="BASE_PATH")
+	private String basePath;
 
 	public BigDecimal getPricePerCbm()
 	{
@@ -70,6 +73,16 @@ public class Configurations extends EntityBase
 	public Long getId()
 	{
 		return id;
+	}
+
+	public String getBasePath()
+	{
+		return basePath;
+	}
+
+	public void setBasePath(String basePath)
+	{
+		this.basePath = basePath;
 	}
 
 	@Override

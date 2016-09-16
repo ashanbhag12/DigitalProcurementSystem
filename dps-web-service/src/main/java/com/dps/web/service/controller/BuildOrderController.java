@@ -1,6 +1,7 @@
 package com.dps.web.service.controller;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,11 +126,11 @@ public class BuildOrderController
 				
 				BigDecimal cbmPrice = cbmrt;
 				cbmPrice = cbmPrice.multiply(product.getCbm());
-				cbmPrice = cbmPrice.divide(cartoonQuantity);
+				cbmPrice = cbmPrice.divide(cartoonQuantity, 2, RoundingMode.HALF_UP);
 				
 				BigDecimal gwPrice = gwrt;
 				gwPrice = gwPrice.multiply(product.getWeight());
-				gwPrice.divide(cartoonQuantity);
+				gwPrice.divide(cartoonQuantity, 2, RoundingMode.HALF_UP);
 				
 				BigDecimal unitPrice = price.add(cbmPrice);
 				unitPrice = unitPrice.add(gwPrice);
