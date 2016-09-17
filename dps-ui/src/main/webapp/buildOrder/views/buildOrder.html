@@ -68,7 +68,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex="20">
                 <label>Quantity</label>
-                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" />
+                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" required/>
                 <div ng-messages="selectedProductDetails.productQuantity.$error" ng-show="selectedProductDetails.productQuantity.$touched">
                     <div ng-message-exp="['required', 'min']">This is required. Should be more than 0.</div>
                 </div>
