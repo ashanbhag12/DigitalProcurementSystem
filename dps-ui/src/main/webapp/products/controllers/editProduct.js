@@ -281,4 +281,17 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.editProduct.isValid.$touched = false;                
                 $scope.showSuccessBox = false;
             };
+            
+            /*Concats all Supplier Initials and returns it to displays in table*/
+            $scope.getSupplierInitials = function(supplierProductInfoList){
+            	
+            	var supplierInitialsSrting = '';
+            	
+            	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
+            		supplierInitialsSrting += supplierProductInfo.supplierInitials;
+            		supplierInitialsSrting += '; ';
+            	});
+            	
+            	return supplierInitialsSrting;
+            }
         });

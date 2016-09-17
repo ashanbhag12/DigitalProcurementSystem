@@ -43,6 +43,8 @@
                     <th>Description</th>
                     <th>MOQ</th>
                     <th>Default Margin</th>
+                    <th>Supplier Initials</th>
+                    <th>Is Valid</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
                          ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
@@ -59,6 +61,8 @@
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
                     <td>{{product.defaultMargin}}</td>
+                    <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
+                    <td>{{product.isValid ? 'Yes' : 'No'}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
                                  aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>
