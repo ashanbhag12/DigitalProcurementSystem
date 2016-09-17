@@ -39,7 +39,7 @@
         </div>
     </div>
     <form name="selectedProductDetails" novalidate>
-    <div class="animateSection bottomDashedBorder" ng-show="productDetailsSection" id="productDetailsSection">
+    <div class="bottomDashedBorder" ng-show="productDetailsSection" id="productDetailsSection">
         <h3 class="md-headline sectionTitle">Product Details</h3>
         <div layout="row">
             <md-input-container class="md-block" flex="25">
@@ -149,29 +149,17 @@
                     <th>Product Code</th>
                     <th>Supplier Code</th>                    
                     <th>Quantity</th>
-                    <th>Customer Specific Product Margin</th> 
+                    <th>Customer Product Margin</th> 
                     <th>Cost</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr dir-paginate="product in orderSummary.orderItems | itemsPerPage:20 track by $index" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
                     <td>{{product.productCode}}</td>
                     <td>{{product.selectedSupplierInitials}}</td>                     
-                    <td>
-                    <div ng-hide="editOrderSummmaryRow[$index]">{{product.quantity | number}}</div>
-                        <div ng-show="editOrderSummmaryRow[$index]">
-                            <input type='text' ng-model="product.quantity" placeholder="Quantity" />  
-                        </div>
-                    </td> 
-                    <td>{{product.custProdDiscount | number:2}}</td>
-                    <td>{{product.unitCost * product.quantity | currency:"Rs."}}</td>
-                    <td class='alignCenter'>
-                        <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editCartRow($index, $event)" 
-                           title='Edit Row' ng-hide="editOrderSummmaryRow[$index]"></a>
-                        <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateCartRow($index, $event)" 
-                           title='Update Row' ng-show="editOrderSummmaryRow[$index]"></a>
-                    </td>                    
+                    <td>{{product.quantity | number}}</td> 
+                    <td>{{product.custProdDiscount | number:3}}</td>
+                    <td>{{product.unitCost * product.quantity | currency:"Rs."}}</td>                   
                 </tr>
             </tbody>
             <tfoot>

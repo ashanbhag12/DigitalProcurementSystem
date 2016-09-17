@@ -61,14 +61,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.editOrderSummmaryRow[i] = false;
             }
 
-            $scope.editCartRow = function (index) {
-                $scope.editOrderSummmaryRow[index] = true;
-            };
-
-            $scope.updateCartRow = function (index) {
-                $scope.editOrderSummmaryRow[index] = false;
-            };
-
             /* Search for products */
             function querySearch(query) {
                 var results = query ? $scope.allProducts.filter(createFilterFor(query)) : $scope.allProducts;
@@ -145,6 +137,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     angular.element(document.querySelector('.loader')).removeClass('show');
                     $timeout(function () {
                         angular.element(document.querySelector('#autocompleteProductField')).focus();
+                        $scope.showSuccessBox = false;
+                        $scope.showErrorBox = false;
                     }, 100);
             	}, 500);                
             };
@@ -178,6 +172,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.editProductsListRowDisabled = true;
                         $scope.productDetailsSection = true;
                         smoothScroll(document.getElementById('productDetailsSection')); /* Scroll to the product details section */
+                        $timeout(function () {
+	                        angular.element(document.querySelector('#productQuantity')).focus();
+                        }, 100);
                     }
                 });
             };
@@ -206,7 +203,12 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
                 $scope.editProductsListRowDisabled = false;
                 $scope.editDisabled = true;
-                $scope.deleteDisabled = true;                
+                $scope.deleteDisabled = true;
+                $timeout(function () {
+                    angular.element(document.querySelector('#autocompleteProductField')).focus();
+                    $scope.showSuccessBox = false;
+                    $scope.showErrorBox = false;
+                }, 100);
             };
             
             /* Function to delete the selected product from added products table */
@@ -234,7 +236,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 	$timeout(function(){
                 		$scope.orderSummarySection = true;
                         smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
-                        $scope.successMessage = "Order cart saved successfully";
+                        $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
                         $scope.showSuccessBox = true;
                         angular.element(document.querySelector('.loader')).removeClass('show');     
