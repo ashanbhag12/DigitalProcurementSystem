@@ -123,7 +123,11 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                                 $scope.product.supplierProductInfoList[i].supplierProductCode = ""
                             }
                         }
-                        $scope.product.isValid = "false";
+                        if(product.isValid == true){
+                        	$scope.product.isValid = "true";
+                        }else{
+                        	$scope.product.isValid = "false";
+                        }
                     }
                 });
             };
