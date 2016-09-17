@@ -78,8 +78,8 @@
                 <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125"></textarea>
             </md-input-container>
             <div flex="15" flex-offset="5">
-                <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn">ADD</md-button>
-                <md-button class="md-raised md-primary submitBtn" ng-click="updateAddedProductsListRow()" ng-show="!showAddBtn">UPDATE</md-button>
+                <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn" ng-disabled="selectedProductDetails.$invalid">ADD</md-button>
+                <md-button class="md-raised md-primary submitBtn" ng-click="updateAddedProductsListRow()" ng-show="!showAddBtn" ng-disabled="selectedProductDetails.$invalid">UPDATE</md-button>
             </div>
         </div>
     </div>
