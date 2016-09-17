@@ -84,9 +84,9 @@ public class BuildOrderController
 			
 			//Get global constants
 			Configurations config = configService.findAll().get(0);
-			BigDecimal fxrt = config.getExchangeRate();
-			BigDecimal cbmrt = config.getPricePerCbm();
-			BigDecimal gwrt = config.getPricePerWeight();
+			BigDecimal fxrt = config.getExchangeRate().setScale(3);
+			BigDecimal cbmrt = config.getPricePerCbm().setScale(3);
+			BigDecimal gwrt = config.getPricePerWeight().setScale(3);
 			
 			List<BuildOrderDTO> orderItems = wrapper.getOrderItems();
 			
@@ -114,26 +114,26 @@ public class BuildOrderController
 			for(BuildOrderDTO item : orderItems)
 			{
 				Product product = prodMap.get(item.getProductId());
-				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()) : Constants.BIG_DECIMAL_ONE;
-				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin();
-				BigDecimal cartoonQuantity  = new BigDecimal(product.getCartoonQuantity().intValue());
+				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()).setScale(3) : Constants.BIG_DECIMAL_ONE;
+				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin().setScale(3);
+				BigDecimal cartoonQuantity  = new BigDecimal(product.getCartoonQuantity().intValue()).setScale(3);
 				
 				BigDecimal price = product.getPrice();
 				price = price.multiply(productMargin);
 				price = price.multiply(custProdMargin);
 				price = price.multiply(custAddMargin);
-				price = price.multiply(fxrt);
+				price = price.multiply(fxrt).setScale(3);
 				
 				BigDecimal cbmPrice = cbmrt;
 				cbmPrice = cbmPrice.multiply(product.getCbm());
-				cbmPrice = cbmPrice.divide(cartoonQuantity, 2, RoundingMode.HALF_UP);
+				cbmPrice = cbmPrice.divide(cartoonQuantity, 3, RoundingMode.HALF_UP);
 				
 				BigDecimal gwPrice = gwrt;
 				gwPrice = gwPrice.multiply(product.getWeight());
-				gwPrice.divide(cartoonQuantity, 2, RoundingMode.HALF_UP);
+				gwPrice.divide(cartoonQuantity, 3, RoundingMode.HALF_UP);
 				
 				BigDecimal unitPrice = price.add(cbmPrice);
-				unitPrice = unitPrice.add(gwPrice);
+				unitPrice = unitPrice.add(gwPrice).setScale(3);
 				
 				item.setUnitCost(unitPrice);
 				

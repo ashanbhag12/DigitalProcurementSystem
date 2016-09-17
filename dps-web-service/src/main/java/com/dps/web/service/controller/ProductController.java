@@ -192,10 +192,10 @@ public class ProductController
 				
 				Product product = new Product();
 				product.setProductCode(values[0].toString());
-				product.setPrice(new BigDecimal(values[1].toString()));
+				product.setPrice(new BigDecimal(values[1].toString()).setScale(3));
 				product.setCartoonQuantity(((Double)values[2]).intValue());
-				product.setCbm(new BigDecimal(values[3].toString()));
-				product.setWeight(new BigDecimal(values[4].toString()));
+				product.setCbm(new BigDecimal(values[3].toString()).setScale(3));
+				product.setWeight(new BigDecimal(values[4].toString()).setScale(3));
 				product.setDescription(values[5] != null ? values[5].toString() : "");
 				product.setMoq(((Double)values[6]).intValue());
 				BigDecimal margin = values[7] != null ? new BigDecimal(values[7].toString()) : Constants.BIG_DECIMAL_ONE;

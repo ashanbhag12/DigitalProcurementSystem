@@ -3,6 +3,7 @@ package com.dps.web.service.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class CustomerProductPriceController
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
 			cost = cost.multiply(prod.getPrice());
-			cost.setScale(2, BigDecimal.ROUND_HALF_UP);
+			cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 			custProdPriceDto.setCost(cost);
 			
 			custPrices.add(custProdPriceDto);
@@ -218,20 +219,48 @@ public class CustomerProductPriceController
 			document.open();
 			document.add(new Paragraph("Product details"));
 			
-			PdfPTable table = new PdfPTable(3); 
+			PdfPTable table = new PdfPTable(7); 
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
 			table.setSpacingAfter(10f);
 			
 			
-			float[] columnWidths = {1f, 1f, 1f};
+			float[] columnWidths = {100f, 200f, 100f, 70f, 70f, 70f, 100f};
 			table.setWidths(columnWidths);
+			
+			PdfPCell cell = createNewCell();
+			cell.addElement(new Paragraph("Code"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("Description"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("Packaging"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("CBM"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("Weight"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("Cost"));
+			table.addCell(cell);
+			
+			cell = createNewCell();
+			cell.addElement(new Paragraph("Image"));
+			table.addCell(cell);
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
 				if(custProdPrice.isToExport())
 				{
-					PdfPCell cell = new PdfPCell();
+					/*PdfPCell cell = new PdfPCell();
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);	
 					cell.setPadding(10f);
@@ -245,7 +274,7 @@ public class CustomerProductPriceController
 					sb.append(custProdPrice.getProductDescription());
 					sb.append("\n");
 					
-					sb.append("Packaageing : ");
+					sb.append("Packageing : ");
 					sb.append(custProdPrice.getCartoonQuantity());
 					sb.append("\n");
 					
@@ -264,15 +293,48 @@ public class CustomerProductPriceController
 					Paragraph para = new Paragraph(sb.toString());
 					cell.addElement(para);
 					
-					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".png");
-					image.scaleAbsolute(100f, 75f);
+					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+					image.scaleAbsolute(75f, 50f);
 					image.setBorderWidth(2);
 					image.setBorder(Rectangle.BOX);
 					
 					cell.addElement(image);
 					table.addCell(cell);
 					
-					System.out.println("Hello");
+					System.out.println("Hello");*/
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getProductCode()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getProductDescription()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getCartoonQuantity().toString()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getCbm().setScale(3,RoundingMode.HALF_UP).toString()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getGrossWeight().toString()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					cell.addElement(new Paragraph(custProdPrice.getCost().setScale(3).toString()));
+					table.addCell(cell);
+					
+					cell = createNewCell();
+					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+					image.scaleAbsolute(40f, 25f);
+					image.setBorderWidth(2);
+					image.setBorder(Rectangle.BOX);
+					
+					cell.addElement(image);
+					table.addCell(cell);
 				}
 			}
 			
@@ -288,5 +350,15 @@ public class CustomerProductPriceController
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private PdfPCell createNewCell()
+	{
+		PdfPCell cell = new PdfPCell();
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);	
+		cell.setPadding(5f);
+		
+		return cell;
 	}
 }
