@@ -21,6 +21,7 @@
                             <span ng-show="sortType == 'supplierInitials' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
+                    <th>Supplier Product Code</th>
                     <th>Customers</th>                    
                     <th>
                         <a href="javascript:;" ng-click="sortType = 'productCode';
@@ -29,6 +30,7 @@
                             <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
+                    <th>Product Description</th>
                     <th>MOQ</th>
                     <th>Total Quantity</th>
                     <th>Remarks</th>
@@ -41,8 +43,10 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20" ng-class="{'success':product.quantity >= product.moq}">                                        
                     <td>{{product.supplierInitials}}</td>
+                    <td>{{product.supplierProductCode}}</td>
                     <td>{{product.customerDetails}}</td>
                     <td>{{product.productCode}}</td>
+                    <td>{{product.productDescription}}</td>
                     <td>{{product.moq}}</td>
                     <td>{{product.quantity}}</td>
                     <td>{{product.remarks}}</td>
