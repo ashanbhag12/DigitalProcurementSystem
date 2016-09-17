@@ -21,13 +21,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DPS_PROD_SUPP_INFO")
-//@SequenceGenerator(name = "DPS_PROD_SUPP_INFO_SEQ", sequenceName = "DPS_PROD_SUPP_INFO_SEQ", initialValue = 1, allocationSize = 1)
 public class SupplierProductInfo extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DPS_PROD_SUPP_INFO_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

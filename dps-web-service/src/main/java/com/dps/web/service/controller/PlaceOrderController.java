@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +33,7 @@ import com.dps.domain.entity.Product;
 import com.dps.domain.entity.Supplier;
 import com.dps.domain.entity.SupplierOrder;
 import com.dps.domain.entity.SupplierOrderDetails;
+import com.dps.domain.entity.SupplierProductInfo;
 import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerOrderDetailsService;
 import com.dps.service.SupplierOrderService;
@@ -140,6 +142,16 @@ public class PlaceOrderController
 				order.setSupplierInitials(suppInitials);
 				order.setToOrder(quantity >= product.getMoq());
 				order.setIdList(ids.toString());
+				order.setProductDescription(product.getDescription());
+				
+				for(SupplierProductInfo suppProdInfo : product.getSuppProdInfo())
+				{
+					if(StringUtils.equalsIgnoreCase(suppInitials, suppProdInfo.getSupplier().getInitials()))
+					{
+						order.setSupplierProductCode(suppProdInfo.getSupplierProductName());
+					}
+				}
+				
 				resultList.add(order);
 			}
 					
@@ -248,30 +260,70 @@ public class PlaceOrderController
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet sheet = workbook.createSheet(suppInitials);
 			
+			CellStyle headerCellStyle = createHeaderCellStyle(workbook);
+			CellStyle cellStyle = createCellStyle(workbook);
+			
 			//Create header Row
 			Row row = sheet.createRow(0);
+			
 			Cell cell = row.createCell(0);
 			cell.setCellValue("Product Code");
+			cell.setCellStyle(headerCellStyle);
+			
 			cell = row.createCell(1);
-			cell.setCellValue("Quantity");
+			cell.setCellValue("Supplier Product Code");
+			cell.setCellStyle(headerCellStyle);
+			
 			cell = row.createCell(2);
-			cell.setCellValue("Remark");
+			cell.setCellValue("Product description");
+			cell.setCellStyle(headerCellStyle);
+			
 			cell = row.createCell(3);
+			cell.setCellValue("Quantity");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(4);
+			cell.setCellValue("Remark");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(5);
 			cell.setCellValue("Customer Information");
+			cell.setCellStyle(headerCellStyle);
 			
 			int rowNumber = 1;
 			//Set rest of the rows from Data:
 			for(PlaceOrderDTO order : ordersPerSupplier.get(suppInitials))
 			{
 				row = sheet.createRow(rowNumber++);
+				
 				cell = row.createCell(0);
 				cell.setCellValue(order.getProductCode());
+				cell.setCellStyle(cellStyle);
+				
 				cell = row.createCell(1);
-				cell.setCellValue(order.getQuantity());
+				cell.setCellValue(order.getSupplierProductCode());
+				cell.setCellStyle(cellStyle);
+				
 				cell = row.createCell(2);
-				cell.setCellValue(order.getRemarks());
+				cell.setCellValue(order.getProductDescription());
+				cell.setCellStyle(cellStyle);
+				
 				cell = row.createCell(3);
+				cell.setCellValue(order.getQuantity());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(4);
+				cell.setCellValue(order.getRemarks());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(5);
 				cell.setCellValue(order.getCustomerDetails());
+				cell.setCellStyle(cellStyle);
+			}
+			
+			for(int i = 0; i < 6; i++)
+			{
+				sheet.autoSizeColumn(i);
 			}
 			
 			String filePath = config.getBasePath() + "supplier" + File.separator;
@@ -283,5 +335,27 @@ public class PlaceOrderController
 		}
 		
 		return null;
+	}
+	
+	private CellStyle createHeaderCellStyle(HSSFWorkbook workbook)
+	{
+		CellStyle cellStyle = workbook.createCellStyle();
+		
+		//Set margins
+		cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+		cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+		cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+		cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+		
+		//Set alignments:
+		cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		cellStyle.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+		
+		return cellStyle;
+	}
+	
+	private CellStyle createCellStyle(HSSFWorkbook workbook)
+	{
+		return createHeaderCellStyle(workbook);
 	}
 }

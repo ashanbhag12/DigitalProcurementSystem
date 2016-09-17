@@ -23,5 +23,6 @@
 	<bean id="configurationDao" class="com.dps.dao.impl.ConfigurationsDaoImpl"></bean>
 	<bean id="customerProductPreferenceDao" class="com.dps.dao.impl.CustomerProductPreferenceDaoImpl"></bean>
 	<bean id="supplierProductInfoDao" class="com.dps.dao.impl.SupplierProductInfoDaoImpl"></bean>
+	<bean id="loginDao" class="com.dps.dao.impl.LoginDaoImpl"></bean>
 
 </beans>

@@ -19,6 +19,7 @@
 		<class>com.dps.domain.entity.Configurations</class>
 		<class>com.dps.domain.entity.CustomerProductPreference</class>
 		<class>com.dps.domain.entity.SupplierProductInfo</class>
+		<class>com.dps.domain.entity.Login</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		

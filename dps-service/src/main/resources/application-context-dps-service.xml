@@ -24,5 +24,6 @@
 	<bean id="configurationsService" class="com.dps.service.impl.ConfigurationsServiceImpl"></bean>
 	<bean id="customerProductPreferenceService" class="com.dps.service.impl.CustomerProductPreferenceServiceImpl"></bean>
 	<bean id="supplierProductInfoService" class="com.dps.service.impl.SupplierProductInfoServiceImpl"></bean>
+	<bean id="loginService" class="com.dps.service.impl.LoginServiceImpl"></bean>
 
 </beans>

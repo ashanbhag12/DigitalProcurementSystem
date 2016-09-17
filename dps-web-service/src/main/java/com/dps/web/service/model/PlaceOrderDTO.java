@@ -20,6 +20,8 @@ public class PlaceOrderDTO
 	private String customerDetails;
 	private boolean toOrder;
 	private String idList;
+	private String supplierProductCode;
+	private String productDescription;
 
 	public String getProductCode()
 	{
@@ -109,6 +111,26 @@ public class PlaceOrderDTO
 	public void setIdList(String idList)
 	{
 		this.idList = idList;
+	}
+
+	public String getSupplierProductCode()
+	{
+		return supplierProductCode;
+	}
+
+	public void setSupplierProductCode(String supplierProductCode)
+	{
+		this.supplierProductCode = supplierProductCode;
+	}
+
+	public String getProductDescription()
+	{
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription)
+	{
+		this.productDescription = productDescription;
 	}
 
 }

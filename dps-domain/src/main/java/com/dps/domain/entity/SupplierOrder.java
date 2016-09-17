@@ -36,7 +36,7 @@ import com.dps.domain.constants.SupplierOrderStatus;
 @Table(name="DPS_SUPP_ORDR")
 public class SupplierOrder extends EntityBase
 {
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
