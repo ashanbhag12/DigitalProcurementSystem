@@ -54,6 +54,6 @@ angular.module('dashboardApp', ["ngMessages"])
                 $scope.globalParameters.exchangeRate.$touched = false;
                 $scope.globalParameters.costPerGrossWeight.$touched = false;
                 $scope.globalParameters.costPerCbm.$touched = false;
-                $scope.globalParameters.storagePath.$touched = false;
+                $scope.globalParameters.basePath.$touched = false;
             };
         });

@@ -60,11 +60,10 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Storage Path</label>
-                <input name="storagePath" ng-model="global.storagePath" required placeholder="0.00" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
-                       type='text' ng-readonly="isReadonly" />
-                <div ng-messages="globalParameters.storagePath.$error" ng-show="globalParameters.storagePath.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required.</div>
+                <label>*Files Storage Path</label>
+                <input name="basePath" ng-model="global.basePath" required placeholder="Path" type='text' ng-readonly="isReadonly" />
+                <div ng-messages="globalParameters.basePath.$error" ng-show="globalParameters.basePath.$touched">
+                    <div ng-message-exp="['required']">This is required.</div>
                 </div>
             </md-input-container>
         </div>
