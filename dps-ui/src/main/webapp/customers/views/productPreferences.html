@@ -15,15 +15,23 @@
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH</md-button>
         </div>
     </div>    
-    <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
-	    <div>
-	    	<h4>Customer margin: {{products.additionalCustomerMargin}}</h4>
-	    </div>
-        <div class="clearfix searchTable marginB10">      
-            <h4 class="floatL marginT15">Search results: {{products.customerProductPrices.length}}</h4>
+    <div class="clearfix searchedResults" ng-show="searchedResults">	    
+	    <div class="clearfix searchTable marginB10">
+	    	<h4 class="floatL inlineBlock paddingT5">Customer margin: {{products.additionalCustomerMargin}}</h4>
             <div class="floatR">
-                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
-            </div>
+	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+	        </div>
+        </div>	    
+        <div class="clearfix">      
+            <h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
+            <div class="floatR tableActions">
+            	<a href="javascript:;" class="showColumns" ng-click="maskColumns = false">Show Columns</a>
+                <a href="javascript:;" class="maskColumns" ng-click="maskColumns = true">Mask Columns</a>                
+                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                   ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
+                <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
+                   ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
+            </div>            
         </div>        
         <table class="customTable">           
             <thead>
@@ -34,29 +42,29 @@
                             <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
                             <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
-                    </th>
-                    <th>Price Per Item</th>
-                    <th>Product Margin</th>
-                    <th>Product Description</th>
+                    </th>  
+                    <th ng-hide="maskColumns">Price Per Item</th>
                     <th>Cartoon Quantity</th>
-                    <th>Gross Weight</th>
                     <th>CBM</th>
-                    <th>Customer Specific Product Margin</th>
+                    <th>Gross Weight</th>                    
+                    <th>Product Description</th>
+                    <th ng-hide="maskColumns">Product Margin</th>
+                    <th ng-hide="maskColumns">Customer Product Margin</th>
                     <th>Cost</th>
                     <th class='alignCenter'>Action</th>
             	</tr>
             </thead>
             <tbody>
                 <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
-                    <td>{{product.productCode}}</td>
-                    <td>{{product.productPrice}}</td>
-                    <td>{{product.productMargin | number:2}}</td>
-                    <td>{{product.productDescription}}</td>
+                    <td>{{product.productCode}}</td>                    
+                    <td ng-hide="maskColumns">{{product.productPrice}}</td>    
                     <td>{{product.cartoonQuantity}}</td>
-                    <td>{{product.grossWeight}}</td>
                     <td>{{product.cbm}}</td>
-                    <td>
-                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:2}}</div>
+                    <td>{{product.grossWeight}}</td>                    
+                    <td>{{product.productDescription}}</td>
+                    <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
+                    <td ng-hide="maskColumns">
+                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
                             <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
                         </div>

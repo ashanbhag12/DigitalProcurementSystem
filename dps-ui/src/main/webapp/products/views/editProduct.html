@@ -7,11 +7,11 @@
             <label>Product Code</label>
             <input type='text' name="searchProductCode" ng-model="searchProductCode" />
         </md-input-container>
-    </div>
-    <div>
-        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
-    </div>
-    <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
+        <div flex-offset="5">
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
+	    </div>
+    </div>    
+    <div class="clearfix searchedResults" ng-show="searchedResults">
         <div class="clearfix searchTable marginB10">            
             <div class="floatR">
                 <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
@@ -19,7 +19,7 @@
         </div>
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
-            <div class="floatR">
+            <div class="floatR tableActions">
                 <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
@@ -36,13 +36,13 @@
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
+                    <th>Price Per Item</th>
                     <th>Cartoon Quantity</th>
-                    <th>CBM</th>
-                    <th>Price</th>
-                    <th>Weight</th>
-                    <th>Description</th>
+                    <th>CBM</th>                    
+                    <th>Gross Weight</th>
+                    <th>Product Description</th>
                     <th>MOQ</th>
-                    <th>Default Margin</th>
+                    <th>Product Margin</th>
                     <th>Supplier Initials</th>
                     <th>Is Valid</th>
                     <th class="alignCenter">
@@ -54,13 +54,13 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
                     <td>{{product.productCode}}</td>
-                    <td>{{product.cartoonQuantity}}</td>
-                    <td>{{product.cbm}}</td>
                     <td>{{product.price}}</td>
+                    <td>{{product.cartoonQuantity}}</td>
+                    <td>{{product.cbm}}</td>                    
                     <td>{{product.weight}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
-                    <td>{{product.defaultMargin}}</td>
+                    <td>{{product.defaultMargin | number:3}}</td>
                     <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
                     <td class='alignCenter'>

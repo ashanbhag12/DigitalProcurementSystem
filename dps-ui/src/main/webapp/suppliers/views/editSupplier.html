@@ -3,17 +3,17 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
-        <md-input-container class="md-block" flex="50">
+        <md-input-container class="md-block" flex="30">
             <label>Name</label>
             <input type='text' name="searchSupplierName" ng-model="searchSupplierName" />
         </md-input-container>
-        <md-input-container class="md-block" flex="50">
+        <md-input-container class="md-block" flex="30">
             <label>Initials</label>
             <input type='text' name="searchSupplierInitials" ng-model="searchSupplierInitials" />
         </md-input-container>
-    </div>
-    <div>
-        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchSupplier()">SEARCH</md-button>
+        <div flex-offset="5">
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchSupplier()">SEARCH</md-button>
+	    </div>
     </div>
     <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
         <div class="clearfix searchTable marginB10">            
@@ -23,7 +23,7 @@
         </div>
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{suppliers.length}}</h4>
-            <div class="floatR">
+            <div class="floatR tableActions">
                 <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteSupplierModal')" 

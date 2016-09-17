@@ -7,6 +7,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
+            $scope.maskColumns = true; /* Hide the columns */
             $scope.products = [];           
 
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */

@@ -186,15 +186,33 @@ h3.sectionTitle, h4.sectionTitle{
    margin-bottom:0;
 }
 
-.editBtn, .deleteBtn{
-    color: rgb(16,108,200);
-    padding:5px 0 4px 20px;    
+.tableActions a{
+	color: rgb(16,108,200);
+    padding:5px 0 4px 20px;
+}
+
+.tableActions a + a{
+	margin-left:10px;
 }
 
 .editBtn{
     background: url("../images/edit.png") no-repeat left center;
     background-size:15px;
-    margin-right:20px;
+}
+
+.deleteBtn{
+    background: url("../images/delete.png") no-repeat left center;
+    background-size:15px;
+}
+
+.maskColumns{
+    background: url("../images/mask.png") no-repeat left center;
+    background-size:15px;
+}
+
+.showColumns{
+    background: url("../images/unmask.png") no-repeat left center;
+    background-size:15px;
 }
 
 .editRow{
@@ -211,11 +229,6 @@ h3.sectionTitle, h4.sectionTitle{
     height:18px;
     width:18px;
     color: rgb(16,108,200);
-}
-
-.deleteBtn{
-    background: url("../images/delete.png") no-repeat left center;
-    background-size:15px;
 }
 
 .searchResultCount{
