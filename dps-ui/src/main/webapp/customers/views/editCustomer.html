@@ -24,9 +24,9 @@
         <div class="clearfix">
             <h4 class="floatL searchResultCount">Search results: {{customers.length}}</h4>
             <div class="floatR tableActions">
-                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
-                <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteCustomerModal')" 
+                <a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteCustomerModal')" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
             </div>
         </div>
@@ -34,7 +34,7 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="javascript:;" ng-click="sortBy = 'name';
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'name';
                             sortOrder = !sortOrder">Name
                             <span ng-show="sortBy == 'name' && sortOrder">&#9662;</span>
                             <span ng-show="sortBy == 'name' && !sortOrder">&#9652;</span>
@@ -43,7 +43,7 @@
                     <th>Phone Number</th>
                     <th>Email Id</th>
                     <th>
-                        <a href="javascript:;" ng-click="sortBy = 'shipmark';
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'shipmark';
                             sortOrder = !sortOrder">Ship Mark
                             <span ng-show="sortBy == 'shipmark' && sortOrder">&#9662;</span>
                             <span ng-show="sortBy == 'shipmark' && !sortOrder">&#9652;</span>
@@ -62,7 +62,7 @@
                     <td>{{customer.phoneNumber}}</td>
                     <td>{{customer.emailId}}</td>
                     <td>{{customer.shipmark}}</td>
-                    <td>{{customer.additionalMargin}}</td>
+                    <td>{{customer.additionalMargin | number:3}}</td>
                     <td class="alignCenter">
                         <md-checkbox type='checkbox' ng-model="customer.isChecked" name="isCustomerChecked" ng-change="toggle(customer)"
                                  aria-label='Select All Customers {{$index}}' class='md-primary'></md-checkbox>

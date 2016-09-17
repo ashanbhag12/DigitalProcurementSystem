@@ -24,9 +24,9 @@
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{suppliers.length}}</h4>
             <div class="floatR tableActions">
-                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                <a href="javascript:;" tabindex="-1"  class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
-                <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteSupplierModal')" 
+                <a href="javascript:;" tabindex="-1"  class="deleteBtn" ng-click="deleteDisabled || showModal('deleteSupplierModal')" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
             </div>
         </div>
@@ -34,14 +34,14 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="javascript:;" ng-click="sortBy = 'name';
+                        <a href="javascript:;" tabindex="-1"  ng-click="sortBy = 'name';
                             sortOrder = !sortOrder">Name
                             <span ng-show="sortBy == 'name' && sortOrder">&#9662;</span>
                             <span ng-show="sortBy == 'name' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
                     <th>
-                        <a href="javascript:;" ng-click="sortBy = 'initials';
+                        <a href="javascript:;" tabindex="-1"  ng-click="sortBy = 'initials';
                             sortOrder = !sortOrder">Initials
                             <span ng-show="sortBy == 'initials' && sortOrder">&#9662;</span>
                             <span ng-show="sortBy == 'initials' && !sortOrder">&#9652;</span>

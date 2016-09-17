@@ -20,9 +20,9 @@
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
             <div class="floatR tableActions">
-                <a href="javascript:;" class="editBtn" ng-click="edit($index, $event)" 
+                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
-                <a href="javascript:;" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
+                <a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="javascript:;" ng-click="sortBy = 'productCode';
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'productCode';
                             sortOrder = !sortOrder">Product Code
                             <span ng-show="sortBy == 'productCode' && sortOrder">&#9662;</span>
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
