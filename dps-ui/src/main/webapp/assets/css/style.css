@@ -200,6 +200,11 @@ h3.sectionTitle, h4.sectionTitle{
     background-size:15px;
 }
 
+.saveBtn{
+    background: url("../images/save.png") no-repeat left center;
+    background-size:15px;
+}
+
 .deleteBtn{
     background: url("../images/delete.png") no-repeat left center;
     background-size:15px;

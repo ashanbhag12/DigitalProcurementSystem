@@ -19,6 +19,21 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 	$scope.customers = data;
                 });
             });
+            
+            /* Function to edit all the customer product margins */
+            $scope.editAll = function () {
+            	for (var i = 0; i < $scope.products.customerProductPrices.length; i++) {
+                    $scope.editProductDetailsRow[i] = true;
+                }
+            };
+            
+            /* Function to save all the customer product margins */
+            $scope.saveAll = function () {
+            	angular.forEach($scope.products.customerProductPrices, function (product, index) {
+            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(2);
+                    $scope.editProductDetailsRow[index] = false;
+                });
+            };
 
             /* Function to search for Products */
             $scope.getProductDetails = function () {
@@ -40,8 +55,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
 
             $scope.updateProductDetails = function (index, product) {
                 product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(2);
-                $scope.editProductDetailsRow[index] = false;
-                
+                $scope.editProductDetailsRow[index] = false;                
             };
 
             $scope.saveProductDetails = function () {
