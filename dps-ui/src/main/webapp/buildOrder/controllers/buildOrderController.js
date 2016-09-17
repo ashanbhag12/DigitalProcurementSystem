@@ -14,8 +14,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.orderSummarySection = false; /* Hide Customer order summary section */
             $scope.productsList = []; /* List of Products Added in the table */
             $scope.calcProductsList = [];
-            $scope.editProductsListRowDisabled = false; /* Enable the product edit button in added products table */
             $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
+            $scope.selectedRows = []; /* Array for toggleAll function */
+            $scope.selectAll = false; /* Set toggle all to false */
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortType = 'productCode'; /* set the default sort type */
             $scope.orderDate = new Date(); /* By default set todays date as order date */
@@ -143,19 +144,57 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             	}, 500);                
             };
             
+            /* Function to select/unselect all the rows in products added table */
+    	    $scope.toggleAll = function () {
+    	        if ($scope.selectAll) {
+    	            $scope.selectAll = true;
+    	            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = false;
+    	            $scope.selectedRows = [];
+    	            angular.forEach($scope.productsList, function (product) {
+    	            	product.isChecked = $scope.selectAll;
+    	                $scope.selectedRows.push(1);
+    	            });
+    	        }
+    	        else {
+    	            $scope.selectAll = false;
+    	            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = true;
+    	            angular.forEach($scope.productsList, function (product) {
+    	            	product.isChecked = $scope.selectAll;
+    	                $scope.selectedRows = [];
+    	            });
+    	        }
+    	    };
+            
             /* Function to select/unselect the row in products added table */
-            $scope.toggle = function (element) {
-                if (element.isChecked) {
-                    $scope.editDisabled = false;
-                    $scope.deleteDisabled = false;
-                    $scope.editProductsListRowDisabled = true; /* Disable all the rows in Products list table */
-                }
-                else {
-                    $scope.editDisabled = true;
-                    $scope.deleteDisabled = true;
-                    $scope.editProductsListRowDisabled = false; /* Enable all the rows in Products list table */
-                }
-            };
+    	    $scope.toggle = function (element) {
+    	        if (element.isChecked) {
+    	            $scope.selectedRows.push(1);
+    	            $scope.editDisabled = false;
+    	            $scope.deleteDisabled = false;
+    	        }
+    	        else {
+    	            $scope.selectedRows.pop();
+    	        }
+    	        if ($scope.productsList.length === $scope.selectedRows.length) {
+    	            $scope.selectAll = true;
+    	            $scope.editDisabled = true;
+    	        }
+    	        else {
+    	            $scope.selectAll = false;
+    	        }
+    	        if ($scope.selectedRows.length === 0) {
+    	            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = true;
+    	        }
+    	        else if ($scope.selectedRows.length > 1) {
+    	            $scope.editDisabled = true;
+    	        }
+    	        else {
+    	            $scope.editDisabled = false;
+    	        }
+    	    };
 
             $scope.editAddedProductsListRow = function () {/* Function to edit the Product in added products table */
                 angular.forEach($scope.productsList, function (product) {
@@ -169,7 +208,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.productDetails.remarks = product.remarks;
                         $scope.productDetails.supplierProductInfoList = product.supplierProductInfoList
                         $scope.showAddBtn = false; /* Show Update Button & hide Add Button */
-                        $scope.editProductsListRowDisabled = true;
                         $scope.productDetailsSection = true;
                         smoothScroll(document.getElementById('productDetailsSection')); /* Scroll to the product details section */
                         $timeout(function () {
@@ -201,7 +239,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.productDetails.cartoonQuantity = "";
                 $scope.productDetailsSection = false;
                 $scope.showAddBtn = true; /* Show Add Button & hide Update Button */
-                $scope.editProductsListRowDisabled = false;
                 $scope.editDisabled = true;
                 $scope.deleteDisabled = true;
                 $timeout(function () {
@@ -220,7 +257,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     }
                 });
                 $scope.productsList = newProductsList;
-                $scope.editProductsListRowDisabled = false;
                 $scope.editDisabled = true;
                 $scope.deleteDisabled = true;
             };

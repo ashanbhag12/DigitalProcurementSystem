@@ -116,7 +116,10 @@
                     <th>Cartoon Quantity</th>
                     <th>Quantity</th>
                     <th>Remarks</th>
-                    <th class='alignCenter'>Action</th>
+                    <th class='alignCenter'>
+                    	<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
+                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -129,7 +132,7 @@
                     <td>{{product.remarks}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
-                         aria-label='Select Product {{$index}}' class='md-primary' ng-disabled="editProductsListRowDisabled"></md-checkbox>
+                         aria-label='Select Product {{$index}}' class='md-primary'></md-checkbox>
                     </td>                    
                 </tr>
             </tbody>            
