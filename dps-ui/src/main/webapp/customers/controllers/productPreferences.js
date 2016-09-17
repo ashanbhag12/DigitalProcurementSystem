@@ -4,6 +4,8 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
+            $scope.successMessage = "";
+            $scope.errorMessage = "";
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
@@ -38,9 +40,20 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to search for Products */
             $scope.getProductDetails = function () {
                 if ($scope.customerShipmark !== undefined) {
-                    $scope.searchedResults = true;
+                	angular.element(document.querySelector('.loader')).addClass('show');                    
                     /* Service Call to retrieve all products */
-                    $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark})
+                    $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
+                    	$timeout(function () {
+                            $scope.searchedResults = true;
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    }, function(error){/* Error Callback */
+                    	$timeout(function () {
+                    		$scope.showErrorBox = true;
+	                		$scope.errorMessage = "Product margin for Customer could not be retrieved. Please try after some time";
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    });
                 }
             };
 
@@ -57,6 +70,11 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
                 $scope.editProductDetailsRow[index] = false;                
             };
+            
+            /* Function to export data to PDF */
+            $scope.kalpesh = function(){
+            	alert(12);            	
+            }
 
             $scope.saveProductDetails = function () {
             	angular.element(document.querySelector('.loader')).addClass('show');
@@ -64,6 +82,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 modifyProductPreferencesService.save($scope.products, function(successResult) { /* Success Callback */
                 		$timeout(function(){
                 			$scope.showSuccessBox = true; 
+                			$scope.successMessage = "Product margin for Customer updated successfully";
                     		$scope.showErrorBox = false;
                     		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark});
                     		angular.element(document.querySelector('.loader')).removeClass('show');
@@ -72,6 +91,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 		$timeout(function(){
 	                		$scope.showSuccessBox = false; 
 	                		$scope.showErrorBox = true;
+	                		$scope.errorMessage = "Product margin for Customer could not be updated. Please try after some time";
 	                		angular.element(document.querySelector('.loader')).removeClass('show');
                 		}, 500);
                 	});

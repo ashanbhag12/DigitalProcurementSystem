@@ -1,7 +1,7 @@
 <div class="editProductPage">
     <h3 class="md-headline sectionTitle">Search Customer</h3>
-    <div class="animateMessages successBox" ng-show="showSuccessBox">Product margin for Customer updated successfully</div>
-    <div class="animateMessages errorBox" ng-show="showErrorBox">Product margin for Customer could not be updated. Please try after some time</div>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
         <md-input-container flex="30">
             <label>Customer</label>
@@ -80,6 +80,7 @@
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
         <div layout='row' layout-align='end center' class='marginT10'>
+        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF" ng-click="kalpesh()" />
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">SAVE</md-button>
             <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
         </div>

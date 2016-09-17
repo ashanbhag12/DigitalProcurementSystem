@@ -473,3 +473,9 @@ md-datepicker {background: #FAFAFA;}
 	position:relative;
 	background:#fff;
 }
+
+.exportToPDF{
+	width: 35px;
+    height: 45px;
+    margin-right: 20px;
+}
