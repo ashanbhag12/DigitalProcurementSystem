@@ -120,7 +120,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:10 track by $index" pagination-id="addedProductsList">
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:20 track by $index" pagination-id="addedProductsList">
                     <td>{{product.productCode}}</td>
                     <td>{{product.selectedSupplierInitials}}</td>
                     <td>{{product.unitCost | currency:"Rs."}}</td>
@@ -155,7 +155,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in orderSummary.orderItems | itemsPerPage:10 track by $index" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
+                <tr dir-paginate="product in orderSummary.orderItems | itemsPerPage:20 track by $index" ng-class="{'success':product.productMOQ > 2}" pagination-id="orderSummary">
                     <td>{{product.productCode}}</td>
                     <td>{{product.selectedSupplierInitials}}</td>                     
                     <td>
