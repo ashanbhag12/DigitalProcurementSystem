@@ -20,6 +20,8 @@
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
             <div class="floatR tableActions">
+            	<a href="javascript:;" tabindex="-1" class="showColumns" ng-click="maskColumns = false">Show Columns</a>
+                <a href="javascript:;" tabindex="-1" class="maskColumns" ng-click="maskColumns = true">Mask Columns</a>
                 <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
@@ -36,13 +38,13 @@
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
-                    <th>Price Per Item</th>
+                    <th ng-hide="maskColumns">Price Per Item</th>
                     <th>Cartoon Quantity</th>
                     <th>CBM</th>                    
                     <th>Gross Weight</th>
                     <th>Product Description</th>
                     <th>MOQ</th>
-                    <th>Product Margin</th>
+                    <th ng-hide="maskColumns">Product Margin</th>
                     <th>Supplier Initials</th>
                     <th>Is Valid</th>
                     <th class="alignCenter">
@@ -54,13 +56,13 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
                     <td>{{product.productCode}}</td>
-                    <td>{{product.price}}</td>
+                    <td ng-hide="maskColumns">{{product.price}}</td>
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>                    
                     <td>{{product.weight}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
-                    <td>{{product.defaultMargin | number:3}}</td>
+                    <td ng-hide="maskColumns">{{product.defaultMargin | number:3}}</td>
                     <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
                     <td class='alignCenter'>

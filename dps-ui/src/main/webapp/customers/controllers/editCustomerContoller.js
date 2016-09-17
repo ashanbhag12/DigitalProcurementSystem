@@ -16,6 +16,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.searchCustomerName = ''; /* Name for customer search */
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    $scope.selectAll = false; /* Set toggle all to false */
+	    $scope.maskColumns = true; /* Hide the columns */
 	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {});
