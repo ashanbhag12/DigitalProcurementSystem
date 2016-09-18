@@ -1,6 +1,7 @@
 <div class="placeOrderPage">
     <h3 class="md-headline sectionTitle">Place Order</h3>
-    <div class="animateMessages successBox" ng-show="showSuccessBox">Order imported to excel successfully</div>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">Order exported to excel successfully</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">Order could not be exported to excel. Please try again after some time</div>
     <div class="animateMessages infoBox" ng-show="showInfoBox">Please wait while we import order to excel</div>
     <div class="clearfix marginT15">
         <div class="clearfix searchTable marginB10">            
@@ -60,7 +61,17 @@
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>  
         <div layout='row' layout-align='end center' class='marginT10 marginB20'>
-            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="placeOrder();">Place Order</md-button>
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('placeOrderModal')">Place Order</md-button>
         </div>
     </div>    
 </div>
+<div class="modal" id="placeOrderModal">
+    <div class="modalTitle">
+        <h4>Confirm Place Order</h4>
+    </div>
+    <div class="modalContent">Are you sure you want to place the order?</div>
+    <div class="modalFooter">
+        <md-button type="button" class="md-raised md-primary" ng-click="placeOrder()">YES</md-button>
+        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('placeOrderModal')">NO</md-button>
+    </div>
+</div> 

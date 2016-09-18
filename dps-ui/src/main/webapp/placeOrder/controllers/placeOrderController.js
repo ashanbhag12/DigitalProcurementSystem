@@ -1,6 +1,7 @@
 angular.module('placeOrderApp', [])
         .controller('placeOrderController', function ($http, $scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
             $scope.showSuccessBox = false; /* Hide the Success box */
+            $scope.showErrorBox = false; /* Hide the Error box */
             $scope.showInfoBox = false; /* Hide the Info box */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
@@ -59,28 +60,26 @@ angular.module('placeOrderApp', [])
                 $scope.selectAll = ($scope.selectedRows.length === $scope.products.length);
             };
 
-            $scope.placeOrder = function () {angular.element(document.querySelector('.loader')).addClass('show'); 
-		    response = savePlaceOrderService.save($scope.products, function(){/* Success Callback */
-		    	$timeout(function () {
-                    $scope.showSuccessBox = true;
-				    $scope.showErrorBox = false;
-				    
-				    /* To reload data in to the table by removing placed order items. */ 
-                    getPlaceOrderService.query().$promise.then(function(data) {
-                		console.log(data)
-                    	$scope.products = data;
-                		$scope.selectAll = false;
-                    });
-				    
-				    angular.element(document.querySelector('.loader')).removeClass('show');
-                }, 500);
-		    }, function(error){/* Error Callback */
-		    	$scope.showErrorBox = true; 
-		    	$scope.showSuccessBox = false;
-		    	$timeout(function () {
-		    		console.log(error);
-                    angular.element(document.querySelector('.loader')).removeClass('show');
-                }, 500);
-		    });
-		  };
+            $scope.placeOrder = function () {
+            	angular.element(document.querySelector('.modal')).css('display', "none");
+			    response = savePlaceOrderService.save($scope.products, function(){/* Success Callback */
+			    	$timeout(function () {
+	                    $scope.showSuccessBox = true;
+					    $scope.showErrorBox = false;
+					    /* To reload data in to the table by removing placed order items. */ 
+	                    getPlaceOrderService.query().$promise.then(function(data) {
+	                		console.log(data)
+	                    	$scope.products = data;
+	                		$scope.selectAll = false;
+	                    });					    
+					    angular.element(document.querySelector('.loader')).removeClass('show');
+	                }, 500);
+			    }, function(error){/* Error Callback */
+			    	$scope.showErrorBox = true; 
+			    	$scope.showSuccessBox = false;
+			    	$timeout(function () {
+	                    angular.element(document.querySelector('.loader')).removeClass('show');
+	                }, 500);
+			    });
+            };
         });
