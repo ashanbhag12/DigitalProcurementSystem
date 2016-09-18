@@ -1,4 +1,4 @@
-<div class="editProductPage">
+<div class="editProductPage" id="editProductPage">
     <h3 class="md-headline sectionTitle">Search Customer</h3>
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
@@ -17,7 +17,7 @@
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
 	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Customer margin: {{products.additionalCustomerMargin}}</h4>
+	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Customer margin: {{products.additionalCustomerMargin | number:3}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
