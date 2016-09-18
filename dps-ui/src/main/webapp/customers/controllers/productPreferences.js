@@ -1,6 +1,6 @@
-angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'])
+angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('productPreferencesController', function ($scope, $rootScope, $timeout, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF) {
+        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF, smoothScroll) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -138,12 +138,13 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to export data to PDF */
             $scope.exportToPDF = function(){
             	angular.element(document.querySelector('.loader')).addClass('show'); 
-    		    response = exportToPDF.save($scope.products.customerProductPrices, function(){/* Success Callback */
+    		    response = exportToPDF.save($scope.products, function(){/* Success Callback */
     		    	$timeout(function () {
                         $scope.showSuccessBox = true;
                         $scope.successMessage = "PDF created successfully"
     				    $scope.showErrorBox = false;
     				    angular.element(document.querySelector('.loader')).removeClass('show');
+    				    smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);
     		    }, function(error){/* Error Callback */
     		    	$scope.showErrorBox = true; 
@@ -152,9 +153,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
     		    	$timeout(function () {
     		    		console.log(error);
                         angular.element(document.querySelector('.loader')).removeClass('show');
+                        smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);
-    		    });
-    		  
+    		    });    		  
             }
 
             $scope.saveProductDetails = function () {
