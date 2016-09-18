@@ -359,4 +359,4 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     angular.element(document.querySelector('.loader')).removeClass('show');
                 }, 500);
             };
-        });
+        }); 
