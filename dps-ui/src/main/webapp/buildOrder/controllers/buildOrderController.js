@@ -255,6 +255,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     angular.element(document.querySelector('#autocompleteProductField')).focus();
                     $scope.showSuccessBox = false;
                     $scope.showErrorBox = false;
+                    $scope.selectedRows = [];
                 }, 100);
             };
             
