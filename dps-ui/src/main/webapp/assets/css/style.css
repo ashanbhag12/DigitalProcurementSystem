@@ -85,6 +85,10 @@ md-autocomplete md-autocomplete-wrap md-progress-linear .md-mode-indeterminate {
     top:3px;
 }
 
+section[role="main"]{
+	min-height: calc(100% - 64px);
+}
+
 .contentSection{
     min-height: calc(100% - 64px);
     max-height: inherit !important; 
