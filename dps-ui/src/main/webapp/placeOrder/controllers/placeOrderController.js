@@ -76,8 +76,10 @@ angular.module('placeOrderApp', [])
 	            	    var blob = new Blob([data], {
 	            	        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 	            	    });
-	            	    var d = new Date();
-	            	    saveAs(blob, 'Order_Placed_' + d.getDate() + '-' + (parseInt(d.getMonth())+1) + '-' + d.getFullYear() + '.xls');
+	            	      
+	            	    //Commented below, because file is getting saved from backend at base path.
+	            	    //var d = new Date();
+	            	    //saveAs(blob, 'Order_Placed_' + d.getDate() + '-' + (parseInt(d.getMonth())+1) + '-' + d.getFullYear() + '.xls');
 	            	    
 	            	    $scope.showSuccessBox = true;
 	                    $scope.showInfoBox = false;
