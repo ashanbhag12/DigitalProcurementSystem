@@ -138,22 +138,36 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 angular.forEach($scope.products, function (product) {
                     if (product.isChecked) {
                     	angular.element(document.querySelector('.loader')).addClass('show');
-                    	response = deleteProductsService.remove({productId : product.id}, function(){/* Success Callback */
-                    		angular.element(document.querySelector('.modal')).css('display', "none");
-    	        	        $timeout(function () {	        	            
+                    	response = deleteProductsService.remove({productId : product.id}, function(){/* Success Callback */                    		
+    	        	        $timeout(function () {	      
+    	        	        	angular.element(document.querySelector('.modal')).css('display', "none");
     	        	            $scope.selectAll = false;
     	        	            /* WS call to get all Products */
-    	                        $scope.products = getProductsService.query({code:$scope.searchProductCode});
-    	        	            $scope.selectedRows = [];
-    	        	            $scope.editDisabled = true;
-    	        	            $scope.deleteDisabled = true;
-    	        	            $scope.showSuccessBox = true;
-    	    			        $scope.successMessage = "Products deleted successfully";
-    	    		            $scope.showErrorBox = false;
-    	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+    	                        $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){
+    	                        	/* Success callback */
+    	                        	$timeout(function () {
+    	                        		$scope.selectedRows = [];
+    	    	        	            $scope.editDisabled = true;
+    	    	        	            $scope.deleteDisabled = true;
+    	    	        	            $scope.showSuccessBox = true;
+    	    	    			        $scope.successMessage = "Products deleted successfully";
+    	    	    		            $scope.showErrorBox = false;
+    	    	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+    	                        	}, 500);
+    	                        }, function(){ /* Error callback */
+    	                        	$timeout(function () {
+    	                        		$scope.selectedRows = [];
+    	    	        	            $scope.editDisabled = true;
+    	    	        	            $scope.deleteDisabled = true;
+    	    	        	            $scope.showErrorBox = true;
+    	    	    			        $scope.errorMessage = "Could not retrieve products. Please try again after some time";
+    	    	    		            $scope.showSuccessBox = false;
+    	    	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+    	                        	}, 500);
+    	                        });    	        	            
     	        	        }, 500);
                     	}, function(){/* Error Callback */
-                    		$timeout(function () {	
+                    		$timeout(function () {	                    			
     	            			$scope.selectAll = false;
     	        	            $scope.selectedRows = [];
     	        	            $scope.editDisabled = true;
@@ -161,7 +175,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     					    	$scope.showSuccessBox = false;
     				            $scope.showErrorBox = true;
     				            $scope.errorMessage = "Products could not be deleted. Please try again after some time";
-    				            angular.element(document.querySelector('.loader')).removeClass('show');
+    				            $rootScope.hideModal('deleteProductModal');
     					    }, 500);
                     	});
                     }
@@ -284,15 +298,12 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             };
             
             /*Concats all Supplier Initials and returns it to displays in table*/
-            $scope.getSupplierInitials = function(supplierProductInfoList){
-            	
-            	var supplierInitialsSrting = '';
-            	
+            $scope.getSupplierInitials = function(supplierProductInfoList){            	
+            	var supplierInitialsSrting = '';            	
             	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
             		supplierInitialsSrting += supplierProductInfo.supplierInitials;
             		supplierInitialsSrting += '; ';
-            	});
-            	
+            	});            	
             	return supplierInitialsSrting;
             }
         });
