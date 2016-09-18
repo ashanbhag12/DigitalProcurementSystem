@@ -35,6 +35,7 @@ ul,ol{list-style:none;}
 .floatR{float:right;}
 .marginB10{margin-bottom: 10px;}
 .marginB15{margin-bottom: 15px;}
+.marginL25{margin-left: 25px !important;}
 .marginB20{margin-bottom: 20px;}
 .marginT10{margin-top: 10px;}
 .marginT15{margin-top: 15px;}
@@ -147,7 +148,6 @@ h3.sectionTitle, h4.sectionTitle{
     margin:0;
 }
 
-.submitBtn + .submitBtn,
 .submitBtn + .resetBtn{
     margin-left:25px;
 }
