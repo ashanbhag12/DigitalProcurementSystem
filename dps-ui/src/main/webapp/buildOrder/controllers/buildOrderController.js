@@ -254,7 +254,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $timeout(function () {
                     angular.element(document.querySelector('#autocompleteProductField')).focus();
                     $scope.showSuccessBox = false;
-                    $scope.showErrorBox = false;
+                    $scope.showErrorBox = false;                    
+                    $scope.selectAll = false;
                     $scope.selectedRows = [];
                 }, 100);
             };
@@ -286,7 +287,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
                         $scope.showSuccessBox = true;
-                        angular.element(document.querySelector('.loader')).removeClass('show');     
+                        angular.element(document.querySelector('.loader')).removeClass('show');  
+                        $scope.addedProductsSection = false;
                 	}, 500)
                 }, function(error){/* Error Callback */
                 	$timeout(function(){
@@ -306,6 +308,12 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                   total += product.unitCost * product.quantity;                  
                 });
                 return total;
+            };
+            
+            $scope.editOrder = function(){
+            	$scope.addedProductsSection = true;
+            	$scope.orderSummarySection = false;
+            	$scope.showSuccessBox = false;
             };
 
             $scope.saveOrder = function () {    

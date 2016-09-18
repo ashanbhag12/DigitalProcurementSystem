@@ -147,6 +147,7 @@ h3.sectionTitle, h4.sectionTitle{
     margin:0;
 }
 
+.submitBtn + .submitBtn,
 .submitBtn + .resetBtn{
     margin-left:25px;
 }
@@ -299,7 +300,7 @@ h3.sectionTitle, h4.sectionTitle{
 /* Animate Sections (Searched results, edit form) CSS */
 .editForm, .searchedResults,
 .animateSection{
-    transition: all ease-in-out 1s;
+    transition: all ease-in-out 500ms;
 }
 
 .editForm.ng-hide-remove, .searchedResults.ng-hide-remove, 
@@ -313,7 +314,7 @@ h3.sectionTitle, h4.sectionTitle{
 }
 
 .animateMessages{
-    transition: all ease-in-out .1s;
+    transition: all ease-in-out 100ms;
 }
 
 .animateMessages.ng-hide-remove{ /* While showing */
