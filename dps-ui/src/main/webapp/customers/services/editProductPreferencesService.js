@@ -10,4 +10,8 @@ angular.module('productPreferencesApp')
 	
 	.factory('getCustomersProductPreferencesService', function ($resource) {
 	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customer/find');
+	})
+	
+	.factory('exportToPDF', function ($resource) {
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/custprodpref/export');
 	});

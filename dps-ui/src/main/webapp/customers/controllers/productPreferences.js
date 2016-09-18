@@ -1,6 +1,6 @@
 angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'])
         .controller('productPreferencesController', function ($scope, $rootScope, $timeout, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService ) {
+        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -137,7 +137,22 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             
             /* Function to export data to PDF */
             $scope.exportToPDF = function(){
-            	alert(12);            	
+            	angular.element(document.querySelector('.loader')).addClass('show'); 
+    		    response = exportToPDF.save($scope.products.customerProductPrices, function(){/* Success Callback */
+    		    	$timeout(function () {
+                        $scope.showSuccessBox = true;
+    				    $scope.showErrorBox = false;
+    				    angular.element(document.querySelector('.loader')).removeClass('show');
+                    }, 500);
+    		    }, function(error){/* Error Callback */
+    		    	$scope.showErrorBox = true; 
+    		    	$scope.showSuccessBox = false;
+    		    	$timeout(function () {
+    		    		console.log(error);
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                    }, 500);
+    		    });
+    		  
             }
 
             $scope.saveProductDetails = function () {
