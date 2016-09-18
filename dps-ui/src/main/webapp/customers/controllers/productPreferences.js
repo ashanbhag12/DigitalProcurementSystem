@@ -141,11 +141,13 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
     		    response = exportToPDF.save($scope.products.customerProductPrices, function(){/* Success Callback */
     		    	$timeout(function () {
                         $scope.showSuccessBox = true;
+                        $scope.successMessage = "PDF created successfully"
     				    $scope.showErrorBox = false;
     				    angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(error){/* Error Callback */
     		    	$scope.showErrorBox = true; 
+    		    	$scope.errorMessage = "PDF could not be created. Please try again after some time."
     		    	$scope.showSuccessBox = false;
     		    	$timeout(function () {
     		    		console.log(error);
