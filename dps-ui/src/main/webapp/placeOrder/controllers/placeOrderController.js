@@ -1,5 +1,5 @@
 angular.module('placeOrderApp', [])
-        .controller('placeOrderController', function ($http, $scope, $timeout, getPlaceOrderService) {
+        .controller('placeOrderController', function ($http, $scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
             $scope.showSuccessBox = false; /* Hide the Success box */
             $scope.showInfoBox = false; /* Hide the Info box */
             $scope.sortOrder = false; /* Set the default sort order */
@@ -59,45 +59,28 @@ angular.module('placeOrderApp', [])
                 $scope.selectAll = ($scope.selectedRows.length === $scope.products.length);
             };
 
-            $scope.placeOrder = function () {
-            	angular.element(document.querySelector('.loader')).addClass('show');
-            	$scope.showInfoBox = true;
-                /* WS Call to fetch excel from Products selected */
-            	$http({
-            	    url: 'http://localhost:8080/dps-web-service-0.0.1/rest/placeorder/save',
-            	    method: 'POST',
-            	    responseType: 'arraybuffer',
-            	    data: $scope.products, //this is your json data string
-            	    headers: {
-            	        'Content-type': 'application/json'
-            	    }
-            	}).success(function(data){
-            		$timeout(function(){ 
-	            	    var blob = new Blob([data], {
-	            	        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-	            	    });
-	            	      
-	            	    //Commented below, because file is getting saved from backend at base path.
-	            	    //var d = new Date();
-	            	    //saveAs(blob, 'Order_Placed_' + d.getDate() + '-' + (parseInt(d.getMonth())+1) + '-' + d.getFullYear() + '.xls');
-	            	    
-	            	    $scope.showSuccessBox = true;
-	                    $scope.showInfoBox = false;
-	                    angular.element(document.querySelector('.loader')).removeClass('show');
-	                    
-	                    /* To reload data in to the table by removing placed order items. */ 
-                        getPlaceOrderService.query().$promise.then(function(data) {
-                    		console.log(data)
-                        	$scope.products = data;
-                    		$scope.selectAll = false;
-                        });                        
-	                    console.log(data);
-            		}, 500)
-            	}).error(function(error){/* Error Callback */
-            		$timeout(function(){ 
-                        console.log(error)
-                        angular.element(document.querySelector('.loader')).removeClass('show');
-            		}, 500)
-            	});
-            };
+            $scope.placeOrder = function () {angular.element(document.querySelector('.loader')).addClass('show'); 
+		    response = savePlaceOrderService.save($scope.products, function(){/* Success Callback */
+		    	$timeout(function () {
+                    $scope.showSuccessBox = true;
+				    $scope.showErrorBox = false;
+				    
+				    /* To reload data in to the table by removing placed order items. */ 
+                    getPlaceOrderService.query().$promise.then(function(data) {
+                		console.log(data)
+                    	$scope.products = data;
+                		$scope.selectAll = false;
+                    });
+				    
+				    angular.element(document.querySelector('.loader')).removeClass('show');
+                }, 500);
+		    }, function(error){/* Error Callback */
+		    	$scope.showErrorBox = true; 
+		    	$scope.showSuccessBox = false;
+		    	$timeout(function () {
+		    		console.log(error);
+                    angular.element(document.querySelector('.loader')).removeClass('show');
+                }, 500);
+		    });
+		  };
         });
