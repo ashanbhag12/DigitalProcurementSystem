@@ -35,7 +35,7 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="33">
-                <label>*Additional Margin</label>
+                <label>*Customer Margin</label>
                 <input placeholder="0.000" ng-pattern="/^[0-9](\.[0-9]{1,3})?$/" required name="additionalMargin" ng-model="customer.additionalMargin" />
                 <div ng-messages="addCustomer.additionalMargin.$error" ng-show="addCustomer.additionalMargin.$touched">
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be between 0-9 and 3 decimals long. (e.g. - xx.xxx)</div>
