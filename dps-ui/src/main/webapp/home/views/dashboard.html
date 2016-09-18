@@ -37,26 +37,26 @@
         <div layout="row">
             <md-input-container class="md-block" flex="25">
                 <label>*Exchange Rate</label>
-                <input type='text' name="exchangeRate" required placeholder="0.00" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
+                <input type='text' name="exchangeRate" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        ng-model="global.exchangeRate" ng-readonly="isReadonly" />
                 <div ng-messages="globalParameters.exchangeRate.$error" ng-show="globalParameters.exchangeRate.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 2 decimal long.(e.g. - xx.xx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>*Per CBM Cost</label>
-                <input name="costPerCbm" required placeholder="0.00" ng-model="global.costPerCbm" type='text' 
+                <input name="costPerCbm" required placeholder="0.000" ng-model="global.costPerCbm" type='text' 
                 	ng-readonly="isReadonly" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/" />
                 <div ng-messages="globalParameters.costPerCbm.$error" ng-show="globalParameters.costPerCbm.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 2 decimal long.(e.g. - xx.xx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>*Per Gross Weight Cost</label>
-                <input name="costPerGrossWeight" ng-model="global.costPerGrossWeight" required placeholder="0.00" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
+                <input name="costPerGrossWeight" ng-model="global.costPerGrossWeight" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        type='text' ng-readonly="isReadonly" />
                 <div ng-messages="globalParameters.costPerGrossWeight.$error" ng-show="globalParameters.costPerGrossWeight.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 2 decimal long.(e.g. - xx.xx)</div>
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
