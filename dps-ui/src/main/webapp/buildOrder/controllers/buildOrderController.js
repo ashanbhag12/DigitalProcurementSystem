@@ -228,6 +228,16 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         product.quantity = $scope.productDetails.productQuantity;
                         product.cartoonQuantity = $scope.productDetails.cartoonQuantity;
                         product.isChecked = false;
+                        
+                        angular.forEach($scope.calcProductsList, function (calcProduct) {
+                        	if(calcProduct.productId === product.productId){
+                        		calcProduct.productCode = $scope.productDetails.productCode;
+                        		calcProduct.selectedSupplierInitials = $scope.productDetails.supplierInitials;
+                        		calcProduct.quantity = $scope.productDetails.productQuantity;
+                        		calcProduct.remarks = $scope.productDetails.remarks;
+                        		calcProduct.unitCost = $scope.productDetails.price;
+                        	}
+                        });
                     }
                 });
                 $scope.productDetails.productCode = "";
