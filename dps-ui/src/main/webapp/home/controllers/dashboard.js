@@ -21,7 +21,9 @@ angular.module('dashboardApp', ["ngMessages"])
     		    $scope.showSaveBtn = true;
                 $scope.showClearBtn = true;
                 $scope.showEditBtn = false;
-                $scope.isReadonly = false;              
+                $scope.isReadonly = false;    
+                $scope.showSuccessBox = false; 
+                $scope.showErrorBox = false;
             };
 
             $scope.submitForm = function (globalParameters) {
