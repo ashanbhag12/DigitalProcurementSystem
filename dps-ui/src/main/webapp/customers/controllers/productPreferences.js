@@ -102,4 +102,4 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 $scope.searchedResults = false;
                 $scope.customerShipmark = "";
             };
-        });
+        }); 
