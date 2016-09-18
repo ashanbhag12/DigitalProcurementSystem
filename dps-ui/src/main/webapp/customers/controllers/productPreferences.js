@@ -10,6 +10,10 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
             $scope.maskColumns = true; /* Hide the columns */
+            $scope.products = [];     
+            $scope.selectedRows = []; /* Array for toggleAll function */
+            $scope.selectAll = false; /* Set toggle all to false */
+            $scope.pdfDisabled = true; /* Disable the PDF button */
             $scope.products = [];           
 
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
@@ -20,6 +24,12 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	getCustomersProductPreferencesService.query().$promise.then(function(data) {
                 	$scope.customers = data;
                 });
+            	
+            	/* Set variable for inline editing in order summary table */
+                for (var i = 0; i < $scope.products.length; i++) {
+                    $scope.editProductDetailsRow[i] = false;
+                }
+
             });
             
             /* Function to edit all the customer product margins */
@@ -56,12 +66,22 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     });
                 }
             };
+            
+            /* Function to edit all the customer product margins */
+            $scope.editAll = function () {
+            	for (var i = 0; i < $scope.products.customerProductPrices.length; i++) {
+            		$scope.editProductDetailsRow[i] = true;
+            	}
+            };
 
-            /* Set variable for inline editing in order summary table */
-            for (var i = 0; i < $scope.products.length; i++) {
-                $scope.editProductDetailsRow[i] = false;
-            }
-
+            /* Function to save all the customer product margins */
+            $scope.saveAll = function () {
+            	angular.forEach($scope.products.customerProductPrices, function (product, index) {
+            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+            		$scope.editProductDetailsRow[index] = false;
+            	});
+            };
+            
             $scope.editProductDetails = function (index, product) {
                 $scope.editProductDetailsRow[index] = true;
             };
@@ -71,8 +91,52 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 $scope.editProductDetailsRow[index] = false;                
             };
             
+            /* Function to select/unselect all the Products */
+    	    $scope.toggleAll = function () {
+    	        if ($scope.selectAll) {
+    	            $scope.selectAll = true;
+    	            $scope.pdfDisabled = false;
+    	            $scope.selectedRows = [];
+    	            angular.forEach($scope.products.customerProductPrices, function (product) {
+    	            	product.toExport = $scope.selectAll;
+    	                $scope.selectedRows.push(1);
+    	            });
+    	        }
+    	        else {
+    	            $scope.selectAll = false;
+    	            $scope.pdfDisabled = true;
+    	            angular.forEach($scope.products.customerProductPrices, function (product) {
+    	            	product.toExport = $scope.selectAll;
+    	                $scope.selectedRows = [];
+    	            });
+    	        }
+    	    };
+    	
+    	    /* Function to select/unselect the Product */
+    	    $scope.toggle = function (element) {
+    	        if (element.toExport) {
+    	            $scope.selectedRows.push(1);
+    	            $scope.pdfDisabled = false;
+    	        }
+    	        else {
+    	            $scope.selectedRows.pop();
+    	        }
+    	        if ($scope.products.customerProductPrices.length === $scope.selectedRows.length) {
+    	            $scope.selectAll = true;
+    	        }
+    	        else {
+    	            $scope.selectAll = false;
+    	        }
+    	        if ($scope.selectedRows.length === 0) {
+    	        	$scope.pdfDisabled = true;
+    	        }
+    	        else{
+    	            $scope.pdfDisabled = false;
+    	        }
+    	    };
+            
             /* Function to export data to PDF */
-            $scope.kalpesh = function(){
+            $scope.exportToPDF = function(){
             	alert(12);            	
             }
 

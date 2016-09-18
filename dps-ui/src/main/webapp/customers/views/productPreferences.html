@@ -50,6 +50,10 @@
                     <th ng-hide="maskColumns">Customer Product Margin</th>
                     <th>Cost</th>
                     <th class='alignCenter'>Action</th>
+                    <th class="alignCenter">
+            			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
+                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+            		</th>
             	</tr>
             </thead>
             <tbody>
@@ -74,13 +78,18 @@
                         <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateProductDetails($index, product)" 
                            title='Update Row' ng-show="editProductDetailsRow[$index]"></a>
                     </td>
+                    <td class="alignCenter">
+                        <md-checkbox type='checkbox' ng-model="product.toExport" name="isProductChecked" ng-change="toggle(product)"
+                                 aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>
+                    </td>
                 </tr>
             </tbody>
         </table> 
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
         <div layout='row' layout-align='end center' class='marginT10'>
-        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF" ng-click="kalpesh()" />
+        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF"
+        	ng-disabled="pdfDisabled" ng-class="{'disableControl':pdfDisabled}" ng-click="pdfDisabled || exportToPDF()" />
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">SAVE</md-button>
             <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
         </div>
