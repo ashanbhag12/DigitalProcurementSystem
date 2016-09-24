@@ -167,6 +167,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	                        });    	        	            
     	        	        }, 500);
                     	}, function(){/* Error Callback */
+                    		angular.element(document.querySelector('.modal')).css('display', "none");     
                     		$timeout(function () {	                    			
     	            			$scope.selectAll = false;
     	        	            $scope.selectedRows = [];
