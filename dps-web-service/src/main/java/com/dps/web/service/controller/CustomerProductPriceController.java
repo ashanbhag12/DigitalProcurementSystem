@@ -324,7 +324,7 @@ public class CustomerProductPriceController
 					table.addCell(cell);
 					
 					cell = createNewCell();
-					cell.addElement(new Paragraph(custProdPrice.getCost().setScale(3).toString()));
+					cell.addElement(new Paragraph(custProdPrice.getCost().setScale(3, RoundingMode.HALF_UP).toString()));
 					table.addCell(cell);
 					
 					cell = createNewCell();

@@ -164,16 +164,7 @@ public class CustomerOrder extends EntityBase
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Status == null) ? 0 : Status.hashCode());
-		result = prime * result
-				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime
-				* result
-				+ ((orderCompletedDate == null) ? 0 : orderCompletedDate
-						.hashCode());
-		result = prime * result
-				+ ((orderDate == null) ? 0 : orderDate.hashCode());
 		return result;
 	}
 
@@ -187,37 +178,12 @@ public class CustomerOrder extends EntityBase
 		if (getClass() != obj.getClass())
 			return false;
 		CustomerOrder other = (CustomerOrder) obj;
-		if (Status != other.Status)
-			return false;
-		if (customer == null)
-		{
-			if (other.customer != null)
-				return false;
-		}
-		else if (!customer.equals(other.customer))
-			return false;
 		if (id == null)
 		{
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		if (orderCompletedDate == null)
-		{
-			if (other.orderCompletedDate != null)
-				return false;
-		}
-		else if (!orderCompletedDate.equals(other.orderCompletedDate))
-			return false;
-		if (orderDate == null)
-		{
-			if (other.orderDate != null)
-				return false;
-		}
-		else if (!orderDate.equals(other.orderDate))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-	
 }

@@ -1,5 +1,7 @@
 package com.dps.web.service.model;
 
+import java.math.BigDecimal;
+
 /**
  * Maps to the field that needs to be displayed on the Place order page.
  *
@@ -22,6 +24,7 @@ public class PlaceOrderDTO
 	private String idList;
 	private String supplierProductCode;
 	private String productDescription;
+	private BigDecimal pricePerItem;
 
 	public String getProductCode()
 	{
@@ -131,6 +134,16 @@ public class PlaceOrderDTO
 	public void setProductDescription(String productDescription)
 	{
 		this.productDescription = productDescription;
+	}
+
+	public BigDecimal getPricePerItem()
+	{
+		return pricePerItem;
+	}
+
+	public void setPricePerItem(BigDecimal pricePerItem)
+	{
+		this.pricePerItem = pricePerItem;
 	}
 
 }

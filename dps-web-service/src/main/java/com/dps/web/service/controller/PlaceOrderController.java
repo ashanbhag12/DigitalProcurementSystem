@@ -3,13 +3,16 @@ package com.dps.web.service.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,7 +30,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.constants.CustomerOrderDetailStatus;
+import com.dps.domain.constants.CustomerOrderStatus;
 import com.dps.domain.entity.Configurations;
+import com.dps.domain.entity.CustomerOrder;
 import com.dps.domain.entity.CustomerOrderDetails;
 import com.dps.domain.entity.Product;
 import com.dps.domain.entity.Supplier;
@@ -36,6 +41,7 @@ import com.dps.domain.entity.SupplierOrderDetails;
 import com.dps.domain.entity.SupplierProductInfo;
 import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerOrderDetailsService;
+import com.dps.service.CustomerOrderService;
 import com.dps.service.SupplierOrderService;
 import com.dps.service.SupplierService;
 import com.dps.web.service.model.PlaceOrderDTO;
@@ -54,6 +60,9 @@ public class PlaceOrderController
 {
 	@Autowired
 	private CustomerOrderDetailsService custOrderDetService;
+	
+	@Autowired
+	private CustomerOrderService customerOrderService;
 	
 	@Autowired
 	private ConfigurationsService configService;
@@ -143,6 +152,7 @@ public class PlaceOrderController
 				order.setToOrder(quantity >= product.getMoq());
 				order.setIdList(ids.toString());
 				order.setProductDescription(product.getDescription());
+				order.setPricePerItem(product.getPrice());
 				
 				for(SupplierProductInfo suppProdInfo : product.getSuppProdInfo())
 				{
@@ -220,6 +230,7 @@ public class PlaceOrderController
 			
 			List<PlaceOrderDTO> orders = ordersPerSupplier.get(supplierInitials);
 			List<SupplierOrderDetails> supplierOrderDetailList = new ArrayList<>();
+			Set<CustomerOrder> customerOrders = new HashSet<>();
 			for(PlaceOrderDTO order : orders)
 			{
 				String[] idString = order.getIdList().split(",");
@@ -233,6 +244,7 @@ public class PlaceOrderController
 						suppOrderDet.setCustomerOrderDetails(custOrderDet);
 						suppOrderDet.setSupplierOrder(supplierOrder);
 						supplierOrderDetailList.add(suppOrderDet);
+						customerOrders.add(custOrderDet.getCustomerOrder());
 					}
 				}
 				
@@ -240,6 +252,29 @@ public class PlaceOrderController
 			
 			supplierOrder.setSupplierOrderDetails(supplierOrderDetailList);
 			supplierOrderList.add(supplierOrder);
+			
+			for(CustomerOrder custOrder : customerOrders)
+			{
+				int unorderedCount = 0;
+				for(CustomerOrderDetails det : custOrder.getLineItems())
+				{
+					if(det.getStatus() == CustomerOrderDetailStatus.NOT_ORDERED)
+					{
+						unorderedCount ++;
+					}
+				}
+				 
+				if(unorderedCount == 0)
+				{
+					custOrder.setStatus(CustomerOrderStatus.ALL_ITEMS_ORDERED);
+				}
+				else
+				{
+					custOrder.setStatus(CustomerOrderStatus.SOME_ITEMS_ORDERED);
+				}
+			}
+			
+			customerOrderService.mergeAll(customerOrders);
 		}
 		
 		supplierOrderService.persistAll(supplierOrderList);
@@ -283,10 +318,14 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(4);
-			cell.setCellValue("Remark");
+			cell.setCellValue("Price Per Item");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(5);
+			cell.setCellValue("Remark");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(6);
 			cell.setCellValue("Customer Information");
 			cell.setCellStyle(headerCellStyle);
 			
@@ -313,10 +352,14 @@ public class PlaceOrderController
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(4);
-				cell.setCellValue(order.getRemarks());
+				cell.setCellValue(order.getPricePerItem().setScale(3, RoundingMode.HALF_UP).toString());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(5);
+				cell.setCellValue(order.getRemarks());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(6);
 				cell.setCellValue(order.getCustomerDetails());
 				cell.setCellStyle(cellStyle);
 			}
