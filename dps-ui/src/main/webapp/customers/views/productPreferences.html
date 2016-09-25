@@ -46,6 +46,7 @@
                     <th>CBM</th>
                     <th>Gross Weight</th>                    
                     <th>Product Description</th>
+                    <th>Supplier Initials</th>
                     <th ng-hide="maskColumns">Product Margin</th>
                     <th ng-hide="maskColumns">Customer Product Margin</th>
                     <th>Cost</th>
@@ -64,6 +65,7 @@
                     <td>{{product.cbm}}</td>
                     <td>{{product.grossWeight}}</td>                    
                     <td>{{product.productDescription}}</td>
+                    <td>{{product.supplierInitials}}</td>
                     <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
                     <td ng-hide="maskColumns">
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
