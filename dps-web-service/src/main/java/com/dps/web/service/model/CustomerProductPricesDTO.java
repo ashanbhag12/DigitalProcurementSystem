@@ -24,6 +24,7 @@ public class CustomerProductPricesDTO
 	private BigDecimal grossWeight;
 	private BigDecimal cbm;
 	private boolean toExport = false;
+	private String supplierInitials;
 
 	public String getProductCode()
 	{
@@ -123,5 +124,13 @@ public class CustomerProductPricesDTO
 	public void setCbm(BigDecimal cbm)
 	{
 		this.cbm = cbm;
+	}
+
+	public String getSupplierInitials() {
+		return supplierInitials;
+	}
+
+	public void setSupplierInitials(String supplierInitials) {
+		this.supplierInitials = supplierInitials;
 	}
 }

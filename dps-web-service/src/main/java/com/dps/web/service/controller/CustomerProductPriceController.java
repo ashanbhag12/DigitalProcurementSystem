@@ -28,6 +28,7 @@ import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.Customer;
 import com.dps.domain.entity.CustomerProductPreference;
 import com.dps.domain.entity.Product;
+import com.dps.domain.entity.SupplierProductInfo;
 import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerProductPreferenceService;
 import com.dps.service.CustomerService;
@@ -99,6 +100,15 @@ public class CustomerProductPriceController
 			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
 			custProdPriceDto.setGrossWeight(prod.getWeight());
 			custProdPriceDto.setCbm(prod.getCbm());
+			
+			StringBuffer sb = new StringBuffer();
+			for(SupplierProductInfo suppProdInfo : prod.getSuppProdInfo())
+			{
+				sb.append(suppProdInfo.getSupplier().getInitials());
+				sb.append("; ");
+			}
+			
+			custProdPriceDto.setSupplierInitials(sb.toString());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
