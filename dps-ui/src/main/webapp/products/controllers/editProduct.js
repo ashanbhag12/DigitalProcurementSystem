@@ -100,6 +100,41 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     $scope.editDisabled = false;
                 }
             };
+            
+            /* Function to search for Products */
+            $scope.searchProduct = function () {    
+            	angular.element(document.querySelector('.loader')).addClass('show');
+                /* Service Call to retrieve searched product */
+                $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
+    	        	$timeout(function(){
+    	        		$scope.searchedResults = true;
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        }, function(){ /* Error Callback */
+    	        	$timeout(function(){
+    	        		$scope.errorMessage = "Product not found. Please try again";
+    	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        	}, 500);
+    	        });
+            };
+            
+            /* Concat all Supplier Initials and display in table */
+            $scope.getSupplierInitials = function(supplierProductInfoList){            	
+            	var supplierInitials = [];            	
+            	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
+            		supplierInitials.push(supplierProductInfo.supplierInitials);
+            	});
+            	return supplierInitials.join("; ");
+            };
+            
+            /* Concat all Supplier Product Code and display in table */
+            $scope.getSupplierProductCode = function(supplierProductInfoList){            	
+            	var supplierProductCodes = [];            	
+            	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
+            		supplierProductCodes.push(supplierProductInfo.supplierProductCode);
+            	});            	
+            	return supplierProductCodes.join("; ");
+            };            
 
             /* Function to edit the selected Product */
             $scope.edit = function () {
@@ -258,23 +293,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     		    	}, 500);
     		    });
             };
-
-            /* Function to search for Products */
-            $scope.searchProduct = function () {    
-            	angular.element(document.querySelector('.loader')).addClass('show');
-                /* Service Call to retrieve searched product */
-                $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
-    	        	$timeout(function(){
-    	        		$scope.searchedResults = true;
-    	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        	}, 500);
-    	        }, function(){ /* Error Callback */
-    	        	$timeout(function(){
-    	        		$scope.errorMessage = "Product not found. Please try again";
-    	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        	}, 500);
-    	        });
-            };
             
             $scope.reset = function () {
                 $scope.product = {};
@@ -296,15 +314,5 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.editProduct.supplierProductCode3.$touched = false;
                 $scope.editProduct.isValid.$touched = false;                
                 $scope.showSuccessBox = false;
-            };
-            
-            /*Concats all Supplier Initials and returns it to displays in table*/
-            $scope.getSupplierInitials = function(supplierProductInfoList){            	
-            	var supplierInitialsSrting = '';            	
-            	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
-            		supplierInitialsSrting += supplierProductInfo.supplierInitials;
-            		supplierInitialsSrting += '; ';
-            	});            	
-            	return supplierInitialsSrting;
-            }
+            };	
         });
