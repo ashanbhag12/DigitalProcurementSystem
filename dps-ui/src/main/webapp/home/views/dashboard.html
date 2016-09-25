@@ -36,7 +36,7 @@
     <form name="globalParameters" ng-submit="submitForm(globalParameters)" novalidate>
         <div layout="row">
             <md-input-container class="md-block" flex="15">
-                <label>*Exchange Rate</label>
+                <label>*ER</label>
                 <input type='text' name="exchangeRate" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        ng-model="global.exchangeRate" ng-readonly="isReadonly" />
                 <div ng-messages="globalParameters.exchangeRate.$error" ng-show="globalParameters.exchangeRate.$touched">
@@ -44,7 +44,7 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="15">
-                <label>*Per CBM Cost</label>
+                <label>*PCBMC</label>
                 <input name="costPerCbm" required placeholder="0.000" ng-model="global.costPerCbm" type='text' 
                 	ng-readonly="isReadonly" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/" />
                 <div ng-messages="globalParameters.costPerCbm.$error" ng-show="globalParameters.costPerCbm.$touched">
@@ -52,7 +52,7 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="20">
-                <label>*Per Gross Weight Cost</label>
+                <label>*PGWC</label>
                 <input name="costPerGrossWeight" ng-model="global.costPerGrossWeight" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        type='text' ng-readonly="isReadonly" />
                 <div ng-messages="globalParameters.costPerGrossWeight.$error" ng-show="globalParameters.costPerGrossWeight.$touched">
