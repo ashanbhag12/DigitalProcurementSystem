@@ -35,7 +35,7 @@
     <div class="errorBox animateMessages" ng-show="showErrorBox">{{errorMessage}}</div>
     <form name="globalParameters" ng-submit="submitForm(globalParameters)" novalidate>
         <div layout="row">
-            <md-input-container class="md-block" flex="25">
+            <md-input-container class="md-block" flex="15">
                 <label>*Exchange Rate</label>
                 <input type='text' name="exchangeRate" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        ng-model="global.exchangeRate" ng-readonly="isReadonly" />
@@ -43,7 +43,7 @@
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="25">
+            <md-input-container class="md-block" flex="15">
                 <label>*Per CBM Cost</label>
                 <input name="costPerCbm" required placeholder="0.000" ng-model="global.costPerCbm" type='text' 
                 	ng-readonly="isReadonly" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/" />
@@ -51,7 +51,7 @@
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="25">
+            <md-input-container class="md-block" flex="20">
                 <label>*Per Gross Weight Cost</label>
                 <input name="costPerGrossWeight" ng-model="global.costPerGrossWeight" required placeholder="0.000" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"
                        type='text' ng-readonly="isReadonly" />
@@ -59,7 +59,7 @@
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimal long.(e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="25">
+            <md-input-container class="md-block" flex="50">
                 <label>*Files Storage Path</label>
                 <input name="basePath" ng-model="global.basePath" ng-required="!isReadonly" placeholder="Path" type='text' ng-readonly="isReadonly" />
                 <div ng-messages="globalParameters.basePath.$error" ng-show="globalParameters.basePath.$touched">
@@ -76,4 +76,4 @@
                        ng-click="clear();" ng-show="showClearBtn">CLEAR</md-button>
         </div>
     </form>
-</div>
+</div> 

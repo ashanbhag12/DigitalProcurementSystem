@@ -89,6 +89,13 @@ section[role="main"]{
 	min-height: calc(100% - 64px);
 }
 
+/*IE 10+ fix for page height */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     section[role="main"]{
+		height: calc(100% - 64px);
+	}
+}
+
 .contentSection{
     min-height: calc(100% - 64px);
     max-height: inherit !important; 
@@ -124,7 +131,9 @@ h3.sectionTitle, h4.sectionTitle{
     padding:10px 8px 10px 20px; 
 }
 
-.mainNav > li a:hover{
+.mainNav > li a:hover,
+.mainNav > li a:active,
+.mainNav li a.active{
     background-color: rgb(40,53,147);
 }
 

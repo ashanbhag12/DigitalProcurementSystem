@@ -132,6 +132,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    		            angular.element(document.querySelector('.loader')).removeClass('show');
 	        	        }, 500);
 	            	}, function(error){/* Error Callback */
+	            		angular.element(document.querySelector('.modal')).css('display', "none");     
 	            		$timeout(function () {	
 	            			$scope.selectAll = false;
 	        	            $scope.selectedRows = [];
