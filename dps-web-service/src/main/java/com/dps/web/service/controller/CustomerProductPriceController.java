@@ -227,14 +227,13 @@ public class CustomerProductPriceController
 			Document document = new Document();
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
 			document.open();
-			document.add(new Paragraph("Product details"));
 			
-			PdfPTable table = new PdfPTable(4); 
+			PdfPTable table = new PdfPTable(5); 
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(5f);
 			table.setSpacingAfter(5f);
 			
-			float[] columnWidths = {1f,1f,1f,1f};
+			float[] columnWidths = {1f,1f,1f,1f,1f};
 			table.setWidths(columnWidths);
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
@@ -242,7 +241,7 @@ public class CustomerProductPriceController
 				if(custProdPrice.isToExport())
 				{
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("Price: Rs. "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
+					cell.addElement(new Paragraph("    "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
 					
 					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
 					image.scaleAbsolute(75f, 50f);
