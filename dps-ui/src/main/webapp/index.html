@@ -8,10 +8,21 @@
 		<link href="assets/images/apple-touch-icon.png" rel="icon" />
 		<link href="assets/libs/css/angular-material-1.0.9.min.css" rel="stylesheet" type="text/css"/>
 		<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+		<style>
+			.scrollToTop{
+				position:fixed;
+			    bottom: 100px;
+			    right: 10px;
+			    z-index: 9999;
+			    height: 42px;
+			    width: 42px;
+			    background: url(/iwov-resources/images/jppl_btt.png) no-repeat left top;
+			}
+		</style>
 		<!-- AngularJS Library -->
 		<script src="assets/libs/js/angular-1.5.7.min.js" type="text/javascript"></script>
 	</head>
-	<body ng-app="mainApp" ng-cloak>
+	<body ng-app="mainApp" ng-cloak id="mainApp">
 	    <md-toolbar class="md-hue-2">
 	        <div class="md-toolbar-tools">
 	            <h1>Digital Procurement System</h1>
@@ -78,7 +89,8 @@
 	            <div ui-view></div>
 	        </div>   
 	        <div class="loader"></div>
-	    </section>   
+	    </section>
+	    <md-button class="md-fab md-primary scrollToTop" aria-label="Scroll to top" scroll-to="mainApp">K</md-button>   
 	    <!-- Third Party Libraries -->
 	    <script src="assets/libs/js/angular-animate-1.5.7.min.js" type="text/javascript"></script>
 	    <script src="assets/libs/js/angular-aria-1.5.7.min.js" type="text/javascript"></script>
