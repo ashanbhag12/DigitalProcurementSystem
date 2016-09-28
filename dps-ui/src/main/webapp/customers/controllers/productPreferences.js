@@ -143,6 +143,11 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                         $scope.showSuccessBox = true;
                         $scope.successMessage = "PDF created successfully"
     				    $scope.showErrorBox = false;
+                        $scope.selectedRows = [];
+                        $scope.selectAll = false;
+                        angular.forEach($scope.products.customerProductPrices, function (product) {
+        	            	product.toExport = $scope.selectAll;
+        	            });
     				    angular.element(document.querySelector('.loader')).removeClass('show');
     				    smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);
