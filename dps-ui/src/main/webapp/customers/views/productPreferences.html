@@ -73,7 +73,7 @@
                             <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
-                    <td>{{product.cost}}</td>
+                    <td>{{product.cost | number:3}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editProductDetails($index, product)" 
                            title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>

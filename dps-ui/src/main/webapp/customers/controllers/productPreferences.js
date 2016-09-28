@@ -42,7 +42,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to save all the customer product margins */
             $scope.saveAll = function () {
             	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
                     $scope.editProductDetailsRow[index] = false;
                 });
             };
