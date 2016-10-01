@@ -50,7 +50,8 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to search for Products */
             $scope.getProductDetails = function () {
                 if ($scope.customerShipmark !== undefined) {
-                	angular.element(document.querySelector('.loader')).addClass('show');                    
+                	angular.element(document.querySelector('.loader')).addClass('show');
+                	$scope.showSuccessBox = false;
                     /* Service Call to retrieve all products */
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
