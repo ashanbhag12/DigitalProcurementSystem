@@ -1,5 +1,5 @@
 'use strict';
-angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
+angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
                            'dashboardApp', 'addCustomerApp', 'editCustomerApp',
                            'addSupplierApp', 'editSupplierApp', 'addProductApp', 'editProductApp',
                            'productPreferencesApp', 'buildOrderApp', 'placeOrderApp'])
@@ -72,7 +72,7 @@ angular.module('mainApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router'
                         templateUrl: "placeOrder/views/placeOrder.html",
                         controller: "placeOrderController"
                     });
-        }).run(function ($rootScope, $state, $timeout) {
+        }).run(function ($rootScope, $state, $timeout) {        	
         	/* Show loader on route change start */
         	$rootScope.$on('$stateChangeStart',function(){
         		angular.element(document.querySelector('.loader')).addClass('show');
