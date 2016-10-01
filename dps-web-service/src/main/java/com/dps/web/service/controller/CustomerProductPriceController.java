@@ -243,8 +243,19 @@ public class CustomerProductPriceController
 					PdfPCell cell = createNewCell();
 					cell.addElement(new Paragraph("    "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
 					
-					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
-					image.scaleAbsolute(75f, 50f);
+					Image image = null;
+					try
+					{
+						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpg");
+					}
+					catch(Exception e)
+					{
+						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+					}
+					
+					//image.scaleAbsoluteHeight(75f);
+					//image.scaleAbsoluteWidth(75f);
+					image.scaleToFit(75f, 75f);
 					image.setBorderWidth(2);
 					image.setBorder(Rectangle.BOX);
 					cell.addElement(image);
