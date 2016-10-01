@@ -493,3 +493,14 @@ md-datepicker {background: #FAFAFA;}
     height: 45px;
     margin-right: 20px;
 } 
+
+.scrollToTop{
+	position:fixed;
+    bottom: 25px;
+    right: 10px;
+    z-index: 9999;
+    height: 42px;
+    width: 42px;
+    background: url(../images/scrollToTop.png) no-repeat center center;
+    background-size:25px;
+}
