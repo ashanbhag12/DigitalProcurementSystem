@@ -28,6 +28,7 @@ import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.Customer;
 import com.dps.domain.entity.CustomerProductPreference;
 import com.dps.domain.entity.Product;
+import com.dps.domain.entity.SupplierProductInfo;
 import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerProductPreferenceService;
 import com.dps.service.CustomerService;
@@ -99,6 +100,15 @@ public class CustomerProductPriceController
 			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
 			custProdPriceDto.setGrossWeight(prod.getWeight());
 			custProdPriceDto.setCbm(prod.getCbm());
+			
+			StringBuffer sb = new StringBuffer();
+			for(SupplierProductInfo suppProdInfo : prod.getSuppProdInfo())
+			{
+				sb.append(suppProdInfo.getSupplier().getInitials());
+				sb.append("; ");
+			}
+			
+			custProdPriceDto.setSupplierInitials(sb.toString());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
@@ -217,14 +227,13 @@ public class CustomerProductPriceController
 			Document document = new Document();
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
 			document.open();
-			document.add(new Paragraph("Product details"));
 			
-			PdfPTable table = new PdfPTable(4); 
+			PdfPTable table = new PdfPTable(5); 
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(5f);
 			table.setSpacingAfter(5f);
 			
-			float[] columnWidths = {1f,1f,1f,1f};
+			float[] columnWidths = {1f,1f,1f,1f,1f};
 			table.setWidths(columnWidths);
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
@@ -232,10 +241,21 @@ public class CustomerProductPriceController
 				if(custProdPrice.isToExport())
 				{
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("Price: Rs. "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
+					cell.addElement(new Paragraph("    "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
 					
-					Image image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
-					image.scaleAbsolute(75f, 50f);
+					Image image = null;
+					try
+					{
+						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpg");
+					}
+					catch(Exception e)
+					{
+						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+					}
+					
+					//image.scaleAbsoluteHeight(75f);
+					//image.scaleAbsoluteWidth(75f);
+					image.scaleToFit(75f, 75f);
 					image.setBorderWidth(2);
 					image.setBorder(Rectangle.BOX);
 					cell.addElement(image);

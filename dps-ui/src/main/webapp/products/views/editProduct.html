@@ -39,13 +39,14 @@
                         </a>
                     </th>
                     <th ng-hide="maskColumns">Price Per Item</th>
-                    <th>Cartoon Quantity</th>
+                    <th>Pkg./Ctn.</th>
                     <th>CBM</th>                    
                     <th>Gross Weight</th>
                     <th>Product Description</th>
                     <th>MOQ</th>
-                    <th ng-hide="maskColumns">Product Margin</th>
+                    <th ng-hide="maskColumns">PM</th>
                     <th>Supplier Initials</th>
+                    <th>Supplier Product Code</th>
                     <th>Is Valid</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
@@ -64,6 +65,7 @@
                     <td>{{product.moq}}</td>
                     <td ng-hide="maskColumns">{{product.defaultMargin | number:3}}</td>
                     <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
+                    <td>{{getSupplierProductCode(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"

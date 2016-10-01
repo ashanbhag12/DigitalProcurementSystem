@@ -17,7 +17,7 @@
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
 	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Customer margin: {{products.additionalCustomerMargin | number:3}}</h4>
+	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">CM: {{products.additionalCustomerMargin | number:3}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
@@ -42,12 +42,13 @@
                         </a>
                     </th>  
                     <th ng-hide="maskColumns">Price Per Item</th>
-                    <th>Cartoon Quantity</th>
+                    <th>Pkg./Ctn.</th>
                     <th>CBM</th>
                     <th>Gross Weight</th>                    
                     <th>Product Description</th>
-                    <th ng-hide="maskColumns">Product Margin</th>
-                    <th ng-hide="maskColumns">Customer Product Margin</th>
+                    <th>Supplier Initials</th>
+                    <th ng-hide="maskColumns">PM</th>
+                    <th ng-hide="maskColumns">CPM</th>
                     <th>Cost</th>
                     <th class='alignCenter'>Action</th>
                     <th class="alignCenter">
@@ -64,6 +65,7 @@
                     <td>{{product.cbm}}</td>
                     <td>{{product.grossWeight}}</td>                    
                     <td>{{product.productDescription}}</td>
+                    <td>{{product.supplierInitials}}</td>
                     <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
                     <td ng-hide="maskColumns">
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
@@ -71,7 +73,7 @@
                             <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
-                    <td>{{product.cost}}</td>
+                    <td>{{product.cost | number:3}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editProductDetails($index, product)" 
                            title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>
@@ -88,7 +90,7 @@
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
         <div layout='row' layout-align='end center' class='marginT10'>
-        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF"
+        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF" title="Export to PDF"
         	ng-disabled="pdfDisabled" ng-class="{'disableControl':pdfDisabled}" ng-click="pdfDisabled || exportToPDF()" />
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">SAVE</md-button>
             <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            

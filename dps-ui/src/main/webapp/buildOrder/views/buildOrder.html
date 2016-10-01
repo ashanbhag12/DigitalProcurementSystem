@@ -63,11 +63,11 @@
         </div>
         <div layout="row" layout-align="center stretch">              
             <md-input-container class="md-block" flex="20">
-                <label>Cartoon Quantity</label>
+                <label>Pkg./Ctn.</label>
                 <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" ng-readonly="true" />
             </md-input-container>
             <md-input-container class="md-block" flex="20">
-                <label>Quantity</label>
+                <label>Cartoon</label>
                 <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" required/>
                 <div ng-messages="selectedProductDetails.productQuantity.$error" ng-show="selectedProductDetails.productQuantity.$touched">
                     <div ng-message-exp="['required', 'min']">This is required. Should be more than 0.</div>
@@ -113,8 +113,8 @@
                         </a>
                     </th>
                     <th>Price Per Item</th>
-                    <th>Cartoon Quantity</th>
-                    <th>Quantity</th>
+                    <th>Pkg./Ctn.</th>
+                    <th>Cartoon</th>
                     <th>Remarks</th>
                     <th class='alignCenter'>
                     	<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
@@ -151,8 +151,8 @@
                 <tr>
                     <th>Product Code</th>
                     <th>Supplier Code</th>                    
-                    <th>Quantity</th>
-                    <th>Customer Product Margin</th> 
+                    <th>Cartoon</th>
+                    <th>CPM</th> 
                     <th>Cost</th>
                 </tr>
             </thead>

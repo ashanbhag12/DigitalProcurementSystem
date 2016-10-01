@@ -5,7 +5,7 @@
 		<h3 class="md-headline sectionTitle">Upload Excel</h3>
 		<div layout="row">
 			<md-input-container class="md-block" flex="60">
-                <input type="file" name="fileUpload" id="fileUpload" required/>
+                <input type="file" name="fileUpload" id="fileUpload" required aria-label="Select File to Upload" />
 		    </md-input-container>
 		    <div flex="35" flex-offset="5">
 	   			<md-button type="submit" class="md-raised md-primary submitBtn">Upload</md-button>
@@ -20,21 +20,21 @@
     	<h3 class="md-headline sectionTitle">Add Product Form</h3>
         <div layout="row">
             <md-input-container class="md-block" flex="25">
-                <label>*Product code</label>
+                <label>*Product Code</label>
                 <input type='text' required name="productCode" ng-model="product.productCode" />
                 <div ng-messages="addProduct.productCode.$error" ng-show="addProduct.productCode.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Price per item</label>
+                <label>*Price Per Item</label>
                 <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.price.$error" ng-show="addProduct.price.$touched">
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Cartoon quantity</label>
+                <label>*Pkg./Ctn.</label>
                 <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
                 <div ng-messages="addProduct.cartoonQuantity.$error" ng-show="addProduct.cartoonQuantity.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
@@ -71,7 +71,7 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Default margin</label>
+                <label>*Product Margin</label>
                 <input required placeholder="0.000" name="defaultMargin" ng-model="product.defaultMargin" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
                 <div ng-messages="addProduct.defaultMargin.$error" ng-show="addProduct.defaultMargin.$touched">
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
@@ -80,7 +80,7 @@
         </div>
         <div layout="row">
 			<md-input-container class="md-block" flex="50">
-		        <label>*Supplier initials</label>
+		        <label>*Supplier Initials</label>
 		        <md-select name="supplierInitials1" ng-model="product.supplierProductInfoList[0].supplierInitials" required>
 		          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
 		            {{si.abbrev}}
@@ -91,13 +91,13 @@
                 </div>
       		</md-input-container>
             <md-input-container class="md-block" flex="50">
-                <label>Supplier product code</label>
+                <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode"/>
             </md-input-container>
         </div>
         <div layout="row">
 			<md-input-container class="md-block" flex="50">
-		        <label>Supplier initials</label>
+		        <label>Supplier Initials</label>
 		        <md-select name="supplierInitials2" ng-model="product.supplierProductInfoList[1].supplierInitials">
 		          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
 		            {{si.abbrev}}
@@ -105,13 +105,13 @@
 		        </md-select>
       		</md-input-container>
             <md-input-container class="md-block" flex="50">
-                <label>Supplier product code</label>
+                <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode2" ng-model="product.supplierProductInfoList[1].supplierProductCode"/>
             </md-input-container>
         </div>
         <div layout="row">
 			<md-input-container class="md-block" flex="50">
-		        <label>Supplier initials</label>
+		        <label>Supplier Initials</label>
 		        <md-select name="supplierInitials3" ng-model="product.supplierProductInfoList[2].supplierInitials">
 		          <md-option ng-repeat="si in allSupplierInitials" value="{{si.abbrev}}">
 		            {{si.abbrev}}
@@ -119,7 +119,7 @@
 		        </md-select>
       		</md-input-container>
             <md-input-container class="md-block" flex="50">
-                <label>Supplier product code</label>
+                <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode3" ng-model="product.supplierProductInfoList[2].supplierProductCode"/>
             </md-input-container>
         </div>

@@ -42,7 +42,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to save all the customer product margins */
             $scope.saveAll = function () {
             	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
                     $scope.editProductDetailsRow[index] = false;
                 });
             };
@@ -50,7 +50,8 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to search for Products */
             $scope.getProductDetails = function () {
                 if ($scope.customerShipmark !== undefined) {
-                	angular.element(document.querySelector('.loader')).addClass('show');                    
+                	angular.element(document.querySelector('.loader')).addClass('show');
+                	$scope.showSuccessBox = false;
                     /* Service Call to retrieve all products */
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
@@ -143,6 +144,11 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                         $scope.showSuccessBox = true;
                         $scope.successMessage = "PDF created successfully"
     				    $scope.showErrorBox = false;
+                        $scope.selectedRows = [];
+                        $scope.selectAll = false;
+                        angular.forEach($scope.products.customerProductPrices, function (product) {
+        	            	product.toExport = $scope.selectAll;
+        	            });
     				    angular.element(document.querySelector('.loader')).removeClass('show');
     				    smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);
