@@ -102,7 +102,7 @@ public class CustomerProductPriceController
 			CustomerProductPricesDTO custProdPriceDto = new CustomerProductPricesDTO();
 			custProdPriceDto.setProductCode(prod.getProductCode());
 			custProdPriceDto.setCustomerProductMargin(custProdPrefs.get(prod.getId()) != null ? custProdPrefs.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
-			custProdPriceDto.setCustomerProductMarginPercentage(custProdPrefsPect.get(prod.getId()) != null ? custProdPrefsPect.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
+			custProdPriceDto.setCustomerProductMarginPercentage(custProdPrefsPect.get(prod.getId()) != null ? custProdPrefsPect.get(prod.getId()) : Constants.BIG_DECIMAL_ZERO);
 			custProdPriceDto.setProductMargin(prod.getDefaultMargin());
 			custProdPriceDto.setProductMarginPercentage(prod.getDiscountPrcentage());
 			custProdPriceDto.setProductPrice(prod.getSuppProdInfo().get(0).getSupplierPrice());

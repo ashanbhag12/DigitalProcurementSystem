@@ -19,4 +19,5 @@ public class Constants
 	}
 	
 	public static final BigDecimal BIG_DECIMAL_ONE = new BigDecimal(1);
+	public static final BigDecimal BIG_DECIMAL_ZERO = new BigDecimal(0);
 }
