@@ -204,6 +204,28 @@ public class CustomerProductPriceController
 	}
 	
 	@POST
+	@Path("/copy/{cust1}/{cust2}")
+	public void copyDiscountingData(@PathParam("cust1") String cust1, @PathParam("cust2") String cust2)
+	{
+		Customer srcCust = customerService.findByShipmarkAndName(cust1, null).get(0);
+		Customer destCust = customerService.findByShipmarkAndName(cust2, null).get(0);
+		
+		List<CustomerProductPreference> srcCustPrefs = custProdPrefService.findAllPreferencesForCustomer(srcCust.getId());
+		List<CustomerProductPreference> destCustPrefs = new ArrayList<>();
+		
+		for(CustomerProductPreference srcPref : srcCustPrefs)
+		{
+			CustomerProductPreference destPref = new CustomerProductPreference();
+			destPref.setCustomer(destCust);
+			destPref.setDiscount(srcPref.getDiscount());
+			destPref.setProduct(srcPref.getProduct());
+			destCustPrefs.add(destPref);
+		}
+		
+		custProdPrefService.persistAll(destCustPrefs);
+	}
+	
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/export")
 	public void generatePdfReport(CustomerProductPricesWrapperDTO wrapper)
