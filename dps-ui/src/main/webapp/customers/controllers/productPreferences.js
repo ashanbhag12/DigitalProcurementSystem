@@ -91,6 +91,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     	$timeout(function () {
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
+                            console.log($scope.products)
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
@@ -122,7 +123,14 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             };
 
             $scope.updateProductDetails = function (index, product) {
-                product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
+            	product.customerProductMargin = parseInt(product.customerProductMarginPercentage);
+            	if(product.customerProductMargin >= 0){
+            		product.customerProductMargin = 1 / (1 - (Math.abs(product.customerProductMargin)/100));
+        		}
+            	else{
+            		product.customerProductMargin = 1 - (Math.abs(product.customerProductMargin)/100);            		
+            	}
+            	product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
                 $scope.editProductDetailsRow[index] = false;                
             };
             

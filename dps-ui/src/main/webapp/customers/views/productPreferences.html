@@ -79,9 +79,9 @@
                     <td>{{product.supplierInitials}}</td>
                     <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
                     <td ng-hide="maskColumns">
-                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
+                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
-                            <input type='number' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
+                            <input type='number' ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
                     <td>{{product.cost | number:3}}</td>
