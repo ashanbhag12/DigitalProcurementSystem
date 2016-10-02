@@ -24,6 +24,7 @@ public class ProductDTO
 	private Integer moq;
 	private Boolean isValid;
 	private BigDecimal defaultMargin;
+	private BigDecimal defaultMarginPercentage;
 	private List<SuppProdInfo> supplierProductInfoList = new ArrayList<>();
 	
 	public Long getId()
@@ -105,5 +106,13 @@ public class ProductDTO
 	public void setSupplierProductInfoList(List<SuppProdInfo> supplierProductInfoList)
 	{
 		this.supplierProductInfoList = supplierProductInfoList;
+	}
+	public BigDecimal getDefaultMarginPercentage()
+	{
+		return defaultMarginPercentage;
+	}
+	public void setDefaultMarginPercentage(BigDecimal defaultMarginPercentage)
+	{
+		this.defaultMarginPercentage = defaultMarginPercentage;
 	}
 }

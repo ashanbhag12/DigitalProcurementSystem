@@ -76,13 +76,21 @@ public class CustomerProductPriceController
 		List<CustomerProductPricesDTO> custPrices = new ArrayList<>();
 		List<Product> prodList = new ArrayList<>();
 		Map<Long, BigDecimal> custProdPrefs = new HashMap<>();
+		Map<Long, BigDecimal> custProdPrefsPect = new HashMap<>();
 		Customer cust = null;
+		List<CustomerProductPreference> custProdPreferences = null;
 		try
 		{
 			List<Customer> custList = customerService.findByShipmarkAndName(shipmark, null);
 			cust = custList.get(0);
 			prodList = productService.findAll();
-			custProdPrefs = custProdPrefService.findPreferencesForCustomer(cust.getId());
+			custProdPreferences = custProdPrefService.findAllPreferencesForCustomer(cust.getId());
+			
+			for(CustomerProductPreference pref : custProdPreferences)
+			{
+				custProdPrefs.put(pref.getProduct().getId(), pref.getDiscount());
+				custProdPrefsPect.put(pref.getProduct().getId(), pref.getDiscountPrcentage());
+			}
 		}
 		catch(Exception e)
 		{
@@ -94,7 +102,9 @@ public class CustomerProductPriceController
 			CustomerProductPricesDTO custProdPriceDto = new CustomerProductPricesDTO();
 			custProdPriceDto.setProductCode(prod.getProductCode());
 			custProdPriceDto.setCustomerProductMargin(custProdPrefs.get(prod.getId()) != null ? custProdPrefs.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
+			custProdPriceDto.setCustomerProductMarginPercentage(custProdPrefsPect.get(prod.getId()) != null ? custProdPrefsPect.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
 			custProdPriceDto.setProductMargin(prod.getDefaultMargin());
+			custProdPriceDto.setProductMarginPercentage(prod.getDiscountPrcentage());
 			custProdPriceDto.setProductPrice(prod.getSuppProdInfo().get(0).getSupplierPrice());
 			custProdPriceDto.setProductDescription(prod.getDescription());
 			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
@@ -123,6 +133,7 @@ public class CustomerProductPriceController
 		
 		CustomerProductPricesWrapperDTO custProdPriceWrapper = new CustomerProductPricesWrapperDTO();
 		custProdPriceWrapper.setAdditionalCustomerMargin(cust.getAdditionalMargin());
+		custProdPriceWrapper.setAdditionalCustomerMarginPercentage(cust.getDiscountPrcentage());
 		custProdPriceWrapper.setShipmark(shipmark);
 		custProdPriceWrapper.setCustomerProductPrices(custPrices);
 		

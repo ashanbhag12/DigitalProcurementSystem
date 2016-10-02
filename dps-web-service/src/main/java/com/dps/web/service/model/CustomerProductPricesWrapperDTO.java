@@ -18,6 +18,7 @@ public class CustomerProductPricesWrapperDTO
 {
 	private String shipmark;
 	private BigDecimal additionalCustomerMargin;
+	private BigDecimal additionalCustomerMarginPercentage;
 	private List<CustomerProductPricesDTO> customerProductPrices = new ArrayList<>();
 
 	public String getShipmark()
@@ -48,6 +49,17 @@ public class CustomerProductPricesWrapperDTO
 	public void setCustomerProductPrices(List<CustomerProductPricesDTO> customerProductPrices)
 	{
 		this.customerProductPrices = customerProductPrices;
+	}
+
+	public BigDecimal getAdditionalCustomerMarginPercentage()
+	{
+		return additionalCustomerMarginPercentage;
+	}
+
+	public void setAdditionalCustomerMarginPercentage(
+			BigDecimal additionalCustomerMarginPercentage)
+	{
+		this.additionalCustomerMarginPercentage = additionalCustomerMarginPercentage;
 	}
 
 }

@@ -64,6 +64,10 @@ public class Customer extends EntityBase
 	
 	@Basic
 	private Boolean isActive;
+	
+	@Basic
+	@Column(name="DISC_PECT")
+	private BigDecimal discountPrcentage;
 
 	public Long getId()
 	{
@@ -120,12 +124,25 @@ public class Customer extends EntityBase
 		this.additionalMargin = additionalMargin;
 	}
 
-	public Boolean isActive() {
+	public Boolean isActive() 
+	{
 		return isActive;
 	}
 
-	public void setActive(Boolean isActive) {
+	public void setActive(Boolean isActive) 
+	{
 		this.isActive = isActive;
+	}
+
+
+	public BigDecimal getDiscountPrcentage()
+	{
+		return discountPrcentage;
+	}
+
+	public void setDiscountPrcentage(BigDecimal discountPrcentage)
+	{
+		this.discountPrcentage = discountPrcentage;
 	}
 
 	@Override

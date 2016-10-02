@@ -126,6 +126,7 @@ public class CustomerController
 	private Customer customerFromCustomerDTO(Customer cust, CustomerDTO custDto)
 	{
 		cust.setAdditionalMargin(custDto.getAdditionalMargin());
+		cust.setDiscountPrcentage(custDto.getAdditionalMarginPercentage());
 		cust.setName(custDto.getName());
 		cust.setShipmark(custDto.getShipmark());
 		cust.setActive(true);
@@ -161,6 +162,7 @@ public class CustomerController
 		CustomerDTO custDto = new CustomerDTO();
 		custDto.setId(cust.getId());
 		custDto.setAdditionalMargin(cust.getAdditionalMargin());
+		custDto.setAdditionalMarginPercentage(cust.getDiscountPrcentage());
 		custDto.setBuilding(cust.getAddress().getBuilding());
 		custDto.setCity(cust.getAddress().getCity());
 		custDto.setEmailId(cust.getContactDetails().getEmailId());

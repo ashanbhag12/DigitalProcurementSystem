@@ -17,6 +17,7 @@ public class CustomerDTO
 	private String name;
 	private String shipmark;
 	private BigDecimal additionalMargin;
+	private BigDecimal additionalMarginPercentage;
 	private String flatNo;
 	private String building;
 	private String street;
@@ -155,5 +156,15 @@ public class CustomerDTO
 	public void setPhoneNumber(String phoneNumber)
 	{
 		this.phoneNumber = phoneNumber;
+	}
+
+	public BigDecimal getAdditionalMarginPercentage()
+	{
+		return additionalMarginPercentage;
+	}
+
+	public void setAdditionalMarginPercentage(BigDecimal additionalMarginPercentage)
+	{
+		this.additionalMarginPercentage = additionalMarginPercentage;
 	}
 }

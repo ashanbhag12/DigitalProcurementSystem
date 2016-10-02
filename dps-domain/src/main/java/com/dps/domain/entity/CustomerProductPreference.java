@@ -3,6 +3,7 @@ package com.dps.domain.entity;
 import java.math.BigDecimal;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,6 +47,10 @@ public class CustomerProductPreference extends EntityBase
 	
 	@Basic
 	private BigDecimal discount;
+	
+	@Basic
+	@Column(name="DISC_PECT")
+	private BigDecimal discountPrcentage;
 
 	public Product getProduct()
 	{
@@ -75,6 +80,16 @@ public class CustomerProductPreference extends EntityBase
 	public void setDiscount(BigDecimal discount)
 	{
 		this.discount = discount;
+	}
+
+	public BigDecimal getDiscountPrcentage()
+	{
+		return discountPrcentage;
+	}
+
+	public void setDiscountPrcentage(BigDecimal discountPrcentage)
+	{
+		this.discountPrcentage = discountPrcentage;
 	}
 
 	public Long getId()

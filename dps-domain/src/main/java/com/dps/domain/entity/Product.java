@@ -77,6 +77,10 @@ public class Product extends EntityBase
 
 	@Basic
 	private Boolean isActive;
+	
+	@Basic
+	@Column(name="DISC_PECT")
+	private BigDecimal discountPrcentage;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@OrderColumn(name = "PREF_NO")
@@ -185,6 +189,16 @@ public class Product extends EntityBase
 	public void setActive(Boolean isActive)
 	{
 		this.isActive = isActive;
+	}
+
+	public BigDecimal getDiscountPrcentage()
+	{
+		return discountPrcentage;
+	}
+
+	public void setDiscountPrcentage(BigDecimal discountPrcentage)
+	{
+		this.discountPrcentage = discountPrcentage;
 	}
 
 	@Override

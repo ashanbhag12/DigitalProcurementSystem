@@ -17,7 +17,9 @@ public class CustomerProductPricesDTO
 	private String productCode;
 	private BigDecimal productPrice; 
 	private BigDecimal productMargin;
+	private BigDecimal productMarginPercentage;
 	private BigDecimal customerProductMargin;
+	private BigDecimal customerProductMarginPercentage;
 	private BigDecimal cost;
 	private String productDescription;
 	private Integer cartoonQuantity;
@@ -126,11 +128,34 @@ public class CustomerProductPricesDTO
 		this.cbm = cbm;
 	}
 
-	public String getSupplierInitials() {
+	public String getSupplierInitials()
+	{
 		return supplierInitials;
 	}
 
-	public void setSupplierInitials(String supplierInitials) {
+	public void setSupplierInitials(String supplierInitials)
+	{
 		this.supplierInitials = supplierInitials;
+	}
+
+	public BigDecimal getProductMarginPercentage()
+	{
+		return productMarginPercentage;
+	}
+
+	public void setProductMarginPercentage(BigDecimal productMarginPercentage)
+	{
+		this.productMarginPercentage = productMarginPercentage;
+	}
+
+	public BigDecimal getCustomerProductMarginPercentage()
+	{
+		return customerProductMarginPercentage;
+	}
+
+	public void setCustomerProductMarginPercentage(
+			BigDecimal customerProductMarginPercentage)
+	{
+		this.customerProductMarginPercentage = customerProductMarginPercentage;
 	}
 }

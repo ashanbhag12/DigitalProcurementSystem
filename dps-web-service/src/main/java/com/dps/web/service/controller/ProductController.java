@@ -392,6 +392,7 @@ public class ProductController
 		//prod.setPrice(prodDto.getPrice());
 		prod.setProductCode(prodDto.getProductCode());
 		prod.setWeight(prodDto.getWeight());
+		prod.setDiscountPrcentage(prodDto.getDefaultMarginPercentage());
 		
 		return prod;
 	}
@@ -407,6 +408,7 @@ public class ProductController
 		prodDto.setId(prod.getId());
 		prodDto.setIsValid(prod.getIsValid());
 		prodDto.setMoq(prod.getMoq());
+		prodDto.setDefaultMarginPercentage(prod.getDiscountPrcentage());
 		//prodDto.setPrice(prod.getPrice());
 		prodDto.setProductCode(prod.getProductCode());
 		prodDto.setWeight(prod.getWeight());
