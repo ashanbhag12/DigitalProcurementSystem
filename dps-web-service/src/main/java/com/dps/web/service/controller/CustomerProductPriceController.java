@@ -215,7 +215,7 @@ public class CustomerProductPriceController
 		}
 	}
 	
-	@POST
+	@GET
 	@Path("/copy/{cust1}/{cust2}")
 	public void copyDiscountingData(@PathParam("cust1") String cust1, @PathParam("cust2") String cust2)
 	{
