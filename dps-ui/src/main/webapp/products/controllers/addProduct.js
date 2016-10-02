@@ -11,6 +11,7 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
             		"description":"",
             		"moq":"",
             		"defaultMargin":"",
+            		"defaultMarginPercentage":"",
             		"supplierProductInfoList": [{
             			"supplierInitials": "",
             			"supplierProductCode": "",
@@ -34,6 +35,17 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
                 });
     	    });
+    	    
+    	    /* Function to update Calculate Product Margin */
+    	    $scope.calculateProductMargin = function(){
+    	    	$scope.product.defaultMargin = parseInt($scope.product.defaultMarginPercentage);
+            	if($scope.product.defaultMargin >= 0){
+            		$scope.product.defaultMargin = 1 / (1 - (Math.abs($scope.product.defaultMargin)/100));
+        		}
+            	else{
+            		$scope.product.defaultMargin = 1 - (Math.abs($scope.product.defaultMargin)/100);            		
+            	}
+    	    };
 
             $scope.submitForm = function (addProduct) {
                 if (addProduct.$valid) {
@@ -89,7 +101,7 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 $scope.addProduct.weight.$touched = false;
                 $scope.addProduct.description.$touched = false;
                 $scope.addProduct.moq.$touched = false;
-                $scope.addProduct.defaultMargin.$touched = false;
+                $scope.addProduct.defaultMarginPercentage.$touched = false;
                 $scope.addProduct.supplierInitials1.$touched = false;
                 $scope.addProduct.supplierProductCode1.$touched = false;
                 $scope.addProduct.supplierPrice1.$touched = false;

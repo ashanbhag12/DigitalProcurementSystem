@@ -112,7 +112,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                $scope.customer.phoneNumber = customer.phoneNumber;
 	                $scope.customer.emailId = customer.emailId;
 	                $scope.customer.shipmark = customer.shipmark;
-	                $scope.customer.additionalMargin = customer.additionalMargin;
+	                $scope.customer.additionalMarginPercentage = customer.additionalMarginPercentage;
 	                $scope.customer.flatNo = customer.flatNo;
 	                $scope.customer.building = customer.building;
 	                $scope.customer.street = customer.street;
@@ -245,7 +245,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $scope.editCustomer.phoneNumber.$touched = false;
 	        $scope.editCustomer.emailId.$touched = false;
 	        $scope.editCustomer.shipmark.$touched = false;
-	        $scope.editCustomer.additionalMargin.$touched = false;
+	        $scope.editCustomer.additionalMarginPercentage.$touched = false;
 	        $scope.editCustomer.flatNo.$touched = false;
 	        $scope.editCustomer.building.$touched = false;
 	        $scope.editCustomer.street.$touched = false;

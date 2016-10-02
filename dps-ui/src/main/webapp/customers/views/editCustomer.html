@@ -64,7 +64,7 @@
                     <td>{{customer.phoneNumber}}</td>
                     <td>{{customer.emailId}}</td>
                     <td>{{customer.shipmark}}</td>
-                    <td ng-hide="maskColumns">{{customer.additionalMargin | number:3}}</td>
+                    <td ng-hide="maskColumns">{{customer.additionalMarginPercentage | number:3}}</td>
                     <td class="alignCenter">
                         <md-checkbox type='checkbox' ng-model="customer.isChecked" name="isCustomerChecked" ng-change="toggle(customer)"
                                  aria-label='Select All Customers {{$index}}' class='md-primary'></md-checkbox>

@@ -35,6 +35,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             		"description":"",
             		"moq":"",
             		"defaultMargin":"",
+            		"defaultMarginPercentage":"",
             		"supplierProductInfoList": [{
             			"supplierInitials": "",
             			"supplierProductCode": "",
@@ -111,6 +112,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        		console.log($scope.products)
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
@@ -147,6 +149,17 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             	return supplierProductPrices.join("; ");
             };
 
+            /* Function to update Product Margin */
+    	    $scope.updateProductMargin = function(){
+    	    	$scope.product.defaultMargin = parseInt($scope.product.defaultMarginPercentage);
+            	if($scope.product.defaultMargin >= 0){
+            		$scope.product.defaultMargin = 1 / (1 - (Math.abs($scope.product.defaultMargin)/100));
+        		}
+            	else{
+            		$scope.product.defaultMargin = 1 - (Math.abs($scope.product.defaultMargin)/100);            		
+            	}
+    	    };
+            
             /* Function to edit the selected Product */
             $scope.edit = function () {
                 angular.forEach($scope.products, function (product) {
@@ -159,7 +172,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         $scope.product.weight = product.weight;
                         $scope.product.description = product.description;
                         $scope.product.moq = product.moq;
-                        $scope.product.defaultMargin = product.defaultMargin;
+                        $scope.product.defaultMarginPercentage = product.defaultMarginPercentage;
                         for(i=0;i<3;i++){
                         	if(product.supplierProductInfoList[i] != undefined){
                             	$scope.product.supplierProductInfoList[i].supplierInitials = product.supplierProductInfoList[i].supplierInitials;
@@ -321,7 +334,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.editProduct.weight.$touched = false;
                 $scope.editProduct.description.$touched = false;
                 $scope.editProduct.moq.$touched = false;
-                $scope.editProduct.defaultMargin.$touched = false;
+                $scope.editProduct.defaultMarginPercentage.$touched = false;
                 $scope.editProduct.supplierInitials1.$touched = false;
                 $scope.editProduct.supplierProductCode1.$touched = false;
                 $scope.editProduct.supplierPrice1.$touched = false;
