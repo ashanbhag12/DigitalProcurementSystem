@@ -77,7 +77,7 @@
                     <td>{{product.grossWeight}}</td>                    
                     <td>{{product.productDescription}}</td>
                     <td>{{product.supplierInitials}}</td>
-                    <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
+                    <td ng-hide="maskColumns">{{product.productMarginPercentage | number:3}}</td>
                     <td ng-hide="maskColumns">
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">

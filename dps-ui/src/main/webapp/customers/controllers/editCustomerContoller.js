@@ -106,7 +106,6 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.edit = function () {
 	        angular.forEach($scope.customers, function (customer) {
 	            if (customer.isChecked) {
-	            	console.log(customer)
 	            	smoothScroll(document.getElementById("editCustomerForm")); /* Scroll to the form */
 	                $scope.editCustomerForm = true;
 	                $scope.customer.name = customer.name;
