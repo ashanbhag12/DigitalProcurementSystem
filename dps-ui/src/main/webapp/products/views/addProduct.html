@@ -27,13 +27,6 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Price Per Item</label>
-                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
-                <div ng-messages="addProduct.price.$error" ng-show="addProduct.price.$touched">
-                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
-                </div>
-            </md-input-container>
-            <md-input-container class="md-block" flex="25">
                 <label>*Pkg./Ctn.</label>
                 <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
                 <div ng-messages="addProduct.cartoonQuantity.$error" ng-show="addProduct.cartoonQuantity.$touched">
@@ -94,6 +87,13 @@
                 <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode"/>
             </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>*Price Per Item</label>
+                <input required placeholder="0.000" name="supplierPrice1" ng-model="product.supplierProductInfoList[0].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.supplierPrice1.$error" ng-show="addProduct.supplierPrice1.$touched">
+                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
         </div>
         <div layout="row">
 			<md-input-container class="md-block" flex="50">
@@ -108,6 +108,13 @@
                 <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode2" ng-model="product.supplierProductInfoList[1].supplierProductCode"/>
             </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>Price Per Item</label>
+                <input placeholder="0.000" name="supplierPrice2" ng-model="product.supplierProductInfoList[1].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.supplierPrice2.$error" ng-show="addProduct.supplierPrice2.$touched">
+                    <div ng-message-exp="['pattern']">Can be 3 decimals long. (e.g. - xx.xxx)</div>
+                </div>
+            </md-input-container>
         </div>
         <div layout="row">
 			<md-input-container class="md-block" flex="50">
@@ -121,6 +128,13 @@
             <md-input-container class="md-block" flex="50">
                 <label>Supplier Product Code</label>
                 <input type='text' name="supplierProductCode3" ng-model="product.supplierProductInfoList[2].supplierProductCode"/>
+            </md-input-container>
+            <md-input-container class="md-block" flex="25">
+                <label>Price Per Item</label>
+                <input placeholder="0.000" name="supplierPrice3" ng-model="product.supplierProductInfoList[2].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+                <div ng-messages="addProduct.supplierPrice3.$error" ng-show="addProduct.supplierPrice3.$touched">
+                    <div ng-message-exp="['pattern']">Can be 3 decimals long. (e.g. - xx.xxx)</div>
+                </div>
             </md-input-container>
         </div>
 		<div layout="row">

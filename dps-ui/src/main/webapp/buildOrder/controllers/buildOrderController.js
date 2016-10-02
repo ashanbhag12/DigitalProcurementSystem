@@ -56,6 +56,14 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     $scope.searchProductSection = true;
                 }
             };
+            
+            $scope.supplierProductPrice = function () {
+            	angular.forEach($scope.productDetails.supplierProductInfoList, function (supplierProductInfo) {
+            		if($scope.productDetails.supplierInitials === supplierProductInfo.supplierInitials){
+            			$scope.productDetails.price = supplierProductInfo.supplierPrice;
+            		}
+            	});
+            };
 
             /* Set variable for inline editing in order summary table */
             for (var i = 0; i < $scope.orderSummary.length; i++) {
@@ -87,7 +95,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     	$scope.productDetails.productCode = $scope.searchedProduct.productCode;
                     	$scope.productDetails.supplierProductInfoList = $scope.searchedProduct.supplierProductInfoList
                     	$scope.productDetails.supplierInitials =  $scope.searchedProduct.supplierProductInfoList[0].supplierInitials;
-                    	$scope.productDetails.price = $scope.searchedProduct.price;
+                    	$scope.productDetails.price = $scope.searchedProduct.supplierProductInfoList[0].supplierPrice;
                     	$scope.productDetails.moq = $scope.searchedProduct.moq;
                     	$scope.productDetails.cartoonQuantity = $scope.searchedProduct.cartoonQuantity;
                         $scope.productDetailsSection = true;
@@ -242,7 +250,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 });
                 $scope.productDetails.productCode = "";
                 $scope.productDetails.supplierCode = "";
-                $scope.productDetails.pricePerPiece = "";
+                $scope.productDetails.price = "";
                 $scope.productDetails.productMOQ = "";
                 $scope.productDetails.remarks = "";
                 $scope.productDetails.productQuantity = "";

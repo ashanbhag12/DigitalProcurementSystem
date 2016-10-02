@@ -31,20 +31,22 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
-            		"price":"",
             		"weight":"",
             		"description":"",
             		"moq":"",
             		"defaultMargin":"",
             		"supplierProductInfoList": [{
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}],
             		"isValid":"false"
             };
@@ -134,7 +136,16 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             		supplierProductCodes.push(supplierProductInfo.supplierProductCode);
             	});            	
             	return supplierProductCodes.join("; ");
-            };            
+            };   
+            
+            /* Concat all Supplier Product Price and display in table */
+            $scope.getSupplierPrices = function(supplierProductInfoList){            	
+            	var supplierProductPrices = [];            	
+            	angular.forEach(supplierProductInfoList, function (supplierProductInfo) {
+            		supplierProductPrices.push(supplierProductInfo.supplierPrice);
+            	});            	
+            	return supplierProductPrices.join("; ");
+            };
 
             /* Function to edit the selected Product */
             $scope.edit = function () {
@@ -145,7 +156,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         $scope.product.productCode = product.productCode;
                         $scope.product.cartoonQuantity = product.cartoonQuantity;
                         $scope.product.cbm = product.cbm;
-                        $scope.product.price = product.price;
                         $scope.product.weight = product.weight;
                         $scope.product.description = product.description;
                         $scope.product.moq = product.moq;
@@ -154,9 +164,11 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         	if(product.supplierProductInfoList[i] != undefined){
                             	$scope.product.supplierProductInfoList[i].supplierInitials = product.supplierProductInfoList[i].supplierInitials;
                                 $scope.product.supplierProductInfoList[i].supplierProductCode = product.supplierProductInfoList[i].supplierProductCode;
+                                $scope.product.supplierProductInfoList[i].supplierPrice = product.supplierProductInfoList[i].supplierPrice;;
                             }else{
                             	$scope.product.supplierProductInfoList[i].supplierInitials = "";
-                                $scope.product.supplierProductInfoList[i].supplierProductCode = ""
+                                $scope.product.supplierProductInfoList[i].supplierProductCode = "";
+                                $scope.product.supplierProductInfoList[i].supplierPrice = "";
                             }
                         }
                         if(product.isValid == true){
@@ -232,29 +244,34 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 			/* So that supplierProductInfoList is of size 3, having 3 objs */
                 			product.supplierProductInfoList = [{
 								                    			"supplierInitials": "",
-								                    			"supplierProductCode": ""
+								                    			"supplierProductCode": "",
+								                    			"supplierPrice": ""
 								                    		}, {
 								                    			"supplierInitials": "",
-								                    			"supplierProductCode": ""
+								                    			"supplierProductCode": "",
+								                    			"supplierPrice": ""
 								                    		}, {
 								                    			"supplierInitials": "",
-								                    			"supplierProductCode": ""
+								                    			"supplierProductCode": "",
+								                    			"supplierPrice": ""
 								                    		}],
                 			
                             product.productCode = $scope.product.productCode;
                             product.cartoonQuantity = $scope.product.cartoonQuantity;
                             product.cbm = $scope.product.cbm;
-                            product.price = $scope.product.price;
                             product.weight = $scope.product.weight;
                             product.description = $scope.product.description;
                             product.moq = $scope.product.moq;
                             product.defaultMargin = $scope.product.defaultMargin;
                             product.supplierProductInfoList[0].supplierInitials = $scope.product.supplierProductInfoList[0].supplierInitials;
                             product.supplierProductInfoList[0].supplierProductCode = $scope.product.supplierProductInfoList[0].supplierProductCode;
+                            product.supplierProductInfoList[0].supplierPrice = $scope.product.supplierProductInfoList[0].supplierPrice;
                             product.supplierProductInfoList[1].supplierInitials = $scope.product.supplierProductInfoList[1].supplierInitials;
                             product.supplierProductInfoList[1].supplierProductCode = $scope.product.supplierProductInfoList[1].supplierProductCode;
+                            product.supplierProductInfoList[1].supplierPrice = $scope.product.supplierProductInfoList[1].supplierPrice;
                             product.supplierProductInfoList[2].supplierInitials = $scope.product.supplierProductInfoList[2].supplierInitials;
                             product.supplierProductInfoList[2].supplierProductCode = $scope.product.supplierProductInfoList[2].supplierProductCode;
+                            product.supplierProductInfoList[2].supplierPrice = $scope.product.supplierProductInfoList[2].supplierPrice;
                             product.isValid = $scope.product.isValid;   
                             delete product.isChecked;	
                             keepGoing = false;
@@ -301,17 +318,19 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.editProduct.productCode.$touched = false;
                 $scope.editProduct.cartoonQuantity.$touched = false;
                 $scope.editProduct.cbm.$touched = false;
-                $scope.editProduct.price.$touched = false;
                 $scope.editProduct.weight.$touched = false;
                 $scope.editProduct.description.$touched = false;
                 $scope.editProduct.moq.$touched = false;
                 $scope.editProduct.defaultMargin.$touched = false;
                 $scope.editProduct.supplierInitials1.$touched = false;
                 $scope.editProduct.supplierProductCode1.$touched = false;
+                $scope.editProduct.supplierPrice1.$touched = false;
                 $scope.editProduct.supplierInitials2.$touched = false;
                 $scope.editProduct.supplierProductCode2.$touched = false;
+                $scope.editProduct.supplierPrice2.$touched = false;
                 $scope.editProduct.supplierInitials3.$touched = false;
                 $scope.editProduct.supplierProductCode3.$touched = false;
+                $scope.editProduct.supplierPrice3.$touched = false;
                 $scope.editProduct.isValid.$touched = false;                
                 $scope.showSuccessBox = false;
             };	

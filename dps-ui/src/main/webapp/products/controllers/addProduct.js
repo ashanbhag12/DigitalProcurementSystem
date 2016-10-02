@@ -7,20 +7,22 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
-            		"price":"",
             		"weight":"",
             		"description":"",
             		"moq":"",
             		"defaultMargin":"",
             		"supplierProductInfoList": [{
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}],
             		"isValid":"false"
             };
@@ -60,20 +62,22 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 		"productCode":"",
                 		"cartoonQuantity":"",
                 		"cbm":"",
-                		"price":"",
                 		"weight":"",
                 		"description":"",
                 		"moq":"",
                 		"defaultMargin":"",
                 		"supplierProductInfoList": [{
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}, {
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}, {
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}],
                 		"isValid":"false"
                 };
@@ -82,17 +86,19 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 $scope.addProduct.productCode.$touched = false;
                 $scope.addProduct.cartoonQuantity.$touched = false;
                 $scope.addProduct.cbm.$touched = false;
-                $scope.addProduct.price.$touched = false;
                 $scope.addProduct.weight.$touched = false;
                 $scope.addProduct.description.$touched = false;
                 $scope.addProduct.moq.$touched = false;
                 $scope.addProduct.defaultMargin.$touched = false;
                 $scope.addProduct.supplierInitials1.$touched = false;
                 $scope.addProduct.supplierProductCode1.$touched = false;
+                $scope.addProduct.supplierPrice1.$touched = false;
                 $scope.addProduct.supplierInitials2.$touched = false;
                 $scope.addProduct.supplierProductCode2.$touched = false;
+                $scope.addProduct.supplierPrice2.$touched = false;
                 $scope.addProduct.supplierInitials3.$touched = false;
                 $scope.addProduct.supplierProductCode3.$touched = false;
+                $scope.addProduct.supplierPrice3.$touched = false;
                 $scope.addProduct.isValid.$touched = false;
                 $scope.showSuccessBox = false;
                 $scope.showErrorBox = false;
