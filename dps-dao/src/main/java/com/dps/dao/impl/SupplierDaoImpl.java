@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.dao.SupplierDao;
@@ -74,6 +76,24 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDa
 		}
 	}
 	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public List<JpaEntityId> findAll()
+	{
+		TypedQuery<Long> typedQuery = entityManager.createNamedQuery(Supplier.GET_ALL_SUPPLIERS, Long.class);
+		
+		List<Long> resultList = typedQuery.getResultList();
+		
+		List<JpaEntityId> idList = new ArrayList<>();
+		
+		for(Long i : resultList)
+		{
+			idList.add(new JpaEntityId(i));
+		}
+		
+		return idList;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.dps.dao.SupplierDao#getAllSupplierInitials()
 	 */
@@ -92,5 +112,13 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDa
 	{
 		TypedQuery<Long> query = entityManager.createNamedQuery(Supplier.GET_SUPPLIER_COUNT, Long.class);
 		return query.getSingleResult().intValue();
+	}
+	
+	@Override
+	@Transactional
+	public void remove(JpaEntityId id)
+	{
+		Supplier s = find(id);
+		s.setActive(false);
 	}
 }

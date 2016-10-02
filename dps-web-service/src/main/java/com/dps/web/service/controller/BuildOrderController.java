@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
@@ -23,6 +24,7 @@ import com.dps.domain.entity.CustomerOrder;
 import com.dps.domain.entity.CustomerOrderDetails;
 import com.dps.domain.entity.Product;
 import com.dps.domain.entity.Supplier;
+import com.dps.domain.entity.SupplierProductInfo;
 import com.dps.service.ConfigurationsService;
 import com.dps.service.CustomerOrderDetailsService;
 import com.dps.service.CustomerOrderService;
@@ -118,7 +120,17 @@ public class BuildOrderController
 				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin().setScale(3, RoundingMode.HALF_UP);
 				BigDecimal cartoonQuantity  = new BigDecimal(product.getCartoonQuantity().intValue()).setScale(3, RoundingMode.HALF_UP);
 				
-				BigDecimal price = product.getPrice();
+				BigDecimal price = Constants.BIG_DECIMAL_ONE;
+				
+				for(SupplierProductInfo spi : product.getSuppProdInfo())
+				{
+					if(StringUtils.equals(spi.getSupplier().getInitials(), item.getSelectedSupplierInitials()))
+					{
+						price = spi.getSupplierPrice();
+						break;
+					}
+				}
+				
 				price = price.multiply(productMargin);
 				price = price.multiply(custProdMargin);
 				price = price.multiply(custAddMargin);

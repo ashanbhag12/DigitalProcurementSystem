@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -100,7 +101,6 @@ public class ProductController
 		catch(Exception e)
 		{
 			throw e;
-			//return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		try
 		{
@@ -166,77 +166,85 @@ public class ProductController
 			
 			int rowCount = 0;
 			Iterator<Row> rowIterator = sheet.iterator();
+			Map<Integer, UploadFields> uploadFieldsMap = new HashMap<>();
 			while(rowIterator.hasNext())
 			{
 				Row row = rowIterator.next();
 				
-				//Ignore the first row
+				//The first row
+				Iterator<Cell> cellIterator = row.cellIterator();
+				int cellCount = -1;
 				if(rowCount++ == 0)
 				{
-					continue;
+					while(++cellCount < UploadFields.values().length)
+					{
+						UploadFields uf = UploadFields.parse(getCellData(cellIterator.next()).toString());
+						if(uf == null)
+						{
+							throw new RuntimeException("Upload fields error");
+						}
+						uploadFieldsMap.put(cellCount, uf);
+					}
 				}
-				
-				Iterator<Cell> cellIterator = row.cellIterator();
-				Object[] values = new Object[15];
-				int cellCount = 0;
-				
-				while(cellCount < 15)
+				else
 				{
-					Cell cell = cellIterator.next();
-					values[cellCount++] = getCellData(cell);
+					EnumMap<UploadFields, Object> values = getRowData(cellIterator, uploadFieldsMap);
+					
+					if(values.get(UploadFields.PRODUCT_CODE) == null)
+					{
+						break;
+					}
+					
+					Product product = new Product();
+					product.setProductCode(values.get(UploadFields.PRODUCT_CODE).toString());
+					product.setCartoonQuantity(((Double)values.get(UploadFields.CARTOON_QUANTITY)).intValue());
+					product.setCbm(new BigDecimal(values.get(UploadFields.CBM).toString()).setScale(3, RoundingMode.HALF_UP));
+					product.setWeight(new BigDecimal(values.get(UploadFields.WEIGHT).toString()).setScale(3, RoundingMode.HALF_UP));
+					product.setDescription(values.get(UploadFields.DESCRIPTION) != null ? values.get(UploadFields.DESCRIPTION).toString() : "");
+					product.setMoq(((Double)values.get(UploadFields.MOQ)).intValue());
+					BigDecimal margin = values.get(UploadFields.DEFAULT_MARGIN) != null ? new BigDecimal(values.get(UploadFields.DEFAULT_MARGIN).toString()) : Constants.BIG_DECIMAL_ONE;
+					product.setDefaultMargin(margin);
+					product.setIsValid("Valid".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)) || "Y".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)));
+					product.setIsValid(Boolean.TRUE);
+					
+					List<SupplierProductInfo> suppProdInfoList = new ArrayList<>();
+					
+					if(values.get(UploadFields.SUPPLIER_1_INITIALS) != null)
+					{
+						SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+						String supplierInitials = values.get(UploadFields.SUPPLIER_1_INITIALS).toString();
+						suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+						suppProdInfo.setSupplierProductName(values.get(UploadFields.SUPPLIER_1_CODE).toString());
+						suppProdInfo.setSupplierPrice(new BigDecimal(values.get(UploadFields.SUPPLIER_1_PRICE).toString()).setScale(3, RoundingMode.HALF_UP));
+						suppProdInfo.setProduct(product);
+						suppProdInfoList.add(suppProdInfo);
+					}
+					
+					if(values.get(UploadFields.SUPPLIER_2_INITIALS) != null)
+					{
+						SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+						String supplierInitials = values.get(UploadFields.SUPPLIER_2_INITIALS).toString();
+						suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+						suppProdInfo.setSupplierProductName(values.get(UploadFields.SUPPLIER_2_CODE).toString());
+						suppProdInfo.setSupplierPrice(new BigDecimal(values.get(UploadFields.SUPPLIER_2_PRICE).toString()).setScale(3, RoundingMode.HALF_UP));
+						suppProdInfo.setProduct(product);
+						suppProdInfoList.add(suppProdInfo);
+					}
+					
+					if(values.get(UploadFields.SUPPLIER_3_INITIALS) != null)
+					{
+						SupplierProductInfo suppProdInfo = new SupplierProductInfo();
+						String supplierInitials = values.get(UploadFields.SUPPLIER_3_INITIALS).toString();
+						suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
+						suppProdInfo.setSupplierProductName(values.get(UploadFields.SUPPLIER_3_CODE).toString());
+						suppProdInfo.setSupplierPrice(new BigDecimal(values.get(UploadFields.SUPPLIER_3_PRICE).toString()).setScale(3, RoundingMode.HALF_UP));
+						suppProdInfo.setProduct(product);
+						suppProdInfoList.add(suppProdInfo);
+					}
+					
+					product.setSuppProdInfo(suppProdInfoList);
+					productList.add(product);
 				}
-				
-				if(values[0] == null)
-				{
-					break;
-				}
-				
-				Product product = new Product();
-				product.setProductCode(values[0].toString());
-				product.setPrice(new BigDecimal(values[1].toString()).setScale(3, RoundingMode.HALF_UP));
-				product.setCartoonQuantity(((Double)values[2]).intValue());
-				product.setCbm(new BigDecimal(values[3].toString()).setScale(3, RoundingMode.HALF_UP));
-				product.setWeight(new BigDecimal(values[4].toString()).setScale(3, RoundingMode.HALF_UP));
-				product.setDescription(values[5] != null ? values[5].toString() : "");
-				product.setMoq(((Double)values[6]).intValue());
-				BigDecimal margin = values[7] != null ? new BigDecimal(values[7].toString()) : Constants.BIG_DECIMAL_ONE;
-				product.setDefaultMargin(margin);
-				product.setIsValid("Valid".equalsIgnoreCase((String)values[8]) || "Y".equalsIgnoreCase((String)values[8]));
-				
-				List<SupplierProductInfo> suppProdInfoList = new ArrayList<>();
-				
-				if(values[9] != null)
-				{
-					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = values[9].toString();
-					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName(values[10].toString());
-					suppProdInfo.setProduct(product);
-					suppProdInfoList.add(suppProdInfo);
-				}
-				
-				if(values[11] != null)
-				{
-					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = values[11].toString();
-					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName(values[12].toString());
-					suppProdInfo.setProduct(product);
-					suppProdInfoList.add(suppProdInfo);
-				}
-				
-				if(values[13] != null)
-				{
-					SupplierProductInfo suppProdInfo = new SupplierProductInfo();
-					String supplierInitials = values[13].toString();
-					suppProdInfo.setSupplier(supplierMap.get(supplierInitials));
-					suppProdInfo.setSupplierProductName(values[14].toString());
-					suppProdInfo.setProduct(product);
-					suppProdInfoList.add(suppProdInfo);
-				}
-				
-				product.setSuppProdInfo(suppProdInfoList);
-				productList.add(product);
 			}
 			
 			productService.persistAll(productList);
@@ -262,6 +270,57 @@ public class ProductController
 		return null;
 	}
 	
+	private EnumMap<UploadFields, Object> getRowData(Iterator<Cell> cellIterator, Map<Integer, UploadFields> uploadFieldsMap)
+	{
+		EnumMap<UploadFields, Object> map = new EnumMap<>(UploadFields.class);
+		
+		int cellCount = 0;
+		while(cellCount < UploadFields.values().length)
+		{
+			Cell cell = cellIterator.next();
+			UploadFields uf = uploadFieldsMap.get(cellCount);
+			map.put(uf, getCellData(cell));
+		}
+		
+		return map;
+	}
+	
+	private enum UploadFields
+	{
+		PRODUCT_CODE,
+		CARTOON_QUANTITY,
+		CBM,
+		WEIGHT,
+		DESCRIPTION,
+		MOQ,
+		DEFAULT_MARGIN,
+		IS_VALID,
+		SUPPLIER_1_INITIALS,
+		SUPPLIER_1_CODE,
+		SUPPLIER_1_PRICE,
+		SUPPLIER_2_INITIALS,
+		SUPPLIER_2_CODE,
+		SUPPLIER_2_PRICE,
+		SUPPLIER_3_INITIALS,
+		SUPPLIER_3_CODE,
+		SUPPLIER_3_PRICE;
+		
+		private static final Map<String, UploadFields> cache = new HashMap<>();
+		
+		static
+		{
+			for(UploadFields uf : UploadFields.values())
+			{
+				cache.put(uf.toString(), uf);
+			}
+		}
+		
+		public static UploadFields parse(String value)
+		{
+			return cache.get(value);
+		}
+	}
+	
 	private Product productFromProductDtoAdd(Product prod, ProductDTO prodDto)
 	{
 		productFromProductDtoCommon(prod, prodDto);
@@ -276,6 +335,7 @@ public class ProductController
 			SupplierProductInfo spi = new SupplierProductInfo();
 			spi.setProduct(prod);
 			spi.setSupplierProductName(spii.getSupplierProductCode());
+			spi.setSupplierPrice(new BigDecimal(spii.getSupplierPrice()));
 			
 			List<Supplier> supplierList = supplierService.findByInitialsAndName(spii.getSupplierInitials(), null);
 			if(supplierList == null || supplierList.size() == 0)
@@ -305,6 +365,7 @@ public class ProductController
 			SupplierProductInfo spi = new SupplierProductInfo();
 			spi.setProduct(prod);
 			spi.setSupplierProductName(spii.getSupplierProductCode());
+			spi.setSupplierPrice(new BigDecimal(spii.getSupplierPrice()));
 			
 			List<Supplier> supplierList = supplierService.findByInitialsAndName(spii.getSupplierInitials(), null);
 			if(supplierList == null || supplierList.size() == 0)
@@ -327,7 +388,7 @@ public class ProductController
 		prod.setDescription(prodDto.getDescription());
 		prod.setIsValid(prodDto.getIsValid());
 		prod.setMoq(prodDto.getMoq());
-		prod.setPrice(prodDto.getPrice());
+		//prod.setPrice(prodDto.getPrice());
 		prod.setProductCode(prodDto.getProductCode());
 		prod.setWeight(prodDto.getWeight());
 		
@@ -345,7 +406,7 @@ public class ProductController
 		prodDto.setId(prod.getId());
 		prodDto.setIsValid(prod.getIsValid());
 		prodDto.setMoq(prod.getMoq());
-		prodDto.setPrice(prod.getPrice());
+		//prodDto.setPrice(prod.getPrice());
 		prodDto.setProductCode(prod.getProductCode());
 		prodDto.setWeight(prod.getWeight());
 		List<SupplierProductInfo> list = prod.getSuppProdInfo();
@@ -355,6 +416,7 @@ public class ProductController
 			spii.setSupplierInitials(spi.getSupplier().getInitials());
 			spii.setProductCode(prod.getProductCode());
 			spii.setSupplierProductCode(spi.getSupplierProductName());
+			spii.setSupplierPrice(spi.getSupplierPrice().setScale(3, RoundingMode.HALF_UP).toString());
 			prodDto.getSupplierProductInfoList().add(spii);
 		}
 		return prodDto;

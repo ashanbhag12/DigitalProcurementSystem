@@ -128,6 +128,7 @@ public class CustomerController
 		cust.setAdditionalMargin(custDto.getAdditionalMargin());
 		cust.setName(custDto.getName());
 		cust.setShipmark(custDto.getShipmark());
+		cust.setActive(true);
 		
 		Address address = cust.getAddress();
 		if(address == null)

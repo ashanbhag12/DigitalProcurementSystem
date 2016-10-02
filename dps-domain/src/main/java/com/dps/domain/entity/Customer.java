@@ -27,10 +27,11 @@ import com.dps.commons.domain.Constants;
 @Entity
 @Table(name = "DPS_CUST")
 @NamedQueries({
-	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name"),
-	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark"),
-	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C"),
-	@NamedQuery(name=Customer.GET_CUSTOMER_COUNT, query="SELECT Count(c) from Customer c")
+	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name and C.isActive = 1"),
+	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark and C.isActive = 1"),
+	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C where C.isActive = 1"),
+	@NamedQuery(name=Customer.GET_CUSTOMER_COUNT, query="SELECT Count(c) from Customer c where c.isActive = 1"),
+	@NamedQuery(name=Customer.GET_ALL_CUSTOMERS, query="SELECT C.id from Customer C where C.isActive = 1")
 })
 public class Customer extends EntityBase
 {
@@ -39,6 +40,7 @@ public class Customer extends EntityBase
 	public static final String FIND_CUSTOMER_BY_SHIPMARK = "Customer.FindCustomerByShipmark";
 	public static final String GET_ALL_CUSTOMER_SHIPMARK = "Customer.GetAllCustomerShipmark";
 	public static final String GET_CUSTOMER_COUNT = "Customer.getCustomerCount";
+	public static final String GET_ALL_CUSTOMERS = "Customer.getAllCustomers";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +61,9 @@ public class Customer extends EntityBase
 	
 	@Embedded
 	private ContactDetails contactDetails;
+	
+	@Basic
+	private Boolean isActive;
 
 	public Long getId()
 	{
@@ -113,6 +118,14 @@ public class Customer extends EntityBase
 	public void setAdditionalMargin(BigDecimal additionalMargin)
 	{
 		this.additionalMargin = additionalMargin;
+	}
+
+	public Boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	@Override

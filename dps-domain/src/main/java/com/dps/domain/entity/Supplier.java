@@ -23,10 +23,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DPS_SUPP")
 @NamedQueries({
-	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_INITIALS, query="SELECT S.id FROM Supplier S WHERE S.initials = :initials"),
-	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_NAME, query="SELECT S.id FROM Supplier S WHERE S.name LIKE :name"),
-	@NamedQuery(name=Supplier.GET_ALL_SUPPLIER_INITIALS, query="SELECT S.initials FROM Supplier S"),
-	@NamedQuery(name=Supplier.GET_SUPPLIER_COUNT, query="SELECT COUNT(S) from Supplier S")
+	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_INITIALS, query="SELECT S.id FROM Supplier S WHERE S.initials = :initials and S.isActive = 1"),
+	@NamedQuery(name=Supplier.FIND_SUPPLIER_BY_NAME, query="SELECT S.id FROM Supplier S WHERE S.name LIKE :name and S.isActive = 1"),
+	@NamedQuery(name=Supplier.GET_ALL_SUPPLIER_INITIALS, query="SELECT S.initials FROM Supplier S where S.isActive = 1"),
+	@NamedQuery(name=Supplier.GET_SUPPLIER_COUNT, query="SELECT COUNT(S) from Supplier S where S.isActive = 1"),
+	@NamedQuery(name=Supplier.GET_ALL_SUPPLIERS, query="SELECT S.id from Supplier S where S.isActive = 1")
 })
 public class Supplier extends EntityBase
 {
@@ -35,6 +36,7 @@ public class Supplier extends EntityBase
 	public static final String FIND_SUPPLIER_BY_NAME = "Supplier.FindSupplierByName";
 	public static final String GET_ALL_SUPPLIER_INITIALS = "Supplier.GetAllSupplierInitials";
 	public static final String GET_SUPPLIER_COUNT = "Supplier.GetSupplierCount";
+	public static final String GET_ALL_SUPPLIERS = "Supplier.GetAllSuppliers";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +50,9 @@ public class Supplier extends EntityBase
 
 	@Embedded
 	private ContactDetails contactDetails;
+	
+	@Basic
+	private Boolean isActive;
 	
 	@Override
 	public Long getId()
@@ -83,6 +88,16 @@ public class Supplier extends EntityBase
 	public void setContactDetails(ContactDetails contactDetails)
 	{
 		this.contactDetails = contactDetails;
+	}
+
+	public Boolean isActive()
+	{
+		return isActive;
+	}
+
+	public void setActive(Boolean isActive)
+	{
+		this.isActive = isActive;
 	}
 
 	@Override

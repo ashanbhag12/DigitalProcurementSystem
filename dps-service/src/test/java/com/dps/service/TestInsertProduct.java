@@ -49,7 +49,7 @@ public class TestInsertProduct
 		prod.setDescription("Test");
 		prod.setIsValid(true);
 		prod.setMoq(1);
-		prod.setPrice(ONE);
+		//prod.setPrice(ONE);
 		prod.setProductCode("Test4");
 		prod.setWeight(ONE);
 		

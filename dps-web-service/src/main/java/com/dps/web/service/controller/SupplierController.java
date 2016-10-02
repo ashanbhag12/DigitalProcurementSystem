@@ -127,6 +127,7 @@ public class SupplierController
 	{
 		supplier.setName(supplierDto.getName());
 		supplier.setInitials(supplierDto.getInitials());
+		supplier.setActive(true);
 		
 		ContactDetails contactDetails = supplier.getContactDetails();
 		if(contactDetails == null)

@@ -3,6 +3,7 @@ package com.dps.web.service.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.constants.CustomerOrderDetailStatus;
 import com.dps.domain.constants.CustomerOrderStatus;
@@ -152,7 +154,19 @@ public class PlaceOrderController
 				order.setToOrder(quantity >= product.getMoq());
 				order.setIdList(ids.toString());
 				order.setProductDescription(product.getDescription());
-				order.setPricePerItem(product.getPrice());
+				
+				BigDecimal price = Constants.BIG_DECIMAL_ONE;
+				
+				for(SupplierProductInfo spi : product.getSuppProdInfo())
+				{
+					if(StringUtils.equals(spi.getSupplier().getInitials(), suppInitials))
+					{
+						price = spi.getSupplierPrice();
+						break;
+					}
+				}
+				
+				order.setPricePerItem(price);
 				
 				for(SupplierProductInfo suppProdInfo : product.getSuppProdInfo())
 				{

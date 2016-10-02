@@ -95,7 +95,7 @@ public class CustomerProductPriceController
 			custProdPriceDto.setProductCode(prod.getProductCode());
 			custProdPriceDto.setCustomerProductMargin(custProdPrefs.get(prod.getId()) != null ? custProdPrefs.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
 			custProdPriceDto.setProductMargin(prod.getDefaultMargin());
-			custProdPriceDto.setProductPrice(prod.getPrice());
+			custProdPriceDto.setProductPrice(prod.getSuppProdInfo().get(0).getSupplierPrice());
 			custProdPriceDto.setProductDescription(prod.getDescription());
 			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
 			custProdPriceDto.setGrossWeight(prod.getWeight());
@@ -114,7 +114,7 @@ public class CustomerProductPriceController
 			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
-			cost = cost.multiply(prod.getPrice());
+			cost = cost.multiply(custProdPriceDto.getProductPrice());
 			cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 			custProdPriceDto.setCost(cost);
 			

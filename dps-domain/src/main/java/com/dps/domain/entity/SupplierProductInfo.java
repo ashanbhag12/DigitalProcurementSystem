@@ -1,5 +1,7 @@
 package com.dps.domain.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +43,10 @@ public class SupplierProductInfo extends EntityBase
 	@Column(name="SUPP_PROD_NAME")
 	private String supplierProductName;
 	
+	@Basic
+	@Column(name="SUPP_PROD_PRICE")
+	private BigDecimal supplierPrice;
+	
 	public Product getProduct()
 	{
 		return product;
@@ -74,6 +80,16 @@ public class SupplierProductInfo extends EntityBase
 	public Long getId()
 	{
 		return id;
+	}
+
+	public BigDecimal getSupplierPrice()
+	{
+		return supplierPrice;
+	}
+
+	public void setSupplierPrice(BigDecimal supplierPrice)
+	{
+		this.supplierPrice = supplierPrice;
 	}
 
 	@Override

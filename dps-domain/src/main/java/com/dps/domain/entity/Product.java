@@ -30,9 +30,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DPS_PROD")
 @NamedQueries({
-	@NamedQuery(name=Product.FIND_PRODUCT_BY_CODE, query="SELECT p.id from Product p where p.productCode like :code"),
-	@NamedQuery(name=Product.GET_ALL_PRODUCT_CODE, query="SELECT p.productCode from Product p"),
-	@NamedQuery(name=Product.GET_PRODUCT_COUNT, query="SELECT count(p) from Product p")
+		@NamedQuery(name = Product.FIND_PRODUCT_BY_CODE, query = "SELECT p.id from Product p where p.productCode like :code and p.isActive = 1"),
+		@NamedQuery(name = Product.GET_ALL_PRODUCT_CODE, query = "SELECT p.productCode from Product p where p.isActive = 1"),
+		@NamedQuery(name = Product.GET_PRODUCT_COUNT, query = "SELECT count(p) from Product p where p.isActive = 1"),
+		@NamedQuery(name=Product.GET_ALL_PRODUCTS, query="SELECT p.id from Product p where p.isActive = 1")
 })
 public class Product extends EntityBase
 {
@@ -40,28 +41,26 @@ public class Product extends EntityBase
 	public static final String FIND_PRODUCT_BY_CODE = "Product.FindProductByCode";
 	public static final String GET_ALL_PRODUCT_CODE = "Product.GetAllProductCode";
 	public static final String GET_PRODUCT_COUNT = "Product.GetProductCount";
+	public static final String GET_ALL_PRODUCTS = "Product.GetAllProducts";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Basic
-	@Column(name="PROD_CODE")
+	@Column(name = "PROD_CODE")
 	private String productCode;
 
 	@Basic
-	private BigDecimal price;
-	
-	@Basic
-	@Column(name="CRTN_QNTY")
+	@Column(name = "CRTN_QNTY")
 	private Integer cartoonQuantity;
-	
+
 	@Basic
 	private BigDecimal cbm;
 
 	@Basic
 	private BigDecimal weight;
-	
+
 	@Basic
 	private String description;
 
@@ -69,163 +68,124 @@ public class Product extends EntityBase
 	private Integer moq;
 
 	@Basic
-	@Column(name="IS_VALID")
+	@Column(name = "IS_VALID")
 	private Boolean isValid;
-	
+
 	@Basic
-	@Column(name="DEFAULT_MARGIN")
+	@Column(name = "DEFAULT_MARGIN")
 	private BigDecimal defaultMargin;
-	
-	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@OrderColumn(name="PREF_NO")
+
+	@Basic
+	private Boolean isActive;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OrderColumn(name = "PREF_NO")
 	private List<SupplierProductInfo> suppProdInfo = new ArrayList<>();
-	
+
 	public Long getId()
 	{
 		return id;
 	}
-
-	
 
 	public String getProductCode()
 	{
 		return productCode;
 	}
 
-
-
 	public void setProductCode(String productCode)
 	{
 		this.productCode = productCode;
 	}
-
-
-
-	public BigDecimal getPrice()
-	{
-		return price;
-	}
-
-
-
-	public void setPrice(BigDecimal price)
-	{
-		this.price = price;
-	}
-
-
 
 	public Integer getCartoonQuantity()
 	{
 		return cartoonQuantity;
 	}
 
-
-
 	public void setCartoonQuantity(Integer cartoonQuantity)
 	{
 		this.cartoonQuantity = cartoonQuantity;
 	}
-
-
 
 	public BigDecimal getCbm()
 	{
 		return cbm;
 	}
 
-
-
 	public void setCbm(BigDecimal cbm)
 	{
 		this.cbm = cbm;
 	}
-
-
 
 	public BigDecimal getWeight()
 	{
 		return weight;
 	}
 
-
-
 	public void setWeight(BigDecimal weight)
 	{
 		this.weight = weight;
 	}
-
-
 
 	public String getDescription()
 	{
 		return description;
 	}
 
-
-
 	public void setDescription(String description)
 	{
 		this.description = description;
 	}
-
-
 
 	public Integer getMoq()
 	{
 		return moq;
 	}
 
-
-
 	public void setMoq(Integer moq)
 	{
 		this.moq = moq;
 	}
-
-
 
 	public Boolean getIsValid()
 	{
 		return isValid;
 	}
 
-
-
 	public void setIsValid(Boolean isValid)
 	{
 		this.isValid = isValid;
 	}
-
-
 
 	public BigDecimal getDefaultMargin()
 	{
 		return defaultMargin;
 	}
 
-
-
 	public void setDefaultMargin(BigDecimal defaultMargin)
 	{
 		this.defaultMargin = defaultMargin;
 	}
-
-
 
 	public List<SupplierProductInfo> getSuppProdInfo()
 	{
 		return suppProdInfo;
 	}
 
-
-
 	public void setSuppProdInfo(List<SupplierProductInfo> suppProdInfo)
 	{
 		this.suppProdInfo = suppProdInfo;
 	}
 
+	public Boolean isActive()
+	{
+		return isActive;
+	}
 
+	public void setActive(Boolean isActive)
+	{
+		this.isActive = isActive;
+	}
 
 	@Override
 	public int hashCode()
@@ -252,15 +212,13 @@ public class Product extends EntityBase
 		{
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		if (productCode == null)
 		{
 			if (other.productCode != null)
 				return false;
-		}
-		else if (!productCode.equals(other.productCode))
+		} else if (!productCode.equals(other.productCode))
 			return false;
 		return true;
 	}

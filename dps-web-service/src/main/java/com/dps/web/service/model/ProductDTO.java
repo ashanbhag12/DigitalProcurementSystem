@@ -17,7 +17,6 @@ public class ProductDTO
 {
 	private Long id;
 	private String productCode;
-	private BigDecimal price;
 	private Integer cartoonQuantity;
 	private BigDecimal cbm;
 	private BigDecimal weight;
@@ -42,14 +41,6 @@ public class ProductDTO
 	public void setProductCode(String productCode)
 	{
 		this.productCode = productCode;
-	}
-	public BigDecimal getPrice()
-	{
-		return price;
-	}
-	public void setPrice(BigDecimal price)
-	{
-		this.price = price;
 	}
 	public Integer getCartoonQuantity()
 	{

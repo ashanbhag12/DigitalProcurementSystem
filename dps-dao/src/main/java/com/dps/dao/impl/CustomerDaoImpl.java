@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.dao.CustomerDao;
@@ -74,6 +76,24 @@ public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDa
 			return findAll(result);
 		}
 	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public List<JpaEntityId> findAll()
+	{
+		TypedQuery<Long> typedQuery = entityManager.createNamedQuery(Customer.GET_ALL_CUSTOMERS, Long.class);
+		
+		List<Long> resultList = typedQuery.getResultList();
+		
+		List<JpaEntityId> idList = new ArrayList<>();
+		
+		for(Long i : resultList)
+		{
+			idList.add(new JpaEntityId(i));
+		}
+		
+		return idList;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.dps.dao.CustomerDao#getAllCustomerShipmarks()
@@ -95,4 +115,11 @@ public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDa
 		return query.getSingleResult().intValue();
 	}
 
+	@Override
+	@Transactional
+	public void remove(JpaEntityId id)
+	{
+		Customer p = find(id);
+		p.setActive(false);
+	}
 }
