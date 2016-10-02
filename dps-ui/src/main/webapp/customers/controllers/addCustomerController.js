@@ -9,6 +9,7 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        emailId: "",
 		        shipmark: "",
 		        additionalMargin: "",
+		        additionalMarginPercentage: "",
 		        flatNo: "",
 			    building: "",
 			    street: "",
@@ -17,6 +18,17 @@ angular.module('addCustomerApp', ['ngMessages'])
 			    state: "",
 			    zip: ""		        	
 		    };
+		    
+		    /* Function to calculate Additional Customer Margin */
+		    $scope.calculateCustomerMargin = function(){
+		    	$scope.customer.additionalMargin = parseInt($scope.customer.additionalMarginPercentage);
+            	if($scope.customer.additionalMargin >= 0){
+            		$scope.customer.additionalMargin = 1 / (1 - (Math.abs($scope.customer.additionalMargin)/100));
+        		}
+            	else{
+            		$scope.customer.additionalMargin = 1 - (Math.abs($scope.customer.additionalMargin)/100);            		
+            	}
+		    }
 		
 		    $scope.submitForm = function (addCustomer) {
 		        if (addCustomer.$valid) {
@@ -28,7 +40,7 @@ angular.module('addCustomerApp', ['ngMessages'])
     					    $scope.showErrorBox = false;
     					    angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
-				    }, function(error){/* Error Callback */				    	
+				    }, function(error){/* Error Callback */		    	
         		    	$timeout(function () {
         		    		$scope.showErrorBox = true; 
     				    	$scope.showSuccessBox = false;
@@ -45,7 +57,7 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        $scope.addCustomer.phoneNumber.$touched = false;		        
 		        $scope.addCustomer.emailId.$touched = false;
 		        $scope.addCustomer.shipmark.$touched = false;
-		        $scope.addCustomer.additionalMargin.$touched = false;	        
+		        $scope.addCustomer.additionalMarginPercentage.$touched = false;	        
 		        $scope.addCustomer.flatNo.$touched = false;
 		        $scope.addCustomer.building.$touched = false;
 		        $scope.addCustomer.street.$touched = false;

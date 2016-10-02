@@ -91,7 +91,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     	$timeout(function () {
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
-                            console.log($scope.products)
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
