@@ -14,7 +14,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.pdfDisabled = true; /* Disable the PDF button */
-            $scope.products = [];           
+            $scope.products = [];  
+            $scope.customers; /* Object for storing customers list */
+            $scope.otherCustomers = []; /* Object for storing customers list other than the selected customer */
 
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
 
@@ -46,6 +48,19 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     $scope.editProductDetailsRow[index] = false;
                 });
             };
+            
+            $scope.createOtherCustomersList = function(){
+            	$scope.otherCustomers = []; /* Empty the object */
+            	angular.forEach($scope.customers, function (customer) {
+            		if(customer.shipmark !== $scope.customerShipmark){
+            			$scope.otherCustomers.push(customer);
+            		}
+            	});
+            };
+            
+            $scope.setOtherCustomerCPM = function(){
+            	/*Service call for seting CPM for Other customers */
+            }
 
             /* Function to search for Products */
             $scope.getProductDetails = function () {
@@ -78,7 +93,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to save all the customer product margins */
             $scope.saveAll = function () {
             	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
             		$scope.editProductDetailsRow[index] = false;
             	});
             };
@@ -88,7 +103,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             };
 
             $scope.updateProductDetails = function (index, product) {
-                product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+                product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
                 $scope.editProductDetailsRow[index] = false;                
             };
             

@@ -5,7 +5,7 @@
     <div layout="row">
         <md-input-container flex="25">
             <label>Customer</label>
-            <md-select ng-model="customerShipmark">
+            <md-select ng-model="customerShipmark" ng-change="createOtherCustomersList()">
                 <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
                     {{customer.name+" - "+customer.shipmark}}
                 </md-option>
@@ -16,14 +16,14 @@
         </div>
         <md-input-container flex="30" flex-offset="5">
             <label>Select Customer to set same CPM</label>
-            <md-select ng-model="otherCPM">
-                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
+            <md-select ng-model="otherCustomer">
+                <md-option ng-repeat="customer in otherCustomers" value="{{customer.shipmark}}">
                     {{customer.name+" - "+customer.shipmark}}
                 </md-option>
             </md-select>
         </md-input-container>
         <div flex-offset="5">
-            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="setOtherCPM()">APPLY</md-button>
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="setOtherCustomerCPM()">APPLY</md-button>
         </div>
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
@@ -81,7 +81,7 @@
                     <td ng-hide="maskColumns">
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
-                            <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
+                            <input type='number' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
                     <td>{{product.cost | number:3}}</td>
