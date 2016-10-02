@@ -1,6 +1,6 @@
 angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('productPreferencesController', function ($scope, $rootScope, $timeout, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF, smoothScroll) {
+        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF, smoothScroll, setOtherCustomerCPM) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -59,7 +59,26 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             };
             
             $scope.setOtherCustomerCPM = function(){
-            	/*Service call for seting CPM for Other customers */
+            	if ($scope.customerShipmark !== undefined && $scope.otherCustomerShipmark !== undefined) {
+                	angular.element(document.querySelector('.loader')).addClass('show');
+                	$scope.showSuccessBox = false;
+                	/*Service call for seting CPM for Other customers */
+                    setOtherCustomerCPM.query({cust1:$scope.customerShipmark,cust2:$scope.otherCustomerShipmark}, function(){/* Success callback */
+                    	$timeout(function () {
+                    		$scope.showSuccessBox = true;
+                            $scope.successMessage = "Successfully changed CPM for other customer with shipmark : "+$scope.otherCustomerShipmark;
+        				    $scope.showErrorBox = false;
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    }, function(error){/* Error Callback */
+                    	$timeout(function () {
+                    		$scope.showErrorBox = true;
+	                		$scope.errorMessage = "Failed to change CPM for other customer with shipmark : "+$scopeotherCustomerShipmark;
+	                		$scope.showSuccessBox = false;
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    });
+                }
             }
 
             /* Function to search for Products */

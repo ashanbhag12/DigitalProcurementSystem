@@ -16,7 +16,7 @@
         </div>
         <md-input-container flex="30" flex-offset="5">
             <label>Select Customer to set same CPM</label>
-            <md-select ng-model="otherCustomer">
+            <md-select ng-model="otherCustomerShipmark">
                 <md-option ng-repeat="customer in otherCustomers" value="{{customer.shipmark}}">
                     {{customer.name+" - "+customer.shipmark}}
                 </md-option>
