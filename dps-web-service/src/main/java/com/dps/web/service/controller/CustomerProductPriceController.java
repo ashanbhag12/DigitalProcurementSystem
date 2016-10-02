@@ -191,6 +191,7 @@ public class CustomerProductPriceController
 							pref.setProduct(product);
 						}
 						pref.setDiscount(custProdPrice.getCustomerProductMargin());
+						pref.setDiscountPrcentage(custProdPrice.getCustomerProductMarginPercentage());
 						
 						customerUpdatedPreferences.add(pref);
 					}
@@ -229,6 +230,7 @@ public class CustomerProductPriceController
 			CustomerProductPreference destPref = new CustomerProductPreference();
 			destPref.setCustomer(destCust);
 			destPref.setDiscount(srcPref.getDiscount());
+			destPref.setDiscountPrcentage(srcPref.getDiscountPrcentage());
 			destPref.setProduct(srcPref.getProduct());
 			destCustPrefs.add(destPref);
 		}
