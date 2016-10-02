@@ -112,7 +112,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        		console.log($scope.products)
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
@@ -275,7 +274,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                             product.weight = $scope.product.weight;
                             product.description = $scope.product.description;
                             product.moq = $scope.product.moq;
-                            product.defaultMargin = $scope.product.defaultMargin;
+                            product.defaultMarginPercentage = $scope.product.defaultMarginPercentage;
                             product.supplierProductInfoList[0].supplierInitials = $scope.product.supplierProductInfoList[0].supplierInitials;
                             product.supplierProductInfoList[0].supplierProductCode = $scope.product.supplierProductInfoList[0].supplierProductCode;
                             product.supplierProductInfoList[0].supplierPrice = $scope.product.supplierProductInfoList[0].supplierPrice;
