@@ -29,6 +29,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    	emailId: "",
 	    	shipmark: "",
 	    	additionalMargin: "",
+	    	additionalMarginPercentage: "",
 	    	flatNo: "",
 		    building: "",
 		    street: "",
@@ -88,6 +89,17 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        else {
 	            $scope.editDisabled = false;
 	        }
+	    };
+	    
+	    /* Function to update Additional Customer Margin */
+	    $scope.updateCustomerMargin = function(){
+	    	$scope.customer.additionalMargin = parseInt($scope.customer.additionalMarginPercentage);
+        	if($scope.customer.additionalMargin >= 0){
+        		$scope.customer.additionalMargin = 1 / (1 - (Math.abs($scope.customer.additionalMargin)/100));
+    		}
+        	else{
+        		$scope.customer.additionalMargin = 1 - (Math.abs($scope.customer.additionalMargin)/100);            		
+        	}
 	    };
 	
 	    /* Function to edit the selected Customer */

@@ -28,7 +28,7 @@ angular.module('addCustomerApp', ['ngMessages'])
             	else{
             		$scope.customer.additionalMargin = 1 - (Math.abs($scope.customer.additionalMargin)/100);            		
             	}
-		    }
+		    };
 		
 		    $scope.submitForm = function (addCustomer) {
 		        if (addCustomer.$valid) {
