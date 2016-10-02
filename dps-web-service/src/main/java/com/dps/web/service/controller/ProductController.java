@@ -324,6 +324,7 @@ public class ProductController
 	private Product productFromProductDtoAdd(Product prod, ProductDTO prodDto)
 	{
 		productFromProductDtoCommon(prod, prodDto);
+		prod.setActive(true);
 		
 		for(SuppProdInfo spii : prodDto.getSupplierProductInfoList())
 		{
