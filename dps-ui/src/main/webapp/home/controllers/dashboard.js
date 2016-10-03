@@ -1,5 +1,5 @@
 angular.module('dashboardApp', ["ngMessages"])
-        .controller("dashboardController", function ($scope, $timeout, getDashboardCardService, getDashboardConfigService, modifyDashboardConfigService) {
+        .controller("dashboardController", function ($rootScope, $scope, $timeout, getDashboardCardService, getDashboardConfigService, modifyDashboardConfigService) {
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
             $scope.successMessage = "";
