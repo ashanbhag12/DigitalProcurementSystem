@@ -313,7 +313,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.calculateGrandTotal = function(){
                 var total = 0;
                 angular.forEach($scope.orderSummary.orderItems, function(product){
-                  total += product.unitCost * product.quantity;                  
+                  total += (product.unitCost * product.quantity);                  
                 });
                 return total;
             };

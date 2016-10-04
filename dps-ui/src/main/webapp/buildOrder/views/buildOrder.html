@@ -162,12 +162,12 @@
                     <td>{{product.selectedSupplierInitials}}</td>                     
                     <td>{{product.quantity | number}}</td> 
                     <td>{{product.custProdDiscount | number:3}}</td>
-                    <td>{{product.unitCost * product.quantity | currency:"Rs."}}</td>                   
+                    <td>{{product.unitCost * product.quantity | number:3 }}</td>                   
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th class='alignRight' colspan="6">Grand Total: {{calculateGrandTotal() |currency:"Rs."}}</th>                    
+                    <th class='alignRight' colspan="6">Grand Total: {{calculateGrandTotal() | number:3 }}</th>                    
                 </tr>
             </tfoot>
         </table>
