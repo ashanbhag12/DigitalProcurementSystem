@@ -9,12 +9,12 @@ angular.module('dashboardApp', ["ngMessages"])
             $scope.showClearBtn = false; /* Hide Clear Button */
             $scope.isReadonly = true; /* Set the fields as Readonly */
             $scope.dashboard; /* Create dashboard object for Cards */
-            $scope.global = {}; /* Create Globals object */
+            $rootScope.global = {}; /* Create Globals object */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
             	$scope.dashboard = getDashboardCardService.get(); /* Get data for Cards */
-            	$scope.global = getDashboardConfigService.get(); /* Get Global Parameters */
+            	$rootScope.global = getDashboardConfigService.get(); /* Get Global Parameters */
             });
 
             $scope.edit = function () {
@@ -29,7 +29,7 @@ angular.module('dashboardApp', ["ngMessages"])
             $scope.submitForm = function (globalParameters) {
             	if (globalParameters.$valid) {
             		angular.element(document.querySelector('.loader')).addClass('show');                    
-        		    response = modifyDashboardConfigService.save($scope.global, function(){/* Success Callback */        		    	
+        		    response = modifyDashboardConfigService.save($rootScope.global, function(){/* Success Callback */        		    	
                         $timeout(function () {
                         	$scope.showSuccessBox = true;
                 		    $scope.successMessage = "Global Parameters saved successfully";          		   
@@ -51,7 +51,7 @@ angular.module('dashboardApp', ["ngMessages"])
             };
 
             $scope.clear = function () {
-            	$scope.global = {};
+            	$rootScope.global = {};
                 $scope.globalParameters.$setPristine();
                 $scope.globalParameters.exchangeRate.$touched = false;
                 $scope.globalParameters.costPerGrossWeight.$touched = false;
