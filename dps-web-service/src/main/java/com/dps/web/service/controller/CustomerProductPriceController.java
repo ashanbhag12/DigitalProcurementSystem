@@ -79,10 +79,12 @@ public class CustomerProductPriceController
 		Map<Long, BigDecimal> custProdPrefsPect = new HashMap<>();
 		Customer cust = null;
 		List<CustomerProductPreference> custProdPreferences = null;
+		Configurations config = null;
 		try
 		{
 			List<Customer> custList = customerService.findByShipmarkAndName(shipmark, null);
 			cust = custList.get(0);
+			config = configService.findAll().get(0);
 			prodList = productService.findAll();
 			custProdPreferences = custProdPrefService.findAllPreferencesForCustomer(cust.getId());
 			
@@ -121,10 +123,26 @@ public class CustomerProductPriceController
 			custProdPriceDto.setSupplierInitials(sb.toString());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
+			
+			cost = cost.multiply(config.getExchangeRate());
+			cost = cost.multiply(custProdPriceDto.getProductPrice());
+			
+			BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+			cost1 = cost1.multiply(prod.getCbm());
+			cost1 = cost1.multiply(config.getPricePerCbm());
+			cost1 = cost1.divide(new BigDecimal(prod.getCartoonQuantity()), RoundingMode.HALF_UP);
+			
+			BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+			cost2 = cost2.multiply(prod.getWeight());
+			cost2 = cost2.multiply(config.getPricePerWeight());
+			cost2 = cost2.divide(new BigDecimal(prod.getCartoonQuantity()), RoundingMode.HALF_UP);
+			
+			cost = cost.add(cost1);
+			cost = cost.add(cost2);
+			
 			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
-			cost = cost.multiply(custProdPriceDto.getProductPrice());
 			cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 			custProdPriceDto.setCost(cost);
 			
