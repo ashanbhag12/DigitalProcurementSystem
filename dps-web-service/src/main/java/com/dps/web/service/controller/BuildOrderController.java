@@ -180,6 +180,7 @@ public class BuildOrderController
 				
 				//Add customer product margin
 				item.setCustProdDiscount(custProdMargin);
+				item.setCustProdDiscountPercent(cust.getDiscountPrcentage());
 			}
 			
 			return wrapper;
