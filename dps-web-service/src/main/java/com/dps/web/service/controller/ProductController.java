@@ -203,8 +203,8 @@ public class ProductController
 					product.setDescription(values.get(UploadFields.DESCRIPTION) != null ? values.get(UploadFields.DESCRIPTION).toString() : "");
 					product.setMoq(((Double)values.get(UploadFields.MOQ)).intValue());
 					BigDecimal margin = values.get(UploadFields.DEFAULT_MARGIN) != null ? new BigDecimal(values.get(UploadFields.DEFAULT_MARGIN).toString()) : Constants.BIG_DECIMAL_ZERO;
-					product.setDiscountPrcentage(ControllerUtils.computeAbsoluteDiscount(margin));
-					product.setDefaultMargin(margin);
+					product.setDiscountPrcentage(margin);
+					product.setDefaultMargin(ControllerUtils.computeAbsoluteDiscount(margin));
 					product.setIsValid("Valid".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)) || "Y".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)));
 					product.setIsValid(Boolean.TRUE);
 					product.setActive(true);
