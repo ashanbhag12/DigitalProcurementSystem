@@ -86,9 +86,6 @@ public class BuildOrderController
 			
 			//Get global constants
 			Configurations config = configService.findAll().get(0);
-			BigDecimal fxrt = config.getExchangeRate().setScale(3, RoundingMode.HALF_UP);
-			BigDecimal cbmrt = config.getPricePerCbm().setScale(3, RoundingMode.HALF_UP);
-			BigDecimal gwrt = config.getPricePerWeight().setScale(3, RoundingMode.HALF_UP);
 			
 			List<BuildOrderDTO> orderItems = wrapper.getOrderItems();
 			
@@ -118,7 +115,6 @@ public class BuildOrderController
 				Product product = prodMap.get(item.getProductId());
 				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()).setScale(3, RoundingMode.HALF_UP) : Constants.BIG_DECIMAL_ONE;
 				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin().setScale(3, RoundingMode.HALF_UP);
-				BigDecimal cartoonQuantity  = new BigDecimal(product.getCartoonQuantity().intValue()).setScale(3, RoundingMode.HALF_UP);
 				
 				BigDecimal price = Constants.BIG_DECIMAL_ONE;
 				
@@ -131,7 +127,30 @@ public class BuildOrderController
 					}
 				}
 				
-				price = price.multiply(productMargin);
+				BigDecimal cost = Constants.BIG_DECIMAL_ONE;
+				
+				cost = cost.multiply(config.getExchangeRate());
+				cost = cost.multiply(price);
+				
+				BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+				cost1 = cost1.multiply(product.getCbm());
+				cost1 = cost1.multiply(config.getPricePerCbm());
+				cost1 = cost1.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
+				
+				BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+				cost2 = cost2.multiply(product.getWeight());
+				cost2 = cost2.multiply(config.getPricePerWeight());
+				cost2 = cost2.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
+				
+				cost = cost.add(cost1);
+				cost = cost.add(cost2);
+				
+				cost = cost.multiply(productMargin);
+				cost = cost.multiply(custProdMargin);
+				cost = cost.multiply(custAddMargin);
+				cost.setScale(3, BigDecimal.ROUND_HALF_UP);
+				
+				/*price = price.multiply(productMargin);
 				price = price.multiply(custProdMargin);
 				price = price.multiply(custAddMargin);
 				price = price.multiply(fxrt).setScale(3, RoundingMode.HALF_UP);
@@ -145,9 +164,9 @@ public class BuildOrderController
 				gwPrice.divide(cartoonQuantity, 3, RoundingMode.HALF_UP);
 				
 				BigDecimal unitPrice = price.add(cbmPrice);
-				unitPrice = unitPrice.add(gwPrice).setScale(3, RoundingMode.HALF_UP);
+				unitPrice = unitPrice.add(gwPrice).setScale(3, RoundingMode.HALF_UP);*/
 				
-				item.setUnitCost(unitPrice);
+				item.setUnitCost(cost);
 				
 				//Check if the MOQ is fulfilled
 				Integer unorderedQuantity = unorderedProductQuantity.get(product.getId());
