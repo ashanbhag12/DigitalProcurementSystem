@@ -58,9 +58,9 @@
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>*MOQ</label>
-                <input min="0" required name="moq" ng-model="product.moq" type='number'/>
+                <input min="0" max="999" required name="moq" ng-model="product.moq" type='number'/>
                 <div ng-messages="addProduct.moq.$error" ng-show="addProduct.moq.$touched">
-                    <div ng-message-exp="['required', 'min']">This is required. Should be between 0-999.</div>
+                    <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-999.</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
