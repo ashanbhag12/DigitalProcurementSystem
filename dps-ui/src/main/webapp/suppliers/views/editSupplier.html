@@ -93,9 +93,9 @@
             <div layout="row">  
                 <md-input-container class="md-block" flex="50">
                     <label>*Contact Number</label>
-                    <input maxlength="14" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{14}$/"/>
+                    <input maxlength="15" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{15}$/"/>
                     <div ng-messages="editSupplier.phoneNumber.$error" ng-show="editSupplier.phoneNumber.$touched">
-                        <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 14 digits long.</div>
+                        <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 15 digits long.</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
