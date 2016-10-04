@@ -169,12 +169,14 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        angular.forEach($scope.customers, function (customer) {
 	        	if(keepGoing) {
 	        		if (customer.isChecked) {
+	        			$scope.updateCustomerMargin();
 	        			angular.element(document.querySelector('.loader')).addClass('show');
 	                    customer.name = $scope.customer.name;
 	                    customer.phoneNumber = $scope.customer.phoneNumber;
 	                    customer.emailId = $scope.customer.emailId;
 	                    customer.shipmark = $scope.customer.shipmark;
 	                    customer.additionalMarginPercentage = $scope.customer.additionalMarginPercentage;
+	                    customer.additionalMargin = $scope.customer.additionalMargin;
 	                    customer.flatNo = $scope.customer.flatNo;
 	                    customer.building = $scope.customer.building;
 	                    customer.street = $scope.customer.street;
@@ -186,7 +188,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                    keepGoing = false;
 	                    $scope.selectedRows = [];
 	                    $scope.updateCustomerJson = angular.toJson(customer);	
-	                }                    
+	                }  
 	        	}
 	        });
 	        

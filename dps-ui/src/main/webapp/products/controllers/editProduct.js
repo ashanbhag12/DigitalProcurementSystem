@@ -112,6 +112,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        		console.log($scope.products);
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
@@ -251,6 +252,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 angular.forEach($scope.products, function (product) {
                 	if(keepGoing) {
                 		if (product.isChecked) {
+                			$scope.updateProductMargin();
                 			angular.element(document.querySelector('.loader')).addClass('show');
                 			
                 			/* So that supplierProductInfoList is of size 3, having 3 objs */
@@ -274,6 +276,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                             product.weight = $scope.product.weight;
                             product.description = $scope.product.description;
                             product.moq = $scope.product.moq;
+                            product.defaultMargin = $scope.product.defaultMargin;
                             product.defaultMarginPercentage = $scope.product.defaultMarginPercentage;
                             product.supplierProductInfoList[0].supplierInitials = $scope.product.supplierProductInfoList[0].supplierInitials;
                             product.supplierProductInfoList[0].supplierProductCode = $scope.product.supplierProductInfoList[0].supplierProductCode;
