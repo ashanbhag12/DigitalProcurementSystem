@@ -77,9 +77,9 @@
             <div layout="row">
                 <md-input-container class="md-block" flex="50">
                     <label>*Name</label>
-                    <input type='text' minlength="5" maxlength="30" required name="name" ng-model="supplier.name" />
+                    <input type='text' minlength="3" maxlength="30" required name="name" ng-model="supplier.name" />
                     <div ng-messages="editSupplier.name.$error" ng-show="editSupplier.name.$touched">
-                        <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 5 to 30 characters long.</div>
+                        <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 3 to 30 characters long.</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
