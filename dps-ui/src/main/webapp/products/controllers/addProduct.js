@@ -40,7 +40,7 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
     	    $scope.calculateProductMargin = function(){
     	    	$scope.product.defaultMargin = parseInt($scope.product.defaultMarginPercentage);
             	if($scope.product.defaultMargin >= 0){
-            		$scope.product.defaultMargin = 1 / (1 - (Math.abs($scope.product.defaultMargin)/100));
+            		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(3);
         		}
             	else{
             		$scope.product.defaultMargin = 1 - (Math.abs($scope.product.defaultMargin)/100);            		

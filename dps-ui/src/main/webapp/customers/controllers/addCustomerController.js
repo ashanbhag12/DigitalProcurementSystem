@@ -23,7 +23,7 @@ angular.module('addCustomerApp', ['ngMessages'])
 		    $scope.calculateCustomerMargin = function(){
 		    	$scope.customer.additionalMargin = parseInt($scope.customer.additionalMarginPercentage);
             	if($scope.customer.additionalMargin >= 0){
-            		$scope.customer.additionalMargin = 1 / (1 - (Math.abs($scope.customer.additionalMargin)/100));
+            		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(3);
         		}
             	else{
             		$scope.customer.additionalMargin = 1 - (Math.abs($scope.customer.additionalMargin)/100);            		

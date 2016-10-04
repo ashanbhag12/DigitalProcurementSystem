@@ -77,6 +77,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     		console.log($scope.products)
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
+                            angular.forEach($scope.products.customerProductPrices, function (product, index) {
+                        		$scope.updateProductDetails(index, product);
+                        	});
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
@@ -107,6 +110,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             };
 
             $scope.updateProductDetails = function (index, product) {
+            	console.log(product);
             	product.customerProductMargin = parseInt(product.customerProductMarginPercentage);
             	if(product.customerProductMargin >= 0){
             		product.customerProductMargin = 1 / (1 - (Math.abs(product.customerProductMargin)/100));
@@ -114,7 +118,11 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	else{
             		product.customerProductMargin = 1 - (Math.abs(product.customerProductMargin)/100);            		
             	}
-            	product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
+            	console.log("product.productMargin "+product.productMargin);
+            	console.log("$scope.products.additionalCustomerMargin "+$scope.products.additionalCustomerMargin);
+            	console.log("product.customerProductMargin "+product.customerProductMargin);
+            	product.cost = (product.cost * product.customerProductMargin);
+    					
                 $scope.editProductDetailsRow[index] = false;                
             };
             
