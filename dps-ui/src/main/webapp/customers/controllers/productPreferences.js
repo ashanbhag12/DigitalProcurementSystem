@@ -74,7 +74,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     /* Service Call to retrieve all products */
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
-                    		console.log($scope.products)
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
                             angular.forEach($scope.products.customerProductPrices, function (product, index) {
@@ -118,10 +117,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	else{
             		product.customerProductMargin = 1 - (Math.abs(product.customerProductMargin)/100);            		
             	}
-            	console.log("product.productMargin "+product.productMargin);
-            	console.log("$scope.products.additionalCustomerMargin "+$scope.products.additionalCustomerMargin);
-            	console.log("product.customerProductMargin "+product.customerProductMargin);
-            	product.cost = (product.cost * product.customerProductMargin);
+            	product.calculatedCost = (product.cost * product.customerProductMargin);
     					
                 $scope.editProductDetailsRow[index] = false;                
             };
