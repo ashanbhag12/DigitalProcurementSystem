@@ -93,7 +93,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    
 	    /* Function to update Additional Customer Margin */
 	    $scope.updateCustomerMargin = function(){
-	    	$scope.customer.additionalMargin = parseInt($scope.customer.additionalMarginPercentage);
+	    	$scope.customer.additionalMargin = parseFloat($scope.customer.additionalMarginPercentage);
         	if($scope.customer.additionalMargin >= 0){
         		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(3);
     		}

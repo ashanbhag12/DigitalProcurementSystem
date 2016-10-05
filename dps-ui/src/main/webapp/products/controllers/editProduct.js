@@ -151,7 +151,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
 
             /* Function to update Product Margin */
     	    $scope.updateProductMargin = function(){
-    	    	$scope.product.defaultMargin = parseInt($scope.product.defaultMarginPercentage);
+    	    	$scope.product.defaultMargin = parseFloat($scope.product.defaultMarginPercentage);
             	if($scope.product.defaultMargin >= 0){
             		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(3);
         		}
