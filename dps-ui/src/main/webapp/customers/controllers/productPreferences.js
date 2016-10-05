@@ -112,10 +112,10 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	console.log(product);
             	product.customerProductMargin = parseInt(product.customerProductMarginPercentage);
             	if(product.customerProductMargin >= 0){
-            		product.customerProductMargin = 1 / (1 - (Math.abs(product.customerProductMargin)/100));
+            		product.customerProductMargin = (1 / (1 - (Math.abs(product.customerProductMargin)/100))).toFixed(3);
         		}
             	else{
-            		product.customerProductMargin = 1 - (Math.abs(product.customerProductMargin)/100);            		
+            		product.customerProductMargin = (1 - (Math.abs(product.customerProductMargin)/100)).toFixed(3);            		
             	}
             	product.calculatedCost = (product.cost * product.customerProductMargin);
     					
