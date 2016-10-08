@@ -187,7 +187,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
     		    	$scope.errorMessage = "PDF could not be created. Please try again after some time."
     		    	$scope.showSuccessBox = false;
     		    	$timeout(function () {
-    		    		console.log(error);
                         angular.element(document.querySelector('.loader')).removeClass('show');
                         smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);

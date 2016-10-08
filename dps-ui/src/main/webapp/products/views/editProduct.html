@@ -50,6 +50,7 @@
                     <th ng-hide="maskColumns">Supplier Initials</th>
                     <th>Supplier Product Code</th>
                     <th>Is Valid</th>
+                    <th>Cost</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
                          ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
@@ -69,6 +70,7 @@
                     <td ng-hide="maskColumns">{{getSupplierInitials(product.supplierProductInfoList)}}</td>
                     <td>{{getSupplierProductCode(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
+                    <td>{{123 | number:3}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
                                  aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>

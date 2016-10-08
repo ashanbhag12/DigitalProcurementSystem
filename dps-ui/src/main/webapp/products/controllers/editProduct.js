@@ -111,7 +111,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 /* Service Call to retrieve searched product */
                 $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
     	        	$timeout(function(){
-    	        		console.log($scope.products)
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        	}, 500);
