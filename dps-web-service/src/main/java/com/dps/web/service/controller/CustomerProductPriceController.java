@@ -190,7 +190,8 @@ public class CustomerProductPriceController
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
-				if(!Constants.BIG_DECIMAL_ONE.equals(custProdPrice.getCustomerProductMargin()))
+				System.out.println(custProdPrice.getCustomerProductMarginPercentage());
+				if(!(custProdPrice.getCustomerProductMarginPercentage().doubleValue() == 0d))
 				{
 					BigDecimal existingDiscount = Constants.BIG_DECIMAL_ONE; 
 					CustomerProductPreference existingPreference = custProdPrefObj.get(custProdPrice.getProductCode());
@@ -243,6 +244,17 @@ public class CustomerProductPriceController
 		Customer destCust = customerService.findByShipmarkAndName(cust2, null).get(0);
 		
 		List<CustomerProductPreference> srcCustPrefs = custProdPrefService.findAllPreferencesForCustomer(srcCust.getId());
+		List<CustomerProductPreference> destCustPrefsExisting = custProdPrefService.findAllPreferencesForCustomer(destCust.getId());
+		
+		//Delete all preferences for destination customer
+		if(destCustPrefsExisting!= null && destCustPrefsExisting.size() > 0)
+		{
+			for(CustomerProductPreference pref : destCustPrefsExisting)
+			{
+				custProdPrefService.remove(new JpaEntityId(pref.getId()));
+			}
+		}
+		
 		List<CustomerProductPreference> destCustPrefs = new ArrayList<>();
 		
 		for(CustomerProductPreference srcPref : srcCustPrefs)
