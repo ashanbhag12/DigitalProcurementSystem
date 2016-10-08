@@ -28,7 +28,7 @@
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
 	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
+	    	<h4 class="floatL inlineBlock paddingT5">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
@@ -52,15 +52,15 @@
                             <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>  
-                    <th ng-hide="maskColumns">Price Per Item</th>
+                    <th>Price Per Item</th>
                     <th>Pkg./Ctn.</th>
                     <th>CBM</th>
                     <th>Gross Weight</th>                    
                     <th>Product Description</th>
-                    <th>Supplier Initials</th>
-                    <th ng-hide="maskColumns">PM</th>
-                    <th ng-hide="maskColumns">CPM</th>
-                    <th>Cost</th>
+                    <th ng-hide="maskColumns">Supplier Initials</th>
+                    <th>PM</th>
+                    <th>CPM</th>
+                    <th ng-hide="maskColumns">Cost</th>
                     <th class='alignCenter'>Action</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
@@ -71,20 +71,20 @@
             <tbody>
                 <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
                     <td>{{product.productCode}}</td>                    
-                    <td ng-hide="maskColumns">{{product.productPrice}}</td>    
+                    <td>{{product.productPrice}}</td>    
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>
                     <td>{{product.grossWeight}}</td>                    
                     <td>{{product.productDescription}}</td>
-                    <td>{{product.supplierInitials}}</td>
-                    <td ng-hide="maskColumns">{{product.productMarginPercentage | number:3}}</td>
-                    <td ng-hide="maskColumns">
+                    <td ng-hide="maskColumns">{{product.supplierInitials}}</td>
+                    <td>{{product.productMarginPercentage | number:3}}</td>
+                    <td>
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
                             <input type='number' ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
-                    <td>{{product.calculatedCost | number:3}}</td>
+                    <td ng-hide="maskColumns">{{product.calculatedCost | number:3}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editProductDetails($index, product)" 
                            title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>
