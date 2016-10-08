@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class CustomerProductPricesDTO
 {
 	private String productCode;
+	private String supplierProductCode;
 	private BigDecimal productPrice; 
 	private BigDecimal productMargin;
 	private BigDecimal productMarginPercentage;
@@ -179,5 +180,15 @@ public class CustomerProductPricesDTO
 	public void setOriginalCost(BigDecimal originalCost)
 	{
 		this.originalCost = originalCost;
+	}
+
+	public String getSupplierProductCode()
+	{
+		return supplierProductCode;
+	}
+
+	public void setSupplierProductCode(String supplierProductCode)
+	{
+		this.supplierProductCode = supplierProductCode;
 	}
 }

@@ -114,13 +114,18 @@ public class CustomerProductPriceController
 			custProdPriceDto.setCbm(prod.getCbm());
 			
 			StringBuffer sb = new StringBuffer();
+			StringBuffer sb1 = new StringBuffer();
 			for(SupplierProductInfo suppProdInfo : prod.getSuppProdInfo())
 			{
 				sb.append(suppProdInfo.getSupplier().getInitials());
 				sb.append("; ");
+				
+				sb1.append(suppProdInfo.getSupplierProductName());
+				sb1.append("; ");
 			}
 			
 			custProdPriceDto.setSupplierInitials(sb.toString());
+			custProdPriceDto.setSupplierProductCode(sb1.toString());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 			
