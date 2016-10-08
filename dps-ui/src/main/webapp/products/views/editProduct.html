@@ -147,8 +147,11 @@
                 	</div>
 	      		</md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Supplier product code</label>
-	                <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode"/>
+	                <label>*Supplier product code</label>
+	                <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode" required />
+	                <div ng-messages="editProduct.supplierProductCode1.$error" ng-show="editProduct.supplierProductCode1.$touched">
+                    	<div ng-message-exp="['required']">This is required.</div>
+                	</div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
 	                <label>*Price Per Item</label>
