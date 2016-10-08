@@ -38,14 +38,14 @@
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
-                    <th ng-hide="maskColumns">Price Per Item</th>
+                    <th>Price Per Item</th>
                     <th>Pkg./Ctn.</th>
                     <th>CBM</th>                    
                     <th>Gross Weight</th>
                     <th>Product Description</th>
                     <th>MOQ</th>
-                    <th ng-hide="maskColumns">PM</th>
-                    <th>Supplier Initials</th>
+                    <th>PM</th>
+                    <th ng-hide="maskColumns">Supplier Initials</th>
                     <th>Supplier Product Code</th>
                     <th>Is Valid</th>
                     <th class="alignCenter">
@@ -57,14 +57,14 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
                     <td>{{product.productCode}}</td>
-                    <td ng-hide="maskColumns">{{getSupplierPrices(product.supplierProductInfoList)}}</td>
+                    <td>{{getSupplierPrices(product.supplierProductInfoList)}}</td>
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>                    
                     <td>{{product.weight}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
-                    <td ng-hide="maskColumns">{{product.defaultMarginPercentage | number:3}}</td>
-                    <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
+                    <td>{{product.defaultMarginPercentage | number:3}}</td>
+                    <td ng-hide="maskColumns">{{getSupplierInitials(product.supplierProductInfoList)}}</td>
                     <td>{{getSupplierProductCode(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
                     <td class='alignCenter'>
