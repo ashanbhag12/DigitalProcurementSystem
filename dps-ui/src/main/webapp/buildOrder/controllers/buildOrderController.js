@@ -54,6 +54,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.showSearchSection = function () {
                 if ($scope.customerShipmark !== undefined) {
                     $scope.searchProductSection = true;
+                    $scope.orderSummarySection = false;
                 }
             };
             
