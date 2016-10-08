@@ -111,15 +111,14 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             };
 
             $scope.updateProductDetails = function (index, product) {
-            	console.log(product)
             	product.customerProductMargin = parseFloat(product.customerProductMarginPercentage);
             	if(product.customerProductMargin >= 0){
-            		product.customerProductMargin = (1 / (1 - (product.customerProductMargin)/100)).toFixed(3);
+            		product.customerProductMargin = (1 / (1 - (product.customerProductMargin/100))).toFixed(6);
         		}
             	else{
-            		product.customerProductMargin = (1 - (product.customerProductMargin)/100).toFixed(3);            		
+            		product.customerProductMargin = (1 - (product.customerProductMargin/100)).toFixed(6);            		
             	}
-            	product.calculatedCost = (product.cost * product.customerProductMargin);    					
+            	product.calculatedCost = (product.cost * product.customerProductMargin).toFixed(6);
                 $scope.editProductDetailsRow[index] = false;                
             };
             
