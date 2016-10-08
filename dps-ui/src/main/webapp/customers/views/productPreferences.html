@@ -81,7 +81,7 @@
                     <td>
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
-                            <input type='number' ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
+                            <input type='number' name="customerProductMarginPercentage" ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
                     <td>{{product.calculatedCost | number:3}}</td>
