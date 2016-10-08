@@ -204,5 +204,11 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             
             $scope.cancel = function () {
             	$scope.editSupplierForm = false;
+            	$scope.selectAll = false;
+            	angular.forEach($scope.suppliers, function (supplier) {
+            		supplier.isChecked = $scope.selectAll;
+                    $scope.selectedRows = [];
+                });
+            	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
             };
         });

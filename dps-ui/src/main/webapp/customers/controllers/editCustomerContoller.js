@@ -242,5 +242,11 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    
 	    $scope.cancel = function () {
         	$scope.editCustomerForm = false;
+        	$scope.selectAll = false;
+        	angular.forEach($scope.customers, function (customer) {
+                customer.isChecked = $scope.selectAll;
+                $scope.selectedRows = [];
+            });
+        	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
         };
 });

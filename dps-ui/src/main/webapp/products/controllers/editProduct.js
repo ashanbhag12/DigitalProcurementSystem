@@ -328,5 +328,11 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             
             $scope.cancel = function () {
             	$scope.editProductForm = false;
+            	$scope.selectAll = false;
+            	angular.forEach($scope.products, function (product) {
+                    product.isChecked = $scope.selectAll;
+                    $scope.selectedRows = [];
+                });
+            	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
             };	
         });
