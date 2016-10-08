@@ -12,19 +12,19 @@
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="50">
-                <label>*Phone Number</label>
-                <input maxlength="10" required name="phoneNumber" ng-model="customer.phoneNumber" type='tel' ng-pattern="/^\d{10}$/"/>
+                <label>Phone Number</label>
+                <input maxlength="10" name="phoneNumber" ng-model="customer.phoneNumber" type='tel' ng-pattern="/^\d{10}$/"/>
                 <div ng-messages="addCustomer.phoneNumber.$error" ng-show="addCustomer.phoneNumber.$touched">
-                    <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 10 digits long.</div>
+                    <div ng-message-exp="['maxlength', 'pattern']">Should be 10 digits long.</div>
                 </div>
             </md-input-container>
         </div>
         <div layout="row">       
             <md-input-container class="md-block" flex="33">
-                <label>*Email Id</label>
-                <input type="email" maxlength="100" required name="emailId" ng-model="customer.emailId" ng-pattern="/^.+@.+\..+$/"/>
+                <label>Email Id</label>
+                <input type="email" maxlength="100" name="emailId" ng-model="customer.emailId" ng-pattern="/^.+@.+\..+$/"/>
                 <div ng-messages="addCustomer.emailId.$error" ng-show="addCustomer.emailId.$touched">
-                    <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+                    <div ng-message-exp="['maxlength', 'pattern']">Must be less then 100 characters and should be a valid e-mail id.</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="33">
@@ -46,18 +46,12 @@
        	<h4 class="md-title sectionTitle">Address</h4>
         <div layout="row">
             <md-input-container class="md-block" flex="33">
-                <label>*Flat No.</label>
-                <input type='text' name="flatNo" ng-model="customer.flatNo" required/>
-                <div ng-messages="addCustomer.flatNo.$error" ng-show="addCustomer.flatNo.$touched">
-                    <div ng-message-exp="['required']">This is required.</div>
-                </div>
+                <label>Flat No.</label>
+                <input type='text' name="flatNo" ng-model="customer.flatNo"/>
             </md-input-container>
             <md-input-container class="md-block" flex="33">
-                <label>*Building</label>
-                <input type='text' name="building" ng-model="customer.building" required/>
-                <div ng-messages="addCustomer.building.$error" ng-show="addCustomer.building.$touched">
-                    <div ng-message-exp="['required']">This is required.</div>
-                </div>
+                <label>Building</label>
+                <input type='text' name="building" ng-model="customer.building" />
             </md-input-container>
             <md-input-container class="md-block" flex="33">
                 <label>Street</label>
@@ -70,24 +64,18 @@
                 <input type='text' name="locality" ng-model="customer.locality"/>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*City</label>
-                <input type='text' name="city" ng-model="customer.city" required/>
-                <div ng-messages="addCustomer.city.$error" ng-show="addCustomer.city.$touched">
-                    <div ng-message-exp="['required']">This is required.</div>
-                </div>
+                <label>City</label>
+                <input type='text' name="city" ng-model="customer.city" />
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*State</label>
-                <input type='text' name="state" ng-model="customer.state" required/>
-                <div ng-messages="addCustomer.state.$error" ng-show="addCustomer.state.$touched">
-                    <div ng-message-exp="['required']">This is required.</div>
-                </div>
+                <label>State</label>
+                <input type='text' name="state" ng-model="customer.state" />
             </md-input-container>
             <md-input-container class="md-block" flex="25">
-                <label>*Zip</label>
-                <input type='text' name="zip" ng-model="customer.zip" maxlength="6" required ng-pattern="/^\d{6}$/" />
+                <label>Zip</label>
+                <input type='text' name="zip" ng-model="customer.zip" maxlength="6" ng-pattern="/^\d{6}$/" />
                 <div ng-messages="addCustomer.zip.$error" ng-show="addCustomer.zip.$touched">
-                    <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 6 digits long.</div>
+                    <div ng-message-exp="['maxlength', 'pattern']">Should be 6 digits long.</div>
                 </div>
             </md-input-container>
         </div>
