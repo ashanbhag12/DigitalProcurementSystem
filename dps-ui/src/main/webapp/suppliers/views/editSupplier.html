@@ -92,17 +92,17 @@
             </div>
             <div layout="row">  
                 <md-input-container class="md-block" flex="50">
-                    <label>*Contact Number</label>
-                    <input maxlength="15" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{15}$/"/>
+                    <label>Contact Number</label>
+                    <input maxlength="15" name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{15}$/"/>
                     <div ng-messages="editSupplier.phoneNumber.$error" ng-show="editSupplier.phoneNumber.$touched">
-                        <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 15 digits long.</div>
+                        <div ng-message-exp="['maxlength', 'pattern']">Should be 15 digits long.</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
-                    <label>*Email Id</label>
-                    <input type="email" maxlength="100" required name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
+                    <label>Email Id</label>
+                    <input type="email" maxlength="100" name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
                     <div ng-messages="editSupplier.emailId.$error" ng-show="editSupplier.emailId.$touched">
-                        <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+                        <div ng-message-exp="['maxlength', 'pattern']">Must be less then 100 characters and should be a valid e-mail id.</div>
                     </div>
                 </md-input-container>
             </div>
