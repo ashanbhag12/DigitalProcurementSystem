@@ -326,27 +326,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     		    });
             };
             
-            $scope.reset = function () {
-                $scope.product = {};
-                $scope.product.isValid="false";
-                $scope.editProduct.$setPristine();
-                $scope.editProduct.productCode.$touched = false;
-                $scope.editProduct.cartoonQuantity.$touched = false;
-                $scope.editProduct.cbm.$touched = false;
-                $scope.editProduct.weight.$touched = false;
-                $scope.editProduct.description.$touched = false;
-                $scope.editProduct.moq.$touched = false;
-                $scope.editProduct.defaultMarginPercentage.$touched = false;
-                $scope.editProduct.supplierInitials1.$touched = false;
-                $scope.editProduct.supplierProductCode1.$touched = false;
-                $scope.editProduct.supplierPrice1.$touched = false;
-                $scope.editProduct.supplierInitials2.$touched = false;
-                $scope.editProduct.supplierProductCode2.$touched = false;
-                $scope.editProduct.supplierPrice2.$touched = false;
-                $scope.editProduct.supplierInitials3.$touched = false;
-                $scope.editProduct.supplierProductCode3.$touched = false;
-                $scope.editProduct.supplierPrice3.$touched = false;
-                $scope.editProduct.isValid.$touched = false;                
-                $scope.showSuccessBox = false;
+            $scope.cancel = function () {
+            	$scope.editProductForm = false;
             };	
         });

@@ -240,22 +240,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        });
 	    };
 	    
-	    $scope.reset = function () {
-	        $scope.customer = {};
-	        $scope.editCustomer.$setPristine();
-	        $scope.editCustomer.name.$touched = false;
-	        $scope.editCustomer.phoneNumber.$touched = false;
-	        $scope.editCustomer.emailId.$touched = false;
-	        $scope.editCustomer.shipmark.$touched = false;
-	        $scope.editCustomer.additionalMarginPercentage.$touched = false;
-	        $scope.editCustomer.flatNo.$touched = false;
-	        $scope.editCustomer.building.$touched = false;
-	        $scope.editCustomer.street.$touched = false;
-	        $scope.editCustomer.locality.$touched = false;
-	        $scope.editCustomer.city.$touched = false;
-	        $scope.editCustomer.state.$touched = false;
-	        $scope.editCustomer.zip.$touched = false;	        
-	        $scope.showSuccessBox = false;
-	        $scope.showErrorBox = false;
-	    };
+	    $scope.cancel = function () {
+        	$scope.editCustomerForm = false;
+        };
 });

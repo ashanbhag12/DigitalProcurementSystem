@@ -316,11 +316,11 @@ public class PlaceOrderController
 			Row row = sheet.createRow(0);
 			
 			Cell cell = row.createCell(0);
-			cell.setCellValue("Product Code");
+			cell.setCellValue("Supplier Product Code");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(1);
-			cell.setCellValue("Supplier Product Code");
+			cell.setCellValue("Product Code");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(2);
@@ -340,7 +340,7 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(6);
-			cell.setCellValue("Customer Information");
+			cell.setCellValue("Shipmark");
 			cell.setCellStyle(headerCellStyle);
 			
 			int rowNumber = 1;
@@ -350,11 +350,11 @@ public class PlaceOrderController
 				row = sheet.createRow(rowNumber++);
 				
 				cell = row.createCell(0);
-				cell.setCellValue(order.getProductCode());
+				cell.setCellValue(order.getSupplierProductCode());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(1);
-				cell.setCellValue(order.getSupplierProductCode());
+				cell.setCellValue(order.getProductCode());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(2);
@@ -378,7 +378,7 @@ public class PlaceOrderController
 				cell.setCellStyle(cellStyle);
 			}
 			
-			for(int i = 0; i < 6; i++)
+			for(int i = 0; i < 7; i++)
 			{
 				sheet.autoSizeColumn(i);
 			}

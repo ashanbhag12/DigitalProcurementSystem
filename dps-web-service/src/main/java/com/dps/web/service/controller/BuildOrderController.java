@@ -131,6 +131,7 @@ public class BuildOrderController
 				
 				cost = cost.multiply(config.getExchangeRate());
 				cost = cost.multiply(price);
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				
 				BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
 				cost1 = cost1.multiply(product.getCbm());
