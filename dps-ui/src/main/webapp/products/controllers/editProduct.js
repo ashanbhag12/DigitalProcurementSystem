@@ -16,6 +16,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.searchProductCode = ''; /* Code for product search */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.maskColumns = true; /* Hide the columns */ 
+            $scope.showSaveBtn = false; /* Hide the Save button */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -110,6 +111,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 /* Service Call to retrieve searched product */
                 $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
     	        	$timeout(function(){
+    	        		console.log($scope.products)
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        	}, 500);
@@ -247,6 +249,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
              * Note: no break; concept for angularJs forEach */
             
             $scope.update = function () {
+            	$scope.showSaveBtn = true;
             	var keepGoing = true;
                 angular.forEach($scope.products, function (product) {
                 	if(keepGoing) {
