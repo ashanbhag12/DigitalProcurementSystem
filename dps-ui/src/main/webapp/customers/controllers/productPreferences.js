@@ -31,7 +31,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 for (var i = 0; i < $scope.products.length; i++) {
                     $scope.editProductDetailsRow[i] = false;
                 }
-
             });
             
             $scope.createOtherCustomersList = function(){
