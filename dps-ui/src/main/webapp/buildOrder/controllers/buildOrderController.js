@@ -84,7 +84,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             /* Create filter function for a query string */
             function createFilterFor(query) {
                 return function filterFn(product) {
-                    return (product.productCode.toLowerCase().indexOf(query.toLowerCase()) === 0);
+                    return (product.productCode.toLowerCase().indexOf(query.toLowerCase()) !== -1);
                 };
             }
 
