@@ -25,6 +25,8 @@ public class CustomerProductPricesDTO
 	private Integer cartoonQuantity;
 	private BigDecimal grossWeight;
 	private BigDecimal cbm;
+	private BigDecimal calculatedCost;
+	private BigDecimal originalCost;
 	private boolean toExport = false;
 	private String supplierInitials;
 
@@ -157,5 +159,25 @@ public class CustomerProductPricesDTO
 			BigDecimal customerProductMarginPercentage)
 	{
 		this.customerProductMarginPercentage = customerProductMarginPercentage;
+	}
+
+	public BigDecimal getCalculatedCost()
+	{
+		return calculatedCost;
+	}
+
+	public void setCalculatedCost(BigDecimal calculatedCost)
+	{
+		this.calculatedCost = calculatedCost;
+	}
+
+	public BigDecimal getOriginalCost()
+	{
+		return originalCost;
+	}
+
+	public void setOriginalCost(BigDecimal originalCost)
+	{
+		this.originalCost = originalCost;
 	}
 }

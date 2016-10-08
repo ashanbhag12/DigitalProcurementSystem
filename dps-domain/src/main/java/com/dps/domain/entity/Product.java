@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class holds product information.
@@ -44,7 +45,9 @@ public class Product extends EntityBase
 	public static final String GET_ALL_PRODUCTS = "Product.GetAllProducts";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_PROD_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_PROD_ID")
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_PROD_ID")
 	private Long id;
 
 	@Basic

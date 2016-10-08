@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class stores the information of the product and supplier mappings.
@@ -28,7 +29,9 @@ public class SupplierProductInfo extends EntityBase
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_PROD_SUPP_INFO_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_PROD_SUPP_INFO_ID")
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_PROD_SUPP_INFO_ID")
 	private Long id;
 	
 	@ManyToOne
