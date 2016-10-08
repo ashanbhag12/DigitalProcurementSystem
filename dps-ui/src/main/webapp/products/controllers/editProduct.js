@@ -10,7 +10,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.editProductForm = false; /* Hide the edit Product Form */
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* set the default sort order */
-            $scope.sortBy = 'name'; /* set the default sort type */
+            $scope.sortBy = 'productCode'; /* set the default sort type */
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Array of all Products */            
             $scope.searchProductCode = ''; /* Code for product search */
@@ -112,7 +112,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        		console.log($scope.products);
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
