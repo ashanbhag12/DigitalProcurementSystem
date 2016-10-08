@@ -75,7 +75,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex="40">
                 <label>Remarks</label>
-                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125"></textarea>
+                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125" ng-keypress="triggerAddProduct($event)"></textarea>
             </md-input-container>
             <div flex="15" flex-offset="5">
                 <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn" ng-disabled="selectedProductDetails.$invalid">ADD</md-button>

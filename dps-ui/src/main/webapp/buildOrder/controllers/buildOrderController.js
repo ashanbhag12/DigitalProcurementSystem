@@ -112,6 +112,14 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     }, 500);
                 }
             };
+            
+            /* Trigger addProduct() function on "enter" key press in remark field */
+            $scope.triggerAddProduct = function(event){
+            	if(event.which === 13) {
+                    event.preventDefault();
+                    $scope.addProduct();
+                }
+            };
 
             $scope.addProduct = function () { /* Function to add Product in the table */
             	angular.element(document.querySelector('.loader')).addClass('show');
