@@ -15,7 +15,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.products = []; /* Array of all Products */            
             $scope.searchProductCode = ''; /* Code for product search */
             $scope.selectAll = false; /* Set toggle all to false */
-            $scope.maskColumns = true; /* Hide the columns */
+            $scope.maskColumns = true; /* Hide the columns */ 
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
