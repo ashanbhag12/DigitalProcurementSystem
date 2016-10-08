@@ -26,6 +26,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.allProducts; /* Get all the products for auto complete */ 
             $scope.orderSummary = []; /* Object containing all the products added to cart  */
             $scope.editOrderSummmaryRow = {}; /* Object for inline editing in Order Summary table */
+            $scope.grandTotal = 0; /* Variable for Grand Total */
+            $scope.totalCartoons = 0; /* Variable total cartoons (all products combined) to be ordered*/
             $scope.productDetails = {/* Object to show product details based on auto complete result */
                     "id": "",
                 	"productCode": "",
@@ -300,6 +302,15 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.orderSummary = buildOrderCalculateService.save(cartJson, function(){/* Success Callback */                	
                 	$timeout(function(){
                 		$scope.orderSummarySection = true;
+                		console.log($scope.orderSummary.orderItems);
+                		$scope.grandTotal = 0;
+                		$scope.totalCartoons = 0;
+                		angular.forEach($scope.orderSummary.orderItems, function(product){                			
+                			console.log(product.unitCost);
+                			console.log("product.quantity "+ typeof product.quantity);
+                        	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
+                        	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
+                        });
                         smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
                         $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
@@ -319,16 +330,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 });
             };
             
-            /* Function to calculate Grand Total of Order Summary */
-            $scope.calculateGrandTotal = function(){
-                var total = 0;
-                angular.forEach($scope.orderSummary.orderItems, function(product){
-                  total += (product.unitCost * product.quantity);                  
-                });
-                return total;
-            };
-            
             $scope.editOrder = function(){
+            	$scope.searchProductSection = true;
             	$scope.addedProductsSection = true;
             	$scope.orderSummarySection = false;
             	$scope.showSuccessBox = false;
