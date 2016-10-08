@@ -303,8 +303,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
                         $scope.showSuccessBox = true;
-                        angular.element(document.querySelector('.loader')).removeClass('show');  
-                        $scope.addedProductsSection = false;
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                        $scope.searchProductSection = false;
+                        $scope.addedProductsSection = false;                        
                 	}, 500)
                 }, function(error){/* Error Callback */
                 	$timeout(function(){
