@@ -313,7 +313,7 @@ public class CustomerProductPriceController
 				if(custProdPrice.isToExport())
 				{
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config).setScale(2, RoundingMode.HALF_UP).toString()));
+					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config, wrapper.getAdditionalCustomerMargin()).setScale(2, RoundingMode.HALF_UP).toString()));
 					
 					Image image = null;
 					try
@@ -360,7 +360,7 @@ public class CustomerProductPriceController
 		return cell;
 	}
 	
-	private BigDecimal findCost(CustomerProductPricesDTO price, Configurations config)
+	private BigDecimal findCost(CustomerProductPricesDTO price, Configurations config, BigDecimal custMargin)
 	{
 		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 		
@@ -379,6 +379,10 @@ public class CustomerProductPriceController
 		
 		cost = cost.add(cost1);
 		cost = cost.add(cost2);
+		
+		cost = cost.multiply(price.getCustomerProductMargin());
+		cost = cost.multiply(price.getProductMargin());
+		cost = cost.multiply(custMargin);
 		
 		return cost;
 	}
