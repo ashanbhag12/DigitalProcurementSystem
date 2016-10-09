@@ -106,7 +106,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.editProductDetails = function (index, product) {
                 $scope.editProductDetailsRow[index] = true;                
                 $timeout(function () {
-                	angular.element(document.querySelector("input[name=customerProductMarginPercentage]")).focus();
+                	angular.element(document.querySelectorAll("input[name=customerProductMarginPercentage]")[index]).focus();
                 }, 100);
             };
 
