@@ -101,7 +101,7 @@
 	                <label>*CBM</label>
 	                <input required placeholder="0.000" name="cbm" ng-model="product.cbm" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.cbm.$error" ng-show="editProduct.cbm.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -110,7 +110,7 @@
 	                <label>*Weight</label>
 	                <input required placeholder="0.000" name="weight" ng-model="product.weight" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.weight.$error" ng-show="editProduct.weight.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
@@ -132,7 +132,7 @@
 	                <input type='number' required placeholder="0.000" name="defaultMarginPercentage" ng-pattern="/^-?[0-9]+(\.[0-9]{1,3})?$/" 
 	                	ng-model="product.defaultMarginPercentage" ng-blur="updateProductMargin()" />
 	                <div ng-messages="editProduct.defaultMarginPercentage.$error" ng-show="editProduct.defaultMarginPercentage.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be between -9-0-9 and 3 decimal long.</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be between -9 & 9 and 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -159,7 +159,7 @@
 	                <label>*Price Per Item</label>
 	                <input required placeholder="0.000" name="supplierPrice1" ng-model="product.supplierProductInfoList[0].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.supplierPrice1.$error" ng-show="editProduct.supplierPrice1.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -180,7 +180,7 @@
 	                <label>Price Per Item</label>
 	                <input placeholder="0.000" name="supplierPrice2" ng-model="product.supplierProductInfoList[1].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.supplierPrice2.$error" ng-show="editProduct.supplierPrice2.$touched">
-	                    <div ng-message-exp="['pattern']">Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['pattern']">Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -201,7 +201,7 @@
 	                <label>Price Per Item</label>
 	                <input placeholder="0.000" name="supplierPrice3" ng-model="product.supplierProductInfoList[2].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.supplierPrice3.$error" ng-show="editProduct.supplierPrice3.$touched">
-	                    <div ng-message-exp="['pattern']">Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['pattern']">Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
