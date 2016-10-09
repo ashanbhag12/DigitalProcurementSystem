@@ -313,7 +313,7 @@ public class CustomerProductPriceController
 				if(custProdPrice.isToExport())
 				{
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config, wrapper.getAdditionalCustomerMargin()).setScale(2, RoundingMode.HALF_UP).toString()));
+					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString()));
 					
 					Image image = null;
 					try
