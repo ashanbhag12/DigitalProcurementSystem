@@ -313,7 +313,7 @@ public class CustomerProductPriceController
 				if(custProdPrice.isToExport())
 				{
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("    "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
+					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config).setScale(2, RoundingMode.HALF_UP).toString()));
 					
 					Image image = null;
 					try
@@ -358,5 +358,28 @@ public class CustomerProductPriceController
 		cell.setPadding(10f);
 		
 		return cell;
+	}
+	
+	private BigDecimal findCost(CustomerProductPricesDTO price, Configurations config)
+	{
+		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
+		
+		cost = cost.multiply(config.getExchangeRate());
+		cost = cost.multiply(price.getProductPrice());
+		
+		BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+		cost1 = cost1.multiply(price.getCbm());
+		cost1 = cost1.multiply(config.getPricePerCbm());
+		cost1 = cost1.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+		cost2 = cost2.multiply(price.getGrossWeight());
+		cost2 = cost2.multiply(config.getPricePerWeight());
+		cost2 = cost2.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		cost = cost.add(cost1);
+		cost = cost.add(cost2);
+		
+		return cost;
 	}
 }
