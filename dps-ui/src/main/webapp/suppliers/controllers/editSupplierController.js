@@ -209,6 +209,8 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             		supplier.isChecked = $scope.selectAll;
                     $scope.selectedRows = [];
                 });
+            	$scope.editDisabled = true;
+                $scope.deleteDisabled = true;
             	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
             };
         });

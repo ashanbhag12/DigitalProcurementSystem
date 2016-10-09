@@ -340,6 +340,8 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     product.isChecked = $scope.selectAll;
                     $scope.selectedRows = [];
                 });
+            	$scope.editDisabled = true;
+                $scope.deleteDisabled = true;
             	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
             };	
         });

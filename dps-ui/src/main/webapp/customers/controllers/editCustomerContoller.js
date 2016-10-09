@@ -247,6 +247,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
                 customer.isChecked = $scope.selectAll;
                 $scope.selectedRows = [];
             });
+        	$scope.editDisabled = true;
+            $scope.deleteDisabled = true;
         	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
         };
 });
