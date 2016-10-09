@@ -36,8 +36,7 @@
         <div class="clearfix">      
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
             <div class="floatR tableActions">
-            	<a href="javascript:;" tabindex="-1" class="showColumns" ng-click="maskColumns = false">Show Columns</a>
-                <a href="javascript:;" tabindex="-1" class="maskColumns" ng-click="maskColumns = true">Mask Columns</a>                
+            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>             
                 <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAll($event)">Edit All</a>
                 <a href="javascript:;" tabindex="-1" class="saveBtn" ng-click="saveAll($event)">Save All</a>
             </div>            
