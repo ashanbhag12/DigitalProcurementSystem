@@ -121,6 +121,14 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        });
             };
             
+            /* Trigger searchProduct() function on "enter" key press in search product field */
+            $scope.triggerSearchProduct = function(event){
+            	if(event.which === 13) {
+                    event.preventDefault();
+                    $scope.searchProduct();
+                }
+            };
+            
             /* Concat all Supplier Initials and display in table */
             $scope.getSupplierInitials = function(supplierProductInfoList){            	
             	var supplierInitials = [];            	

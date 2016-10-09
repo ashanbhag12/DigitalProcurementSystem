@@ -5,7 +5,7 @@
     <div layout="row">
         <md-input-container class="md-block" flex="25">
             <label>Product Code</label>
-            <input type='text' name="searchProductCode" ng-model="searchProductCode" />
+            <input type='text' name="searchProductCode" ng-model="searchProductCode" ng-keypress="triggerSearchProduct($event)" />
         </md-input-container>
         <div flex-offset="5">
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
