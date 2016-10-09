@@ -197,11 +197,16 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	angular.element(document.querySelector('.loader')).addClass('show');
                 /* WS call to save the changes and update the table */                              
                 modifyProductPreferencesService.save($scope.products, function(successResult) { /* Success Callback */
-                		$timeout(function(){
+                		$timeout(function(){                			
                 			$scope.showSuccessBox = true; 
                 			$scope.successMessage = "Product margin for Customer updated successfully";
                     		$scope.showErrorBox = false;
-                    		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark});
+                    		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, 
+                				function(){/* Success callback */
+	                    			angular.forEach($scope.products.customerProductPrices, function (product, index) {
+	                            		$scope.updateProductDetails(index, product);
+	                            	});
+                    		});
                     		angular.element(document.querySelector('.loader')).removeClass('show');
                 		}, 500);                		
                 	}, function(error){/* Error Callback */
