@@ -380,8 +380,8 @@ public class CustomerProductPriceController
 		cost = cost.add(cost1);
 		cost = cost.add(cost2);
 		
-		cost = cost.multiply(price.getCustomerProductMargin());
 		cost = cost.multiply(price.getProductMargin());
+		cost = cost.multiply(price.getCustomerProductMargin());
 		cost = cost.multiply(custMargin);
 		
 		return cost;
