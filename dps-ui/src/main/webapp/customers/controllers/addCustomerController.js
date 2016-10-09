@@ -26,7 +26,7 @@ angular.module('addCustomerApp', ['ngMessages'])
             		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(6);
         		}
             	else{
-            		$scope.customer.additionalMargin = 1 - (Math.abs($scope.customer.additionalMargin)/100).toFixed(6);            		
+            		$scope.customer.additionalMargin = (1 - (Math.abs($scope.customer.additionalMargin)/100)).toFixed(6);            		
             	}
 		    };
 		

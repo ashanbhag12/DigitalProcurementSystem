@@ -163,7 +163,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(6);
         		}
             	else{
-            		$scope.product.defaultMargin = 1 - (Math.abs($scope.product.defaultMargin)/100).toFixed(6);            		
+            		$scope.product.defaultMargin = (1 - (Math.abs($scope.product.defaultMargin)/100)).toFixed(6);            		
             	}
     	    };
             
