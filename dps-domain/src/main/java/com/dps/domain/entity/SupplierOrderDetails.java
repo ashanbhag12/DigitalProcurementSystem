@@ -31,7 +31,7 @@ public class SupplierOrderDetails extends EntityBase
 
 	@Id
 	@TableGenerator(name="DPS_SUPP_ORDR_DETL_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
-					valueColumnName="GEN_VAL", pkColumnValue="DPS_SUPP_ORDR_DETL_ID")
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_SUPP_ORDR_DETL_ID", allocationSize=10)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_SUPP_ORDR_DETL_ID")
 	private Long id;
 	

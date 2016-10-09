@@ -30,9 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
+import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.Product;
 import com.dps.domain.entity.Supplier;
 import com.dps.domain.entity.SupplierProductInfo;
+import com.dps.service.ConfigurationsService;
 import com.dps.service.ProductService;
 import com.dps.service.SupplierService;
 import com.dps.web.service.model.ProductDTO;
@@ -56,6 +58,9 @@ public class ProductController
 	
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private ConfigurationsService configService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -399,6 +404,32 @@ public class ProductController
 		return prod;
 	}
 	
+	private BigDecimal findCost(Product product)
+	{
+		Configurations config = configService.findAll().get(0);
+		
+		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
+		
+		cost = cost.multiply(config.getExchangeRate());
+		cost = cost.multiply(product.getSuppProdInfo().get(0).getSupplierPrice());
+		//cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
+		
+		BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+		cost1 = cost1.multiply(product.getCbm());
+		cost1 = cost1.multiply(config.getPricePerCbm());
+		cost1 = cost1.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+		cost2 = cost2.multiply(product.getWeight());
+		cost2 = cost2.multiply(config.getPricePerWeight());
+		cost2 = cost2.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		cost = cost.add(cost1);
+		cost = cost.add(cost2);
+		
+		return cost;
+	}
+	
 	private ProductDTO productToProductDto(Product prod)
 	{
 		ProductDTO prodDto = new ProductDTO();
@@ -411,7 +442,8 @@ public class ProductController
 		prodDto.setIsValid(prod.getIsValid());
 		prodDto.setMoq(prod.getMoq());
 		prodDto.setDefaultMarginPercentage(prod.getDiscountPrcentage());
-		//prodDto.setPrice(prod.getPrice());
+		prodDto.setPrice(prod.getSuppProdInfo().get(0).getSupplierPrice().setScale(3, RoundingMode.HALF_UP));
+		prodDto.setCost(findCost(prod).setScale(3, RoundingMode.HALF_UP));
 		prodDto.setProductCode(prod.getProductCode());
 		prodDto.setWeight(prod.getWeight());
 		List<SupplierProductInfo> list = prod.getSuppProdInfo();

@@ -25,7 +25,7 @@ public class Login  extends EntityBase
 
 	@Id
 	@TableGenerator(name="DPS_LOGIN_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
-					valueColumnName="GEN_VAL", pkColumnValue="DPS_LOGIN_ID")
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_LOGIN_ID", allocationSize=10)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_LOGIN_ID")
 	private Long id;
 	

@@ -25,6 +25,8 @@ public class ProductDTO
 	private Boolean isValid;
 	private BigDecimal defaultMargin;
 	private BigDecimal defaultMarginPercentage;
+	private BigDecimal price;
+	private BigDecimal cost;
 	private List<SuppProdInfo> supplierProductInfoList = new ArrayList<>();
 	
 	public Long getId()
@@ -114,5 +116,21 @@ public class ProductDTO
 	public void setDefaultMarginPercentage(BigDecimal defaultMarginPercentage)
 	{
 		this.defaultMarginPercentage = defaultMarginPercentage;
+	}
+	public BigDecimal getPrice()
+	{
+		return price;
+	}
+	public void setPrice(BigDecimal price)
+	{
+		this.price = price;
+	}
+	public BigDecimal getCost()
+	{
+		return cost;
+	}
+	public void setCost(BigDecimal cost)
+	{
+		this.cost = cost;
 	}
 }

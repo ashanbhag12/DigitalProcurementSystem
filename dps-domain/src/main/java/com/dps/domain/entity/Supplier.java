@@ -41,7 +41,7 @@ public class Supplier extends EntityBase
 
 	@Id
 	@TableGenerator(name="DPS_SUPP_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
-					valueColumnName="GEN_VAL", pkColumnValue="DPS_SUPP_ID")
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_SUPP_ID", allocationSize=10)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_SUPP_ID")
 	private Long id;
 

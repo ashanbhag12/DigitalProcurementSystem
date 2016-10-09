@@ -36,7 +36,7 @@ public class CustomerProductPreference extends EntityBase
 	
 	@Id
 	@TableGenerator(name="DPS_CUST_PROD_PREF_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
-					valueColumnName="GEN_VAL", pkColumnValue="DPS_CUST_PROD_PREF_ID")
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_CUST_PROD_PREF_ID", allocationSize=10)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_CUST_PROD_PREF_ID")
 	private Long id;
 	

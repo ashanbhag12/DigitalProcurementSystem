@@ -46,7 +46,7 @@ public class Product extends EntityBase
 
 	@Id
 	@TableGenerator(name="DPS_PROD_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
-					valueColumnName="GEN_VAL", pkColumnValue="DPS_PROD_ID")
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_PROD_ID", allocationSize=10)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_PROD_ID")
 	private Long id;
 
