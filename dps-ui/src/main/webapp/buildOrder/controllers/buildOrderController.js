@@ -116,14 +116,6 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 }
             };
             
-            /* Trigger addProduct() function on "enter" key press in remark field */
-            $scope.triggerAddProduct = function(event){
-            	if(event.which === 13) {
-                    event.preventDefault();
-                    $scope.addProduct();
-                }
-            };
-
             $scope.addProduct = function () { /* Function to add Product in the table */
             	angular.element(document.querySelector('.loader')).addClass('show');
             	$scope.addedProductsSection = true;
@@ -161,6 +153,14 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.showErrorBox = false;
                     }, 100);
             	}, 500);                
+            };
+            
+            /* Trigger addProduct() function on "enter" key press in remark field */
+            $scope.triggerAddProduct = function(event){            	
+            	if(event.which === 13 && $scope.productDetails.productQuantity > 0) {
+                    event.preventDefault();
+                    $scope.addProduct();
+                }
             };
             
             /* Function to select/unselect all the rows in products added table */
