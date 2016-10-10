@@ -14,7 +14,6 @@ angular.module('placeOrderApp', [])
                 /* WS call to fetch the data */
             	getPlaceOrderService.query().$promise.then(function(data) {            		
                 	$scope.products = data;
-                	console.log($scope.products)
                 	
                 	/* To select the rows which fulfills MOQ */
 	                angular.forEach($scope.products, function (product) {
@@ -68,7 +67,6 @@ angular.module('placeOrderApp', [])
 					    $scope.showErrorBox = false;
 					    /* To reload data in to the table by removing placed order items. */ 
 	                    getPlaceOrderService.query().$promise.then(function(data) {
-	                		console.log(data)
 	                    	$scope.products = data;
 	                		$scope.selectAll = false;
 	                    });					    

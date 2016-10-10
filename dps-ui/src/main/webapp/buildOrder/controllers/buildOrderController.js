@@ -302,12 +302,9 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.orderSummary = buildOrderCalculateService.save(cartJson, function(){/* Success Callback */                	
                 	$timeout(function(){
                 		$scope.orderSummarySection = true;
-                		console.log($scope.orderSummary.orderItems);
                 		$scope.grandTotal = 0;
                 		$scope.totalCartoons = 0;
-                		angular.forEach($scope.orderSummary.orderItems, function(product){                			
-                			console.log(product.unitCost);
-                			console.log("product.quantity "+ typeof product.quantity);
+                		angular.forEach($scope.orderSummary.orderItems, function(product){
                         	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
                         	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
                         });
