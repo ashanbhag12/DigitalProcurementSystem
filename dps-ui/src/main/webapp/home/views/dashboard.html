@@ -61,7 +61,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex="50">
                 <label>*Files Storage Path</label>
-                <input name="basePath" ng-model="global.basePath" required placeholder="Path" type='text' ng-readonly="isReadonly" />
+                <input name="basePath" ng-model="global.basePath" required placeholder="Path" type='text' ng-readonly="isReadonly" ng-blur="createBasePath(global.basePath)" />
                 <div ng-messages="globalParameters.basePath.$error" ng-show="globalParameters.basePath.$touched">
                     <div ng-message-exp="['required']">This is required.</div>
                 </div>

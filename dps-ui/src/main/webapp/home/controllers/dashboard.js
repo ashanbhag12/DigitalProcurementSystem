@@ -25,6 +25,12 @@ angular.module('dashboardApp', ["ngMessages"])
                 $scope.showSuccessBox = false; 
                 $scope.showErrorBox = false;
             };
+            
+            $scope.createBasePath = function(){
+            	if( !$scope.isReadonly && $scope.global.basePath !== undefined){
+            		$scope.global.basePath = $scope.global.basePath + "\\"; /* "\\" for "\" */
+            	}            	
+            };
 
             $scope.submitForm = function (globalParameters) {
             	if (globalParameters.$valid) {
