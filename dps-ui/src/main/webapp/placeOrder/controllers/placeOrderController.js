@@ -1,5 +1,5 @@
 angular.module('placeOrderApp', [])
-        .controller('placeOrderController', function ($http, $scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
+        .controller('placeOrderController', function ($rootScope, $http, $scope, $timeout, getPlaceOrderService, savePlaceOrderService) {
             $scope.showSuccessBox = false; /* Hide the Success box */
             $scope.showErrorBox = false; /* Hide the Error box */
             $scope.showInfoBox = false; /* Hide the Info box */

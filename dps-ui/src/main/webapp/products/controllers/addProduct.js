@@ -1,5 +1,5 @@
 angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
-        .controller('addProductController', function ($scope, $timeout, addProductsService, getSuppliersInitialsService, smoothScroll) {
+        .controller('addProductController', function ($rootScope, $scope, $timeout, addProductsService, getSuppliersInitialsService, smoothScroll) {
             $scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             
