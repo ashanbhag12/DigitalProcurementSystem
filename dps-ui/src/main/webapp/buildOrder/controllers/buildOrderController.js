@@ -158,8 +158,13 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             /* Trigger addProduct() function on "enter" key press in remark field */
             $scope.triggerAddProduct = function(event){            	
             	if(event.which === 13 && $scope.productDetails.productQuantity > 0) {
-                    event.preventDefault();
-                    $scope.addProduct();
+            		event.preventDefault();
+            		if($scope.showAddBtn){
+            			$scope.addProduct(); /* Add function */
+            		}
+            		else{
+            			$scope.updateAddedProductsListRow(); /* Update function */
+            		}
                 }
             };
             
@@ -308,6 +313,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
                         	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
                         });
+                		$scope.grandTotal = ($scope.grandTotal).toFixed(6);
                         smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
                         $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
