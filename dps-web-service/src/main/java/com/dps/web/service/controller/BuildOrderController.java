@@ -113,8 +113,8 @@ public class BuildOrderController
 			for(BuildOrderDTO item : orderItems)
 			{
 				Product product = prodMap.get(item.getProductId());
-				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()).setScale(3, RoundingMode.HALF_UP) : Constants.BIG_DECIMAL_ONE;
-				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin().setScale(3, RoundingMode.HALF_UP);
+				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()) : Constants.BIG_DECIMAL_ONE;
+				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin();
 				
 				BigDecimal price = Constants.BIG_DECIMAL_ONE;
 				
