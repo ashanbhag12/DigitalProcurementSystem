@@ -8,6 +8,7 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        phoneNumber: "",
 		        emailId: "",
 		        shipmark: "",
+		        originalShipmark:"",
 		        additionalMargin: "",
 		        additionalMarginPercentage: "",
 		        flatNo: "",
@@ -57,6 +58,7 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        $scope.addCustomer.phoneNumber.$touched = false;		        
 		        $scope.addCustomer.emailId.$touched = false;
 		        $scope.addCustomer.shipmark.$touched = false;
+		        $scope.addCustomer.originalShipmark.$touched = false;
 		        $scope.addCustomer.additionalMarginPercentage.$touched = false;	        
 		        $scope.addCustomer.flatNo.$touched = false;
 		        $scope.addCustomer.building.$touched = false;

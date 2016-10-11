@@ -17,17 +17,12 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    $scope.selectAll = false; /* Set toggle all to false */
 	    $scope.maskColumns = true; /* Hide the columns */
-	    
-	    /* Function will be executed after the page is loaded */
-	    $scope.$on('$viewContentLoaded', function () {});
-	
-	    /* Customer object to be edited */
-	    /* changed name from editCustomer with customer bcos it was conflicting with form name*/
-	    $scope.customer = {
+	    $scope.customer = {/* Customer object to be edited */
 	    	name: "",
 	    	phoneNumber: "",
 	    	emailId: "",
 	    	shipmark: "",
+	    	originalShipmark:"",
 	    	additionalMargin: "",
 	    	additionalMarginPercentage: "",
 	    	flatNo: "",
@@ -38,6 +33,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    state: "",
 		    zip: ""
 	    };
+	    
+	    /* Function will be executed after the page is loaded */
+	    $scope.$on('$viewContentLoaded', function () {});
 	
 	    /* Function to select/unselect all the Customers */
 	    $scope.toggleAll = function () {
@@ -112,6 +110,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                $scope.customer.phoneNumber = customer.phoneNumber;
 	                $scope.customer.emailId = customer.emailId;
 	                $scope.customer.shipmark = customer.shipmark;
+	                $scope.customer.originalShipmark = customer.originalShipmark;
 	                $scope.customer.additionalMarginPercentage = customer.additionalMarginPercentage;
 	                $scope.customer.flatNo = customer.flatNo;
 	                $scope.customer.building = customer.building;
@@ -175,6 +174,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                    customer.phoneNumber = $scope.customer.phoneNumber;
 	                    customer.emailId = $scope.customer.emailId;
 	                    customer.shipmark = $scope.customer.shipmark;
+	                    customer.originalShipmark = $scope.customer.originalShipmark;
 	                    customer.additionalMarginPercentage = $scope.customer.additionalMarginPercentage;
 	                    customer.additionalMargin = $scope.customer.additionalMargin;
 	                    customer.flatNo = $scope.customer.flatNo;
@@ -228,7 +228,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    	angular.element(document.querySelector('.loader')).addClass('show'); 
 	        /* Service Call to retrieve searched customer */
 	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark}, function(){/* Success Callback */
-	        	$timeout(function(){
+	        	$timeout(function(){	        		
 	        		$scope.searchedResults = true;
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        	}, 500);

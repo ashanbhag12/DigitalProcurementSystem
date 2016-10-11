@@ -4,22 +4,20 @@
     <div class="animateMessages errorBox" ng-show="showErrorBox">Customer could not be added. Please try again after some time</div>
     <form name="addCustomer" ng-submit="submitForm(addCustomer)" novalidate>
         <div layout="row">
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="33">
                 <label>*Name</label>
                 <input type='text' minlength="3" maxlength="30" required name="name" ng-model="customer.name" />
                 <div ng-messages="addCustomer.name.$error" ng-show="addCustomer.name.$touched">
                     <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 3 to 30 characters long.</div>
                 </div>
             </md-input-container>
-            <md-input-container class="md-block" flex="50">
+            <md-input-container class="md-block" flex="33">
                 <label>Phone Number</label>
                 <input maxlength="10" name="phoneNumber" ng-model="customer.phoneNumber" type='tel' ng-pattern="/^\d{10}$/"/>
                 <div ng-messages="addCustomer.phoneNumber.$error" ng-show="addCustomer.phoneNumber.$touched">
                     <div ng-message-exp="['maxlength', 'pattern']">Should be 10 digits long.</div>
                 </div>
             </md-input-container>
-        </div>
-        <div layout="row">       
             <md-input-container class="md-block" flex="33">
                 <label>Email Id</label>
                 <input type="email" maxlength="100" name="emailId" ng-model="customer.emailId" ng-pattern="/^.+@.+\..+$/"/>
@@ -27,8 +25,17 @@
                     <div ng-message-exp="['maxlength', 'pattern']">Must be less then 100 characters and should be a valid e-mail id.</div>
                 </div>
             </md-input-container>
+        </div>
+        <div layout="row">       
             <md-input-container class="md-block" flex="33">
-                <label>*Ship Mark</label>
+                <label>Original Shipmark</label>
+                <input maxlength="30" name="originalShipmark" ng-model="customer.originalShipmark" />
+                <div ng-messages="addCustomer.originalShipmark.$error" ng-show="addCustomer.originalShipmark.$touched">
+                    <div ng-message-exp="['maxlength']">Should be at max 30 characters long.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex="33">
+                <label>*Shipmark</label>
                 <input maxlength="8" required name="shipmark" ng-model="customer.shipmark" />
                 <div ng-messages="addCustomer.shipmark.$error" ng-show="addCustomer.shipmark.$touched">
                     <div ng-message-exp="['required', 'maxlength']">This is required. Should be max 8 characters long.</div>
