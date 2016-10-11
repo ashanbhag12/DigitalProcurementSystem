@@ -293,8 +293,21 @@ public class CustomerProductPriceController
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String dateStr = df.format(date);
 			
-			String reportPath = config.getBasePath() + "customer" + File.separator;
-			String imagePath = config.getBasePath() + "images"  + File.separator;
+			String basePath = config.getBasePath();
+			if(!basePath.endsWith(File.separator))
+			{
+				basePath = basePath + File.separator;
+			}
+			
+			String reportPath = basePath + "customer";
+			
+			File dir = new File(reportPath);
+			if(!dir.exists())
+			{
+				dir.mkdir();
+			}
+			
+			String imagePath = basePath + "images"  + File.separator;
 			
 			Document document = new Document();
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
@@ -319,18 +332,26 @@ public class CustomerProductPriceController
 					try
 					{
 						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpg");
+						image.scaleToFit(75f, 75f);
+						image.setBorderWidth(2);
+						image.setBorder(Rectangle.BOX);
+						cell.addElement(image);
 					}
 					catch(Exception e)
 					{
-						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+						try
+						{
+							image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+							image.scaleToFit(75f, 75f);
+							image.setBorderWidth(2);
+							image.setBorder(Rectangle.BOX);
+							cell.addElement(image);
+						}
+						catch(Exception ex)
+						{
+							cell.addElement(new Paragraph("\nImage not available."));
+						}
 					}
-					
-					//image.scaleAbsoluteHeight(75f);
-					//image.scaleAbsoluteWidth(75f);
-					image.scaleToFit(75f, 75f);
-					image.setBorderWidth(2);
-					image.setBorder(Rectangle.BOX);
-					cell.addElement(image);
 					
 					table.addCell(cell);
 				}

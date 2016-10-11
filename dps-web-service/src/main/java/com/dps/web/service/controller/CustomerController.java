@@ -129,6 +129,7 @@ public class CustomerController
 		cust.setDiscountPrcentage(custDto.getAdditionalMarginPercentage());
 		cust.setName(custDto.getName());
 		cust.setShipmark(custDto.getShipmark());
+		cust.setOriginalShipmark(custDto.getOriginalShipmark());
 		cust.setActive(true);
 		
 		Address address = cust.getAddress();
@@ -171,6 +172,7 @@ public class CustomerController
 		custDto.setName(cust.getName());
 		custDto.setPhoneNumber(cust.getContactDetails().getPhoneNumber());
 		custDto.setShipmark(cust.getShipmark());
+		custDto.setOriginalShipmark(cust.getOriginalShipmark());
 		custDto.setState(cust.getAddress().getState());
 		custDto.setStreet(cust.getAddress().getStreet());
 		custDto.setZip(cust.getAddress().getZip());

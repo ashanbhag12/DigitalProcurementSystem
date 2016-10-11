@@ -21,6 +21,7 @@ public class ProductDTO
 	private BigDecimal cbm;
 	private BigDecimal weight;
 	private String description;
+	private String dummyCode;
 	private Integer moq;
 	private Boolean isValid;
 	private BigDecimal defaultMargin;
@@ -132,5 +133,13 @@ public class ProductDTO
 	public void setCost(BigDecimal cost)
 	{
 		this.cost = cost;
+	}
+	public String getDummyCode()
+	{
+		return dummyCode;
+	}
+	public void setDummyCode(String dummyCode)
+	{
+		this.dummyCode = dummyCode;
 	}
 }

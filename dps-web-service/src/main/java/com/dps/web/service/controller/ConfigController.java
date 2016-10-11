@@ -1,5 +1,7 @@
 package com.dps.web.service.controller;
 
+import java.io.File;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -54,7 +56,14 @@ public class ConfigController
 		config.setExchangeRate(configDto.getExchangeRate());
 		config.setPricePerWeight(configDto.getCostPerGrossWeight());
 		config.setPricePerCbm(configDto.getCostPerCbm());
-		config.setBasePath(configDto.getBasePath());
+		
+		String basePath = configDto.getBasePath();
+		
+		if(!basePath.endsWith(File.separator))
+		{
+			basePath = basePath + File.separator;
+		}
+		config.setBasePath(basePath);
 		
 		configService.merge(config);
 	}

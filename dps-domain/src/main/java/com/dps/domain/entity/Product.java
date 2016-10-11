@@ -82,6 +82,10 @@ public class Product extends EntityBase
 	private Boolean isActive;
 	
 	@Basic
+	@Column(name="DUMMY_CODE")
+	private String dummyCode;
+	
+	@Basic
 	@Column(name="DISC_PECT")
 	private BigDecimal discountPrcentage;
 
@@ -202,6 +206,16 @@ public class Product extends EntityBase
 	public void setDiscountPrcentage(BigDecimal discountPrcentage)
 	{
 		this.discountPrcentage = discountPrcentage;
+	}
+
+	public String getDummyCode()
+	{
+		return dummyCode;
+	}
+
+	public void setDummyCode(String dummyCode)
+	{
+		this.dummyCode = dummyCode;
 	}
 
 	@Override

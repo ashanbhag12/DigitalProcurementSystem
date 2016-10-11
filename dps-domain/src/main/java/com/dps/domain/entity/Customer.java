@@ -56,6 +56,10 @@ public class Customer extends EntityBase
 	private String shipmark;
 	
 	@Basic
+	@Column(name="ORIG_SHIPMARK")
+	private String originalShipmark;
+	
+	@Basic
 	@Column(name="ADDITIONAL_MARGIN")
 	private BigDecimal additionalMargin = Constants.BIG_DECIMAL_ONE;
 
@@ -146,6 +150,16 @@ public class Customer extends EntityBase
 	public void setDiscountPrcentage(BigDecimal discountPrcentage)
 	{
 		this.discountPrcentage = discountPrcentage;
+	}
+
+	public String getOriginalShipmark()
+	{
+		return originalShipmark;
+	}
+
+	public void setOriginalShipmark(String originalShipmark)
+	{
+		this.originalShipmark = originalShipmark;
 	}
 
 	@Override

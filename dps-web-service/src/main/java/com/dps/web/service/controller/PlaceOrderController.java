@@ -383,8 +383,21 @@ public class PlaceOrderController
 				sheet.autoSizeColumn(i);
 			}
 			
-			String filePath = config.getBasePath() + "supplier" + File.separator;
-			filePath = filePath + suppInitials + "_" + dateStr  + ".xls";
+			String basePath = config.getBasePath();
+			if(!basePath.endsWith(File.separator))
+			{
+				basePath = basePath + File.separator;
+			}
+			
+			String filePath = basePath + "supplier";
+			
+			File dir = new File(filePath);
+			if(!dir.exists())
+			{
+				dir.mkdir();
+			}
+			
+			filePath = filePath + File.separator + suppInitials + "_" + dateStr  + ".xls";
 			File file = new File(filePath);
 			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);

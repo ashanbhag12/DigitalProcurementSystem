@@ -16,6 +16,7 @@ public class CustomerDTO
 	private Long id;
 	private String name;
 	private String shipmark;
+	private String originalShipmark;
 	private BigDecimal additionalMargin;
 	private BigDecimal additionalMarginPercentage;
 	private String flatNo;
@@ -166,5 +167,15 @@ public class CustomerDTO
 	public void setAdditionalMarginPercentage(BigDecimal additionalMarginPercentage)
 	{
 		this.additionalMarginPercentage = additionalMarginPercentage;
+	}
+
+	public String getOriginalShipmark()
+	{
+		return originalShipmark;
+	}
+
+	public void setOriginalShipmark(String originalShipmark)
+	{
+		this.originalShipmark = originalShipmark;
 	}
 }

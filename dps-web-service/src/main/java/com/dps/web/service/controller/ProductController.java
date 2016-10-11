@@ -202,6 +202,7 @@ public class ProductController
 					
 					Product product = new Product();
 					product.setProductCode(values.get(UploadFields.PRODUCT_CODE).toString());
+					product.setDummyCode(values.get(UploadFields.DUMMY_CODE).toString());
 					product.setCartoonQuantity(((Double)values.get(UploadFields.CARTOON_QUANTITY)).intValue());
 					product.setCbm(new BigDecimal(values.get(UploadFields.CBM).toString()).setScale(3, RoundingMode.HALF_UP));
 					product.setWeight(new BigDecimal(values.get(UploadFields.WEIGHT).toString()).setScale(3, RoundingMode.HALF_UP));
@@ -295,6 +296,7 @@ public class ProductController
 	private enum UploadFields
 	{
 		PRODUCT_CODE,
+		DUMMY_CODE,
 		CARTOON_QUANTITY,
 		CBM,
 		WEIGHT,
@@ -400,6 +402,7 @@ public class ProductController
 		prod.setProductCode(prodDto.getProductCode());
 		prod.setWeight(prodDto.getWeight());
 		prod.setDiscountPrcentage(prodDto.getDefaultMarginPercentage());
+		prod.setDummyCode(prodDto.getDummyCode());
 		
 		return prod;
 	}
@@ -438,6 +441,7 @@ public class ProductController
 		prodDto.setCbm(prod.getCbm());
 		prodDto.setDefaultMargin(prod.getDefaultMargin());
 		prodDto.setDescription(prod.getDescription());
+		prodDto.setDummyCode(prod.getDummyCode());
 		prodDto.setId(prod.getId());
 		prodDto.setIsValid(prod.getIsValid());
 		prodDto.setMoq(prod.getMoq());
