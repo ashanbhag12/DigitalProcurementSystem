@@ -310,7 +310,7 @@ public class CustomerProductPriceController
 			String imagePath = basePath + "images"  + File.separator;
 			
 			Document document = new Document();
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + File.separator + cust.getShipmark() + "_" +dateStr+".pdf"));
 			document.open();
 			
 			PdfPTable table = new PdfPTable(5); 
@@ -325,8 +325,11 @@ public class CustomerProductPriceController
 			{
 				if(custProdPrice.isToExport())
 				{
+					Product product = productService.findByCode(custProdPrice.getProductCode()).get(0);
+					
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("    "+findCost(custProdPrice, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString()));
+					String price = findCost(custProdPrice, product, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString();
+					cell.addElement(new Paragraph(product.getProductCode() + ":" + product.getCartoonQuantity() + " PC\n" +price + "/-"));
 					
 					Image image = null;
 					try
@@ -381,9 +384,9 @@ public class CustomerProductPriceController
 		return cell;
 	}
 	
-	private BigDecimal findCost(CustomerProductPricesDTO price, Configurations config, BigDecimal custMargin)
+	private BigDecimal findCost(CustomerProductPricesDTO price, Product product, Configurations config, BigDecimal custMargin)
 	{
-		Product product = productService.findByCode(price.getProductCode()).get(0);
+		
 		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 		
 		cost = cost.multiply(config.getExchangeRate());
