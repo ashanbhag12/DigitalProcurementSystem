@@ -1,8 +1,7 @@
 angular.module('addCustomerApp', ['ngMessages'])
 		.controller('addCustomerController', function ($rootScope, $scope, $timeout, addCustomersService) {
 		    $scope.showSuccessBox = false; /* Hide the success box */
-		    $scope.showErrorBox = false; /* Hide the error box */
-		
+		    $scope.showErrorBox = false; /* Hide the error box */		
 		    $scope.customer = {/* Customer Object */
 		        name: "",
 		        phoneNumber: "",
