@@ -362,25 +362,26 @@ public class CustomerProductPriceController
 	
 	private BigDecimal findCost(CustomerProductPricesDTO price, Configurations config, BigDecimal custMargin)
 	{
+		Product product = productService.findByCode(price.getProductCode()).get(0);
 		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
 		
 		cost = cost.multiply(config.getExchangeRate());
-		cost = cost.multiply(price.getProductPrice());
+		cost = cost.multiply(product.getSuppProdInfo().get(0).getSupplierPrice());
 		
 		BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
-		cost1 = cost1.multiply(price.getCbm());
+		cost1 = cost1.multiply(product.getCbm());
 		cost1 = cost1.multiply(config.getPricePerCbm());
 		cost1 = cost1.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
 		
 		BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
-		cost2 = cost2.multiply(price.getGrossWeight());
+		cost2 = cost2.multiply(product.getWeight());
 		cost2 = cost2.multiply(config.getPricePerWeight());
 		cost2 = cost2.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
 		
 		cost = cost.add(cost1);
 		cost = cost.add(cost2);
 		
-		cost = cost.multiply(price.getProductMargin());
+		cost = cost.multiply(product.getDefaultMargin());
 		cost = cost.multiply(price.getCustomerProductMargin());
 		cost = cost.multiply(custMargin);
 		
