@@ -291,10 +291,10 @@ public class PlaceOrderController
 			customerOrderService.mergeAll(customerOrders);
 		}
 		
+		createExcel(ordersPerSupplier, config);
+		
 		supplierOrderService.persistAll(supplierOrderList);
 		custOrderDetService.mergeAll(custOrderDetList);
-		
-		createExcel(ordersPerSupplier, config);
 	}
 
 	private HSSFWorkbook createExcel(Map<String, List<PlaceOrderDTO>> ordersPerSupplier, Configurations config) throws IOException
