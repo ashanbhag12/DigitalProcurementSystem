@@ -9,6 +9,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.dao.ProductDao;
@@ -51,10 +53,33 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao
 		
 		return findAll(productCodeId);
 	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public List<JpaEntityId> findAll()
+	{
+		TypedQuery<Long> typedQuery = entityManager.createNamedQuery(Product.GET_ALL_PRODUCTS, Long.class);
+		
+		List<Long> resultList = typedQuery.getResultList();
+		
+		List<JpaEntityId> idList = new ArrayList<>();
+		
+		for(Long i : resultList)
+		{
+			idList.add(new JpaEntityId(i));
+		}
+		
+		return idList;
+	}
+	
+	@Override
+	@Transactional
+	public void remove(JpaEntityId id)
+	{
+		Product p = find(id);
+		p.setActive(false);
+	}
 
-	/* (non-Javadoc)
-	 * @see com.dps.dao.ProductDao#getAllProductCodes()
-	 */
 	@Override
 	public List<String> getAllProductCodes()
 	{

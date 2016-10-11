@@ -126,8 +126,11 @@ public class CustomerController
 	private Customer customerFromCustomerDTO(Customer cust, CustomerDTO custDto)
 	{
 		cust.setAdditionalMargin(custDto.getAdditionalMargin());
+		cust.setDiscountPrcentage(custDto.getAdditionalMarginPercentage());
 		cust.setName(custDto.getName());
 		cust.setShipmark(custDto.getShipmark());
+		cust.setOriginalShipmark(custDto.getOriginalShipmark());
+		cust.setActive(true);
 		
 		Address address = cust.getAddress();
 		if(address == null)
@@ -160,6 +163,7 @@ public class CustomerController
 		CustomerDTO custDto = new CustomerDTO();
 		custDto.setId(cust.getId());
 		custDto.setAdditionalMargin(cust.getAdditionalMargin());
+		custDto.setAdditionalMarginPercentage(cust.getDiscountPrcentage());
 		custDto.setBuilding(cust.getAddress().getBuilding());
 		custDto.setCity(cust.getAddress().getCity());
 		custDto.setEmailId(cust.getContactDetails().getEmailId());
@@ -168,6 +172,7 @@ public class CustomerController
 		custDto.setName(cust.getName());
 		custDto.setPhoneNumber(cust.getContactDetails().getPhoneNumber());
 		custDto.setShipmark(cust.getShipmark());
+		custDto.setOriginalShipmark(cust.getOriginalShipmark());
 		custDto.setState(cust.getAddress().getState());
 		custDto.setStreet(cust.getAddress().getStreet());
 		custDto.setZip(cust.getAddress().getZip());

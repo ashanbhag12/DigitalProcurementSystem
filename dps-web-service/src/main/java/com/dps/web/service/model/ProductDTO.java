@@ -17,14 +17,17 @@ public class ProductDTO
 {
 	private Long id;
 	private String productCode;
-	private BigDecimal price;
 	private Integer cartoonQuantity;
 	private BigDecimal cbm;
 	private BigDecimal weight;
 	private String description;
+	private String dummyCode;
 	private Integer moq;
 	private Boolean isValid;
 	private BigDecimal defaultMargin;
+	private BigDecimal defaultMarginPercentage;
+	private BigDecimal price;
+	private BigDecimal cost;
 	private List<SuppProdInfo> supplierProductInfoList = new ArrayList<>();
 	
 	public Long getId()
@@ -42,14 +45,6 @@ public class ProductDTO
 	public void setProductCode(String productCode)
 	{
 		this.productCode = productCode;
-	}
-	public BigDecimal getPrice()
-	{
-		return price;
-	}
-	public void setPrice(BigDecimal price)
-	{
-		this.price = price;
 	}
 	public Integer getCartoonQuantity()
 	{
@@ -114,5 +109,37 @@ public class ProductDTO
 	public void setSupplierProductInfoList(List<SuppProdInfo> supplierProductInfoList)
 	{
 		this.supplierProductInfoList = supplierProductInfoList;
+	}
+	public BigDecimal getDefaultMarginPercentage()
+	{
+		return defaultMarginPercentage;
+	}
+	public void setDefaultMarginPercentage(BigDecimal defaultMarginPercentage)
+	{
+		this.defaultMarginPercentage = defaultMarginPercentage;
+	}
+	public BigDecimal getPrice()
+	{
+		return price;
+	}
+	public void setPrice(BigDecimal price)
+	{
+		this.price = price;
+	}
+	public BigDecimal getCost()
+	{
+		return cost;
+	}
+	public void setCost(BigDecimal cost)
+	{
+		this.cost = cost;
+	}
+	public String getDummyCode()
+	{
+		return dummyCode;
+	}
+	public void setDummyCode(String dummyCode)
+	{
+		this.dummyCode = dummyCode;
 	}
 }

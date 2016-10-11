@@ -1,5 +1,5 @@
 angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
-        .controller('addProductController', function ($scope, $timeout, addProductsService, getSuppliersInitialsService, smoothScroll) {
+        .controller('addProductController', function ($rootScope, $scope, $timeout, addProductsService, getSuppliersInitialsService, smoothScroll) {
             $scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             
@@ -7,20 +7,23 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
-            		"price":"",
             		"weight":"",
             		"description":"",
             		"moq":"",
             		"defaultMargin":"",
+            		"defaultMarginPercentage":"",
             		"supplierProductInfoList": [{
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}, {
             			"supplierInitials": "",
-            			"supplierProductCode": ""
+            			"supplierProductCode": "",
+            			"supplierPrice": ""
             		}],
             		"isValid":"false"
             };
@@ -32,6 +35,17 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 	$scope.allSupplierInitials = data.map(function (initial) { return { abbrev: initial }; });
                 });
     	    });
+    	    
+    	    /* Function to update Calculate Product Margin */
+    	    $scope.calculateProductMargin = function(){
+    	    	$scope.product.defaultMargin = parseFloat($scope.product.defaultMarginPercentage);
+            	if($scope.product.defaultMargin >= 0){
+            		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(6);
+        		}
+            	else{
+            		$scope.product.defaultMargin = (1 - (Math.abs($scope.product.defaultMargin)/100)).toFixed(6);            		
+            	}
+    	    };
 
             $scope.submitForm = function (addProduct) {
                 if (addProduct.$valid) {
@@ -60,20 +74,22 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 		"productCode":"",
                 		"cartoonQuantity":"",
                 		"cbm":"",
-                		"price":"",
                 		"weight":"",
                 		"description":"",
                 		"moq":"",
                 		"defaultMargin":"",
                 		"supplierProductInfoList": [{
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}, {
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}, {
                 			"supplierInitials": "",
-                			"supplierProductCode": ""
+                			"supplierProductCode": "",
+                			"supplierPrice": ""
                 		}],
                 		"isValid":"false"
                 };
@@ -82,17 +98,19 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 $scope.addProduct.productCode.$touched = false;
                 $scope.addProduct.cartoonQuantity.$touched = false;
                 $scope.addProduct.cbm.$touched = false;
-                $scope.addProduct.price.$touched = false;
                 $scope.addProduct.weight.$touched = false;
                 $scope.addProduct.description.$touched = false;
                 $scope.addProduct.moq.$touched = false;
-                $scope.addProduct.defaultMargin.$touched = false;
+                $scope.addProduct.defaultMarginPercentage.$touched = false;
                 $scope.addProduct.supplierInitials1.$touched = false;
                 $scope.addProduct.supplierProductCode1.$touched = false;
+                $scope.addProduct.supplierPrice1.$touched = false;
                 $scope.addProduct.supplierInitials2.$touched = false;
                 $scope.addProduct.supplierProductCode2.$touched = false;
+                $scope.addProduct.supplierPrice2.$touched = false;
                 $scope.addProduct.supplierInitials3.$touched = false;
                 $scope.addProduct.supplierProductCode3.$touched = false;
+                $scope.addProduct.supplierPrice3.$touched = false;
                 $scope.addProduct.isValid.$touched = false;
                 $scope.showSuccessBox = false;
                 $scope.showErrorBox = false;

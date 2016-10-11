@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class stores the default configurations that the entire application will need.
@@ -25,7 +26,9 @@ public class Configurations extends EntityBase
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_CONFIG_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_CONFIG_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_CONFIG_ID")
 	private Long id;
 	
 	@Column(name="CBM_RATE")

@@ -1,5 +1,7 @@
 package com.dps.domain.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class stores the information of the product and supplier mappings.
@@ -26,7 +29,9 @@ public class SupplierProductInfo extends EntityBase
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_PROD_SUPP_INFO_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_PROD_SUPP_INFO_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_PROD_SUPP_INFO_ID")
 	private Long id;
 	
 	@ManyToOne
@@ -40,6 +45,10 @@ public class SupplierProductInfo extends EntityBase
 	@Basic
 	@Column(name="SUPP_PROD_NAME")
 	private String supplierProductName;
+	
+	@Basic
+	@Column(name="SUPP_PROD_PRICE")
+	private BigDecimal supplierPrice;
 	
 	public Product getProduct()
 	{
@@ -74,6 +83,16 @@ public class SupplierProductInfo extends EntityBase
 	public Long getId()
 	{
 		return id;
+	}
+
+	public BigDecimal getSupplierPrice()
+	{
+		return supplierPrice;
+	}
+
+	public void setSupplierPrice(BigDecimal supplierPrice)
+	{
+		this.supplierPrice = supplierPrice;
 	}
 
 	@Override

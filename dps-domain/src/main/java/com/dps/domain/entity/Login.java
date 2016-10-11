@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class holds the login information.
@@ -23,7 +24,9 @@ public class Login  extends EntityBase
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_LOGIN_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_LOGIN_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_LOGIN_ID")
 	private Long id;
 	
 	@Basic

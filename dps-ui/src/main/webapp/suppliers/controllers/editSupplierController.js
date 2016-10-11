@@ -201,15 +201,16 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
     	        	}, 500);
     	        });
             };
-
-            $scope.reset = function () {
-                $scope.supplier = {};
-                $scope.editSupplier.$setPristine();
-                $scope.editSupplier.name.$touched = false;
-                $scope.editSupplier.initials.$touched = false;
-                $scope.editSupplier.phoneNumber.$touched = false;
-                $scope.editSupplier.emailId.$touched = false;
-                $scope.showSuccessBox = false;
-                $scope.showErrorBox = false;
+            
+            $scope.cancel = function () {
+            	$scope.editSupplierForm = false;
+            	$scope.selectAll = false;
+            	angular.forEach($scope.suppliers, function (supplier) {
+            		supplier.isChecked = $scope.selectAll;
+                    $scope.selectedRows = [];
+                });
+            	$scope.editDisabled = true;
+                $scope.deleteDisabled = true;
+            	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
             };
         });

@@ -76,13 +76,23 @@ public class CustomerProductPriceController
 		List<CustomerProductPricesDTO> custPrices = new ArrayList<>();
 		List<Product> prodList = new ArrayList<>();
 		Map<Long, BigDecimal> custProdPrefs = new HashMap<>();
+		Map<Long, BigDecimal> custProdPrefsPect = new HashMap<>();
 		Customer cust = null;
+		List<CustomerProductPreference> custProdPreferences = null;
+		Configurations config = null;
 		try
 		{
 			List<Customer> custList = customerService.findByShipmarkAndName(shipmark, null);
 			cust = custList.get(0);
+			config = configService.findAll().get(0);
 			prodList = productService.findAll();
-			custProdPrefs = custProdPrefService.findPreferencesForCustomer(cust.getId());
+			custProdPreferences = custProdPrefService.findAllPreferencesForCustomer(cust.getId());
+			
+			for(CustomerProductPreference pref : custProdPreferences)
+			{
+				custProdPrefs.put(pref.getProduct().getId(), pref.getDiscount());
+				custProdPrefsPect.put(pref.getProduct().getId(), pref.getDiscountPrcentage());
+			}
 		}
 		catch(Exception e)
 		{
@@ -94,27 +104,52 @@ public class CustomerProductPriceController
 			CustomerProductPricesDTO custProdPriceDto = new CustomerProductPricesDTO();
 			custProdPriceDto.setProductCode(prod.getProductCode());
 			custProdPriceDto.setCustomerProductMargin(custProdPrefs.get(prod.getId()) != null ? custProdPrefs.get(prod.getId()) : Constants.BIG_DECIMAL_ONE);
+			custProdPriceDto.setCustomerProductMarginPercentage(custProdPrefsPect.get(prod.getId()) != null ? custProdPrefsPect.get(prod.getId()) : Constants.BIG_DECIMAL_ZERO);
 			custProdPriceDto.setProductMargin(prod.getDefaultMargin());
-			custProdPriceDto.setProductPrice(prod.getPrice());
+			custProdPriceDto.setProductMarginPercentage(prod.getDiscountPrcentage());
+			custProdPriceDto.setProductPrice(prod.getSuppProdInfo().get(0).getSupplierPrice());
 			custProdPriceDto.setProductDescription(prod.getDescription());
 			custProdPriceDto.setCartoonQuantity(prod.getCartoonQuantity());
 			custProdPriceDto.setGrossWeight(prod.getWeight());
 			custProdPriceDto.setCbm(prod.getCbm());
 			
 			StringBuffer sb = new StringBuffer();
+			StringBuffer sb1 = new StringBuffer();
 			for(SupplierProductInfo suppProdInfo : prod.getSuppProdInfo())
 			{
 				sb.append(suppProdInfo.getSupplier().getInitials());
 				sb.append("; ");
+				
+				sb1.append(suppProdInfo.getSupplierProductName());
+				sb1.append("; ");
 			}
 			
 			custProdPriceDto.setSupplierInitials(sb.toString());
+			custProdPriceDto.setSupplierProductCode(sb1.toString());
 			
 			BigDecimal cost = Constants.BIG_DECIMAL_ONE;
-			cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
+			
+			cost = cost.multiply(config.getExchangeRate());
+			cost = cost.multiply(custProdPriceDto.getProductPrice());
+			
+			BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+			cost1 = cost1.multiply(prod.getCbm());
+			cost1 = cost1.multiply(config.getPricePerCbm());
+			cost1 = cost1.divide(new BigDecimal(prod.getCartoonQuantity()), RoundingMode.HALF_UP);
+			
+			BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+			cost2 = cost2.multiply(prod.getWeight());
+			cost2 = cost2.multiply(config.getPricePerWeight());
+			cost2 = cost2.divide(new BigDecimal(prod.getCartoonQuantity()), RoundingMode.HALF_UP);
+			
+			cost = cost.add(cost1);
+			cost = cost.add(cost2);
+			
+			custProdPriceDto.setOriginalCost(cost.setScale(3, RoundingMode.HALF_UP));
+			
+			//cost = cost.multiply(custProdPriceDto.getCustomerProductMargin());
 			cost = cost.multiply(cust.getAdditionalMargin());
 			cost = cost.multiply(custProdPriceDto.getProductMargin());
-			cost = cost.multiply(prod.getPrice());
 			cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 			custProdPriceDto.setCost(cost);
 			
@@ -123,6 +158,7 @@ public class CustomerProductPriceController
 		
 		CustomerProductPricesWrapperDTO custProdPriceWrapper = new CustomerProductPricesWrapperDTO();
 		custProdPriceWrapper.setAdditionalCustomerMargin(cust.getAdditionalMargin());
+		custProdPriceWrapper.setAdditionalCustomerMarginPercentage(cust.getDiscountPrcentage());
 		custProdPriceWrapper.setShipmark(shipmark);
 		custProdPriceWrapper.setCustomerProductPrices(custPrices);
 		
@@ -159,7 +195,8 @@ public class CustomerProductPriceController
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
-				if(!Constants.BIG_DECIMAL_ONE.equals(custProdPrice.getCustomerProductMargin()))
+				System.out.println(custProdPrice.getCustomerProductMarginPercentage());
+				if(!(custProdPrice.getCustomerProductMarginPercentage().doubleValue() == 0d))
 				{
 					BigDecimal existingDiscount = Constants.BIG_DECIMAL_ONE; 
 					CustomerProductPreference existingPreference = custProdPrefObj.get(custProdPrice.getProductCode());
@@ -180,6 +217,7 @@ public class CustomerProductPriceController
 							pref.setProduct(product);
 						}
 						pref.setDiscount(custProdPrice.getCustomerProductMargin());
+						pref.setDiscountPrcentage(custProdPrice.getCustomerProductMarginPercentage());
 						
 						customerUpdatedPreferences.add(pref);
 					}
@@ -203,6 +241,40 @@ public class CustomerProductPriceController
 		}
 	}
 	
+	@GET
+	@Path("/copy/{cust1}/{cust2}")
+	public void copyDiscountingData(@PathParam("cust1") String cust1, @PathParam("cust2") String cust2)
+	{
+		Customer srcCust = customerService.findByShipmarkAndName(cust1, null).get(0);
+		Customer destCust = customerService.findByShipmarkAndName(cust2, null).get(0);
+		
+		List<CustomerProductPreference> srcCustPrefs = custProdPrefService.findAllPreferencesForCustomer(srcCust.getId());
+		List<CustomerProductPreference> destCustPrefsExisting = custProdPrefService.findAllPreferencesForCustomer(destCust.getId());
+		
+		//Delete all preferences for destination customer
+		if(destCustPrefsExisting!= null && destCustPrefsExisting.size() > 0)
+		{
+			for(CustomerProductPreference pref : destCustPrefsExisting)
+			{
+				custProdPrefService.remove(new JpaEntityId(pref.getId()));
+			}
+		}
+		
+		List<CustomerProductPreference> destCustPrefs = new ArrayList<>();
+		
+		for(CustomerProductPreference srcPref : srcCustPrefs)
+		{
+			CustomerProductPreference destPref = new CustomerProductPreference();
+			destPref.setCustomer(destCust);
+			destPref.setDiscount(srcPref.getDiscount());
+			destPref.setDiscountPrcentage(srcPref.getDiscountPrcentage());
+			destPref.setProduct(srcPref.getProduct());
+			destCustPrefs.add(destPref);
+		}
+		
+		custProdPrefService.persistAll(destCustPrefs);
+	}
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/export")
@@ -221,11 +293,24 @@ public class CustomerProductPriceController
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String dateStr = df.format(date);
 			
-			String reportPath = config.getBasePath() + "customer" + File.separator;
-			String imagePath = config.getBasePath() + "images"  + File.separator;
+			String basePath = config.getBasePath();
+			if(!basePath.endsWith(File.separator))
+			{
+				basePath = basePath + File.separator;
+			}
+			
+			String reportPath = basePath + "customer";
+			
+			File dir = new File(reportPath);
+			if(!dir.exists())
+			{
+				dir.mkdir();
+			}
+			
+			String imagePath = basePath + "images"  + File.separator;
 			
 			Document document = new Document();
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + cust.getShipmark() + "_" +dateStr+".pdf"));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + File.separator + cust.getShipmark() + "_" +dateStr+".pdf"));
 			document.open();
 			
 			PdfPTable table = new PdfPTable(5); 
@@ -240,25 +325,36 @@ public class CustomerProductPriceController
 			{
 				if(custProdPrice.isToExport())
 				{
+					Product product = productService.findByCode(custProdPrice.getProductCode()).get(0);
+					
 					PdfPCell cell = createNewCell();
-					cell.addElement(new Paragraph("    "+custProdPrice.getProductPrice().setScale(2, RoundingMode.HALF_UP).toString()));
+					String price = findCost(custProdPrice, product, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString();
+					cell.addElement(new Paragraph(product.getProductCode() + ":" + product.getCartoonQuantity() + " PC\n" +price + "/-"));
 					
 					Image image = null;
 					try
 					{
 						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpg");
+						image.scaleToFit(75f, 75f);
+						image.setBorderWidth(2);
+						image.setBorder(Rectangle.BOX);
+						cell.addElement(image);
 					}
 					catch(Exception e)
 					{
-						image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+						try
+						{
+							image = Image.getInstance(imagePath + custProdPrice.getProductCode() + ".jpeg");
+							image.scaleToFit(75f, 75f);
+							image.setBorderWidth(2);
+							image.setBorder(Rectangle.BOX);
+							cell.addElement(image);
+						}
+						catch(Exception ex)
+						{
+							cell.addElement(new Paragraph("\nImage not available."));
+						}
 					}
-					
-					//image.scaleAbsoluteHeight(75f);
-					//image.scaleAbsoluteWidth(75f);
-					image.scaleToFit(75f, 75f);
-					image.setBorderWidth(2);
-					image.setBorder(Rectangle.BOX);
-					cell.addElement(image);
 					
 					table.addCell(cell);
 				}
@@ -286,5 +382,33 @@ public class CustomerProductPriceController
 		cell.setPadding(10f);
 		
 		return cell;
+	}
+	
+	private BigDecimal findCost(CustomerProductPricesDTO price, Product product, Configurations config, BigDecimal custMargin)
+	{
+		
+		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
+		
+		cost = cost.multiply(config.getExchangeRate());
+		cost = cost.multiply(product.getSuppProdInfo().get(0).getSupplierPrice());
+		
+		BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
+		cost1 = cost1.multiply(product.getCbm());
+		cost1 = cost1.multiply(config.getPricePerCbm());
+		cost1 = cost1.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
+		cost2 = cost2.multiply(product.getWeight());
+		cost2 = cost2.multiply(config.getPricePerWeight());
+		cost2 = cost2.divide(new BigDecimal(price.getCartoonQuantity()), RoundingMode.HALF_UP);
+		
+		cost = cost.add(cost1);
+		cost = cost.add(cost2);
+		
+		cost = cost.multiply(product.getDefaultMargin());
+		cost = cost.multiply(price.getCustomerProductMargin());
+		cost = cost.multiply(custMargin);
+		
+		return cost;
 	}
 }

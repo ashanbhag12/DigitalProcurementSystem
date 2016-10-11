@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import com.dps.commons.domain.Constants;
 
@@ -27,10 +28,11 @@ import com.dps.commons.domain.Constants;
 @Entity
 @Table(name = "DPS_CUST")
 @NamedQueries({
-	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name"),
-	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark"),
-	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C"),
-	@NamedQuery(name=Customer.GET_CUSTOMER_COUNT, query="SELECT Count(c) from Customer c")
+	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_NAME, query="SELECT C.id FROM Customer C where C.name like :name and C.isActive = 1"),
+	@NamedQuery(name=Customer.FIND_CUSTOMER_BY_SHIPMARK, query = "SELECT C.id FROM Customer C where C.shipmark = :shipmark and C.isActive = 1"),
+	@NamedQuery(name=Customer.GET_ALL_CUSTOMER_SHIPMARK, query="SELECT C.shipmark from Customer C where C.isActive = 1"),
+	@NamedQuery(name=Customer.GET_CUSTOMER_COUNT, query="SELECT Count(c) from Customer c where c.isActive = 1"),
+	@NamedQuery(name=Customer.GET_ALL_CUSTOMERS, query="SELECT C.id from Customer C where C.isActive = 1")
 })
 public class Customer extends EntityBase
 {
@@ -39,9 +41,12 @@ public class Customer extends EntityBase
 	public static final String FIND_CUSTOMER_BY_SHIPMARK = "Customer.FindCustomerByShipmark";
 	public static final String GET_ALL_CUSTOMER_SHIPMARK = "Customer.GetAllCustomerShipmark";
 	public static final String GET_CUSTOMER_COUNT = "Customer.getCustomerCount";
+	public static final String GET_ALL_CUSTOMERS = "Customer.getAllCustomers";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_CUST_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_CUST_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_CUST_ID")
 	private Long id;
 
 	@Basic
@@ -49,6 +54,10 @@ public class Customer extends EntityBase
 
 	@Basic
 	private String shipmark;
+	
+	@Basic
+	@Column(name="ORIG_SHIPMARK")
+	private String originalShipmark;
 	
 	@Basic
 	@Column(name="ADDITIONAL_MARGIN")
@@ -59,6 +68,13 @@ public class Customer extends EntityBase
 	
 	@Embedded
 	private ContactDetails contactDetails;
+	
+	@Basic
+	private Boolean isActive;
+	
+	@Basic
+	@Column(name="DISC_PECT")
+	private BigDecimal discountPrcentage;
 
 	public Long getId()
 	{
@@ -113,6 +129,37 @@ public class Customer extends EntityBase
 	public void setAdditionalMargin(BigDecimal additionalMargin)
 	{
 		this.additionalMargin = additionalMargin;
+	}
+
+	public Boolean isActive() 
+	{
+		return isActive;
+	}
+
+	public void setActive(Boolean isActive) 
+	{
+		this.isActive = isActive;
+	}
+
+
+	public BigDecimal getDiscountPrcentage()
+	{
+		return discountPrcentage;
+	}
+
+	public void setDiscountPrcentage(BigDecimal discountPrcentage)
+	{
+		this.discountPrcentage = discountPrcentage;
+	}
+
+	public String getOriginalShipmark()
+	{
+		return originalShipmark;
+	}
+
+	public void setOriginalShipmark(String originalShipmark)
+	{
+		this.originalShipmark = originalShipmark;
 	}
 
 	@Override

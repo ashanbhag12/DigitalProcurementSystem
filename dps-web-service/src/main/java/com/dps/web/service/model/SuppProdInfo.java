@@ -14,6 +14,7 @@ public class SuppProdInfo
 	private String supplierInitials;
 	private String productCode;
 	private String supplierProductCode;
+	private String supplierPrice;
 	
 	public String getSupplierInitials()
 	{
@@ -38,5 +39,13 @@ public class SuppProdInfo
 	public void setSupplierProductCode(String supplierProductCode)
 	{
 		this.supplierProductCode = supplierProductCode;
+	}
+	public String getSupplierPrice()
+	{
+		return supplierPrice;
+	}
+	public void setSupplierPrice(String supplierPrice)
+	{
+		this.supplierPrice = supplierPrice;
 	}
 }

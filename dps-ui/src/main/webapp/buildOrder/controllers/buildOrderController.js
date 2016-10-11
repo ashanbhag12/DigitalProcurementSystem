@@ -26,6 +26,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.allProducts; /* Get all the products for auto complete */ 
             $scope.orderSummary = []; /* Object containing all the products added to cart  */
             $scope.editOrderSummmaryRow = {}; /* Object for inline editing in Order Summary table */
+            $scope.grandTotal = 0; /* Variable for Grand Total */
+            $scope.totalCartoons = 0; /* Variable total cartoons (all products combined) to be ordered*/
             $scope.productDetails = {/* Object to show product details based on auto complete result */
                     "id": "",
                 	"productCode": "",
@@ -54,7 +56,16 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             $scope.showSearchSection = function () {
                 if ($scope.customerShipmark !== undefined) {
                     $scope.searchProductSection = true;
+                    $scope.orderSummarySection = false;
                 }
+            };
+            
+            $scope.supplierProductPrice = function () {
+            	angular.forEach($scope.productDetails.supplierProductInfoList, function (supplierProductInfo) {
+            		if($scope.productDetails.supplierInitials === supplierProductInfo.supplierInitials){
+            			$scope.productDetails.price = supplierProductInfo.supplierPrice;
+            		}
+            	});
             };
 
             /* Set variable for inline editing in order summary table */
@@ -75,7 +86,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             /* Create filter function for a query string */
             function createFilterFor(query) {
                 return function filterFn(product) {
-                    return (product.productCode.toLowerCase().indexOf(query.toLowerCase()) === 0);
+                    return (product.productCode.toLowerCase().indexOf(query.toLowerCase()) !== -1);
                 };
             }
 
@@ -87,7 +98,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     	$scope.productDetails.productCode = $scope.searchedProduct.productCode;
                     	$scope.productDetails.supplierProductInfoList = $scope.searchedProduct.supplierProductInfoList
                     	$scope.productDetails.supplierInitials =  $scope.searchedProduct.supplierProductInfoList[0].supplierInitials;
-                    	$scope.productDetails.price = $scope.searchedProduct.price;
+                    	$scope.productDetails.price = $scope.searchedProduct.supplierProductInfoList[0].supplierPrice;
                     	$scope.productDetails.moq = $scope.searchedProduct.moq;
                     	$scope.productDetails.cartoonQuantity = $scope.searchedProduct.cartoonQuantity;
                         $scope.productDetailsSection = true;
@@ -104,7 +115,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                     }, 500);
                 }
             };
-
+            
             $scope.addProduct = function () { /* Function to add Product in the table */
             	angular.element(document.querySelector('.loader')).addClass('show');
             	$scope.addedProductsSection = true;
@@ -142,6 +153,19 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         $scope.showErrorBox = false;
                     }, 100);
             	}, 500);                
+            };
+            
+            /* Trigger addProduct() function on "enter" key press in remark field */
+            $scope.triggerAddProduct = function(event){            	
+            	if(event.which === 13 && $scope.productDetails.productQuantity > 0) {
+            		event.preventDefault();
+            		if($scope.showAddBtn){
+            			$scope.addProduct(); /* Add function */
+            		}
+            		else{
+            			$scope.updateAddedProductsListRow(); /* Update function */
+            		}
+                }
             };
             
             /* Function to select/unselect all the rows in products added table */
@@ -242,7 +266,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 });
                 $scope.productDetails.productCode = "";
                 $scope.productDetails.supplierCode = "";
-                $scope.productDetails.pricePerPiece = "";
+                $scope.productDetails.price = "";
                 $scope.productDetails.productMOQ = "";
                 $scope.productDetails.remarks = "";
                 $scope.productDetails.productQuantity = "";
@@ -283,12 +307,20 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 $scope.orderSummary = buildOrderCalculateService.save(cartJson, function(){/* Success Callback */                	
                 	$timeout(function(){
                 		$scope.orderSummarySection = true;
+                		$scope.grandTotal = 0;
+                		$scope.totalCartoons = 0;
+                		angular.forEach($scope.orderSummary.orderItems, function(product){
+                        	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
+                        	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
+                        });
+                		$scope.grandTotal = ($scope.grandTotal).toFixed(6);
                         smoothScroll(document.getElementById('orderSummarySection')); /* Scroll to the order summary section */
                         $scope.successMessage = "Added products list saved successfully";
                         $scope.showErrorBox = false;
                         $scope.showSuccessBox = true;
-                        angular.element(document.querySelector('.loader')).removeClass('show');  
-                        $scope.addedProductsSection = false;
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                        $scope.searchProductSection = false;
+                        $scope.addedProductsSection = false;                        
                 	}, 500)
                 }, function(error){/* Error Callback */
                 	$timeout(function(){
@@ -301,16 +333,8 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 });
             };
             
-            /* Function to calculate Grand Total of Order Summary */
-            $scope.calculateGrandTotal = function(){
-                var total = 0;
-                angular.forEach($scope.orderSummary.orderItems, function(product){
-                  total += product.unitCost * product.quantity;                  
-                });
-                return total;
-            };
-            
             $scope.editOrder = function(){
+            	$scope.searchProductSection = true;
             	$scope.addedProductsSection = true;
             	$scope.orderSummarySection = false;
             	$scope.showSuccessBox = false;

@@ -3,6 +3,7 @@ package com.dps.web.service.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.constants.CustomerOrderDetailStatus;
 import com.dps.domain.constants.CustomerOrderStatus;
@@ -152,7 +154,19 @@ public class PlaceOrderController
 				order.setToOrder(quantity >= product.getMoq());
 				order.setIdList(ids.toString());
 				order.setProductDescription(product.getDescription());
-				order.setPricePerItem(product.getPrice());
+				
+				BigDecimal price = Constants.BIG_DECIMAL_ONE;
+				
+				for(SupplierProductInfo spi : product.getSuppProdInfo())
+				{
+					if(StringUtils.equals(spi.getSupplier().getInitials(), suppInitials))
+					{
+						price = spi.getSupplierPrice();
+						break;
+					}
+				}
+				
+				order.setPricePerItem(price);
 				
 				for(SupplierProductInfo suppProdInfo : product.getSuppProdInfo())
 				{
@@ -277,10 +291,10 @@ public class PlaceOrderController
 			customerOrderService.mergeAll(customerOrders);
 		}
 		
+		createExcel(ordersPerSupplier, config);
+		
 		supplierOrderService.persistAll(supplierOrderList);
 		custOrderDetService.mergeAll(custOrderDetList);
-		
-		createExcel(ordersPerSupplier, config);
 	}
 
 	private HSSFWorkbook createExcel(Map<String, List<PlaceOrderDTO>> ordersPerSupplier, Configurations config) throws IOException
@@ -302,11 +316,11 @@ public class PlaceOrderController
 			Row row = sheet.createRow(0);
 			
 			Cell cell = row.createCell(0);
-			cell.setCellValue("Product Code");
+			cell.setCellValue("Supplier Product Code");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(1);
-			cell.setCellValue("Supplier Product Code");
+			cell.setCellValue("Product Code");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(2);
@@ -326,7 +340,7 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(6);
-			cell.setCellValue("Customer Information");
+			cell.setCellValue("Shipmark");
 			cell.setCellStyle(headerCellStyle);
 			
 			int rowNumber = 1;
@@ -336,11 +350,11 @@ public class PlaceOrderController
 				row = sheet.createRow(rowNumber++);
 				
 				cell = row.createCell(0);
-				cell.setCellValue(order.getProductCode());
+				cell.setCellValue(order.getSupplierProductCode());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(1);
-				cell.setCellValue(order.getSupplierProductCode());
+				cell.setCellValue(order.getProductCode());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(2);
@@ -364,13 +378,26 @@ public class PlaceOrderController
 				cell.setCellStyle(cellStyle);
 			}
 			
-			for(int i = 0; i < 6; i++)
+			for(int i = 0; i < 7; i++)
 			{
 				sheet.autoSizeColumn(i);
 			}
 			
-			String filePath = config.getBasePath() + "supplier" + File.separator;
-			filePath = filePath + suppInitials + "_" + dateStr  + ".xls";
+			String basePath = config.getBasePath();
+			if(!basePath.endsWith(File.separator))
+			{
+				basePath = basePath + File.separator;
+			}
+			
+			String filePath = basePath + "supplier";
+			
+			File dir = new File(filePath);
+			if(!dir.exists())
+			{
+				dir.mkdir();
+			}
+			
+			filePath = filePath + File.separator + suppInitials + "_" + dateStr  + ".xls";
 			File file = new File(filePath);
 			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);

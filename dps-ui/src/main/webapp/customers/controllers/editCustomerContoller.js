@@ -17,18 +17,14 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    $scope.searchCustomerShipmark = ''; /* Initials for customer search */
 	    $scope.selectAll = false; /* Set toggle all to false */
 	    $scope.maskColumns = true; /* Hide the columns */
-	    
-	    /* Function will be executed after the page is loaded */
-	    $scope.$on('$viewContentLoaded', function () {});
-	
-	    /* Customer object to be edited */
-	    /* changed name from editCustomer with customer bcos it was conflicting with form name*/
-	    $scope.customer = {
+	    $scope.customer = {/* Customer object to be edited */
 	    	name: "",
 	    	phoneNumber: "",
 	    	emailId: "",
 	    	shipmark: "",
+	    	originalShipmark:"",
 	    	additionalMargin: "",
+	    	additionalMarginPercentage: "",
 	    	flatNo: "",
 		    building: "",
 		    street: "",
@@ -37,6 +33,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    state: "",
 		    zip: ""
 	    };
+	    
+	    /* Function will be executed after the page is loaded */
+	    $scope.$on('$viewContentLoaded', function () {});
 	
 	    /* Function to select/unselect all the Customers */
 	    $scope.toggleAll = function () {
@@ -89,6 +88,17 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	            $scope.editDisabled = false;
 	        }
 	    };
+	    
+	    /* Function to update Additional Customer Margin */
+	    $scope.updateCustomerMargin = function(){
+	    	$scope.customer.additionalMargin = parseFloat($scope.customer.additionalMarginPercentage);
+        	if($scope.customer.additionalMargin >= 0){
+        		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(6);
+    		}
+        	else{
+        		$scope.customer.additionalMargin = (1 - (Math.abs($scope.customer.additionalMargin)/100)).toFixed(6);       		
+        	}
+	    };
 	
 	    /* Function to edit the selected Customer */
 	    $scope.edit = function () {
@@ -100,7 +110,8 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                $scope.customer.phoneNumber = customer.phoneNumber;
 	                $scope.customer.emailId = customer.emailId;
 	                $scope.customer.shipmark = customer.shipmark;
-	                $scope.customer.additionalMargin = customer.additionalMargin;
+	                $scope.customer.originalShipmark = customer.originalShipmark;
+	                $scope.customer.additionalMarginPercentage = customer.additionalMarginPercentage;
 	                $scope.customer.flatNo = customer.flatNo;
 	                $scope.customer.building = customer.building;
 	                $scope.customer.street = customer.street;
@@ -157,11 +168,14 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        angular.forEach($scope.customers, function (customer) {
 	        	if(keepGoing) {
 	        		if (customer.isChecked) {
+	        			$scope.updateCustomerMargin();
 	        			angular.element(document.querySelector('.loader')).addClass('show');
 	                    customer.name = $scope.customer.name;
 	                    customer.phoneNumber = $scope.customer.phoneNumber;
 	                    customer.emailId = $scope.customer.emailId;
 	                    customer.shipmark = $scope.customer.shipmark;
+	                    customer.originalShipmark = $scope.customer.originalShipmark;
+	                    customer.additionalMarginPercentage = $scope.customer.additionalMarginPercentage;
 	                    customer.additionalMargin = $scope.customer.additionalMargin;
 	                    customer.flatNo = $scope.customer.flatNo;
 	                    customer.building = $scope.customer.building;
@@ -174,7 +188,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                    keepGoing = false;
 	                    $scope.selectedRows = [];
 	                    $scope.updateCustomerJson = angular.toJson(customer);	
-	                }                    
+	                }  
 	        	}
 	        });
 	        
@@ -214,7 +228,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    	angular.element(document.querySelector('.loader')).addClass('show'); 
 	        /* Service Call to retrieve searched customer */
 	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark}, function(){/* Success Callback */
-	        	$timeout(function(){
+	        	$timeout(function(){	        		
 	        		$scope.searchedResults = true;
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        	}, 500);
@@ -226,22 +240,15 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        });
 	    };
 	    
-	    $scope.reset = function () {
-	        $scope.customer = {};
-	        $scope.editCustomer.$setPristine();
-	        $scope.editCustomer.name.$touched = false;
-	        $scope.editCustomer.phoneNumber.$touched = false;
-	        $scope.editCustomer.emailId.$touched = false;
-	        $scope.editCustomer.shipmark.$touched = false;
-	        $scope.editCustomer.additionalMargin.$touched = false;
-	        $scope.editCustomer.flatNo.$touched = false;
-	        $scope.editCustomer.building.$touched = false;
-	        $scope.editCustomer.street.$touched = false;
-	        $scope.editCustomer.locality.$touched = false;
-	        $scope.editCustomer.city.$touched = false;
-	        $scope.editCustomer.state.$touched = false;
-	        $scope.editCustomer.zip.$touched = false;	        
-	        $scope.showSuccessBox = false;
-	        $scope.showErrorBox = false;
-	    };
+	    $scope.cancel = function () {
+        	$scope.editCustomerForm = false;
+        	$scope.selectAll = false;
+        	angular.forEach($scope.customers, function (customer) {
+                customer.isChecked = $scope.selectAll;
+                $scope.selectedRows = [];
+            });
+        	$scope.editDisabled = true;
+            $scope.deleteDisabled = true;
+        	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
+        };
 });

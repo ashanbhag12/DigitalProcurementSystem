@@ -77,38 +77,38 @@
             <div layout="row">
                 <md-input-container class="md-block" flex="50">
                     <label>*Name</label>
-                    <input type='text' minlength="5" maxlength="30" required name="name" ng-model="supplier.name" />
+                    <input type='text' minlength="3" maxlength="30" required name="name" ng-model="supplier.name" />
                     <div ng-messages="editSupplier.name.$error" ng-show="editSupplier.name.$touched">
-                        <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 5 to 30 characters long.</div>
+                        <div ng-message-exp="['required', 'minlength', 'maxlength']">This is required. Should be between 3 to 30 characters long.</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
                     <label>*Initials</label>
                     <input maxlength="8" required name="initials" ng-model="supplier.initials" type='text' />
                     <div ng-messages="editSupplier.initials.$error" ng-show="editSupplier.initials.$touched">
-                        <div ng-message-exp="['required', 'maxlength']">This is required. Should be at max 8 characters long.</div>
+                        <div ng-message-exp="['required', 'maxlength']">This is required. Should be max 8 characters long.</div>
                     </div>
                 </md-input-container>
             </div>
             <div layout="row">  
                 <md-input-container class="md-block" flex="50">
-                    <label>*Contact Number</label>
-                    <input maxlength="14" required name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{14}$/"/>
+                    <label>Contact Number</label>
+                    <input maxlength="15" name="phoneNumber" ng-model="supplier.phoneNumber" type='tel' ng-pattern="/^\d{15}$/"/>
                     <div ng-messages="editSupplier.phoneNumber.$error" ng-show="editSupplier.phoneNumber.$touched">
-                        <div ng-message-exp="['required', 'maxlength', 'pattern']">This is required. Should be 14 digits long.</div>
+                        <div ng-message-exp="['maxlength', 'pattern']">Should be 15 digits long.</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block" flex="50">
-                    <label>*Email Id</label>
-                    <input type="email" maxlength="100" required name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
+                    <label>Email Id</label>
+                    <input type="email" maxlength="100" name="emailId" ng-model="supplier.emailId" ng-pattern="/^.+@.+\..+$/"/>
                     <div ng-messages="editSupplier.emailId.$error" ng-show="editSupplier.emailId.$touched">
-                        <div ng-message-exp="['required', 'maxlength', 'pattern']">Your email is the required field. Must be less then 100 characters and should be a valid e-mail id.</div>
+                        <div ng-message-exp="['maxlength', 'pattern']">Must be less then 100 characters and should be a valid e-mail id.</div>
                     </div>
                 </md-input-container>
             </div>
             <div>
                 <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="editSupplier.$invalid" ng-click="update()">UPDATE</md-button>
-                <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
+            	<md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancel();">CANCEL</md-button>
             </div>
         </form>
     </div>

@@ -5,7 +5,7 @@
     <div layout="row">
         <md-input-container class="md-block" flex="25">
             <label>Product Code</label>
-            <input type='text' name="searchProductCode" ng-model="searchProductCode" />
+            <input type='text' name="searchProductCode" ng-model="searchProductCode" ng-keypress="triggerSearchProduct($event)" />
         </md-input-container>
         <div flex-offset="5">
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
@@ -14,14 +14,13 @@
     <div class="clearfix searchedResults" ng-show="searchedResults">
         <div class="clearfix searchTable marginB10">            
             <div class="floatR">
-                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
             </div>
         </div>
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
             <div class="floatR tableActions">
-            	<a href="javascript:;" tabindex="-1" class="showColumns" ng-click="maskColumns = false">Show Columns</a>
-                <a href="javascript:;" tabindex="-1" class="maskColumns" ng-click="maskColumns = true">Mask Columns</a>
+            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>
                 <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled || showModal('deleteProductModal')" 
@@ -38,16 +37,17 @@
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
-                    <th ng-hide="maskColumns">Price Per Item</th>
+                    <th>Price Per Item</th>
                     <th>Pkg./Ctn.</th>
                     <th>CBM</th>                    
                     <th>Gross Weight</th>
                     <th>Product Description</th>
                     <th>MOQ</th>
-                    <th ng-hide="maskColumns">PM</th>
-                    <th>Supplier Initials</th>
+                    <th>PM</th>
+                    <th ng-hide="maskColumns">Supplier Initials</th>
                     <th>Supplier Product Code</th>
                     <th>Is Valid</th>
+                    <th ng-hide="maskColumns">A. Cost</th>
                     <th class="alignCenter">
             			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
                          ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
@@ -57,16 +57,17 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
                     <td>{{product.productCode}}</td>
-                    <td ng-hide="maskColumns">{{product.price}}</td>
+                    <td>{{getSupplierPrices(product.supplierProductInfoList)}}</td>
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>                    
                     <td>{{product.weight}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.moq}}</td>
-                    <td ng-hide="maskColumns">{{product.defaultMargin | number:3}}</td>
-                    <td>{{getSupplierInitials(product.supplierProductInfoList)}}</td>
+                    <td>{{product.defaultMarginPercentage | number:3}}</td>
+                    <td ng-hide="maskColumns">{{getSupplierInitials(product.supplierProductInfoList)}}</td>
                     <td>{{getSupplierProductCode(product.supplierProductInfoList)}}</td>
                     <td>{{product.isValid ? 'Yes' : 'No'}}</td>
+                    <td ng-hide="maskColumns">{{product.cost | number:3}}</td>
                     <td class='alignCenter'>
                         <md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle(product)"
                                  aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>
@@ -89,13 +90,6 @@
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
-	                <label>*Price per item</label>
-	                <input required placeholder="0.000" name="price" ng-model="product.price" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
-	                <div ng-messages="editProduct.price.$error" ng-show="editProduct.price.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
-	                </div>
-	            </md-input-container>
-	            <md-input-container class="md-block" flex="25">
 	                <label>*Cartoon quantity</label>
 	                <input min="1" required name="cartoonQuantity" ng-model="product.cartoonQuantity" type='number'/>
 	                <div ng-messages="editProduct.cartoonQuantity.$error" ng-show="editProduct.cartoonQuantity.$touched">
@@ -106,7 +100,7 @@
 	                <label>*CBM</label>
 	                <input required placeholder="0.000" name="cbm" ng-model="product.cbm" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.cbm.$error" ng-show="editProduct.cbm.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -115,7 +109,7 @@
 	                <label>*Weight</label>
 	                <input required placeholder="0.000" name="weight" ng-model="product.weight" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
 	                <div ng-messages="editProduct.weight.$error" ng-show="editProduct.weight.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
@@ -127,16 +121,17 @@
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
 	                <label>*MOQ</label>
-	                <input min="0" max="9" required name="moq" ng-model="product.moq" type='number'/>
+	                <input min="0" max="999" required name="moq" ng-model="product.moq" type='number'/>
 	                <div ng-messages="editProduct.moq.$error" ng-show="editProduct.moq.$touched">
-	                    <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-9.</div>
+	                    <div ng-message-exp="['required', 'min', 'max']">This is required. Should be between 0-999.</div>
 	                </div>
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="25">
 	                <label>*Default margin</label>
-	                <input required placeholder="0.000" name="defaultMargin" ng-model="product.defaultMargin" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
-	                <div ng-messages="editProduct.defaultMargin.$error" ng-show="editProduct.defaultMargin.$touched">
-	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long. (e.g. - xx.xxx)</div>
+	                <input type='number' required placeholder="0.000" name="defaultMarginPercentage" ng-pattern="/^-?[0-9]+(\.[0-9]{1,3})?$/" 
+	                	ng-model="product.defaultMarginPercentage" ng-blur="updateProductMargin()" />
+	                <div ng-messages="editProduct.defaultMarginPercentage.$error" ng-show="editProduct.defaultMarginPercentage.$touched">
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be between -9 & 9 and 3 decimals long.</div>
 	                </div>
 	            </md-input-container>
 	        </div>
@@ -153,8 +148,18 @@
                 	</div>
 	      		</md-input-container>
 	            <md-input-container class="md-block" flex="50">
-	                <label>Supplier product code</label>
-	                <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode"/>
+	                <label>*Supplier product code</label>
+	                <input type='text' name="supplierProductCode1" ng-model="product.supplierProductInfoList[0].supplierProductCode" required />
+	                <div ng-messages="editProduct.supplierProductCode1.$error" ng-show="editProduct.supplierProductCode1.$touched">
+                    	<div ng-message-exp="['required']">This is required.</div>
+                	</div>
+	            </md-input-container>
+	            <md-input-container class="md-block" flex="25">
+	                <label>*Price Per Item</label>
+	                <input required placeholder="0.000" name="supplierPrice1" ng-model="product.supplierProductInfoList[0].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+	                <div ng-messages="editProduct.supplierPrice1.$error" ng-show="editProduct.supplierPrice1.$touched">
+	                    <div ng-message-exp="['required', 'pattern']">This is required. Can be 3 decimals long.</div>
+	                </div>
 	            </md-input-container>
 	        </div>
 	        <div layout="row">
@@ -170,6 +175,13 @@
 	                <label>Supplier product code</label>
 	                <input type='text' name="supplierProductCode2" ng-model="product.supplierProductInfoList[1].supplierProductCode"/>
 	            </md-input-container>
+	            <md-input-container class="md-block" flex="25">
+	                <label>Price Per Item</label>
+	                <input placeholder="0.000" name="supplierPrice2" ng-model="product.supplierProductInfoList[1].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+	                <div ng-messages="editProduct.supplierPrice2.$error" ng-show="editProduct.supplierPrice2.$touched">
+	                    <div ng-message-exp="['pattern']">Can be 3 decimals long.</div>
+	                </div>
+	            </md-input-container>
 	        </div>
 	        <div layout="row">
 				<md-input-container class="md-block" flex="50">
@@ -184,6 +196,13 @@
 	                <label>Supplier product code</label>
 	                <input type='text' name="supplierProductCode3" ng-model="product.supplierProductInfoList[2].supplierProductCode"/>
 	            </md-input-container>
+	            <md-input-container class="md-block" flex="25">
+	                <label>Price Per Item</label>
+	                <input placeholder="0.000" name="supplierPrice3" ng-model="product.supplierProductInfoList[2].supplierPrice" type='text' ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/"/>
+	                <div ng-messages="editProduct.supplierPrice3.$error" ng-show="editProduct.supplierPrice3.$touched">
+	                    <div ng-message-exp="['pattern']">Can be 3 decimals long.</div>
+	                </div>
+	            </md-input-container>
 	        </div>
 			<div layout="row">
 				<md-input-container class="md-block" flex="50">
@@ -196,7 +215,7 @@
 			</div>
 	        <div>
                 <md-button type="submit" class="md-raised md-primary submitBtn" ng-disabled="editProduct.$invalid" ng-click="update()">UPDATE</md-button>
-                <md-button type="reset" class="md-raised md-warn resetBtn" ng-click="reset();">CLEAR</md-button>
+                <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancel();">CANCEL</md-button>
             </div>
         </form>
     </div>

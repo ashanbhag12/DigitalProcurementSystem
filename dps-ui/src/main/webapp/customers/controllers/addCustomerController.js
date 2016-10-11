@@ -1,14 +1,15 @@
 angular.module('addCustomerApp', ['ngMessages'])
-		.controller('addCustomerController', function ($scope, $timeout, addCustomersService) {
+		.controller('addCustomerController', function ($rootScope, $scope, $timeout, addCustomersService) {
 		    $scope.showSuccessBox = false; /* Hide the success box */
-		    $scope.showErrorBox = false; /* Hide the error box */
-		
+		    $scope.showErrorBox = false; /* Hide the error box */		
 		    $scope.customer = {/* Customer Object */
 		        name: "",
 		        phoneNumber: "",
 		        emailId: "",
 		        shipmark: "",
+		        originalShipmark:"",
 		        additionalMargin: "",
+		        additionalMarginPercentage: "",
 		        flatNo: "",
 			    building: "",
 			    street: "",
@@ -16,6 +17,17 @@ angular.module('addCustomerApp', ['ngMessages'])
 			    city: "",
 			    state: "",
 			    zip: ""		        	
+		    };
+		    
+		    /* Function to calculate Additional Customer Margin */
+		    $scope.calculateCustomerMargin = function(){
+		    	$scope.customer.additionalMargin = parseFloat($scope.customer.additionalMarginPercentage);
+            	if($scope.customer.additionalMargin >= 0){
+            		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(6);
+        		}
+            	else{
+            		$scope.customer.additionalMargin = (1 - (Math.abs($scope.customer.additionalMargin)/100)).toFixed(6);            		
+            	}
 		    };
 		
 		    $scope.submitForm = function (addCustomer) {
@@ -28,7 +40,7 @@ angular.module('addCustomerApp', ['ngMessages'])
     					    $scope.showErrorBox = false;
     					    angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
-				    }, function(error){/* Error Callback */				    	
+				    }, function(error){/* Error Callback */		    	
         		    	$timeout(function () {
         		    		$scope.showErrorBox = true; 
     				    	$scope.showSuccessBox = false;
@@ -45,7 +57,8 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        $scope.addCustomer.phoneNumber.$touched = false;		        
 		        $scope.addCustomer.emailId.$touched = false;
 		        $scope.addCustomer.shipmark.$touched = false;
-		        $scope.addCustomer.additionalMargin.$touched = false;	        
+		        $scope.addCustomer.originalShipmark.$touched = false;
+		        $scope.addCustomer.additionalMarginPercentage.$touched = false;	        
 		        $scope.addCustomer.flatNo.$touched = false;
 		        $scope.addCustomer.building.$touched = false;
 		        $scope.addCustomer.street.$touched = false;

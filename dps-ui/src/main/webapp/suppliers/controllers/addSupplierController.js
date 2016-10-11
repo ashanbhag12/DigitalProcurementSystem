@@ -1,5 +1,5 @@
 angular.module('addSupplierApp', ['ngMessages'])
-        .controller('addSupplierController', function ($scope, $timeout, addSuppliersService) {
+        .controller('addSupplierController', function ($rootScope, $scope, $timeout, addSuppliersService) {
             $scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
 

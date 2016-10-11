@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,7 +39,9 @@ public class CustomerOrder extends EntityBase
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_CUST_ORDR_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_CUST_ORDR_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_CUST_ORDR_ID")
 	private Long id;
 	
 	@ManyToOne

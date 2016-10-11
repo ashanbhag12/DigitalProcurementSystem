@@ -1,6 +1,6 @@
 angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('productPreferencesController', function ($scope, $rootScope, $timeout, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF, smoothScroll) {
+        		getProductPreferencesService, modifyProductPreferencesService, exportToPDF, smoothScroll, setOtherCustomerCPM) {
             /* Initialize the page variables */
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
@@ -14,7 +14,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.pdfDisabled = true; /* Disable the PDF button */
-            $scope.products = [];           
+            $scope.products = [];  
+            $scope.customers; /* Object for storing customers list */
+            $scope.otherCustomers = []; /* Object for storing customers list other than the selected customer */
 
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
 
@@ -29,23 +31,39 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                 for (var i = 0; i < $scope.products.length; i++) {
                     $scope.editProductDetailsRow[i] = false;
                 }
-
             });
             
-            /* Function to edit all the customer product margins */
-            $scope.editAll = function () {
-            	for (var i = 0; i < $scope.products.customerProductPrices.length; i++) {
-                    $scope.editProductDetailsRow[i] = true;
-                }
+            $scope.createOtherCustomersList = function(){
+            	$scope.otherCustomers = []; /* Empty the object */
+            	angular.forEach($scope.customers, function (customer) {
+            		if(customer.shipmark !== $scope.customerShipmark){
+            			$scope.otherCustomers.push(customer);
+            		}
+            	});
             };
             
-            /* Function to save all the customer product margins */
-            $scope.saveAll = function () {
-            	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin);
-                    $scope.editProductDetailsRow[index] = false;
-                });
-            };
+            $scope.setOtherCustomerCPM = function(){
+            	if ($scope.customerShipmark !== undefined && $scope.otherCustomerShipmark !== undefined) {
+                	angular.element(document.querySelector('.loader')).addClass('show');
+                	$scope.showSuccessBox = false;
+                	/*Service call for seting CPM for Other customers */
+                    setOtherCustomerCPM.query({cust1:$scope.customerShipmark,cust2:$scope.otherCustomerShipmark}, function(){/* Success callback */
+                    	$timeout(function () {
+                    		$scope.showSuccessBox = true;
+                            $scope.successMessage = "Successfully changed CPM for other customer with shipmark : "+$scope.otherCustomerShipmark;
+        				    $scope.showErrorBox = false;
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    }, function(error){/* Error Callback */
+                    	$timeout(function () {
+                    		$scope.showErrorBox = true;
+	                		$scope.errorMessage = "Failed to change CPM for other customer with shipmark : "+$scopeotherCustomerShipmark;
+	                		$scope.showSuccessBox = false;
+                            angular.element(document.querySelector('.loader')).removeClass('show');
+                        }, 500);
+                    });
+                }
+            }
 
             /* Function to search for Products */
             $scope.getProductDetails = function () {
@@ -57,6 +75,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     	$timeout(function () {
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
+                            angular.forEach($scope.products.customerProductPrices, function (product, index) {
+                        		$scope.updateProductDetails(index, product);
+                        	});
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
@@ -78,17 +99,26 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to save all the customer product margins */
             $scope.saveAll = function () {
             	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
-            		$scope.editProductDetailsRow[index] = false;
+            		$scope.updateProductDetails(index, product);
             	});
             };
             
             $scope.editProductDetails = function (index, product) {
-                $scope.editProductDetailsRow[index] = true;
+                $scope.editProductDetailsRow[index] = true;                
+                $timeout(function () {
+                	angular.element(document.querySelectorAll("input[name=customerProductMarginPercentage]")[index]).focus();
+                }, 100);
             };
 
             $scope.updateProductDetails = function (index, product) {
-                product.cost = (product.productPrice * product.productMargin * $scope.products.additionalCustomerMargin * product.customerProductMargin).toFixed(3);
+            	product.customerProductMargin = parseFloat(product.customerProductMarginPercentage);
+            	if(product.customerProductMargin >= 0){
+            		product.customerProductMargin = (1 / (1 - (Math.abs(product.customerProductMargin)/100))).toFixed(6);
+        		}
+            	else{
+            		product.customerProductMargin = (1 - (Math.abs(product.customerProductMargin)/100)).toFixed(6);            		
+            	}
+            	product.calculatedCost = (product.cost * product.customerProductMargin).toFixed(6);
                 $scope.editProductDetailsRow[index] = false;                
             };
             
@@ -157,7 +187,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
     		    	$scope.errorMessage = "PDF could not be created. Please try again after some time."
     		    	$scope.showSuccessBox = false;
     		    	$timeout(function () {
-    		    		console.log(error);
                         angular.element(document.querySelector('.loader')).removeClass('show');
                         smoothScroll(document.getElementById("editProductPage")); /* Scroll to the form */
                     }, 500);
@@ -168,11 +197,16 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             	angular.element(document.querySelector('.loader')).addClass('show');
                 /* WS call to save the changes and update the table */                              
                 modifyProductPreferencesService.save($scope.products, function(successResult) { /* Success Callback */
-                		$timeout(function(){
+                		$timeout(function(){                			
                 			$scope.showSuccessBox = true; 
                 			$scope.successMessage = "Product margin for Customer updated successfully";
                     		$scope.showErrorBox = false;
-                    		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark});
+                    		$scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, 
+                				function(){/* Success callback */
+	                    			angular.forEach($scope.products.customerProductPrices, function (product, index) {
+	                            		$scope.updateProductDetails(index, product);
+	                            	});
+                    		});
                     		angular.element(document.querySelector('.loader')).removeClass('show');
                 		}, 500);                		
                 	}, function(error){/* Error Callback */

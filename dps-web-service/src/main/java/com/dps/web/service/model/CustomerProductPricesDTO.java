@@ -15,14 +15,19 @@ import java.math.BigDecimal;
 public class CustomerProductPricesDTO
 {
 	private String productCode;
+	private String supplierProductCode;
 	private BigDecimal productPrice; 
 	private BigDecimal productMargin;
+	private BigDecimal productMarginPercentage;
 	private BigDecimal customerProductMargin;
+	private BigDecimal customerProductMarginPercentage;
 	private BigDecimal cost;
 	private String productDescription;
 	private Integer cartoonQuantity;
 	private BigDecimal grossWeight;
 	private BigDecimal cbm;
+	private BigDecimal calculatedCost;
+	private BigDecimal originalCost;
 	private boolean toExport = false;
 	private String supplierInitials;
 
@@ -126,11 +131,64 @@ public class CustomerProductPricesDTO
 		this.cbm = cbm;
 	}
 
-	public String getSupplierInitials() {
+	public String getSupplierInitials()
+	{
 		return supplierInitials;
 	}
 
-	public void setSupplierInitials(String supplierInitials) {
+	public void setSupplierInitials(String supplierInitials)
+	{
 		this.supplierInitials = supplierInitials;
+	}
+
+	public BigDecimal getProductMarginPercentage()
+	{
+		return productMarginPercentage;
+	}
+
+	public void setProductMarginPercentage(BigDecimal productMarginPercentage)
+	{
+		this.productMarginPercentage = productMarginPercentage;
+	}
+
+	public BigDecimal getCustomerProductMarginPercentage()
+	{
+		return customerProductMarginPercentage;
+	}
+
+	public void setCustomerProductMarginPercentage(
+			BigDecimal customerProductMarginPercentage)
+	{
+		this.customerProductMarginPercentage = customerProductMarginPercentage;
+	}
+
+	public BigDecimal getCalculatedCost()
+	{
+		return calculatedCost;
+	}
+
+	public void setCalculatedCost(BigDecimal calculatedCost)
+	{
+		this.calculatedCost = calculatedCost;
+	}
+
+	public BigDecimal getOriginalCost()
+	{
+		return originalCost;
+	}
+
+	public void setOriginalCost(BigDecimal originalCost)
+	{
+		this.originalCost = originalCost;
+	}
+
+	public String getSupplierProductCode()
+	{
+		return supplierProductCode;
+	}
+
+	public void setSupplierProductCode(String supplierProductCode)
+	{
+		this.supplierProductCode = supplierProductCode;
 	}
 }

@@ -3,6 +3,7 @@ package com.dps.domain.entity;
 import java.math.BigDecimal;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * This class stores the customer specific product details.
@@ -33,7 +35,9 @@ public class CustomerProductPreference extends EntityBase
 	public static final String GET_PREFERENCES_FOR_CUSTOMER = "CustomerProductPreference.GetPreferencesForCustomer";
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableGenerator(name="DPS_CUST_PROD_PREF_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
+					valueColumnName="GEN_VAL", pkColumnValue="DPS_CUST_PROD_PREF_ID", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="DPS_CUST_PROD_PREF_ID")
 	private Long id;
 	
 	@ManyToOne
@@ -46,6 +50,10 @@ public class CustomerProductPreference extends EntityBase
 	
 	@Basic
 	private BigDecimal discount;
+	
+	@Basic
+	@Column(name="DISC_PECT")
+	private BigDecimal discountPrcentage;
 
 	public Product getProduct()
 	{
@@ -75,6 +83,16 @@ public class CustomerProductPreference extends EntityBase
 	public void setDiscount(BigDecimal discount)
 	{
 		this.discount = discount;
+	}
+
+	public BigDecimal getDiscountPrcentage()
+	{
+		return discountPrcentage;
+	}
+
+	public void setDiscountPrcentage(BigDecimal discountPrcentage)
+	{
+		this.discountPrcentage = discountPrcentage;
 	}
 
 	public Long getId()

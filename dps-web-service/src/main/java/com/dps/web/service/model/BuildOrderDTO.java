@@ -21,6 +21,7 @@ public class BuildOrderDTO
 	private String remarks;
 	private BigDecimal unitCost;
 	private BigDecimal custProdDiscount;
+	private BigDecimal custProdDiscountPercent;
 	private Boolean isMoqSatisfied = Boolean.FALSE;
 
 	public String getProductCode()
@@ -101,6 +102,16 @@ public class BuildOrderDTO
 	public void setIsMoqSatisfied(Boolean isMoqSatisfied)
 	{
 		this.isMoqSatisfied = isMoqSatisfied;
+	}
+
+	public BigDecimal getCustProdDiscountPercent()
+	{
+		return custProdDiscountPercent;
+	}
+
+	public void setCustProdDiscountPercent(BigDecimal custProdDiscountPercent)
+	{
+		this.custProdDiscountPercent = custProdDiscountPercent;
 	}
 
 }

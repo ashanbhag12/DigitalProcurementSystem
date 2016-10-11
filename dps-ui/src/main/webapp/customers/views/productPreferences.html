@@ -3,9 +3,9 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
-        <md-input-container flex="30">
+        <md-input-container flex="25">
             <label>Customer</label>
-            <md-select ng-model="customerShipmark">
+            <md-select ng-model="customerShipmark" ng-change="createOtherCustomersList()">
                 <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
                     {{customer.name+" - "+customer.shipmark}}
                 </md-option>
@@ -14,10 +14,21 @@
         <div flex-offset="5">
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH</md-button>
         </div>
+        <md-input-container flex="30" flex-offset="5">
+            <label>Select Customer to set same CPM</label>
+            <md-select ng-model="otherCustomerShipmark">
+                <md-option ng-repeat="customer in otherCustomers" value="{{customer.shipmark}}">
+                    {{customer.name+" - "+customer.shipmark}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <div flex-offset="5">
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="setOtherCustomerCPM()">APPLY</md-button>
+        </div>
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
 	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">CM: {{products.additionalCustomerMargin | number:3}}</h4>
+	    	<h4 class="floatL inlineBlock paddingT5">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
@@ -25,8 +36,7 @@
         <div class="clearfix">      
             <h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
             <div class="floatR tableActions">
-            	<a href="javascript:;" tabindex="-1" class="showColumns" ng-click="maskColumns = false">Show Columns</a>
-                <a href="javascript:;" tabindex="-1" class="maskColumns" ng-click="maskColumns = true">Mask Columns</a>                
+            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>             
                 <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAll($event)">Edit All</a>
                 <a href="javascript:;" tabindex="-1" class="saveBtn" ng-click="saveAll($event)">Save All</a>
             </div>            
@@ -47,8 +57,8 @@
                     <th>Gross Weight</th>                    
                     <th>Product Description</th>
                     <th>Supplier Initials</th>
-                    <th ng-hide="maskColumns">PM</th>
-                    <th ng-hide="maskColumns">CPM</th>
+                    <th>PM</th>
+                    <th>CPM</th>
                     <th>Cost</th>
                     <th class='alignCenter'>Action</th>
                     <th class="alignCenter">
@@ -66,14 +76,14 @@
                     <td>{{product.grossWeight}}</td>                    
                     <td>{{product.productDescription}}</td>
                     <td>{{product.supplierInitials}}</td>
-                    <td ng-hide="maskColumns">{{product.productMargin | number:3}}</td>
-                    <td ng-hide="maskColumns">
-                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMargin | number:3}}</div>
+                    <td>{{product.productMarginPercentage | number:3}}</td>
+                    <td>
+                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
-                            <input type='text' ng-model="product.customerProductMargin" placeholder="Customer Margin" />  
+                            <input type='number' name="customerProductMarginPercentage" ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
                         </div>
                     </td>                    
-                    <td>{{product.cost | number:3}}</td>
+                    <td>{{product.calculatedCost | number:3}}</td>
                     <td class='alignCenter'>
                         <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editProductDetails($index, product)" 
                            title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>
