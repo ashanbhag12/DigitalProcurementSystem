@@ -329,7 +329,7 @@ public class CustomerProductPriceController
 					
 					PdfPCell cell = createNewCell();
 					String price = findCost(custProdPrice, product, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString();
-					cell.addElement(new Paragraph(product.getProductCode() + ":" + product.getCartoonQuantity() + " PC\n" +price + "/-"));
+					cell.addElement(new Paragraph(product.getProductCode() + ":" + product.getCartoonQuantity() + " P\n" +price + "/-"));
 					
 					Image image = null;
 					try
