@@ -167,6 +167,12 @@ public class CustomerController
 			address = new Address();
 			cust.setAddress(address);
 		}
+		ContactDetails cd = cust.getContactDetails();
+		if(cd == null)
+		{
+			cd = new ContactDetails();
+			cust.setContactDetails(cd);
+		}
 		custDto.setId(cust.getId());
 		custDto.setAdditionalMargin(cust.getAdditionalMargin());
 		custDto.setAdditionalMarginPercentage(cust.getDiscountPrcentage());
