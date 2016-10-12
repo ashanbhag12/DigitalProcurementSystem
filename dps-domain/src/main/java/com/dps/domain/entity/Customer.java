@@ -64,7 +64,7 @@ public class Customer extends EntityBase
 	private BigDecimal additionalMargin = Constants.BIG_DECIMAL_ONE;
 
 	@Embedded
-	private Address address;
+	private Address address = new Address();
 	
 	@Embedded
 	private ContactDetails contactDetails;
