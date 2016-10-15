@@ -112,6 +112,7 @@ h3.sectionTitle, h4.sectionTitle{
     min-width: 200px;
     max-width: 200px;
     background-color: rgb(63,81,181);
+    border-top:1px solid rgb(121,134,203);
 }
 
 .mainNav > li{
