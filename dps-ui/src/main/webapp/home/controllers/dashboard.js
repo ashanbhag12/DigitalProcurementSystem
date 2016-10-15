@@ -1,5 +1,5 @@
 angular.module('dashboardApp', ["ngMessages"])
-        .controller("dashboardController", function ($rootScope, $scope, $timeout, getDashboardCardService, getDashboardConfigService, modifyDashboardConfigService) {
+        .controller("dashboardController", function ($rootScope, $scope, $timeout, getDashboardCardService, modifyDashboardConfigService) {
             $scope.showSuccessBox = false; /* Hide the error messages */
             $scope.showErrorBox = false; /* Hide the success messages */
             $scope.successMessage = "";
@@ -9,12 +9,10 @@ angular.module('dashboardApp', ["ngMessages"])
             $scope.showClearBtn = false; /* Hide Clear Button */
             $scope.isReadonly = true; /* Set the fields as Readonly */
             $scope.dashboard; /* Create dashboard object for Cards */
-            $rootScope.global = {}; /* Create Globals object */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
             	$scope.dashboard = getDashboardCardService.get(); /* Get data for Cards */
-            	$rootScope.global = getDashboardConfigService.get(); /* Get Global Parameters */
             });
 
             $scope.edit = function () {
