@@ -195,7 +195,6 @@ public class CustomerProductPriceController
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
-				System.out.println(custProdPrice.getCustomerProductMarginPercentage());
 				if(!(custProdPrice.getCustomerProductMarginPercentage().doubleValue() == 0d))
 				{
 					BigDecimal existingDiscount = Constants.BIG_DECIMAL_ONE; 
