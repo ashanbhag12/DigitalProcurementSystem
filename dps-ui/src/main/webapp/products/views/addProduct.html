@@ -19,6 +19,13 @@
     <form name="addProduct" ng-submit="submitForm(addProduct)" novalidate>
     	<h3 class="md-headline sectionTitle">Add Product Form</h3>
         <div layout="row">
+       		<md-input-container class="md-block" flex="25">
+                <label>Dummy Product Code</label>
+                <input required type='text' name="dummyCode" ng-model="product.dummyCode" />
+                <div ng-messages="addProduct.dummyCode.$error" ng-show="addProduct.dummyCode.$touched">
+                    <div ng-message-exp="['required']">This is required.</div>
+                </div>
+            </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>*Product Code</label>
                 <input type='text' required name="productCode" ng-model="product.productCode" />
