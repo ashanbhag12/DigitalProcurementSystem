@@ -19,5 +19,6 @@
 		<bean id="custProdPricePrefController" class = "com.dps.web.service.controller.CustomerProductPriceController"/>
 		<bean id="buildOrderController" class="com.dps.web.service.controller.BuildOrderController"></bean>
 		<bean id="placeOrderController" class="com.dps.web.service.controller.PlaceOrderController"></bean>
-		
+		<bean id="updateSupplierOrderController" class="com.dps.web.service.controller.UpdateSupplierOrderController"></bean>
+		<bean id="supplierOrderController" class="com.dps.web.service.controller.SupplierOrderController"></bean>
 </beans>

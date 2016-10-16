@@ -33,6 +33,8 @@ import com.dps.commons.domain.Constants;
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.constants.CustomerOrderDetailStatus;
 import com.dps.domain.constants.CustomerOrderStatus;
+import com.dps.domain.constants.SupplierOrderDetailStatus;
+import com.dps.domain.constants.SupplierOrderStatus;
 import com.dps.domain.entity.Configurations;
 import com.dps.domain.entity.CustomerOrder;
 import com.dps.domain.entity.CustomerOrderDetails;
@@ -241,6 +243,7 @@ public class PlaceOrderController
 			supplierOrder.setWeightRate(config.getPricePerWeight());
 			supplierOrder.setOrderDate(new Date());
 			supplierOrder.setSupplier(suppliersMap.get(supplierInitials));
+			supplierOrder.setStatus(SupplierOrderStatus.ORDER_PLACED);
 			
 			List<PlaceOrderDTO> orders = ordersPerSupplier.get(supplierInitials);
 			List<SupplierOrderDetails> supplierOrderDetailList = new ArrayList<>();
@@ -257,6 +260,7 @@ public class PlaceOrderController
 						custOrderDet.setStatus(CustomerOrderDetailStatus.ORDER_SENT);
 						suppOrderDet.setCustomerOrderDetails(custOrderDet);
 						suppOrderDet.setSupplierOrder(supplierOrder);
+						suppOrderDet.setStatus(SupplierOrderDetailStatus.ITEM_NOT_RECEIVED);
 						supplierOrderDetailList.add(suppOrderDet);
 						customerOrders.add(custOrderDet.getCustomerOrder());
 					}

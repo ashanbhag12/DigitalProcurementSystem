@@ -251,13 +251,24 @@ public class BuildOrderController
 			{
 				CustomerOrderDetails det = new CustomerOrderDetails();
 				det.setCustomerOrder(custOrder);
-				det.setProduct(prodMap.get(item.getProductId()));
+				
+				Product prod = prodMap.get(item.getProductId());
+				det.setProduct(prod);
 				det.setQuantity(item.getQuantity());
 				det.setSupplier(suppliers.get(item.getSelectedSupplierInitials()));
 				det.setCbmRate(config.getPricePerCbm());
 				det.setWeightRate(config.getPricePerWeight());
 				det.setExchangeRate(config.getExchangeRate());
 				det.setRemarks(item.getRemarks());
+				
+				for(SupplierProductInfo suppProdInfo : prod.getSuppProdInfo())
+				{
+					if(suppProdInfo.getSupplier().getInitials().equals(item.getSelectedSupplierInitials()))
+					{
+						det.setProductPrice(suppProdInfo.getSupplierPrice());
+						break;
+					}
+				}
 				lineItems.add(det);
 			}
 			

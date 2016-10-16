@@ -70,7 +70,7 @@ public class CustomerOrder extends EntityBase
 	
 	@Column(name="CBM_RATE")
 	private BigDecimal cbmRate;
-
+	
 	@Override
 	public Long getId()
 	{

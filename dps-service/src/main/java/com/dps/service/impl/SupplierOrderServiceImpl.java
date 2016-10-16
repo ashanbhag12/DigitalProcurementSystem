@@ -1,5 +1,8 @@
 package com.dps.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,18 @@ public class SupplierOrderServiceImpl extends BaseServiceImpl<SupplierOrder> imp
 	protected void initializeCache()
 	{
 		cache = new CacheImpl<Long, SupplierOrder>(1);
+	}
+
+	@Override
+	public List<SupplierOrder> getUncompletedOrders()
+	{
+		return supplierOrderDao.getUncompletedOrders();
+	}
+
+	@Override
+	public List<SupplierOrder> getSupplierOrders(String supplierInitials, Date startDate, Date endDate)
+	{
+		return supplierOrderDao.getSupplierOrders(supplierInitials, startDate, endDate);
 	}
 
 }

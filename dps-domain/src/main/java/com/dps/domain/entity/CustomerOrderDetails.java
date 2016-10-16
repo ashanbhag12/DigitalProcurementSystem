@@ -89,6 +89,9 @@ public class CustomerOrderDetails extends EntityBase
 	
 	@Basic
 	private String remarks;
+	
+	@Column(name="PROD_PRC")
+	private BigDecimal productPrice;
 
 	public Long getId()
 	{
@@ -218,6 +221,16 @@ public class CustomerOrderDetails extends EntityBase
 	public void setCbmRate(BigDecimal cbmRate)
 	{
 		this.cbmRate = cbmRate;
+	}
+
+	public BigDecimal getProductPrice()
+	{
+		return productPrice;
+	}
+
+	public void setProductPrice(BigDecimal productPrice)
+	{
+		this.productPrice = productPrice;
 	}
 
 	@Override

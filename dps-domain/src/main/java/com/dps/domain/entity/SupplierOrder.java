@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -35,9 +37,17 @@ import com.dps.domain.constants.SupplierOrderStatus;
  */
 @Entity
 @Table(name="DPS_SUPP_ORDR")
+@NamedQueries({
+	@NamedQuery(name=SupplierOrder.GET_UNCOMPLETED_SUPPLIER_ORDERS, query="SELECT O.id FROM SupplierOrder O where O.status <> 'ORDER_COMPLETED'"),
+	@NamedQuery(name=SupplierOrder.GET_ALL_SUPPLIER_ORDERS_FOR_DATE_RANGE, query = "SELECT O.id FROM SupplierOrder O where O.orderDate between :startDate AND :endDate"),
+	@NamedQuery(name=SupplierOrder.GET_SUPPLIER_ORDERS_FOR_DATE_RANGE, query = "SELECT O.id FROM SupplierOrder O where O.orderDate between :startDate AND :endDate AND O.supplier.initials = :supplierInitials")
+})
 public class SupplierOrder extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
+	public static final String GET_UNCOMPLETED_SUPPLIER_ORDERS = "SupplierOrder.getUncompletedSupplierOrders";
+	public static final String GET_ALL_SUPPLIER_ORDERS_FOR_DATE_RANGE = "SupplierOrder.getAllSupplierOrderForDateRange";
+	public static final String GET_SUPPLIER_ORDERS_FOR_DATE_RANGE = "SupplierOrder.getSupplierOrderForDateRange";
 	
 	@Id
 	@TableGenerator(name="DPS_SUPP_ORDR_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
