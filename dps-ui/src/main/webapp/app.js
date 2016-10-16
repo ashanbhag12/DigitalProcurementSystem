@@ -2,7 +2,8 @@
 angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
                            'dashboardApp', 'addCustomerApp', 'editCustomerApp',
                            'addSupplierApp', 'editSupplierApp', 'addProductApp', 'editProductApp',
-                           'productPreferencesApp', 'buildOrderApp', 'placeOrderApp'])
+                           'productPreferencesApp', 'buildOrderApp', 'viewCustomerOrderApp',
+                           'placeOrderApp', 'viewSupplierOrderApp', 'updateOrderApp'])
         .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         	
         	$mdThemingProvider.theme('default')
@@ -67,11 +68,30 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
                         controller: "buildOrderController"
                     })
                     
+                    .state('viewCustomerOrder', {
+                        url: "/viewCustomerOrder",
+                        templateUrl: "customerOrder/views/viewCustomerOrder.html",
+                        controller: "viewCustomerOrderController"
+                    })
+                    
                     .state('placeOrder', {
                         url: "/placeOrder",
                         templateUrl: "supplierOrder/views/placeOrder.html",
                         controller: "placeOrderController"
+                    })
+                    
+                    .state('viewSupplierOrder', {
+                        url: "/viewSupplierOrder",
+                        templateUrl: "supplierOrder/views/viewSupplierOrder.html",
+                        controller: "viewSupplierOrderController"
+                    })
+                    
+                    .state('updateOrder', {
+                        url: "/updateOrder",
+                        templateUrl: "supplierOrder/views/updateOrder.html",
+                        controller: "updateOrderController"
                     });
+            
         }).run(function ($rootScope, $state, $timeout, getDashboardConfigService) {    
         	
         	$rootScope.global = getDashboardConfigService.get(); /* Get Global Parameters */

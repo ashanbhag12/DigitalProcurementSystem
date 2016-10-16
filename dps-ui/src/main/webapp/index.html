@@ -71,7 +71,7 @@
 			                            <a ui-sref="buildOrder" ui-sref-active="active">Build Order</a>                            
 			                        </li>
 			                        <li>
-			                            <a ui-sref="#" ui-sref-active="active">View Orders</a>                            
+			                            <a ui-sref="viewCustomerOrder" ui-sref-active="active">View Orders</a>                            
 			                        </li>
 	                            </ol>
 	                        </li>
@@ -82,10 +82,10 @@
 			                            <a ui-sref="placeOrder" ui-sref-active="active">Place Order</a>                            
 			                        </li>
 			                        <li>
-			                            <a ui-sref="" ui-sref-active="active">View Orders</a>                            
+			                            <a ui-sref="viewSupplierOrder" ui-sref-active="active">View Orders</a>                            
 			                        </li>
 			                        <li>
-			                            <a ui-sref="" ui-sref-active="active">Update Orders</a>                            
+			                            <a ui-sref="updateOrder" ui-sref-active="active">Update Orders</a>                            
 			                        </li>
 	                            </ol>
 	                        </li>
@@ -136,9 +136,12 @@
 	    <script src="suppliers/services/addSupplierService.js" type="text/javascript"></script>
 	    <!-- Build Order Module -->
 	    <script src="customerOrder/controllers/buildOrderController.js" type="text/javascript"></script>
+	    <script src="customerOrder/controllers/viewCustomerOrderController.js" type="text/javascript"></script>
 	    <script src="customerOrder/services/buildOrderService.js" type="text/javascript"></script>
 	    <!-- Place Order Module -->
 	    <script src="supplierOrder/controllers/placeOrderController.js" type="text/javascript"></script>
+	    <script src="supplierOrder/controllers/viewSupplierOrderController.js" type="text/javascript"></script>
+	    <script src="supplierOrder/controllers/updateOrderController.js" type="text/javascript"></script>
 	    <script src="supplierOrder/services/placeOrderService.js" type="text/javascript"></script> 
 	</body>
 </html>
