@@ -409,6 +409,7 @@ md-datepicker {background: #FAFAFA;}
 
 .customTable input, .customTable select{
     width:inherit;
+    min-width:80px;
     padding:5px;
     border:1px solid #ccc;
     outline: none;

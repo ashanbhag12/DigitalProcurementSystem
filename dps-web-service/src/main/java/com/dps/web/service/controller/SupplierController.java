@@ -145,6 +145,13 @@ public class SupplierController
 	{
 		SupplierDTO suppDto = new SupplierDTO();
 		
+		ContactDetails contactDetails = supp.getContactDetails();
+		if(contactDetails == null)
+		{
+			contactDetails = new ContactDetails();
+			supp.setContactDetails(contactDetails);
+		}
+		
 		suppDto.setId(supp.getId());
 		suppDto.setEmailId(supp.getContactDetails().getEmailId());
 		suppDto.setInitials(supp.getInitials());

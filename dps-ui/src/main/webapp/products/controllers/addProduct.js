@@ -4,6 +4,7 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
             $scope.showErrorBox = false; /* Hide the Error Box */
             
             $scope.product = { /* Product Object */                	
+            		"dummyCode":"",
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
@@ -71,7 +72,8 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
 
             $scope.reset = function () {
             	$scope.product = { /* Reset the Product Object */                	
-                		"productCode":"",
+            			"dummyCode":"",
+            			"productCode":"",
                 		"cartoonQuantity":"",
                 		"cbm":"",
                 		"weight":"",
@@ -95,6 +97,7 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
                 };
                 $scope.product.isValid="false";
                 $scope.addProduct.$setPristine();
+                $scope.addProduct.dummyCode.$touched = false;
                 $scope.addProduct.productCode.$touched = false;
                 $scope.addProduct.cartoonQuantity.$touched = false;
                 $scope.addProduct.cbm.$touched = false;

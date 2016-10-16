@@ -28,6 +28,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             /* changed name from editProduct with product because it was conflicting with form name */
             $scope.product = {                	
             		"id":"",
+            		"dummyCode":"",
             		"productCode":"",
             		"cartoonQuantity":"",
             		"cbm":"",
@@ -173,6 +174,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     if (product.isChecked) {
                     	smoothScroll(document.getElementById("editProductForm")); /* Scroll to the form */
                         $scope.editProductForm = true;
+                        $scope.product.dummyCode = product.dummyCode;
                         $scope.product.productCode = product.productCode;
                         $scope.product.cartoonQuantity = product.cartoonQuantity;
                         $scope.product.cbm = product.cbm;
@@ -277,6 +279,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
 								                    			"supplierPrice": ""
 								                    		}],
                 			
+							product.dummyCode = $scope.product.dummyCode;
                             product.productCode = $scope.product.productCode;
                             product.cartoonQuantity = $scope.product.cartoonQuantity;
                             product.cbm = $scope.product.cbm;

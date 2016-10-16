@@ -28,7 +28,7 @@
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
 	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
+	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
@@ -80,7 +80,8 @@
                     <td>
                         <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
                         <div ng-show="editProductDetailsRow[$index]">
-                            <input type='number' name="customerProductMarginPercentage" ng-model="product.customerProductMarginPercentage" placeholder="Customer Margin" />  
+                            <input type='number' name="customerProductMarginPercentage" ng-model="product.customerProductMarginPercentage" 
+                            	min="-99" max="99" placeholder="CPM" />  
                         </div>
                     </td>                    
                     <td>{{product.calculatedCost | number:3}}</td>

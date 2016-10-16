@@ -68,6 +68,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             /* Function to search for Products */
             $scope.getProductDetails = function () {
                 if ($scope.customerShipmark !== undefined) {
+                	$scope.maskColumns = true; /* Hide the columns */
                 	angular.element(document.querySelector('.loader')).addClass('show');
                 	$scope.showSuccessBox = false;
                     /* Service Call to retrieve all products */

@@ -72,7 +72,10 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
                         templateUrl: "placeOrder/views/placeOrder.html",
                         controller: "placeOrderController"
                     });
-        }).run(function ($rootScope, $state, $timeout) {        	
+        }).run(function ($rootScope, $state, $timeout, getDashboardConfigService) {    
+        	
+        	$rootScope.global = getDashboardConfigService.get(); /* Get Global Parameters */
+        	
         	/* Show loader on route change start */
         	$rootScope.$on('$stateChangeStart',function(){
         		angular.element(document.querySelector('.loader')).addClass('show');
@@ -81,10 +84,10 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
         	/* Hide loader on route change success after 500ms delay */
         	$rootScope.$on('$stateChangeSuccess',function(){
 	    		  $timeout(function(){
-	    			  angular.element(document.querySelector('.loader')).removeClass('show');  
+	    			  angular.element(document.querySelector('.loader')).removeClass('show'); 	    			  
 	    		  }, 500)        		  
-	    	 });
-            
+	    	 });      	
+        	
             /* Global function to show Modal Window */
             $rootScope.showModal = function (modalId) {
                 angular.element(document.querySelector('.loader')).addClass('show');

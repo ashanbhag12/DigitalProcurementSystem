@@ -161,6 +161,18 @@ public class CustomerController
 	private CustomerDTO customerToCustomerDTO(Customer cust)
 	{
 		CustomerDTO custDto = new CustomerDTO();
+		Address address = cust.getAddress();
+		if(address == null)
+		{
+			address = new Address();
+			cust.setAddress(address);
+		}
+		ContactDetails cd = cust.getContactDetails();
+		if(cd == null)
+		{
+			cd = new ContactDetails();
+			cust.setContactDetails(cd);
+		}
 		custDto.setId(cust.getId());
 		custDto.setAdditionalMargin(cust.getAdditionalMargin());
 		custDto.setAdditionalMarginPercentage(cust.getDiscountPrcentage());

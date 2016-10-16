@@ -195,7 +195,6 @@ public class CustomerProductPriceController
 			
 			for(CustomerProductPricesDTO custProdPrice : wrapper.getCustomerProductPrices())
 			{
-				System.out.println(custProdPrice.getCustomerProductMarginPercentage());
 				if(!(custProdPrice.getCustomerProductMarginPercentage().doubleValue() == 0d))
 				{
 					BigDecimal existingDiscount = Constants.BIG_DECIMAL_ONE; 
@@ -315,8 +314,8 @@ public class CustomerProductPriceController
 			
 			PdfPTable table = new PdfPTable(5); 
 			table.setWidthPercentage(100);
-			table.setSpacingBefore(5f);
-			table.setSpacingAfter(5f);
+			table.setSpacingBefore(1f);
+			table.setSpacingAfter(1f);
 			
 			float[] columnWidths = {1f,1f,1f,1f,1f};
 			table.setWidths(columnWidths);
@@ -328,8 +327,8 @@ public class CustomerProductPriceController
 					Product product = productService.findByCode(custProdPrice.getProductCode()).get(0);
 					
 					PdfPCell cell = createNewCell();
-					String price = findCost(custProdPrice, product, config, wrapper.getAdditionalCustomerMargin()).setScale(3, RoundingMode.HALF_UP).toString();
-					cell.addElement(new Paragraph(product.getProductCode() + ":" + product.getCartoonQuantity() + " PC\n" +price + "/-"));
+					String price = findCost(custProdPrice, product, config, wrapper.getAdditionalCustomerMargin()).setScale(2, RoundingMode.HALF_UP).toString();
+					cell.addElement(new Paragraph(product.getDummyCode() + "  " + product.getCartoonQuantity() + "\n" +price));
 					
 					Image image = null;
 					try
@@ -355,7 +354,8 @@ public class CustomerProductPriceController
 							cell.addElement(new Paragraph("\nImage not available."));
 						}
 					}
-					
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table.addCell(cell);
 				}
 			}
@@ -377,9 +377,7 @@ public class CustomerProductPriceController
 	private PdfPCell createNewCell()
 	{
 		PdfPCell cell = new PdfPCell();
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);	
-		cell.setPadding(10f);
+		cell.setPadding(2f);
 		
 		return cell;
 	}
