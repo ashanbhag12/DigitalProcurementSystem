@@ -502,3 +502,49 @@ md-datepicker {background: #FAFAFA;}
     background: url(../images/scrollToTop.png) no-repeat center center;
     background-size:18px;
 }
+
+/* CSS for accordions starts here */
+.accordionWrapper .md-accordion{min-height:50px;}
+
+.md-accordion + .md-accordion{margin-top:10px;}
+
+.accordionWrapper .md-accordion md-toolbar{
+	height: 50px;
+	min-height:50px;
+}
+
+.accordionWrapper .md-accordion h3,
+.accordionWrapper .md-accordion .accordionContent{
+    -webkit-transition: all ease-out 300ms;
+    transition: all ease-out 300ms;
+}
+
+.md-accordion h3{
+	color:#fff;
+	padding-left:30px;	
+	line-height: 18px;
+}
+
+.md-accordion h3.expand{
+	background: url(../images/expand.png) no-repeat left center;
+    background-size:18px;
+}
+
+.md-accordion h3.collapse{
+	background: url(../images/collapse.png) no-repeat left center;
+    background-size:18px;
+}
+
+.accordionWrapper .md-accordion .accordionContent{
+    height: 0;
+    border:0;
+    overflow: hidden;    
+}
+
+.accordionWrapper .md-accordion .accordionContent.active{
+    height: auto;
+    padding: 10px;
+    display: block;
+    border:1px solid rgb(63,81,181);
+}
+/* CSS for accordions ends here */
