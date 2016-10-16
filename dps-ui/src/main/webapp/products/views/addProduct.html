@@ -28,9 +28,9 @@
             </md-input-container>
             <md-input-container class="md-block" flex="25">
                 <label>*Dummy Product Code</label>
-                <input required type='text' name="dummyCode" ng-model="product.dummyCode" />
+                <input required type='text' name="dummyCode" ng-model="product.dummyCode"  maxlength="6"  />
                 <div ng-messages="addProduct.dummyCode.$error" ng-show="addProduct.dummyCode.$touched">
-                    <div ng-message-exp="['required']">This is required.</div>
+                    <div ng-message-exp="['required', 'maxlength']">This is required. Can be maximum 6 characters.</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex="25">
