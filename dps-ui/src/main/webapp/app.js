@@ -63,13 +63,13 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
                     
                     .state('buildOrder', {
                         url: "/buildOrder",
-                        templateUrl: "buildOrder/views/buildOrder.html",
+                        templateUrl: "customerOrder/views/buildOrder.html",
                         controller: "buildOrderController"
                     })
                     
                     .state('placeOrder', {
                         url: "/placeOrder",
-                        templateUrl: "placeOrder/views/placeOrder.html",
+                        templateUrl: "supplierOrder/views/placeOrder.html",
                         controller: "placeOrderController"
                     });
         }).run(function ($rootScope, $state, $timeout, getDashboardConfigService) {    
