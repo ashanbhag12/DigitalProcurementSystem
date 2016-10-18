@@ -86,19 +86,19 @@ angular.module('updateOrderApp', [])
 
             /* Function to save all the customer product margins */
             $scope.saveAll = function () {
-            	angular.forEach($scope.accordianData[0].orderDetails.length, function (product, index) {
-            		$scope.updateOrderDetails(index, product);
-            	});
+            	for (var i = 0; i < $scope.accordianData[0].orderDetails.length; i++) {
+            		$scope.updateOrderDetails(i);
+            	}
             };
             
-            $scope.editOrderDetails = function (index, product) {
+            $scope.editOrderDetails = function (index) {
                 $scope.editTableRow[index] = true;                
                 $timeout(function () {
                 	angular.element(document.querySelectorAll("input[name=receivedQuantity]")[index]).focus();
                 }, 100);
             };
 
-            $scope.updateOrderDetails = function (index, product) {
+            $scope.updateOrderDetails = function (index) {
                 $scope.editTableRow[index] = false;                
             };
         });

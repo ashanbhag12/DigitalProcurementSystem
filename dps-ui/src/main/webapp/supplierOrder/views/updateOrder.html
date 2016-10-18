@@ -59,9 +59,9 @@
 		                        </div>
 		                    </td>
 		                    <td class='alignCenter'>
-		                        <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editOrderDetails($index, product)" 
+		                        <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editOrderDetails($index)" 
 		                           title='Edit Row' ng-hide="editTableRow[$index]"></a>
-		                        <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateOrderDetails($index, product)" 
+		                        <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateOrderDetails($index)" 
 		                           title='Update Row' ng-show="editTableRow[$index]"></a>
 		                    </td>
 		                </tr>
@@ -70,10 +70,57 @@
 		        <!-- Pagination Directive -->
 		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id=""></div>      
 		        <div layout='row' layout-align='end center' class='marginT10'>
-		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">UPDATE ORDER</md-button>
+		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal')">UPDATE</md-button>
 		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
 		        </div>
 		    </div>
 		</div>
+	</div>
+</div>
+<div class="modal" id="updateOrderModal">
+    <div class="modalTitle">
+        <h4>Update Orders?</h4>
+    </div>
+    <div class="modalContent">
+    	<div>Below is the list of orders you have selected to update:</div> 
+    	<div class="marginT15 marginB15">
+    		<table class="customTable">           
+	            <thead>
+	                <tr>
+	                    <th>
+	                        <a tabindex="-1" ng-click="sortType = 'productCode';
+	                            sortOrder = !sortOrder">Product Code
+	                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+	                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+	                        </a>
+	                    </th>  
+	                    <th>
+	                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'shipmark';
+	                            sortOrder = !sortOrder">Shipmark
+	                            <span ng-show="sortType == 'shipmark' && sortOrder">&#9662;</span>
+	                            <span ng-show="sortType == 'shipmark' && !sortOrder">&#9652;</span>
+	                        </a>
+                        </th>
+	                    <th>Ordered Qty.</th>
+	                    <th>Available Qty.</th>
+	                    <th>Received Qty.</th>
+	            	</tr>
+	            </thead>
+	            <tbody>
+	                <tr ng-repeat="order in accordianData.orderDetails | orderBy:sortType:sortOrder">
+	                    <td>{{order.productCode}}</td>                    
+	                    <td ng-hide="maskColumns">{{order.shipmark}}</td>    
+	                    <td>{{order.orderedQuantity}}</td>
+	                    <td>{{order.availableQuantity}}</td>
+	                    <td>{{order.receivedQuantity}}</td>
+	                </tr>
+	            </tbody>
+	        </table> 
+    	</div>
+        <div class="marginB10">Are you sure you want to update the selected orders?</div>
+	    <div class="modalFooter">
+	        <md-button type="button" class="md-raised md-primary" ng-click="alert(1)">YES</md-button>
+	        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('updateOrderModal')">NO</md-button>
+	    </div>
 	</div>
 </div>
