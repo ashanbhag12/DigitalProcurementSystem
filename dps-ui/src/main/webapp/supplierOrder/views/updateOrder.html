@@ -44,6 +44,10 @@
 		                    <th>Available Qty.</th>
 		                    <th>Received Qty.</th>
 		                    <th class="alignCenter">Action</th>
+		                    <th class="alignCenter">
+		                    	<md-checkbox type='checkbox' aria-label='Select  Order {{$index}}' class="md-primary"
+	                       			ng-model="selectAll[$index]" ng-change="toggleAll($index)"></md-checkbox>
+		                    </th>
 		            	</tr>
 		            </thead>
 		            <tbody>
@@ -63,6 +67,10 @@
 		                           title='Edit Row' ng-hide="editTableRow[$index]"></a>
 		                        <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateOrderDetails($index)" 
 		                           title='Update Row' ng-show="editTableRow[$index]"></a>
+		                    </td>
+		                    <td class="alignCenter">
+		                    	<md-checkbox type='checkbox' ng-model="order.isChecked" name="isOrderChecked" ng-change="toggle($parent.$index, $index, order)"
+	                            	aria-label='Select All Rows' class='md-primary'></md-checkbox>
 		                    </td>
 		                </tr>
 		            </tbody>
@@ -107,12 +115,12 @@
 	            	</tr>
 	            </thead>
 	            <tbody>
-	                <tr ng-repeat="order in accordianData.orderDetails | orderBy:sortType:sortOrder">
+	                <tr ng-repeat="order in accordianData[0].orderDetails | orderBy:sortType:sortOrder">
 	                    <td>{{order.productCode}}</td>                    
-	                    <td ng-hide="maskColumns">{{order.shipmark}}</td>    
+	                    <td>{{order.shipmark}}</td>    
 	                    <td>{{order.orderedQuantity}}</td>
 	                    <td>{{order.availableQuantity}}</td>
-	                    <td>{{order.receivedQuantity}}</td>
+	                    <td>{{order.receivedQuantity}}</td>	                    
 	                </tr>
 	            </tbody>
 	        </table> 
