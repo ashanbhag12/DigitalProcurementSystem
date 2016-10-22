@@ -256,7 +256,7 @@ h3.sectionTitle, h4.sectionTitle{
 }
 
 .searchTable input{
-    width:300px;
+    width:225px;
     padding:10px;
     border:1px solid #ccc;
     outline: none;
@@ -512,6 +512,7 @@ md-datepicker {background: #FAFAFA;}
 .accordionWrapper .md-accordion md-toolbar{
 	height: 50px;
 	min-height:50px;
+	cursor:pointer;
 }
 
 .accordionWrapper .md-accordion h3,

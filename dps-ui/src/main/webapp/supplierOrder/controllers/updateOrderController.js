@@ -8,28 +8,32 @@ angular.module('updateOrderApp', [])
             $scope.sortType = 'productCode'; /* Set the default sort type */
             $scope.maskColumns = true; /* Hide the columns */
             $scope.isAccordionOpen = false; /* Collapse all the accordions */
-            $scope.editTableRow = {}; /* Object for inline editing in Order Summary table */           
-            $scope.accordionList = new Object(); /* List of Accordions */
+            $scope.editTables = {}; /* Object for inline editing in update order table */
+            $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
             $scope.ordersData = [];
+            $scope.updatedOrder; /* Object for updated order */
+            $scope.updatedOrderIndex; /* Index for updated order */
             
             /* Function will be executed after the page is loaded */
-            $scope.$on('$viewContentLoaded', function () {
-            	
-            	// WS to get all orders.
-            	$scope.ordersData = getUpdateSupplierOrderService.query();
-            	
-            	/* Create array for toggleAll inside accordionList object */
-                for (var i = 0; i < $scope.ordersData.length; i++) {
-                	$scope.accordionList["selectedRows" + i] = [];
-                	$scope.selectAll[i] = false;
-                	
-                	/* Set variable for inline editing in update order table */
-                    for (var j = 0; j < $scope.ordersData[0].orderDetails.length; j++) {
-                        $scope.editTableRow[j] = false;
+            $scope.$on('$viewContentLoaded', function () {            	
+            	/* WS to get all orders */
+            	getUpdateSupplierOrderService.query().$promise.then(function(data) {
+            		$scope.ordersData = data;
+            		
+            		/* Create array for toggleAll inside accordionList object */
+                    for (var i = 0; i < $scope.ordersData.length; i++) {
+                    	$scope.accordionList["selectedRows" + i] = [];
+                    	$scope.editTables["editTable" + i] = [];
+                    	$scope.selectAll[i] = false;                	
+                    	
+                    	/* Set variable for inline editing in update order table */
+                        for (var j = 0; j < $scope.ordersData[i].orderDetails.length; j++) {
+                        	$scope.editTables["editTable"+i][j] = false;
+                        }
                     }
-                }
-            });   
+                });
+            }); 
             
             /* Function to select/unselect all the Orders from accordions */
     	    $scope.toggleAll = function (index) {
@@ -70,41 +74,56 @@ angular.module('updateOrderApp', [])
     	    };
             
             /* Function to edit all the customer product margins */
-            $scope.editAll = function () {
-            	for (var i = 0; i < $scope.ordersData[0].orderDetails.length; i++) {
-            		$scope.editTableRow[i] = true;
+            $scope.editAll = function (parentIndex) {
+            	for (var i = 0; i < $scope.ordersData[parentIndex].orderDetails.length; i++) {
+            		$scope.editOrderDetails(parentIndex, i);
             	}
             };
 
             /* Function to save all the customer product margins */
-            $scope.saveAll = function () {
-            	for (var i = 0; i < $scope.ordersData[0].orderDetails.length; i++) {
-            		$scope.updateOrderDetails(i);
+            $scope.saveAll = function (parentIndex) {
+            	for (var i = 0; i < $scope.ordersData[parentIndex].orderDetails.length; i++) {
+            		$scope.updateOrderDetails(parentIndex, i);
             	}
             };
             
-            $scope.editOrderDetails = function (index) {
-                $scope.editTableRow[index] = true;                
+            $scope.editOrderDetails = function (parentIndex, index) {
+            	$scope.editTables["editTable"+parentIndex][index] = true;
                 $timeout(function () {
-                	angular.element(document.querySelectorAll("input[name=receivedQuantity]")[index]).focus();
+                	angular.element(document.querySelectorAll("input[name=receivedQuantity]")[parentIndex + index]).focus();
                 }, 100);
             };
 
-            $scope.updateOrderDetails = function (index) {
-                $scope.editTableRow[index] = false;                
+            $scope.updateOrderDetails = function (parentIndex, index) {
+            	$scope.editTables["editTable"+parentIndex][index] = false;           
             };
             
-            $scope.setSupplierForUpdateOrderModal = function(suppData){
-            	$scope.suppData = suppData;
+            $scope.setSupplierForUpdateOrderModal = function(index, data){
+            	$scope.updatedOrder = data;
+            	$scope.updatedOrderIndex = index;
             }
             
             $scope.updateOrder = function () {
+            	angular.element(document.querySelector('.loader')).addClass('show');
             	saveUpdateSupplierOrderService.save($scope.ordersData, function(){ /* Success Callback */    		    	
                     $timeout(function () {
                     	$scope.ordersData = getUpdateSupplierOrderService.query();
+                    	$scope.showSuccessBox = true;
+                        $scope.successMessage = "Order updated successfully"
+    				    $scope.showErrorBox = false;
+                    	$scope.selectAll[$scope.updatedOrderIndex] = false;
+                        for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
+                            $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                        } 
+                        angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
-    		    	$timeout(function () {}, 500);
+    		    	$timeout(function () {
+    		    		$scope.showErrorBox = true; 
+        		    	$scope.errorMessage = "Order could not be updated. Please try again after some time."
+        		    	$scope.showSuccessBox = false;
+        		    	angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
     		    });
             };
         });
