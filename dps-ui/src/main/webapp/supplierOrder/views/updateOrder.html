@@ -3,15 +3,15 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox"></div>
     <div class="animateMessages errorBox" ng-show="showErrorBox"></div>
     <div class="accordionWrapper">
-	    <div class="md-accordion" ng-repeat="data in accordianData">
+	    <div class="md-accordion" ng-repeat="data in ordersData">
 		    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
 		        <div class="md-toolbar-tools">
-		            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">{{data.heading}}</h3>
+		            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">Order for {{data.supplierInitials}}</h3>
 		        </div>
 		    </md-toolbar>
 		    <div class="accordionContent" ng-class="{active:isAccordionOpen}">	    
 			    <div class="clearfix searchTable marginB10">
-			    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Supplier Initials: {{data.suplierInitials}}</h4>
+			    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Supplier Initials: {{data.supplierInitials}}</h4>
 		            <div class="floatR">
 			            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 			        </div>
@@ -33,15 +33,15 @@
 		                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
 		                        </a>
 		                    </th>  
-		                    <th ng-hide="maskColumns">
+		                    <!-- <th ng-hide="maskColumns">
 		                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'shipmark';
 		                            sortOrder = !sortOrder">Shipmark
 		                            <span ng-show="sortType == 'shipmark' && sortOrder">&#9662;</span>
 		                            <span ng-show="sortType == 'shipmark' && !sortOrder">&#9652;</span>
 		                        </a>
-	                        </th>
+	                        </th> -->
 		                    <th>Ordered Qty.</th>
-		                    <th>Available Qty.</th>
+		                    <th>Pending Qty.</th>
 		                    <th>Received Qty.</th>
 		                    <th class="alignCenter">Action</th>
 		                    <th class="alignCenter">
@@ -53,9 +53,9 @@
 		            <tbody>
 		                <tr dir-paginate="order in data.orderDetails | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index" pagination-id="">
 		                    <td>{{order.productCode}}</td>                    
-		                    <td ng-hide="maskColumns">{{order.shipmark}}</td>    
+		                    <!-- <td ng-hide="maskColumns">{{order.shipmark}}</td> -->    
 		                    <td>{{order.orderedQuantity}}</td>
-		                    <td>{{order.availableQuantity}}</td>
+		                    <td>{{order.pendingQuantity}}</td>
 		                    <td>
 		                        <div ng-hide="editTableRow[$index]">{{order.receivedQuantity}}</div>
 		                        <div ng-show="editTableRow[$index]">
@@ -78,7 +78,7 @@
 		        <!-- Pagination Directive -->
 		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id=""></div>      
 		        <div layout='row' layout-align='end center' class='marginT10'>
-		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal')">UPDATE</md-button>
+		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal');setSupplierForUpdateOrderModal(data)">UPDATE</md-button>
 		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
 		        </div>
 		    </div>
@@ -102,24 +102,24 @@
 	                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
 	                        </a>
 	                    </th>  
-	                    <th>
+	                    <!-- <th>
 	                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'shipmark';
 	                            sortOrder = !sortOrder">Shipmark
 	                            <span ng-show="sortType == 'shipmark' && sortOrder">&#9662;</span>
 	                            <span ng-show="sortType == 'shipmark' && !sortOrder">&#9652;</span>
 	                        </a>
-                        </th>
+                        </th> -->
 	                    <th>Ordered Qty.</th>
-	                    <th>Available Qty.</th>
+	                    <th>Pending Qty.</th>
 	                    <th>Received Qty.</th>
 	            	</tr>
 	            </thead>
 	            <tbody>
-	                <tr ng-repeat="order in accordianData[0].orderDetails | orderBy:sortType:sortOrder">
+	                <tr ng-repeat="order in suppData.orderDetails | orderBy:sortType:sortOrder">
 	                    <td>{{order.productCode}}</td>                    
-	                    <td>{{order.shipmark}}</td>    
+	                    <!-- <td>{{order.shipmark}}</td> -->    
 	                    <td>{{order.orderedQuantity}}</td>
-	                    <td>{{order.availableQuantity}}</td>
+	                    <td>{{order.pendingQuantity}}</td>
 	                    <td>{{order.receivedQuantity}}</td>	                    
 	                </tr>
 	            </tbody>
@@ -127,7 +127,7 @@
     	</div>
         <div class="marginB10">Are you sure you want to update the selected orders?</div>
 	    <div class="modalFooter">
-	        <md-button type="button" class="md-raised md-primary" ng-click="alert(1)">YES</md-button>
+	        <md-button type="button" class="md-raised md-primary" ng-click="updateOrder();hideModal('updateOrderModal')">YES</md-button>
 	        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('updateOrderModal')">NO</md-button>
 	    </div>
 	</div>
