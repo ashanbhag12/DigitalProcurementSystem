@@ -515,16 +515,12 @@ md-datepicker {background: #FAFAFA;}
 	cursor:pointer;
 }
 
-.accordionWrapper .md-accordion h3,
-.accordionWrapper .md-accordion .accordionContent{
-    -webkit-transition: all ease-out 300ms;
-    transition: all ease-out 300ms;
-}
-
 .md-accordion h3{
 	color:#fff;
 	padding-left:30px;	
 	line-height: 18px;
+	-webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
 }
 
 .md-accordion h3.expand{
@@ -538,15 +534,19 @@ md-datepicker {background: #FAFAFA;}
 }
 
 .accordionWrapper .md-accordion .accordionContent{
-    height: 0;
+    height:0;
     border:0;
+    opacity:0;
     overflow: hidden;    
+    -webkit-transition: opacity ease-in-out 500ms;
+    transition: opacity ease-in-out 500ms;
 }
 
 .accordionWrapper .md-accordion .accordionContent.active{
-    height: auto;
-    padding: 10px;
+	height:auto;
+   	padding:10px;
     display: block;
+    opacity:1;
     border:1px solid rgb(63,81,181);
 }
 /* CSS for accordions ends here */
