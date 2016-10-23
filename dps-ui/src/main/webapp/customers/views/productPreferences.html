@@ -4,7 +4,7 @@
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
         <md-input-container flex="25">
-            <label>Customer</label>
+            <label>Select Customer</label>
             <md-select ng-model="customerShipmark" ng-change="createOtherCustomersList()">
                 <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
                     {{customer.name+" - "+customer.shipmark}}

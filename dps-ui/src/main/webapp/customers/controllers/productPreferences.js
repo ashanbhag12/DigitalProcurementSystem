@@ -17,7 +17,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.products = [];  
             $scope.customers; /* Object for storing customers list */
             $scope.otherCustomers = []; /* Object for storing customers list other than the selected customer */
-
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
 
             /* Function will be executed after the page is loaded */
