@@ -103,7 +103,15 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.setSupplierForUpdateOrderModal = function(index, data){
             	$scope.updatedOrder = data;
             	$scope.updatedOrderIndex = index;
-            }
+            };
+            
+            $scope.cancelUpdate = function(index){
+            	$scope.selectAll[index] = false;
+	            angular.forEach($scope.ordersData[index].orderDetails, function (order) {
+	            	order.isChecked = $scope.selectAll[index]
+	                $scope.accordionList["selectedRows" + index] = [];
+	            });
+            };
             
             $scope.updateOrder = function () {
             	angular.element(document.querySelector('.loader')).addClass('show');

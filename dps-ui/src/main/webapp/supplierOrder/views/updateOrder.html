@@ -81,7 +81,7 @@
 		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + data.id"></div>      
 		        <div layout='row' layout-align='end center' class='marginT10'>
 		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setSupplierForUpdateOrderModal($index, data)">UPDATE</md-button>
-		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
+		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelUpdate($index)">CANCEL</md-button>            
 		        </div>
 		    </div>
 		</div>
