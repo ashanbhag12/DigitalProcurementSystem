@@ -1,4 +1,4 @@
-angular.module('updateOrderApp', [])
+angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
         .controller('updateOrderController', function ($rootScope, $scope, $timeout, getUpdateSupplierOrderService, saveUpdateSupplierOrderService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
@@ -6,6 +6,8 @@ angular.module('updateOrderApp', [])
             $scope.errorMessage = "";
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
+            $scope.modalSortOrder = false; /* Set the default sort order in the popup*/
+            $scope.modalSortType = 'productCode'; /* Set the default sort type in the popup */
             $scope.maskColumns = true; /* Hide the columns */
             $scope.isAccordionOpen = false; /* Collapse all the accordions */
             $scope.editTables = {}; /* Object for inline editing in update order table */

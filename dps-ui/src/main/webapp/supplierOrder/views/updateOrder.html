@@ -47,13 +47,13 @@
 		                    <th>Received Qty.</th>
 		                    <th class="alignCenter">Action</th>
 		                    <th class="alignCenter">
-		                    	<md-checkbox type='checkbox' aria-label='Select  Order {{$index}}' class="md-primary"
+		                    	<md-checkbox type='checkbox' aria-label='Select  All Orders' class="md-primary"
 	                       			ng-model="selectAll[$index]" ng-change="toggleAll($index)"></md-checkbox>
 		                    </th>
 		            	</tr>
 		            </thead>
 		            <tbody>
-		                <tr dir-paginate="order in data.orderDetails | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index" pagination-id="">
+		                <tr dir-paginate="order in data.orderDetails | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:1 track by $index" pagination-id = "'_' + data.id">
 		                    <td>{{order.productCode}}</td>                    
 		                    <td ng-hide="maskColumns">{{order.customerInitials}}</td>   
 		                    <td>{{order.orderedQuantity}}</td>
@@ -72,13 +72,13 @@
 		                    </td>
 		                    <td class="alignCenter">
 		                    	<md-checkbox type='checkbox' ng-model="order.isChecked" name="isOrderChecked" ng-change="toggle($parent.$index, $index, order)"
-	                            	aria-label='Select All Rows' class='md-primary'></md-checkbox>
+	                            	aria-label='Select Row {{$index}}' class='md-primary'></md-checkbox>
 		                    </td>
 		                </tr>
 		            </tbody>
 		        </table> 
 		        <!-- Pagination Directive -->
-		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id=""></div>      
+		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + data.id"></div>      
 		        <div layout='row' layout-align='end center' class='marginT10'>
 		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setSupplierForUpdateOrderModal($index, data)">UPDATE</md-button>
 		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
@@ -98,17 +98,17 @@
 	            <thead>
 	                <tr>
 	                    <th>
-	                        <a tabindex="-1" ng-click="sortType = 'productCode';
-	                            sortOrder = !sortOrder">Product Code
-	                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
-	                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+	                        <a tabindex="-1" ng-click="modalSortType = 'productCode';
+	                            modalSortOrder = !modalSortOrder">Product Code
+	                            <span ng-show="modalSortType == 'productCode' && modalSortOrder">&#9662;</span>
+	                            <span ng-show="modalSortType == 'productCode' && !modalSortOrder">&#9652;</span>
 	                        </a>
 	                    </th>  
 	                    <th>
-	                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'customerInitials';
-	                            sortOrder = !sortOrder">Shipmark
-	                            <span ng-show="sortType == 'customerInitials' && sortOrder">&#9662;</span>
-	                            <span ng-show="sortType == 'customerInitials' && !sortOrder">&#9652;</span>
+	                    	<a href="javascript:;" tabindex="-1" ng-click="modalSortType = 'customerInitials';
+	                            modalSortOrder = !modalSortOrder">Shipmark
+	                            <span ng-show="modalSortType == 'customerInitials' && modalSortOrder">&#9662;</span>
+	                            <span ng-show="modalSortType == 'customerInitials' && !modalSortOrder">&#9652;</span>
 	                        </a>
                         </th>
 	                    <th>Ordered Qty.</th>
@@ -117,7 +117,7 @@
 	            	</tr>
 	            </thead>
 	            <tbody>
-	                <tr ng-repeat="order in updatedOrder.orderDetails | orderBy:sortType:sortOrder">
+	                <tr ng-repeat="order in updatedOrder.orderDetails | filter:{isChecked:true} | orderBy:modalSortType:modalSortOrder">
 	                    <td>{{order.productCode}}</td>                    
 	                    <td>{{order.customerInitials}}</td>  
 	                    <td>{{order.orderedQuantity}}</td>
