@@ -14,6 +14,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
             $scope.ordersData = [];
+            $scope.disabledUpdateBtn = false; /* Disable the Update button if orderDetails array is empty */
             $scope.updatedOrder; /* Object for updated order */
             $scope.updatedOrderIndex; /* Index for updated order */
             
@@ -102,13 +103,14 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             
             $scope.setSupplierForUpdateOrderModal = function(index, data){
             	$scope.updatedOrder = data;
-            	$scope.updatedOrderIndex = index;
+            	$scope.updatedOrderIndex = index;            	
             };
             
             $scope.cancelUpdate = function(index){
             	$scope.selectAll[index] = false;
 	            angular.forEach($scope.ordersData[index].orderDetails, function (order) {
-	            	order.isChecked = $scope.selectAll[index]
+	            	order.isChecked = $scope.selectAll[index];
+	            	order.receivedQuantity = 0; /* Reset the received quantity field to 0 */
 	                $scope.accordionList["selectedRows" + index] = [];
 	            });
             };
