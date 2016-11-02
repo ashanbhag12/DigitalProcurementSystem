@@ -493,12 +493,11 @@ md-datepicker {background: #FAFAFA;}
 .exportToPDF{
 	width: 35px;
     height: 45px;
-    margin-right: 20px;
 } 
 
 .scrollToTop{
 	position:fixed;
-    bottom: 25px;
+    bottom: 75px;
     right: 10px;
     background: url(../images/scrollToTop.png) no-repeat center center;
     background-size:18px;

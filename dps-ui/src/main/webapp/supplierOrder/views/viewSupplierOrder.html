@@ -1,1 +1,90 @@
-View supplier order page
+<div class="viewSupplierOrderPage">
+    <h3 class="md-headline sectionTitle">View Supplier Orders</h3>
+    <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
+    <div layout="row">
+    	<md-input-container flex="20">
+        	<label>Select Supplier</label>
+            <md-select ng-model="customerShipmark">
+                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
+                    {{customer.name+" - "+customer.shipmark}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex="20" flex-offset="5">
+            <label>Order Status</label>
+            <md-select ng-model="customerShipmark">
+                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
+                    {{customer.name+" - "+customer.shipmark}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <div class="datepickerContainer" flex="20">
+            <label>Start Date (DD/MM/YYYY)</label>
+            <div>
+                <md-datepicker ng-model="orderStartDate" md-placeholder="Start date" md-open-on-focus></md-datepicker>
+            </div>
+        </div>
+        <div class="datepickerContainer" flex="20">
+            <label>End Date (DD/MM/YYYY)</label>
+            <div>
+                <md-datepicker ng-model="orderEndDate" md-placeholder="End date" md-min-date="orderStartDate" md-open-on-focus></md-datepicker>
+            </div>
+        </div>
+        <div flex="20">
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
+	    </div>
+    </div>    
+    <div class="clearfix searchedResults" ng-show="searchedResults">	    
+	    <div class="clearfix searchTable marginB10">
+	    	<h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
+            <div class="floatR">
+	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+	        </div>
+        </div>
+        <table class="customTable">           
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
+                            sortOrder = !sortOrder">Product Code
+                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Pkg./Ctn.</th>                   
+                    <th>Product Description</th>
+                    <th>
+                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'supplierInitials';
+                            sortOrder = !sortOrder">Supplier Initials
+                            <span ng-show="sortType == 'supplierInitials' && sortOrder">&#9662;</span>
+                            <span ng-show="sortType == 'supplierInitials' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th class="alignCenter">
+            			<md-checkbox type='checkbox' aria-label='Select All Order' class="md-primary"
+                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
+            		</th>
+            	</tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
+                    <td>{{product.productCode}}</td> 
+                    <td>{{product.cartoonQuantity}}</td>                  
+                    <td>{{product.productDescription}}</td>
+                    <td>{{product.supplierInitials}}</td>
+                    <td class="alignCenter">
+                        <md-checkbox type='checkbox' ng-model="product.toExport" name="isProductChecked" ng-change="toggle(product)"
+                                 aria-label='Select Order {{$index}}' class='md-primary'></md-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
+        <div layout='row' layout-align='end center' class='marginT10'>
+        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="exportToPDF" title="Export to Excel"
+        	ng-disabled="excelDisabled" ng-class="{'disableControl':excelDisabled}" ng-click="excelDisabled || exportToExcel()" />            
+        </div>
+    </div>
+</div>

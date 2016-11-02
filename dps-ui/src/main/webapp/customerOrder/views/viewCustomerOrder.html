@@ -3,7 +3,7 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
-    	<md-input-container flex="25">
+    	<md-input-container flex="20">
         	<label>Select Customer</label>
             <md-select ng-model="customerShipmark">
                 <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
@@ -11,7 +11,7 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex="25" flex-offset="5">
+        <md-input-container class="md-block" flex="20" flex-offset="5">
             <label>Order Status</label>
             <md-select ng-model="customerShipmark">
                 <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
@@ -19,20 +19,20 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <div class="datepickerContainer" flex="25">
+        <div class="datepickerContainer" flex="20">
             <label>Start Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderStartDate" md-placeholder="Start date" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div class="datepickerContainer" flex="25">
+        <div class="datepickerContainer" flex="20">
             <label>End Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderEndDate" md-placeholder="End date" md-min-date="orderStartDate" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div>
-	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH</md-button>
+        <div flex="20">
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
