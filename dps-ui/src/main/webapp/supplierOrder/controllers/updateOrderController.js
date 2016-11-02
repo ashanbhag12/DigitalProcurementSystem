@@ -14,7 +14,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
             $scope.ordersData = [];
-            $scope.disabledUpdateBtn = false; /* Disable the Update button if orderDetails array is empty */
+            $scope.disabledUpdateBtn = true; /* Disable the Update button if orderDetails array is empty */
             $scope.updatedOrder; /* Object for updated order */
             $scope.updatedOrderIndex; /* Index for updated order */
             
@@ -42,6 +42,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
     	    $scope.toggleAll = function (index) {
     	        if ($scope.selectAll[index]) {
     	            $scope.selectAll[index] = true;
+    	            $scope.disabledUpdateBtn = false;
     	            $scope.accordionList["selectedRows" + index] = [];
     	            angular.forEach($scope.ordersData[index].orderDetails, function (order) {
     	            	order.isChecked = $scope.selectAll[index]
@@ -50,6 +51,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
     	        }
     	        else {
     	            $scope.selectAll[index] = false;
+    	            $scope.disabledUpdateBtn = true;
     	            angular.forEach($scope.ordersData[index].orderDetails, function (order) {
     	            	order.isChecked = $scope.selectAll[index]
     	                $scope.accordionList["selectedRows" + index] = [];
@@ -61,18 +63,24 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
     	    $scope.toggle = function (parentIndex, index, order) {
     	        if (order.isChecked) {
     	        	$scope.accordionList["selectedRows" + parentIndex].push(1);
+    	        	$scope.disabledUpdateBtn = false;
     	        }
     	        else {
     	        	$scope.accordionList["selectedRows" + parentIndex].pop();
     	        }
     	        if ($scope.ordersData[parentIndex].orderDetails.length === $scope.accordionList["selectedRows" + parentIndex].length) {
     	            $scope.selectAll[parentIndex] = true;
+    	            $scope.disabledUpdateBtn = true;
     	        }
     	        else {
     	        	$scope.selectAll[parentIndex] = false;
     	        }
     	        if ( $scope.accordionList["selectedRows" + parentIndex].length === 0) {
     	        	$scope.selectAll[parentIndex] = false;
+    	        	$scope.disabledUpdateBtn = true;
+    	        }
+    	        else{
+    	        	$scope.disabledUpdateBtn = false;
     	        }
     	    };
             
@@ -108,6 +116,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             
             $scope.cancelUpdate = function(index){
             	$scope.selectAll[index] = false;
+            	$scope.disabledUpdateBtn = true;
 	            angular.forEach($scope.ordersData[index].orderDetails, function (order) {
 	            	order.isChecked = $scope.selectAll[index];
 	            	order.receivedQuantity = 0; /* Reset the received quantity field to 0 */
