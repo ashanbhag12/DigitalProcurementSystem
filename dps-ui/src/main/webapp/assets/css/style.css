@@ -49,7 +49,7 @@ ul,ol{list-style:none;}
 .paddingB5{padding-bottom:5px;}
 
 .disableControl{
-    cursor: not-allowed;
+    cursor: not-allowed !important;
     opacity: 0.5;
     -moz-opacity: 0.5;
     background: #EBEBE4;
