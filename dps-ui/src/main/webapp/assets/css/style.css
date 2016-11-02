@@ -490,7 +490,7 @@ md-datepicker {background: #FAFAFA;}
 	background:#fff;
 }
 
-.exportToPDF{
+.pdfBtn, .excelBtn{
 	width: 35px;
     height: 45px;
 } 
