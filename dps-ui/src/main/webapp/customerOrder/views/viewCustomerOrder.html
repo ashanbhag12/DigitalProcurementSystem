@@ -110,10 +110,9 @@
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
         <div layout='row' layout-align='end center' class='marginT10'>
-        	<input type="image" src="./assets/images/pdf.png" alt="Export to PDF" class="exportToPDF" title="Export to PDF"
+        	<input type="image" src="./assets/images/pdf.png" alt="Generate Invoice" class="pdfBtn" title="Generate Invoice"
         	ng-disabled="pdfDisabled" ng-class="{'disableControl':pdfDisabled}" ng-click="pdfDisabled || exportToPDF()" />
-            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="saveProductDetails()">SAVE</md-button>
-            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelChanges()">CANCEL</md-button>            
+            <md-button type="button" class="md-raised md-primary submitBtn marginL25" ng-click="saveProductDetails()">SAVE</md-button>            
         </div>
     </div>
 </div>
