@@ -234,7 +234,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        	}, 500);
 	        }, function(){ /* Error Callback */
 	        	$timeout(function(){
-	        		$scope.errorMessage = "Customer not found. Please try again";
+	        		$scope.errorMessage = "Customer could not be found. Please try again after some time";
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        	}, 500);
 	        });

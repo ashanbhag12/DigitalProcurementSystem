@@ -35,6 +35,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                         	$scope.editTables["editTable"+i][j] = false;
                         }
                     }
+                    console.log($scope.ordersData);
                 });
             }); 
             

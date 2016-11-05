@@ -56,7 +56,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
                     		$scope.showErrorBox = true;
-	                		$scope.errorMessage = "Failed to change CPM for other customer with shipmark : "+$scopeotherCustomerShipmark;
+	                		$scope.errorMessage = "Failed to change CPM for other customer with shipmark : "+$scopeotherCustomerShipmark+". Please try again after some time";
 	                		$scope.showSuccessBox = false;
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);

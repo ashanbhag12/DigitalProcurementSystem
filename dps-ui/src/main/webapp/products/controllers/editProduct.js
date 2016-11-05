@@ -116,7 +116,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
-    	        		$scope.errorMessage = "Product not found. Please try again";
+    	        		$scope.errorMessage = "Product not found. Please try again after some time";
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        	}, 500);
     	        });
