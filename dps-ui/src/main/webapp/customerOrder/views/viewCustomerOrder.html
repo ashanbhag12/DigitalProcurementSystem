@@ -11,27 +11,19 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex="20" flex-offset="5">
-            <label>Order Status</label>
-            <md-select ng-model="customerShipmark">
-                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
-                    {{customer.name+" - "+customer.shipmark}}
-                </md-option>
-            </md-select>
-        </md-input-container>
-        <div class="datepickerContainer" flex="20">
+        <div class="datepickerContainer" flex="20" flex-offset="5">
             <label>Start Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderStartDate" md-placeholder="Start date" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div class="datepickerContainer" flex="20">
+        <div class="datepickerContainer" flex="20" flex-offset="5">
             <label>End Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderEndDate" md-placeholder="End date" md-min-date="orderStartDate" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div flex="20">
+        <div flex="20" flex-offset="5">
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
