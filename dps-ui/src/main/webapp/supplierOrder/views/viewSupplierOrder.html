@@ -4,10 +4,10 @@
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div layout="row">
     	<md-input-container flex="20">
-        	<label>Select Supplier</label>
-            <md-select ng-model="customerShipmark">
-                <md-option ng-repeat="customer in customers" value="{{customer.shipmark}}">
-                    {{customer.name+" - "+customer.shipmark}}
+        	<label>Supplier Initials</label>
+            <md-select ng-model="supplierInitials">
+                <md-option ng-repeat="supplier in suppliers" value="{{supplier.id}}">
+                    {{supplier.initials}}
                 </md-option>
             </md-select>
         </md-input-container>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div flex="20" flex-offset="5">
-	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getSupplierOrders()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    

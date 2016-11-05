@@ -1,6 +1,5 @@
 angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
-        .controller('viewSupplierOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService) {
+        .controller('viewSupplierOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getSupplierOrderService, getSuppliersService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -12,33 +11,33 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.excelDisabled = true; /* Disable the Excel button */
-            $scope.products = [];  
-            $scope.customers; /* Object for storing customers list */
+            $scope.suppliers = []; /* Array of all Suppliers */ 
+            $scope.supplierOrders; /* Object for all supplier orders */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {  
-            	/* WS call to fetch all customers*/
-            	getCustomersProductPreferencesService.query().$promise.then(function(data) {
-                	$scope.customers = data;
-                });
+            	/* WS call to fetch all suppliers */
+            	getSuppliersService.query().$promise.then(function(data) {
+            		$scope.suppliers = data;
+            	});
             });
             
             /* Function to search for Products */
-            $scope.getProductDetails = function () {
-                if ($scope.customerShipmark !== undefined) {
-                	$scope.maskColumns = true; /* Hide the columns */
+            $scope.getSupplierOrders = function () {
+                if ($scope.supplierInitials !== undefined) {
                 	angular.element(document.querySelector('.loader')).addClass('show');
-                	$scope.showSuccessBox = false;
                     /* Service Call to retrieve all products */
-                    $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
+                	$scope.supplierOrders = getSupplierOrderService.query({initials:$scope.supplierInitials}, function(){/* Success Callback */
                     	$timeout(function () {
+                    		console.log($scope.supplierOrders)
                             $scope.searchedResults = true;
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
+                    		console.log(error)
                     		$scope.showErrorBox = true;
-	                		$scope.errorMessage = "Product margin for Customer could not be retrieved. Please try after some time";
+	                		$scope.errorMessage = "Supplier order could not be retrieved. Please try after some time";
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
                     });
