@@ -7,13 +7,12 @@
 		    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
 		        <div class="md-toolbar-tools">
 		            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
-		            	Order placed on {{data.orderDate | date : "d-MMM-y"}} for supplier {{data.supplierInitials}}
+		            	Order placed on {{data.orderDate | date : "d-MMM-y"}} for Supplier {{data.supplierInitials}}
 	            	</h3>
 		        </div>
 		    </md-toolbar>
 		    <div class="accordionContent" ng-class="{active:isAccordionOpen}">	    
 			    <div class="clearfix searchTable marginB10">
-			    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">Supplier Initials: {{data.supplierInitials}}</h4>
 		            <div class="floatR">
 			            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 			        </div>
