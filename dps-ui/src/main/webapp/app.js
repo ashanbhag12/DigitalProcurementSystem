@@ -1,6 +1,6 @@
 'use strict';
 angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router', 
-                           'dashboardApp', 'addCustomerApp', 'editCustomerApp',
+                           'dashboardApp', 'addCustomerApp', 'editCustomerApp', 'allCPMsApp',
                            'addSupplierApp', 'editSupplierApp', 'addProductApp', 'editProductApp',
                            'productPreferencesApp', 'buildOrderApp', 'viewCustomerOrderApp',
                            'placeOrderApp', 'viewSupplierOrderApp', 'updateOrderApp'])
@@ -48,6 +48,12 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
                         url: "/productPreferences",
                         templateUrl: "customers/views/productPreferences.html",
                         controller: "productPreferencesController"
+                    })
+                    
+                    .state('allCPMs', {
+                        url: "/allCPMs",
+                        templateUrl: "customers/views/allCPMs.html",
+                        controller: "allCPMsController"
                     })
 
                     .state('addSupplier', {

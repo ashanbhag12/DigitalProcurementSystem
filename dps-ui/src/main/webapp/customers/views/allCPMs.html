@@ -1,0 +1,65 @@
+<div class="allCPMsPage" id="allCPMsPage">
+    <h3 class="md-headline sectionTitle">All CPMs</h3>
+    <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
+    <div layout="row">
+        <md-input-container class="md-block" flex="25">
+            <label>Product Code</label>
+            <input type='text' name="searchProductCode" ng-model="searchProductCode" ng-keypress="triggerSearchProduct($event)" />
+        </md-input-container>
+        <div flex-offset="5">
+            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
+        </div>
+    </div>    
+    <div class="clearfix searchedResults" ng-show="searchedResults">	    
+	    <div class="clearfix searchTable marginB10">
+            <div class="floatR">
+	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+	        </div>
+        </div>	    
+        <div class="clearfix">      
+            <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
+        </div>        
+        <div class="clearfix">    
+	        <table class="customTable">           
+	            <thead>
+	                <tr>
+	                    <th>
+	                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
+	                            sortOrder = !sortOrder">Product Code
+	                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+	                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+	                        </a>
+	                    </th>  
+	                    <th>Cartoon Qty.</th>
+	                    <th>CBM</th>
+	                    <th>Cost</th>
+	                    <th>Default Margin</th>                    
+	                    <th>Product Description</th>
+	                    <th>ID</th>
+	                    <th>Is Valid</th>
+	                    <th>Price Per Item</th>
+	                    <th>Weight</th>
+	                    <th>Dummy Code</th>
+	            	</tr>
+	            </thead>
+	            <tbody>
+	                <tr dir-paginate="product in products | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
+	                    <td>{{product.productCode}}</td>                    
+	                    <td>{{product.cartoonQuantity}}</td>    
+	                    <td>{{product.cbm}}</td>
+	                    <td>{{product.cost}}</td>
+	                    <td>{{product.defaultMargin}}</td>                    
+	                    <td>{{product.description}}</td>
+	                    <td>{{product.id}}</td>
+	                    <td>{{product.isValid}}</td>                   
+	                    <td>{{product.price}}</td>
+	                    <td>{{product.weight}}</td>
+	                    <td>{{product.dummyCode}}</td>
+	                </tr>
+	            </tbody>
+	        </table>
+        </div> 
+        <!-- Pagination Directive -->
+        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>
+    </div>    
+</div>
