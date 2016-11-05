@@ -6,7 +6,7 @@
     	<md-input-container flex="20">
         	<label>Supplier Initials</label>
             <md-select ng-model="supplierInitials">
-                <md-option ng-repeat="supplier in suppliers" value="{{supplier.id}}">
+                <md-option ng-repeat="supplier in suppliers" value="{{supplier.initials}}">
                     {{supplier.initials}}
                 </md-option>
             </md-select>
@@ -28,55 +28,68 @@
 	    </div>
     </div>    
     <div class="clearfix searchedResults" ng-show="searchedResults">	    
-	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
-            <div class="floatR">
-	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
-	        </div>
-        </div>
-        <table class="customTable">           
-            <thead>
-                <tr>
-                    <th>
-                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
-                            sortOrder = !sortOrder">Product Code
-                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
-                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
-                        </a>
-                    </th>
-                    <th>Pkg./Ctn.</th>                   
-                    <th>Product Description</th>
-                    <th>
-                    	<a href="javascript:;" tabindex="-1" ng-click="sortType = 'supplierInitials';
-                            sortOrder = !sortOrder">Supplier Initials
-                            <span ng-show="sortType == 'supplierInitials' && sortOrder">&#9662;</span>
-                            <span ng-show="sortType == 'supplierInitials' && !sortOrder">&#9652;</span>
-                        </a>
-                    </th>
-                    <th class="alignCenter">
-            			<md-checkbox type='checkbox' aria-label='Select All Order' class="md-primary"
-                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
-            		</th>
-            	</tr>
-            </thead>
-            <tbody>
-                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
-                    <td>{{product.productCode}}</td> 
-                    <td>{{product.cartoonQuantity}}</td>                  
-                    <td>{{product.productDescription}}</td>
-                    <td>{{product.supplierInitials}}</td>
-                    <td class="alignCenter">
-                        <md-checkbox type='checkbox' ng-model="product.toExport" name="isProductChecked" ng-change="toggle(product)"
-                                 aria-label='Select Order {{$index}}' class='md-primary'></md-checkbox>
-                    </td>
-                </tr>
-            </tbody>
-        </table> 
-        <!-- Pagination Directive -->
-        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
-        <div layout='row' layout-align='end center' class='marginT10'>
-        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel"
-        	ng-disabled="excelDisabled" ng-class="{'disableControl':excelDisabled}" ng-click="excelDisabled || exportToExcel()" />            
-        </div>
+	    <div class="accordionWrapper">
+		    <div class="md-accordion" ng-repeat="order in supplierOrders">
+			    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
+			        <div class="md-toolbar-tools">
+			            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
+			            	Order placed on {{order.orderDate | date : "d-MMM-y"}} for Supplier {{order.supplierInitials}}
+		            	</h3>
+			        </div>
+			    </md-toolbar>
+			    <div class="accordionContent" ng-class="{active:isAccordionOpen}">	    
+				    <div class="clearfix searchTable marginB10">
+			            <div class="floatR">
+				            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+				        </div>
+			        </div>    
+			        <div class="clearfix">
+			            <div class="floatR tableActions">
+			            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>
+			            </div>            
+			        </div>     
+			        <table class="customTable">           
+			            <thead>
+			                <tr>
+			                    <th>
+			                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
+			                            sortOrder = !sortOrder">Product Code
+			                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+			                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+			                        </a>
+			                    </th>  
+			                    <th ng-hide="maskColumns">Shipmark</th>
+			                    <th>Product Description</th>
+			                    <th>Ordered Qty.</th>
+			                    <th>Remarks</th>
+			                    <th class="alignCenter">
+			                    	<md-checkbox type='checkbox' aria-label='Select  All Orders' class="md-primary"
+		                       			ng-model="selectAll[$index]" ng-change="toggleAll($index)"></md-checkbox>
+			                    </th>
+			            	</tr>
+			            </thead>
+			            <tbody>
+			                <tr dir-paginate="product in order.details | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index" pagination-id = "'_' + order.id">
+			                    <td>{{product.productCode}}</td>                    
+			                    <td ng-hide="maskColumns">{{product.customerDetails}}</td> 
+			                    <td>{{product.productDescription}}</td>
+			                    <td>{{product.quantity}}</td>
+			                    <td>{{product.remarks}}</td>
+			                    <td class="alignCenter">
+			                    	<md-checkbox type='checkbox' ng-model="order.isChecked" name="isOrderChecked" ng-change="toggle($parent.$index, $index, order)"
+		                            	aria-label='Select Row {{$index}}' class='md-primary'></md-checkbox>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table> 
+			        <!-- Pagination Directive -->
+			        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + order.id"></div>      
+			        <div layout='row' layout-align='end center' class='marginT10'>
+			        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel"
+			        	ng-disabled="excelDisabled" ng-class="{'disableControl':excelDisabled}" ng-click="excelDisabled || exportToExcel()" />            
+			        </div>
+			    </div>
+			</div>
+		</div>
     </div>
 </div>

@@ -5,5 +5,6 @@ angular.module('viewSupplierOrderApp')
 	})
 
 	.factory('getSupplierOrderService', function ($resource) {
-	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplierorder/');
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplierorder/:supplierInitials/:startDate/:endDate', 
+	    		{supplierInitials:'@supplierInitials', startDate: "@startDate", endDate: "@startDate"});
 	})
