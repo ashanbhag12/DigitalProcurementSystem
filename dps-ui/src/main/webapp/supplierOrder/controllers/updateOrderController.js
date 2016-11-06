@@ -101,7 +101,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.editOrderDetails = function (parentIndex, index) {
             	$scope.editTables["editTable"+parentIndex][index] = true;
                 $timeout(function () {
-                	angular.element(document.querySelectorAll("input[name=receivedQuantity]")[parentIndex + index]).focus();
+                	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").eq(index).focus();
                 }, 100);
             };
 
