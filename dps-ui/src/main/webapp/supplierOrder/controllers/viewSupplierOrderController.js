@@ -1,5 +1,6 @@
 angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
-        .controller('viewSupplierOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getSupplierOrderService, getSuppliersService) {
+        .controller('viewSupplierOrderController', function ($scope, $rootScope, $timeout, smoothScroll, 
+        		getSupplierOrderService, getSuppliersService, exportToExcelService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -105,5 +106,34 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
                         }, 500);
                     });
                 }
-            };            
+            };
+            
+            /* Function to export Supplier Order to Excel */
+            $scope.exportToExcel = function(selectedOrder, selectedOrderIndex){
+            	angular.forEach(selectedOrder.details, function (product) {
+            		delete product.isChecked;
+	            });
+            	angular.element(document.querySelector('.loader')).addClass('show'); 
+    		    response = exportToExcelService.save(selectedOrder, function(){/* Success Callback */
+    		    	$timeout(function () {
+                        $scope.showSuccessBox = true;
+                        $scope.successMessage = "Supplier order exported to excel successfully"
+    				    $scope.showErrorBox = false;
+                        $scope.selectAll[selectedOrderIndex] = false;
+                        for (var i = 0; i < selectedOrder.details.length; i++) {
+                            $scope.editTables["editTable" + selectedOrderIndex][i] = false;
+                        }
+    				    angular.element(document.querySelector('.loader')).removeClass('show');
+    				    smoothScroll(document.getElementById("viewSupplierOrderPage")); /* Scroll to the form */
+                    }, 500);
+    		    }, function(error){/* Error Callback */    		    	
+    		    	$timeout(function () {
+    		    		$scope.showErrorBox = true; 
+        		    	$scope.errorMessage = "Supplier order could not be exported to excel. Please try again after some time."
+        		    	$scope.showSuccessBox = false;
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                        smoothScroll(document.getElementById("viewSupplierOrderPage")); /* Scroll to the form */
+                    }, 500);
+    		    });    		  
+            };
         }); 

@@ -1,4 +1,4 @@
-<div class="viewSupplierOrderPage">
+<div class="viewSupplierOrderPage" id="viewSupplierOrderPage">
     <h3 class="md-headline sectionTitle">View Supplier Orders</h3>
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
@@ -86,7 +86,7 @@
 			        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + order.id"></div>      
 			        <div layout='row' layout-align='end center' class='marginT10'>
 			        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel"
-			        	ng-disabled="excelDisabled[$index]" ng-class="{'disableControl':excelDisabled[$index]}" ng-click="excelDisabled[$index] || exportToExcel()" />            
+			        	ng-disabled="excelDisabled[$index]" ng-class="{'disableControl':excelDisabled[$index]}" ng-click="excelDisabled[$index] || exportToExcel(order, $index)" />            
 			        </div>
 			    </div>
 			</div>
