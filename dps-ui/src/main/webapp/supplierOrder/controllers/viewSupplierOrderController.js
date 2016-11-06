@@ -13,7 +13,7 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
             $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.excelDisabled = true; /* Disable the Excel button */
+            $scope.excelDisabled = []; /* Disable the Excel button */
             $scope.suppliers = []; /* Array of all Suppliers */ 
             $scope.supplierOrders = []; /* Object for all supplier orders */
             $scope.selectedOrder; /* Object for selected order */
@@ -28,61 +28,72 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             	});
             });
             
-            /* Function to select/unselect all the Products */
-    	    $scope.toggleAll = function () {
-    	        if ($scope.selectAll) {
-    	            $scope.selectAll = true;
-    	            $scope.excelDisabled = false;
-    	            $scope.selectedRows = [];
-    	            angular.forEach($scope.products.customerProductPrices, function (product) {
-    	            	product.toExport = $scope.selectAll;
-    	                $scope.selectedRows.push(1);
+            /* Function to select/unselect all the Orders from accordions */
+    	    $scope.toggleAll = function (index) {
+    	        if ($scope.selectAll[index]) {
+    	            $scope.selectAll[index] = true;
+    	            $scope.excelDisabled[index] = false;
+    	            $scope.accordionList["selectedRows" + index] = [];
+    	            angular.forEach($scope.supplierOrders[index].details, function (order) {
+    	            	order.isChecked = $scope.selectAll[index]
+    	                $scope.accordionList["selectedRows" + index].push(1);
     	            });
     	        }
     	        else {
-    	            $scope.selectAll = false;
-    	            $scope.excelDisabled = true;
-    	            angular.forEach($scope.products.customerProductPrices, function (product) {
-    	            	product.toExport = $scope.selectAll;
-    	                $scope.selectedRows = [];
+    	            $scope.selectAll[index] = false;
+    	            $scope.excelDisabled[index] = true;
+    	            angular.forEach($scope.supplierOrders[index].details, function (order) {
+    	            	order.isChecked = $scope.selectAll[index]
+    	                $scope.accordionList["selectedRows" + index] = [];
     	            });
     	        }
     	    };
-    	
-    	    /* Function to select/unselect the Product */
-    	    $scope.toggle = function (element) {
-    	        if (element.toExport) {
-    	            $scope.selectedRows.push(1);
-    	            $scope.excelDisabled = false;
+    	    
+    	    /* Function to select/unselect the Order from one accordion */
+    	    $scope.toggle = function (parentIndex, index, product) {
+    	        if (product.isChecked) {
+    	        	$scope.accordionList["selectedRows" + parentIndex].push(1);
+    	        	$scope.excelDisabled[parentIndex] = false;
     	        }
     	        else {
-    	            $scope.selectedRows.pop();
+    	        	$scope.accordionList["selectedRows" + parentIndex].pop();
     	        }
-    	        if ($scope.products.customerProductPrices.length === $scope.selectedRows.length) {
-    	            $scope.selectAll = true;
+    	        if ($scope.supplierOrders[parentIndex].details.length === $scope.accordionList["selectedRows" + parentIndex].length) {
+    	            $scope.selectAll[parentIndex] = true;
+    	            $scope.excelDisabled[parentIndex] = true;
     	        }
     	        else {
-    	            $scope.selectAll = false;
+    	        	$scope.selectAll[parentIndex] = false;
     	        }
-    	        if ($scope.selectedRows.length === 0) {
-    	        	$scope.excelDisabled = true;
+    	        if ( $scope.accordionList["selectedRows" + parentIndex].length === 0) {
+    	        	$scope.selectAll[parentIndex] = false;
+    	        	$scope.excelDisabled[parentIndex] = true;
     	        }
     	        else{
-    	            $scope.excelDisabled = false;
+    	        	$scope.excelDisabled[parentIndex] = false;
     	        }
     	    };
             
             /* Function to search for Products */
             $scope.getSupplierOrders = function () {
-                console.log(Date.parse($scope.orderStartDate))
-                console.log(Date.parse($scope.orderEndDate))
                 if ($scope.supplierInitials !== undefined) {
                 	angular.element(document.querySelector('.loader')).addClass('show');
                     /* Service Call to retrieve all products */
                 	$scope.supplierOrders = getSupplierOrderService.query({supplierInitials:$scope.supplierInitials, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){/* Success Callback */
                     	$timeout(function () {
                     		console.log($scope.supplierOrders)
-                            $scope.searchedResults = true;
+                    		$scope.searchedResults = true;
+                    		/* Create array for toggleAll inside accordionList object */
+		                    for (var i = 0; i < $scope.supplierOrders.length; i++) {
+		                    	$scope.accordionList["selectedRows" + i] = [];
+		                    	$scope.editTables["editTable" + i] = [];
+		                    	$scope.selectAll[i] = false;                	
+		                    	$scope.excelDisabled[i] = true;
+		                    	/* Set variable for inline editing in update order table */
+		                        for (var j = 0; j < $scope.supplierOrders[i].details.length; j++) {
+		                        	$scope.editTables["editTable"+i][j] = false;
+		                        }
+		                    }                            
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
                     }, function(error){/* Error Callback */
@@ -94,6 +105,5 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
                         }, 500);
                     });
                 }
-            };
-            
+            };            
         }); 
