@@ -35,7 +35,6 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                         	$scope.editTables["editTable"+i][j] = false;
                         }
                     }
-                    console.log($scope.ordersData);
                 });
             }); 
             
@@ -112,7 +111,9 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             
             $scope.setSupplierForUpdateOrderModal = function(index, data){
             	$scope.updatedOrder = data;
-            	$scope.updatedOrderIndex = index;            	
+            	$scope.updatedOrderIndex = index;
+            	console.log($scope.ordersData)
+            	console.log($scope.updatedOrder)
             };
             
             $scope.cancelUpdate = function(index){
@@ -127,6 +128,10 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             
             $scope.updateOrder = function () {
             	angular.element(document.querySelector('.loader')).addClass('show');
+            	angular.forEach($scope.updatedOrder.orderDetails, function (product) {
+            		delete product.isChecked;
+	            });
+            	console.log($scope.updatedOrder)
             	saveUpdateSupplierOrderService.save($scope.ordersData, function(){ /* Success Callback */    		    	
                     $timeout(function () {
                     	$scope.ordersData = getUpdateSupplierOrderService.query();
