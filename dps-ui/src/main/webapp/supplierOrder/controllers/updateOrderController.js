@@ -137,7 +137,8 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                     $timeout(function () {
                     	$scope.ordersData = getUpdateSupplierOrderService.query();
                     	$scope.showSuccessBox = true;
-                        $scope.successMessage = "Order updated successfully"
+                    	$scope.successMessage = "Order placed for Supplier " + $scope.updatedOrder.supplierInitials + " updated successfully"
+                    	//$scope.successMessage = "Order placed on " + $scope.updatedOrder.toString('d-MMM-y') + " for Supplier " + $scope.updatedOrder.supplierInitials + " updated successfully"
     				    $scope.showErrorBox = false;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {

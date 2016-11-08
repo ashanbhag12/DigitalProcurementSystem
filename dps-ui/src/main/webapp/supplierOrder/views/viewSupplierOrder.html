@@ -33,7 +33,7 @@
 			    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
 			        <div class="md-toolbar-tools">
 			            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
-			            	Order placed on {{order.orderDate | date : "d-MMM-y"}} for Supplier {{order.supplierInitials}}
+			            	Order placed for Supplier {{order.supplierInitials}} on {{order.orderDate | date : "d-MMM-y"}} 
 		            	</h3>
 			        </div>
 			    </md-toolbar>
