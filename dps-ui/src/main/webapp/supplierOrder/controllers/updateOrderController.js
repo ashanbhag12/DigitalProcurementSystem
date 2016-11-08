@@ -35,7 +35,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                         	$scope.editTables["editTable"+i][j] = false;
                         }
                     }
-                    console.log($scope.ordersData)
+                    console.log($scope.ordersData);                    
                 });
             }); 
             
@@ -144,6 +144,9 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
                         } 
+                        $timeout(function () {/* Open the updated order accordion */
+                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                        }, 100);                        
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
