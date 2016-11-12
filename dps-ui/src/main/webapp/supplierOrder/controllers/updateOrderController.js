@@ -13,7 +13,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.editTables = {}; /* Object for inline editing in update order table */
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
-            $scope.ordersData = [];
+            $scope.ordersData = []; /* All orders object */
             $scope.disabledUpdateBtn = true; /* Disable the Update button if orderDetails array is empty */
             $scope.updatedOrder; /* Object for updated order */
             $scope.updatedOrderIndex; /* Index for updated order */
@@ -113,8 +113,16 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.setSupplierForUpdateOrderModal = function(index, data){
             	$scope.updatedOrder = data;
             	$scope.updatedOrderIndex = index;
-            	console.log($scope.ordersData)
-            	console.log($scope.updatedOrder)
+            	console.log($scope.ordersData);
+            	
+            	/* Set the received quantity field to 0 for unselected products */
+                angular.forEach($scope.ordersData, function (order, orderIndex) {                	
+                	if(orderIndex != $scope.updatedOrderIndex){
+		            	angular.forEach(order.orderDetails, function (product) {
+			            	product.receivedQuantity = 0; 
+			            });
+                	}
+	            });
             };
             
             $scope.cancelUpdate = function(index){
@@ -138,7 +146,6 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                     	$scope.ordersData = getUpdateSupplierOrderService.query();
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Order placed for Supplier " + $scope.updatedOrder.supplierInitials + " updated successfully"
-                    	//$scope.successMessage = "Order placed on " + $scope.updatedOrder.toString('d-MMM-y') + " for Supplier " + $scope.updatedOrder.supplierInitials + " updated successfully"
     				    $scope.showErrorBox = false;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
