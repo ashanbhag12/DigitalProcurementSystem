@@ -552,3 +552,20 @@ md-datepicker {background: #FAFAFA;}
 	min-width:750px;
 	max-width:750px;
 }
+
+.CPMTable .customTable{
+    float: left;
+    width:initial;
+}
+
+.CPMTable .customTable thead th {
+    height:30px;
+    white-space: nowrap
+}
+
+.CPMTable .rightDiv{
+    overflow-x: auto;
+    width:945px;
+    min-width:945px;
+    max-width:945px;
+}
