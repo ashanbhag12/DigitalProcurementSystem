@@ -62,10 +62,6 @@
 			                    <th>Product Description</th>
 			                    <th>Ordered Qty.</th>
 			                    <th>Remarks</th>
-			                    <th class="alignCenter">
-			                    	<md-checkbox type='checkbox' aria-label='Select  All Orders' class="md-primary"
-		                       			ng-model="selectAll[$index]" ng-change="toggleAll($index)"></md-checkbox>
-			                    </th>
 			            	</tr>
 			            </thead>
 			            <tbody>
@@ -75,18 +71,13 @@
 			                    <td>{{product.productDescription}}</td>
 			                    <td>{{product.quantity}}</td>
 			                    <td>{{product.remarks}}</td>
-			                    <td class="alignCenter">
-			                    	<md-checkbox type='checkbox' ng-model="product.isChecked" name="isProductChecked" ng-change="toggle($parent.$index, $index, product)"
-		                            	aria-label='Select Row {{$index}}' class='md-primary'></md-checkbox>
-			                    </td>
 			                </tr>
 			            </tbody>
 			        </table> 
 			        <!-- Pagination Directive -->
 			        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + order.id"></div>      
 			        <div layout='row' layout-align='end center' class='marginT10'>
-			        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel"
-			        	ng-disabled="excelDisabled[$index]" ng-class="{'disableControl':excelDisabled[$index]}" ng-click="excelDisabled[$index] || exportToExcel(order, $index)" />            
+			        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel" ng-click="exportToExcel(order, $index)" />            
 			        </div>
 			    </div>
 			</div>

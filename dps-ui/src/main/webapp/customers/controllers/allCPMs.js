@@ -18,14 +18,12 @@ angular.module('allCPMsApp', ['angularUtils.directives.dirPagination', 'smoothSc
     	        		$scope.searchedResults = true;
     	                $scope.showErrorBox = false;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        		console.log($scope.products)
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
     	        		$scope.searchedResults = false;
     	                $scope.showErrorBox = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        		console.log($scope.customers)
     	        	}, 500);
     	        });
             };
