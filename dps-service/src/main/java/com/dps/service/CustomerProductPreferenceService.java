@@ -30,4 +30,11 @@ public interface CustomerProductPreferenceService extends BaseService<CustomerPr
 	 * @return {@link List} of {@link CustomerProductPreference} objects that are present for that customer.
 	 */
 	List<CustomerProductPreference> findAllPreferencesForCustomer(Long id);
+	
+	/**
+	 * Returns {@link Map} of {@link Long} the customer id and {@link BigDecimal} the discount for the customer for the specified product id.
+	 * @param productId - The product Id for which all customer preferences are to be fetched.
+	 * @return {@link Map} of {@link Long} the customer id and {@link BigDecimal} the discount for the customer for the specified product id.
+	 */
+	Map<Long, BigDecimal> findAllCustomerPreferencesForProduct(Long productId);
 }

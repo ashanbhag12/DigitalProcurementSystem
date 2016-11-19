@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -34,9 +36,13 @@ import com.dps.domain.constants.CustomerOrderStatus;
  */
 @Entity
 @Table(name="DPS_CUST_ORDR")
+@NamedQueries({
+	@NamedQuery(name=CustomerOrder.GET_CUSTOMER_ORDERS, query="SELECT o.id from CustomerOrder o where o.customer.shipmark = :shipmark and o.orderDate between :startDate and :endDate")
+})
 public class CustomerOrder extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
+	public static final String GET_CUSTOMER_ORDERS = "CustomerOrder.getCustomerOrders";
 	
 	@Id
 	@TableGenerator(name="DPS_CUST_ORDR_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",

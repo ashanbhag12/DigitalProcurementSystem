@@ -59,4 +59,10 @@ public class CustomerProductPreferenceServiceImpl extends BaseServiceImpl<Custom
 		return customerProductPreferenceDao.findAllPreferencesForCustomer(id);
 	}
 
+	@Override
+	public Map<Long, BigDecimal> findAllCustomerPreferencesForProduct(Long productId)
+	{
+		return customerProductPreferenceDao.findAllCustomerPreferencesForProduct(productId);
+	}
+
 }

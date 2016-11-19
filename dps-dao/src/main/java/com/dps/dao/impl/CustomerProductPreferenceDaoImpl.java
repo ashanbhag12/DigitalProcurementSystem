@@ -56,4 +56,22 @@ public class CustomerProductPreferenceDaoImpl extends BaseDaoImpl<CustomerProduc
 		return custProdPrefList;
 	}
 
+	@Override
+	public Map<Long, BigDecimal> findAllCustomerPreferencesForProduct(Long productId)
+	{
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("productId", productId);
+		
+		List<JpaEntityId> idList = findAllByNamedQuery(CustomerProductPreference.GET_PREFERENCES_FOR_PRODUCT, parameters);
+		List<CustomerProductPreference> custProdPrefList =  findAll(idList);
+		
+		Map<Long, BigDecimal> custPreferences = new HashMap<>();
+		for(CustomerProductPreference custProdPref : custProdPrefList)
+		{
+			custPreferences.put(custProdPref.getCustomer().getId(), custProdPref.getDiscountPrcentage());
+		}
+		
+		return custPreferences;
+	}
+
 }

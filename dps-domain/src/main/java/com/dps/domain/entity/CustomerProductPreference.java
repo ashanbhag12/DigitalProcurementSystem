@@ -27,12 +27,14 @@ import javax.persistence.TableGenerator;
 @Entity
 @Table(name = "DPS_CUST_PROD_PREF")
 @NamedQueries({
-	@NamedQuery(name=CustomerProductPreference.GET_PREFERENCES_FOR_CUSTOMER, query="SELECT C.id FROM CustomerProductPreference C where C.customer.id = :id")
+	@NamedQuery(name=CustomerProductPreference.GET_PREFERENCES_FOR_CUSTOMER, query="SELECT C.id FROM CustomerProductPreference C where C.customer.id = :id"),
+	@NamedQuery(name=CustomerProductPreference.GET_PREFERENCES_FOR_PRODUCT, query="SELECT c.id FROM CustomerProductPreference c where c.product.id = :productId")
 })
 public class CustomerProductPreference extends EntityBase
 {
 	private static final long serialVersionUID = 1L;
 	public static final String GET_PREFERENCES_FOR_CUSTOMER = "CustomerProductPreference.GetPreferencesForCustomer";
+	public static final String GET_PREFERENCES_FOR_PRODUCT = "CustomerProductPreference.GetPreferencesForProduct";
 	
 	@Id
 	@TableGenerator(name="DPS_CUST_PROD_PREF_ID", table="DPS_ID_GEN", pkColumnName="GEN_NAME",
