@@ -11,17 +11,13 @@
 	            	</h3>
 		        </div>
 		    </md-toolbar>
-		    <div class="accordionContent" ng-class="{active:isAccordionOpen}">	    
-			    <div class="clearfix searchTable marginB10">
-		            <div class="floatR">
-			            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
-			        </div>
-		        </div>    
-		        <div class="clearfix">
+		    <div class="accordionContent" ng-class="{active:isAccordionOpen}">  
+		        <div class="clearfix searchTable">
 		            <div class="floatR tableActions">
 		            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>             
 		                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAll($index)">Edit All</a>
 		                <a href="javascript:;" tabindex="-1" class="saveBtn" ng-click="saveAll($index)">Save All</a>
+		                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
 		            </div>            
 		        </div>     
 		        <table class="customTable">           

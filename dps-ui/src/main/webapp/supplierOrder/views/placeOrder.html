@@ -3,14 +3,12 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox">Order exported to excel successfully</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">Order could not be exported to excel. Please try again after some time</div>
     <div class="animateMessages infoBox" ng-show="showInfoBox">Please wait while we import order to excel</div>
-    <div class="clearfix marginT15">
-        <div class="clearfix searchTable marginB10">            
+    <div class="clearfix">
+        <div class="clearfix searchTable">
+            <h4 class="floatL searchResultsTitle">Products pending to be ordered: {{products.length}}</h4>
             <div class="floatR">
                 <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
             </div>
-        </div>
-        <div class="clearfix">
-            <h4 class="floatL inlineBlock paddingT5 paddingB5">Products pending to be ordered: {{products.length}}</h4>
         </div>
         <table class="customTable">           
             <thead>
