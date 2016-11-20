@@ -16,18 +16,14 @@
 	    </div>
     </div>
     <div class="clearfix marginT15 searchedResults" ng-show="searchedResults">
-        <div class="clearfix searchTable marginB10">            
-            <div class="floatR">
-                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
-            </div>
-        </div>
-        <div class="clearfix">
-            <h4 class="floatL inlineBlock paddingT5">Search results: {{suppliers.length}}</h4>
+        <div class="clearfix searchTable">
+            <h4 class="floatL searchResultsTitle">Search results: {{suppliers.length}}</h4>
             <div class="floatR tableActions">
                 <a href="javascript:;" tabindex="-1"  class="editBtn" ng-click="editDisabled || edit($index, $event)" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" tabindex="-1"  class="deleteBtn" ng-click="deleteDisabled || showModal('deleteSupplierModal')" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
+               	<input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
             </div>
         </div>
         <table class="customTable">           
