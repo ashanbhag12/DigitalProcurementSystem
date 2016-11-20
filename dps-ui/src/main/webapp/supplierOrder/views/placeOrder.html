@@ -68,8 +68,48 @@
         <h4>Confirm Place Order</h4>
     </div>
     <div class="modalContent">
-    	<img alt="Alert" src="./assets/images/alert.png" align="middle" />
-    	<strong>Caution!</strong> Are you sure you want to place the order?
+    	<div>Below is the list of products you have selected to order:</div> 
+    	<div class="marginT15 marginB15">
+    		<table class="customTable">           
+            <thead>
+                <tr>  
+                    <th>
+                        <a href="javascript:;" ng-click="modalSortType = 'supplierInitials';
+                            modalSortOrder = !modalSortOrder">Supplier Initials
+                            <span ng-show="modalSortType == 'supplierInitials' && modalSortOrder">&#9662;</span>
+                            <span ng-show="modalSortType == 'supplierInitials' && !modalSortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Supplier Product Code</th>
+                    <th>Customers</th>                    
+                    <th>
+                        <a href="javascript:;" ng-click="modalSortType = 'productCode';
+                            modalSortOrder = !modalSortOrder">Product Code
+                            <span ng-show="modalSortType == 'productCode' && modalSortOrder">&#9662;</span>
+                            <span ng-show="modalSortType == 'productCode' && !modalSortOrder">&#9652;</span>
+                        </a>
+                    </th>
+                    <th>Product Description</th>
+                    <th>MOQ</th>
+                    <th>Cartoon</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in products | filter:{toOrder:true} | orderBy:modalSortType:modalSortOrder">                                        
+                    <td>{{product.supplierInitials}}</td>
+                    <td>{{product.supplierProductCode}}</td>
+                    <td>{{product.customerDetails}}</td>
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.productDescription}}</td>
+                    <td>{{product.moq}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.remarks}}</td>
+                </tr>
+            </tbody>
+        </table> 
+    	</div>
+    	<div><strong>Caution!</strong> Are you sure you want to place the order?</div>
    	</div>
     <div class="modalFooter">
         <md-button type="button" class="md-raised md-primary" ng-click="placeOrder()">YES</md-button>

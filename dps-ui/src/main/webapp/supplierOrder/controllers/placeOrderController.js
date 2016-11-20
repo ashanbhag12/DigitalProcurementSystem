@@ -5,6 +5,8 @@ angular.module('placeOrderApp', [])
             $scope.showInfoBox = false; /* Hide the Info box */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
+            $scope.modalSortOrder = false; /* Set the default sort order in the popup*/
+            $scope.modalSortType = 'productCode'; /* Set the default sort type in the popup */
             $scope.selectedRows = []; /* Array for toggleAll function */
             $scope.products = []; /* Object containing all products data */
             $scope.selectAll = false; /* Set toggle all to false */
