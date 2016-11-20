@@ -11,23 +11,27 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <div class="datepickerContainer" flex="20" flex-offset="5">
+        <div class="datepickerContainer" flex="20">
             <label>Start Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderStartDate" md-placeholder="Start date" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div class="datepickerContainer" flex="20" flex-offset="5">
+        <div class="datepickerContainer" flex="20">
             <label>End Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderEndDate" md-placeholder="End date" md-min-date="orderStartDate" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div flex="20" flex-offset="5">
+        <div flex="20">
+	        <md-button type="button" class="md-raised md-primary" ng-click="setSearchDate(3)">3M</md-button>
+	        <md-button type="button" class="md-raised md-primary" ng-click="setSearchDate(6)">6M</md-button>
+	    </div>
+        <div flex="20">
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getSupplierOrders()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
-    <div class="clearfix searchedResults" ng-show="searchedResults">	    
+    <div class="clearfix searchedResults marginT15" ng-show="searchedResults">	    
 	    <div class="accordionWrapper">
 		    <div class="md-accordion" ng-repeat="order in supplierOrders">
 			    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
@@ -37,15 +41,11 @@
 		            	</h3>
 			        </div>
 			    </md-toolbar>
-			    <div class="accordionContent" ng-class="{active:isAccordionOpen}">	    
-				    <div class="clearfix searchTable marginB10">
-			            <div class="floatR">
-				            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
-				        </div>
-			        </div>    
-			        <div class="clearfix">
+			    <div class="accordionContent" ng-class="{active:isAccordionOpen}">  
+			        <div class="clearfix searchTable">
 			            <div class="floatR tableActions">
 			            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>
+		            	 	<input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
 			            </div>            
 			        </div>     
 			        <table class="customTable">           

@@ -11,19 +11,23 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <div class="datepickerContainer" flex="20" flex-offset="5">
+        <div class="datepickerContainer" flex="20">
             <label>Start Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderStartDate" md-placeholder="Start date" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div class="datepickerContainer" flex="20" flex-offset="5">
+        <div class="datepickerContainer" flex="20">
             <label>End Date (DD/MM/YYYY)</label>
             <div>
                 <md-datepicker ng-model="orderEndDate" md-placeholder="End date" md-min-date="orderStartDate" md-open-on-focus></md-datepicker>
             </div>
         </div>
-        <div flex="20" flex-offset="5">
+        <div flex="20">
+	        <md-button type="button" class="md-raised md-primary" ng-click="setSearchDate(3)">3M</md-button>
+	        <md-button type="button" class="md-raised md-primary" ng-click="setSearchDate(6)">6M</md-button>
+	    </div>
+        <div flex="20">
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
 	    </div>
     </div>    

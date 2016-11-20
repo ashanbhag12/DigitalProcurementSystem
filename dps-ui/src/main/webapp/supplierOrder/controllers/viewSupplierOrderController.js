@@ -21,6 +21,17 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             	});
             });
             
+            /* Function to set search date to past 3/6 months */
+            $scope.setSearchDate = function(monthsToAdd){
+            	$scope.orderEndDate = new Date();
+            	if(monthsToAdd === 3){
+            		$scope.orderStartDate = new Date(new Date().setMonth(new Date().getMonth() - 3));
+            	}
+            	else{            		
+            		$scope.orderStartDate = new Date(new Date().setMonth(new Date().getMonth() - 6));
+            	}
+            };
+            
             /* Function to search for Products */
             $scope.getSupplierOrders = function () {
                 if ($scope.supplierInitials !== undefined) {
