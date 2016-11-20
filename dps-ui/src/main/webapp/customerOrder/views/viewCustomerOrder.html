@@ -31,19 +31,17 @@
 	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
-    <div class="clearfix searchedResults" ng-show="searchedResults">	    
-	    <div class="clearfix searchTable marginB10">
-	    	<h4 class="floatL inlineBlock paddingT5" ng-hide="maskColumns">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>
-            <div class="floatR">
-	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
+    <div class="clearfix searchedResults marginT15" ng-show="searchedResults">   
+        <div class="clearfix searchTable"> 
+        	<div class="floatL searchResultsTitle">
+	        	<h4 class="inlineBlock">Search results: {{products.customerProductPrices.length}}</h4> 
+	        	<h4 class="inlineBlock marginL25" ng-hide="maskColumns">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>    
 	        </div>
-        </div>	    
-        <div class="clearfix">      
-            <h4 class="floatL inlineBlock paddingT5">Search results: {{products.customerProductPrices.length}}</h4>
             <div class="floatR tableActions">
             	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>             
                 <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAll($event)">Edit All</a>
                 <a href="javascript:;" tabindex="-1" class="saveBtn" ng-click="saveAll($event)">Save All</a>
+                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
             </div>            
         </div>        
         <table class="customTable">           

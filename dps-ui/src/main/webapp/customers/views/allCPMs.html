@@ -10,14 +10,12 @@
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="searchProduct()">SEARCH</md-button>
         </div>
     </div>    
-    <div class="clearfix searchedResults" ng-show="searchedResults">	    
-	    <div class="clearfix searchTable marginB10">
+    <div class="clearfix searchedResults" ng-show="searchedResults">    
+        <div class="clearfix searchTable">      
+            <h4 class="floatL searchResultsTitle">Search results: {{products.length}}</h4>
             <div class="floatR">
 	            <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" /> 
 	        </div>
-        </div>	    
-        <div class="clearfix">      
-            <h4 class="floatL inlineBlock paddingT5">Search results: {{products.length}}</h4>
         </div>        
         <div class="CPMTable clearfix">
         	<div>
