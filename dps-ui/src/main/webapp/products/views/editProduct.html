@@ -51,7 +51,7 @@
             	</tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
+                <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
                     <td>{{product.productCode}}</td>
                     <td>{{getSupplierPrices(product.supplierProductInfoList)}}</td>
                     <td>{{product.cartoonQuantity}}</td>

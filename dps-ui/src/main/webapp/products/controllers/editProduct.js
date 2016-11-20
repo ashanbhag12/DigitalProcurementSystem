@@ -16,6 +16,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.searchProductCode = ''; /* Code for product search */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.maskColumns = true; /* Hide the columns */ 
+            var scrollOptions = { /* Set offset to scroll to search table */
+            	    offset: -185,
+            	}
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
@@ -113,11 +116,13 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
-    	        	}, 500);
+    	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
+    	        	}, 500);    	        	
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
     	        		$scope.errorMessage = "Product not found. Please try again after some time";
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        		smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     	        	}, 500);
     	        });
             };
