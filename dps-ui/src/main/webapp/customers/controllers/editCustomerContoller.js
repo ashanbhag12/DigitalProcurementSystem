@@ -33,6 +33,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    state: "",
 		    zip: ""
 	    };
+	    var scrollOptions = { /* Set offset to scroll to search table */
+        	    offset: -200,
+        	}
 	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {});
@@ -231,6 +234,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        	$timeout(function(){	        		
 	        		$scope.searchedResults = true;
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
+	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
 	        	}, 500);
 	        }, function(){ /* Error Callback */
 	        	$timeout(function(){
