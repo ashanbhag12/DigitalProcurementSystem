@@ -26,7 +26,7 @@
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="setOtherCustomerCPM()">APPLY</md-button>
         </div>
     </div>    
-    <div class="clearfix searchedResults" ng-show="searchedResults">    
+    <div class="clearfix searchedResults marginT15" ng-show="searchedResults">    
         <div class="clearfix searchTable">   
         	<div class="floatL searchResultsTitle">	        	   
 	            <h4 class="inlineBlock">Search results: {{products.customerProductPrices.length}}</h4>
@@ -66,7 +66,7 @@
             	</tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
+                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
                     <td>{{product.productCode}}</td>                    
                     <td ng-hide="maskColumns">{{product.productPrice}}</td>    
                     <td>{{product.cartoonQuantity}}</td>

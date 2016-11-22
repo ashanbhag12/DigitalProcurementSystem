@@ -18,6 +18,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.customers; /* Object for storing customers list */
             $scope.otherCustomers = []; /* Object for storing customers list other than the selected customer */
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
+            var scrollOptions = { /* Set offset to scroll to search table */
+            	    offset: -175,
+            	};
 
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {
@@ -78,6 +81,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                             angular.forEach($scope.products.customerProductPrices, function (product, index) {
                         		$scope.updateProductDetails(index, product);
                         	});
+                            smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {

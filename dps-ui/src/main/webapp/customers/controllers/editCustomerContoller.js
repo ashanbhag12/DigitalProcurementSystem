@@ -35,7 +35,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    };
 	    var scrollOptions = { /* Set offset to scroll to search table */
         	    offset: -200,
-        	}
+        	};
 	    
 	    /* Function will be executed after the page is loaded */
 	    $scope.$on('$viewContentLoaded', function () {});

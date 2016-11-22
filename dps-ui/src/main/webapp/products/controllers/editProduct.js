@@ -18,7 +18,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.maskColumns = true; /* Hide the columns */ 
             var scrollOptions = { /* Set offset to scroll to search table */
             	    offset: -185,
-            	}
+            	};
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {   
