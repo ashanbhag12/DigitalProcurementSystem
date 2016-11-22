@@ -16,12 +16,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             $scope.searchSupplierName = ''; /* Name for supplier search */
             $scope.searchSupplierInitials = ''; /* Initials for supplier search */
             $scope.selectAll = false; /* Set toggle all to false */
-            /* Function will be executed after the page is loaded */
-            $scope.$on('$viewContentLoaded', function () {
-            });
-
-            /* Supplier object to be edited */
-            /* changed name from editSupplier with supplier because it was conflicting with form name*/
             $scope.supplier = {/* Supplier Object */
                 "id": "",
                 "name": "",
@@ -29,6 +23,12 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 "phoneNumber": "",
                 "emailId": ""
             };
+            var scrollOptions = { /* Set offset to scroll to search table */
+            	    offset: -200,
+            	};
+            
+            /* Function will be executed after the page is loaded */
+            $scope.$on('$viewContentLoaded', function () {});
 
             /* Function to select/unselect all the Suppliers */
             $scope.toggleAll = function () {
@@ -193,6 +193,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
+    	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
