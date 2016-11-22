@@ -65,7 +65,7 @@
 			            	</tr>
 			            </thead>
 			            <tbody>
-			                <tr dir-paginate="product in order.details | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index" pagination-id = "'_' + order.id">
+			                <tr dir-paginate="product in order.details | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index" pagination-id = "'_' + order.id">
 			                    <td>{{product.productCode}}</td>                    
 			                    <td ng-hide="maskColumns">{{product.customerDetails}}</td> 
 			                    <td>{{product.productDescription}}</td>

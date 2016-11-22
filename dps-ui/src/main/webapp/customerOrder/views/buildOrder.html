@@ -123,7 +123,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:20 track by $index" pagination-id="addedProductsList">
+                <tr dir-paginate="product in productsList | orderBy:sortType:sortOrder | itemsPerPage:15 track by $index" pagination-id="addedProductsList">
                     <td>{{product.productCode}}</td>
                     <td>{{product.selectedSupplierInitials}}</td>
                     <td>{{product.unitCost | currency:"Rs."}}</td>

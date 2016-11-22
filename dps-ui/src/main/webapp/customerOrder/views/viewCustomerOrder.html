@@ -71,7 +71,7 @@
             	</tr>
             </thead>
             <tbody>
-                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:20 track by $index">
+                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
                     <td>{{product.productCode}}</td>                    
                     <td ng-hide="maskColumns">{{product.productPrice}}</td>    
                     <td>{{product.cartoonQuantity}}</td>
