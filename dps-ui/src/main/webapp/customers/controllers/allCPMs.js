@@ -21,7 +21,6 @@ angular.module('allCPMsApp', ['angularUtils.directives.dirPagination', 'smoothSc
         	        		$scope.searchedResults = true;
         	                $scope.showErrorBox = false;
         	        		angular.element(document.querySelector('.loader')).removeClass('show');
-        	        		console.log($scope.allCPMs);
         	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
         	        	}, 500);
         	        }, function(){ /* Error Callback */

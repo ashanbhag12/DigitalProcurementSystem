@@ -1,6 +1,6 @@
 angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
-        .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersProductPreferencesService,
-        		getProductPreferencesService, modifyProductPreferencesService) {
+        .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
+        		getCustomerOrderService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -8,26 +8,26 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* Set the default sort order */
             $scope.sortType = 'productCode'; /* Set the default sort type */
-            $scope.maskColumns = true; /* Hide the columns */
-            $scope.products = [];     
-            $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.selectAll = false; /* Set toggle all to false */
-            $scope.pdfDisabled = true; /* Disable the PDF button */
-            $scope.products = [];  
-            $scope.customers; /* Object for storing customers list */
-            $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
+            $scope.modalSortOrder = false; /* Set the default sort order in the popup*/
+            $scope.modalSortType = 'productCode'; /* Set the default sort type in the popup */
+            $scope.maskColumns = true; /* Hide the columns */     
+            $scope.deleteDisabled = []; /* Model for deleting customer orders */
+            $scope.pdfDisabled = []; /* Model for disabling invoice button */
+            $scope.customers = []; /* Array of all Customers */ 
+            $scope.customerOrders = []; /* Object for all customer orders */            
+            $scope.isAccordionOpen = false; /* Collapse all the accordions */
+            $scope.editTables = {}; /* Object for inline editing in update order table */
+            $scope.accordionList = {}; /* List of Accordions */
+            $scope.selectAll = []; /* Model for toggleAll as per list of accordions */
+            $scope.deleteOrder; /* Object for deleted order */
+            $scope.deletedOrderIndex; /* Index for deleted order */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {  
             	/* WS call to fetch all customers*/
-            	getCustomersProductPreferencesService.query().$promise.then(function(data) {
+            	getCustomersService.query().$promise.then(function(data) {
                 	$scope.customers = data;
                 });
-            	
-            	/* Set variable for inline editing in order summary table */
-                for (var i = 0; i < $scope.products.length; i++) {
-                    $scope.editProductDetailsRow[i] = false;
-                }
             });
             
             /* Function to set search date to past 3/6 months */
@@ -42,93 +42,111 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             };
             
             /* Function to search for Products */
-            $scope.getProductDetails = function () {
+            $scope.getCustomerOrders = function () {
                 if ($scope.customerShipmark !== undefined) {
-                	$scope.maskColumns = true; /* Hide the columns */
                 	angular.element(document.querySelector('.loader')).addClass('show');
-                	$scope.showSuccessBox = false;
                     /* Service Call to retrieve all products */
-                    $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
+                	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){/* Success Callback */
                     	$timeout(function () {
-                            $scope.searchedResults = true;
+                    		console.log($scope.customerOrders)
+                    		$scope.searchedResults = true;      
+                    		$scope.showErrorBox = false;                   
                             angular.element(document.querySelector('.loader')).removeClass('show');
-                            angular.forEach($scope.products.customerProductPrices, function (product, index) {
-                        		$scope.updateProductDetails(index, product);
-                        	});
+                            /* Create array for toggleAll inside accordionList object */
+                            for (var i = 0; i < $scope.customerOrders.length; i++) {
+                            	$scope.accordionList["selectedRows" + i] = [];
+                            	$scope.editTables["editTable" + i] = [];
+                            	$scope.selectAll[i] = false;  
+                            	$scope.pdfDisabled[i] = true;
+                            	$scope.deleteDisabled[i] = true;
+                            	
+                            	/* Set variable for inline editing in update order table */
+                                for (var j = 0; j < $scope.customerOrders[i].lineItems.length; j++) {
+                                	$scope.editTables["editTable"+i][j] = false;
+                                }
+                            }  
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
                     		$scope.showErrorBox = true;
-	                		$scope.errorMessage = "Product margin for Customer could not be retrieved. Please try after some time";
+	                		$scope.errorMessage = "Customer order could not be retrieved. Please try after some time";
                             angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
                     });
                 }
             };
             
-            /* Function to edit all the customer product margins */
-            $scope.editAll = function () {
-            	for (var i = 0; i < $scope.products.customerProductPrices.length; i++) {
-            		$scope.editProductDetailsRow[i] = true;
-            	}
-            };
-
-            /* Function to save all the customer product margins */
-            $scope.saveAll = function () {
-            	angular.forEach($scope.products.customerProductPrices, function (product, index) {
-            		$scope.updateProductDetails(index, product);
-            	});
-            };
-            
-            $scope.editProductDetails = function (index, product) {
-                $scope.editProductDetailsRow[index] = true;                
-                $timeout(function () {
-                	angular.element(document.querySelectorAll("input[name=customerProductMarginPercentage]")[index]).focus();
-                }, 100);
-            };
-            
-            /* Function to select/unselect all the Products */
-    	    $scope.toggleAll = function () {
-    	        if ($scope.selectAll) {
-    	            $scope.selectAll = true;
-    	            $scope.pdfDisabled = false;
-    	            $scope.selectedRows = [];
-    	            angular.forEach($scope.products.customerProductPrices, function (product) {
-    	            	product.toExport = $scope.selectAll;
-    	                $scope.selectedRows.push(1);
+            /* Function to select/unselect all the Orders from accordions */
+    	    $scope.toggleAll = function (index) {
+    	        if ($scope.selectAll[index]) {
+    	            $scope.selectAll[index] = true;    	            
+    	            $scope.pdfDisabled[index] = false;
+    	            $scope.deleteDisabled[index] = false;
+    	            $scope.accordionList["selectedRows" + index] = [];
+    	            angular.forEach($scope.customerOrders[index].lineItems, function (product) {
+    	            	product.selected = $scope.selectAll[index]
+    	                $scope.accordionList["selectedRows" + index].push(1);
     	            });
     	        }
     	        else {
-    	            $scope.selectAll = false;
-    	            $scope.pdfDisabled = true;
-    	            angular.forEach($scope.products.customerProductPrices, function (product) {
-    	            	product.toExport = $scope.selectAll;
-    	                $scope.selectedRows = [];
+    	            $scope.selectAll[index] = false;
+    	            $scope.pdfDisabled[index] = true;
+    	            $scope.deleteDisabled[index] = true;
+    	            angular.forEach($scope.customerOrders[index].lineItems, function (product) {
+    	            	product.selected = $scope.selectAll[index]
+    	                $scope.accordionList["selectedRows" + index] = [];
     	            });
     	        }
     	    };
-    	
-    	    /* Function to select/unselect the Product */
-    	    $scope.toggle = function (element) {
-    	        if (element.toExport) {
-    	            $scope.selectedRows.push(1);
-    	            $scope.pdfDisabled = false;
+            
+            /* Function to select/unselect the Order from one accordion */
+    	    $scope.toggle = function (parentIndex, index, product) {
+    	        if (product.selected) {
+    	        	$scope.accordionList["selectedRows" + parentIndex].push(1);
     	        }
     	        else {
-    	            $scope.selectedRows.pop();
+    	        	$scope.accordionList["selectedRows" + parentIndex].pop();
     	        }
-    	        if ($scope.products.customerProductPrices.length === $scope.selectedRows.length) {
-    	            $scope.selectAll = true;
+    	        if ($scope.customerOrders[parentIndex].lineItems.length === $scope.accordionList["selectedRows" + parentIndex].length) {
+    	            $scope.selectAll[parentIndex] = true;
+    	            $scope.pdfDisabled[parentIndex] = false;
+    	            $scope.deleteDisabled[parentIndex] = false;
     	        }
     	        else {
-    	            $scope.selectAll = false;
+    	        	$scope.selectAll[parentIndex] = false;
+    	        	$scope.pdfDisabled[parentIndex] = true;
+    	        	$scope.deleteDisabled[parentIndex] = true;
     	        }
-    	        if ($scope.selectedRows.length === 0) {
-    	        	$scope.pdfDisabled = true;
+    	        if ( $scope.accordionList["selectedRows" + parentIndex].length === 0) {
+    	        	$scope.selectAll[parentIndex] = false;
+    	        	$scope.pdfDisabled[parentIndex] = true;
+    	        	$scope.deleteDisabled[parentIndex] = true;
     	        }
     	        else{
-    	            $scope.pdfDisabled = false;
+    	        	$scope.pdfDisabled[parentIndex] = false;
+    	        	$scope.deleteDisabled[parentIndex] = false;
     	        }
     	    };
+    	    
+    	    $scope.setCustomerOrderModal = function(index, order){
+            	$scope.deleteOrder = order;
+            	$scope.deletedOrderIndex = index;
+            };
             
+            /* Function to deleted the selected products */
+            $scope.deleteOrder = function(){
+            	$scope.deleteOrder = order;
+            	$scope.deletedOrderIndex = index;
+            };
+    	    
+    	    /* Function to generate invoice without Total Cost (TC) */
+    	    $scope.generateInvoiceWithoutTC = function(){
+    	    	
+    	    };
+    	    
+    	    /* Function to generate invoice */
+	    	$scope.generateInvoice = function(){
+    	    	
+    	    };
+    	    
         }); 

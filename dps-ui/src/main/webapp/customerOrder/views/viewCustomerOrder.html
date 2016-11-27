@@ -28,85 +28,135 @@
 	        <md-button type="button" class="md-raised md-primary" ng-click="setSearchDate(6)">6M</md-button>
 	    </div>
         <div flex="20">
-	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductDetails()">SEARCH ORDER</md-button>
+	        <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getCustomerOrders()">SEARCH ORDER</md-button>
 	    </div>
     </div>    
-    <div class="clearfix searchedResults marginT15" ng-show="searchedResults">   
-        <div class="clearfix searchTable"> 
-        	<div class="floatL searchResultsTitle">
-	        	<h4 class="inlineBlock">Search results: {{products.customerProductPrices.length}}</h4> 
-	        	<h4 class="inlineBlock marginL25" ng-hide="maskColumns">CM: {{products.additionalCustomerMarginPercentage | number:3}}</h4>    
-	        </div>
-            <div class="floatR tableActions">
-            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>             
-                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAll($event)">Edit All</a>
-                <a href="javascript:;" tabindex="-1" class="saveBtn" ng-click="saveAll($event)">Save All</a>
-                <input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
-            </div>            
-        </div>        
-        <table class="customTable">           
-            <thead>
-                <tr>
-                    <th>
-                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
-                            sortOrder = !sortOrder">Product Code
-                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
-                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
-                        </a>
-                    </th>  
-                    <th ng-hide="maskColumns">Price Per Item</th>
-                    <th>Pkg./Ctn.</th>
-                    <th>CBM</th>
-                    <th>Gross Weight</th>                    
-                    <th>Product Description</th>
-                    <th>Supplier Initials</th>
-                    <th>PM</th>
-                    <th>CPM</th>
-                    <th>Cost</th>
-                    <th class='alignCenter'>Action</th>
-                    <th class="alignCenter">
-            			<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
-                         ng-model="selectAll" ng-change="toggleAll()"></md-checkbox>
-            		</th>
-            	</tr>
-            </thead>
-            <tbody>
-                <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
-                    <td>{{product.productCode}}</td>                    
-                    <td ng-hide="maskColumns">{{product.productPrice}}</td>    
-                    <td>{{product.cartoonQuantity}}</td>
-                    <td>{{product.cbm}}</td>
-                    <td>{{product.grossWeight}}</td>                    
-                    <td>{{product.productDescription}}</td>
-                    <td>{{product.supplierInitials}}</td>
-                    <td>{{product.productMarginPercentage | number:3}}</td>
-                    <td>
-                        <div ng-hide="editProductDetailsRow[$index]">{{product.customerProductMarginPercentage | number:3}}</div>
-                        <div ng-show="editProductDetailsRow[$index]">
-                            <input type='number' name="customerProductMarginPercentage" ng-model="product.customerProductMarginPercentage" 
-                            	min="-99" max="99" placeholder="CPM" />  
-                        </div>
-                    </td>                    
-                    <td>{{product.calculatedCost | number:3}}</td>
-                    <td class='alignCenter'>
-                        <a href="javascript:;" tabindex="-1" class="editRow" ng-click="editProductDetails($index, product)" 
-                           title='Edit Row' ng-hide="editProductDetailsRow[$index]"></a>
-                        <a href="javascript:;" tabindex="-1" class="updateRow" ng-click="updateProductDetails($index, product)" 
-                           title='Update Row' ng-show="editProductDetailsRow[$index]"></a>
-                    </td>
-                    <td class="alignCenter">
-                        <md-checkbox type='checkbox' ng-model="product.toExport" name="isProductChecked" ng-change="toggle(product)"
-                                 aria-label='Select All Products {{$index}}' class='md-primary'></md-checkbox>
-                    </td>
-                </tr>
-            </tbody>
-        </table> 
-        <!-- Pagination Directive -->
-        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>      
-        <div layout='row' layout-align='end center' class='marginT10'>
-        	<input type="image" src="./assets/images/pdf.png" alt="Generate Invoice" class="pdfBtn" title="Generate Invoice"
-        	ng-disabled="pdfDisabled" ng-class="{'disableControl':pdfDisabled}" ng-click="pdfDisabled || exportToPDF()" />
-            <md-button type="button" class="md-raised md-primary submitBtn marginL25" ng-click="saveProductDetails()">SAVE</md-button>            
-        </div>
+    <div class="clearfix searchedResults marginT15" ng-show="searchedResults">	    
+	    <div class="accordionWrapper">
+		    <div class="md-accordion" ng-repeat="order in customerOrders">
+			    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
+			        <div class="md-toolbar-tools">
+			            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
+			            	Order placed for Customer {{order.shipmark}} on {{order.orderDate | date : "d-MMM-y"}} 
+		            	</h3>
+			        </div>
+			    </md-toolbar>
+			    <div class="accordionContent" ng-class="{active:isAccordionOpen}">  
+			        <div class="clearfix searchTable">
+			            <div class="floatR tableActions">
+			            	<a href="javascript:;" tabindex="-1" ng-class="maskColumns ? 'showColumns' : 'maskColumns'" ng-click="maskColumns = !maskColumns">Mask/Unmask Columns</a>
+			            	<a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled[$index] || showModal('deleteOrderModal');setCustomerOrderModal($index, order)" 
+                   				ng-disabled="deleteDisabled[$index]" ng-class="{'disableControl':deleteDisabled[$index]}">Delete</a>
+		            	 	<input name="searchTableText" type="text" placeholder="Search Table" ng-model="searchTable" />
+			            </div>            
+			        </div>     
+			        <table class="customTable">           
+			            <thead>
+			                <tr>
+			                    <th>
+			                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
+			                            sortOrder = !sortOrder">Product Code
+			                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
+			                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+			                        </a>
+			                    </th>  
+			                    <th ng-hide="maskColumns">Supplier Initials</th>
+			                    <th>Product Qty.</th>			                    
+			                    <th>Remarks</th>
+			                    <th>Cost</th>
+			                    <th>Received Qty.</th>
+			                    <th class="alignCenter">
+			                    	<md-checkbox type='checkbox' aria-label='Select  All Orders' class="md-primary"
+		                       			ng-model="selectAll[$index]" ng-change="toggleAll($index)"></md-checkbox>
+			                    </th>
+			            	</tr>
+			            </thead>
+			            <tbody>
+			                <tr dir-paginate="product in order.lineItems | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index" pagination-id = "'_' + order.id">
+			                    <td>{{product.productCode}}</td>                    
+			                    <td ng-hide="maskColumns">{{product.supplierInitials}}</td> 			                    
+			                    <td>{{product.quantity}}</td>
+			                    <td>{{product.remarks}}</td>
+			                    <td>{{product.productPrice}}</td>
+			                    <td>{{product.receivedQuantity}}</td>
+			                    <td class="alignCenter">
+			                    	<md-checkbox type='checkbox' ng-model="product.selected" name="isProductSelected" ng-change="toggle($parent.$index, $index, product)"
+		                            	aria-label='Select Row {{$index}}' class='md-primary'></md-checkbox>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table> 
+			        <!-- Pagination Directive -->
+			        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + order.id"></div>
+			        <div layout="row" layout-align="center stretch">              
+			            <md-input-container flex="10">
+			                <label>Pkg. Cost</label>
+			                <input type="text" name="packagingCost" ng-model="packagingCost" />
+			            </md-input-container>
+			            <md-input-container flex="40">
+			                <label>Pkg. Remarks</label>
+			                <textarea name="packagingRemarks" ng-model="packagingRemarks" maxlength="125"></textarea>
+			            </md-input-container>
+			            <md-input-container flex="10">
+			                <label>Discount</label>
+			                <input type="text" name="discount" ng-model="discount" />
+			            </md-input-container>
+			            <md-input-container flex="40">
+			                <label>Discount Remarks</label>
+			                <textarea name="discountRemarks" ng-model="discountRemarks" maxlength="125"></textarea>
+			            </md-input-container>
+			        </div>      
+			        <div layout='row' layout-align='end center'>
+			        	<input type="image" src="./assets/images/pdf.png" alt="Generate Invoice without TC" class="pdfBtn" title="Generate Invoice without TC"
+        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="generateInvoiceWithoutTC()" />
+        	            <input type="image" src="./assets/images/pdf.png" alt="Generate Invoice" class="pdfBtn marginL25" title="Generate Invoice"
+        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="generateInvoice()" />
+			        </div>
+			    </div>
+			</div>
+		</div>
+    </div>
+</div>
+<div class="modal" id="deleteOrderModal">
+    <div class="modalTitle">
+        <h4>Delete Orders?</h4>
+    </div>
+    <div class="modalContent">
+    	<div>Below is the list of products you have selected to delete:</div> 
+    	<div class="marginT15 marginB15">
+    		<table class="customTable">           
+	            <thead>
+	                <tr>
+	                    <th>
+	                        <a href="javascript:;" tabindex="-1" ng-click="modalSortType = 'productCode';
+	                            modalSortOrder = !modalSortOrder">Product Code
+	                            <span ng-show="modalSortType == 'productCode' && modalSortOrder">&#9662;</span>
+	                            <span ng-show="modalSortType == 'productCode' && !modalSortOrder">&#9652;</span>
+	                        </a>
+	                    </th>  
+	                    <th ng-hide="maskColumns">Supplier Initials</th>
+	                    <th>Product Qty.</th>			                    
+	                    <th>Remarks</th>
+	                    <th>Cost</th>
+	                    <th>Received Qty.</th>
+	            	</tr>
+	            </thead>
+	            <tbody>
+	            	<tr ng-repeat="order in updatedOrder.orderDetails | orderBy:modalSortType:modalSortOrder">
+	                    <td>{{product.productCode}}</td>                    
+	                    <td ng-hide="maskColumns">{{product.supplierInitials}}</td> 			                    
+	                    <td>{{product.quantity}}</td>
+	                    <td>{{product.remarks}}</td>
+	                    <td>{{product.productPrice}}</td>
+	                    <td>{{product.receivedQuantity}}</td>
+	                </tr>
+	            </tbody>
+	        </table> 
+    	</div>
+        <div class="marginB10">Are you sure you want to delete the selected products?</div>	    
+	</div>
+	<div class="modalFooter">
+        <md-button type="button" class="md-raised md-primary" ng-click="hideModal('deleteOrderModal'); deleteOrder();">YES</md-button>
+        <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('deleteOrderModal')">NO</md-button>
     </div>
 </div>
