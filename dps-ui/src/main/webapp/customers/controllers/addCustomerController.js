@@ -34,10 +34,10 @@ angular.module('addCustomerApp', ['ngMessages'])
 		        if (addCustomer.$valid) {
 		        	angular.element(document.querySelector('.loader')).addClass('show'); 
 				    response = addCustomersService.save($scope.customer, function(){/* Success Callback */				    
-					    $timeout(function () {                            
+					    $timeout(function () { 
                             $scope.reset();
                             $scope.showSuccessBox = true;
-    					    $scope.showErrorBox = false;
+    					    $scope.showErrorBox = false;    					    
     					    angular.element(document.querySelector('.loader')).removeClass('show');
                         }, 500);
 				    }, function(error){/* Error Callback */		    	
