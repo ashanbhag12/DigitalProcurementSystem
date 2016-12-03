@@ -10,6 +10,6 @@ angular.module('viewSupplierOrderApp')
 	})
 	
 	.factory('exportToExcelService', function ($resource) {
-		return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplierorder/:supplierInitials', 
-				{supplierInitials:'@supplierInitials'});
+		return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/supplierorder/:id', 
+				{id:'@id'});
 	})

@@ -59,7 +59,7 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             		delete product.isChecked;
 	            });
             	angular.element(document.querySelector('.loader')).addClass('show'); 
-    		    response = exportToExcelService.save(selectedOrder, function(){/* Success Callback */
+    		    response = exportToExcelService.query({id:selectedOrder.id}, function(){/* Success Callback */
     		    	$timeout(function () {
                         $scope.showSuccessBox = true;
                         $scope.successMessage = "Supplier order exported to excel successfully"
