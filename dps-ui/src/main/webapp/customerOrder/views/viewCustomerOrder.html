@@ -142,7 +142,7 @@
 	            	</tr>
 	            </thead>
 	            <tbody>
-	            	<tr ng-repeat="order in updatedOrder.orderDetails | orderBy:modalSortType:modalSortOrder">
+	            	<tr ng-repeat="product in deleteOrder.lineItems | filter:{selected:true} | orderBy:modalSortType:modalSortOrder">
 	                    <td>{{product.productCode}}</td>                    
 	                    <td ng-hide="maskColumns">{{product.supplierInitials}}</td> 			                    
 	                    <td>{{product.quantity}}</td>
@@ -156,7 +156,7 @@
         <div class="marginB10">Are you sure you want to delete the selected products?</div>	    
 	</div>
 	<div class="modalFooter">
-        <md-button type="button" class="md-raised md-primary" ng-click="hideModal('deleteOrderModal'); deleteOrder();">YES</md-button>
+        <md-button type="button" class="md-raised md-primary" ng-click="hideModal('deleteOrderModal'); deleteCustomerOrder();">YES</md-button>
         <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('deleteOrderModal')">NO</md-button>
     </div>
 </div>

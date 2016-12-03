@@ -1,6 +1,6 @@
 angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
-        		getCustomerOrderService) {
+        		getCustomerOrderService, deleteCustomerOrderService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -134,9 +134,31 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             };
             
             /* Function to deleted the selected products */
-            $scope.deleteOrder = function(){
-            	$scope.deleteOrder = order;
-            	$scope.deletedOrderIndex = index;
+            $scope.deleteCustomerOrder = function(){
+            	angular.element(document.querySelector('.loader')).addClass('show');
+            	deleteCustomerOrderService.save($scope.deleteOrder, function(){ /* Success Callback */    		    	
+                    $timeout(function () {
+                    	$scope.ordersData = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.showSuccessBox = true;
+                    	$scope.successMessage = "Customer order deleted successfully"
+    				    $scope.showErrorBox = false;
+                    	$scope.selectAll[$scope.deletedOrderIndex] = false;
+                        for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
+                            $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
+                        } 
+                        $timeout(function () {/* Open the updated order accordion */
+                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.deletedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                        }, 100);                        
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                    }, 500);
+    		    }, function(){/* Error Callback */
+    		    	$timeout(function () {
+    		    		$scope.showErrorBox = true; 
+        		    	$scope.errorMessage = "Customer order could not be deleted."
+        		    	$scope.showSuccessBox = false;
+        		    	angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    });
             };
     	    
     	    /* Function to generate invoice without Total Cost (TC) */
