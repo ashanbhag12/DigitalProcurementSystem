@@ -55,9 +55,6 @@ angular.module('viewSupplierOrderApp', ['smoothScroll', 'angularUtils.directives
             
             /* Function to export Supplier Order to Excel */
             $scope.exportToExcel = function(selectedOrder, selectedOrderIndex){
-            	angular.forEach(selectedOrder.details, function (product) {
-            		delete product.isChecked;
-	            });
             	angular.element(document.querySelector('.loader')).addClass('show'); 
     		    response = exportToExcelService.query({id:selectedOrder.id}, function(){/* Success Callback */
     		    	$timeout(function () {
