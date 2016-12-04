@@ -48,7 +48,6 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     /* Service Call to retrieve all products */
                 	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){/* Success Callback */
                     	$timeout(function () {
-                    		console.log($scope.customerOrders)
                     		$scope.searchedResults = true;      
                     		$scope.showErrorBox = false;                   
                             angular.element(document.querySelector('.loader')).removeClass('show');
@@ -64,7 +63,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                                 for (var j = 0; j < $scope.customerOrders[i].lineItems.length; j++) {
                                 	$scope.editTables["editTable"+i][j] = false;
                                 }
-                            }  
+                            } 
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
