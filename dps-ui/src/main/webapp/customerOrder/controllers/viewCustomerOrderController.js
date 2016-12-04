@@ -49,7 +49,8 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                 	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){/* Success Callback */
                     	$timeout(function () {
                     		$scope.searchedResults = true;      
-                    		$scope.showErrorBox = false;                   
+                    		$scope.showErrorBox = false;   
+                    		console.log($scope.customerOrders)
                             angular.element(document.querySelector('.loader')).removeClass('show');
                             /* Create array for toggleAll inside accordionList object */
                             for (var i = 0; i < $scope.customerOrders.length; i++) {
