@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.JpaEntityId;
 import com.dps.domain.constants.CustomerOrderDetailStatus;
+import com.dps.domain.constants.CustomerOrderStatus;
 import com.dps.domain.entity.CustomerOrder;
 import com.dps.domain.entity.CustomerOrderDetails;
 import com.dps.service.ConfigurationsService;
@@ -72,13 +73,60 @@ public class CustomerOrderController
 		}
 		
 		List<CustomerOrderDetailsDTO> lineItemsDto = custOrderDto.getLineItems();
+		int completedOrder = 0;
 		for(CustomerOrderDetailsDTO lineItem : lineItemsDto)
 		{
 			CustomerOrderDetails custOrderDet = custOrdersMap.get(lineItem.getId());
 			custOrderDet.setStatus(CustomerOrderDetailStatus.CANCELLED);
+			
+			if(custOrderDet.getStatus() == CustomerOrderDetailStatus.CANCELLED || custOrderDet.getStatus() == CustomerOrderDetailStatus.CANCELLED)
+			{
+				completedOrder++;
+			}
 		}
 		
+		if(completedOrder == lineItemsDto.size())
+		{
+			custOrder.setStatus(CustomerOrderStatus.COMPLETED);
+		}
+		
+		custOrder = updateAdditionalDetails(custOrderDto, custOrder);
+		
 		custOrderService.merge(custOrder);
+	}
+	
+	@POST
+	@Path("/update")
+	public void updateOrders(CustomerOrderDTO custOrderDto)
+	{
+		CustomerOrder custOrder = custOrderService.find(new JpaEntityId(custOrderDto.getId()));
+		List<CustomerOrderDetails> custOrderDetails = custOrder.getLineItems();
+		Map<Long, CustomerOrderDetails> custOrdersMap = new HashMap<>();
+		
+		for(CustomerOrderDetails custOrderDet : custOrderDetails)
+		{
+			custOrdersMap.put(custOrderDet.getId(), custOrderDet);
+		}
+		
+		List<CustomerOrderDetailsDTO> lineItemsDto = custOrderDto.getLineItems();
+		for(CustomerOrderDetailsDTO lineItem : lineItemsDto)
+		{
+			CustomerOrderDetails custOrderDet = custOrdersMap.get(lineItem.getId());
+			custOrderDet.setProductPrice(lineItem.getProductPrice());
+		}
+		
+		custOrder = updateAdditionalDetails(custOrderDto, custOrder);
+		
+		custOrderService.merge(custOrder);
+	}
+	
+	private CustomerOrder updateAdditionalDetails(CustomerOrderDTO dto, CustomerOrder order)
+	{
+		order.setAdditionalCost(dto.getAdditionalCost());
+		order.setAdditionalCostDetails(dto.getAdditionalCostDetails());
+		order.setAdditionalDiscount(dto.getAdditionalDiscount());
+		order.setAdditionalDiscountDetails(dto.getAdditionalDiscountDetails());
+		return order;
 	}
 
 	private CustomerOrderDTO convertToDto(CustomerOrder custOrder)
@@ -89,6 +137,10 @@ public class CustomerOrderController
 		order.setOrderDate(custOrder.getOrderDate());
 		order.setShipmark(custOrder.getCustomer().getShipmark());
 		order.setStatus(custOrder.getStatus().toString());
+		order.setAdditionalCost(custOrder.getAdditionalCost());
+		order.setAdditionalCostDetails(custOrder.getAdditionalCostDetails());
+		order.setAdditionalDiscount(custOrder.getAdditionalDiscount());
+		order.setAdditionalDiscountDetails(custOrder.getAdditionalDiscountDetails());
 		
 		List<CustomerOrderDetails> lineItems = custOrder.getLineItems();
 		List<CustomerOrderDetailsDTO> lineItemsDtoList = new ArrayList<>();

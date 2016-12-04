@@ -77,6 +77,18 @@ public class CustomerOrder extends EntityBase
 	@Column(name="CBM_RATE")
 	private BigDecimal cbmRate;
 	
+	@Column(name="ADD_COST")
+	private BigDecimal additionalCost;
+	
+	@Column(name="ADD_COST_DET")
+	private String additionalCostDetails;
+	
+	@Column(name="ADD_DISC")
+	private BigDecimal additionalDiscount;
+	
+	@Column(name="ADD_DISC_DET")
+	private String additionalDiscountDetails;
+	
 	@Override
 	public Long getId()
 	{
@@ -166,6 +178,46 @@ public class CustomerOrder extends EntityBase
 	public void setLineItems(List<CustomerOrderDetails> lineItems)
 	{
 		this.lineItems = lineItems;
+	}
+
+	public BigDecimal getAdditionalCost()
+	{
+		return additionalCost;
+	}
+
+	public void setAdditionalCost(BigDecimal additionalCost)
+	{
+		this.additionalCost = additionalCost;
+	}
+
+	public String getAdditionalCostDetails()
+	{
+		return additionalCostDetails;
+	}
+
+	public void setAdditionalCostDetails(String additionalCostDetails)
+	{
+		this.additionalCostDetails = additionalCostDetails;
+	}
+
+	public BigDecimal getAdditionalDiscount()
+	{
+		return additionalDiscount;
+	}
+
+	public void setAdditionalDiscount(BigDecimal additionalDiscount)
+	{
+		this.additionalDiscount = additionalDiscount;
+	}
+
+	public String getAdditionalDiscountDetails()
+	{
+		return additionalDiscountDetails;
+	}
+
+	public void setAdditionalDiscountDetails(String additionalDiscountDetails)
+	{
+		this.additionalDiscountDetails = additionalDiscountDetails;
 	}
 
 	@Override
