@@ -1,6 +1,6 @@
 angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
-        		getCustomerOrderService, deleteCustomerOrderService) {
+        		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -20,6 +20,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* Model for toggleAll as per list of accordions */
             $scope.deleteOrder; /* Object for deleted order */
+            $scope.updateOrder; /* Object for update order */
             $scope.deletedOrderIndex; /* Index for deleted order */
             
             /* Function will be executed after the page is loaded */
@@ -170,5 +171,26 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
 	    	$scope.generateInvoice = function(){
     	    	
     	    };
+    	    
+    	    /* Function to update the selected products */
+            $scope.updateCustomerOrder = function(){
+            	angular.element(document.querySelector('.loader')).addClass('show');
+            	updateCustomerOrderService.save($scope.updateOrder, function(){ /* Success Callback */    		    	
+                    $timeout(function () {
+                    	$scope.ordersData = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.showSuccessBox = true;
+                    	$scope.successMessage = "Customer order updates successfully"
+    				    $scope.showErrorBox = false;     
+                        angular.element(document.querySelector('.loader')).removeClass('show');
+                    }, 500);
+    		    }, function(){/* Error Callback */
+    		    	$timeout(function () {
+    		    		$scope.showErrorBox = true; 
+        		    	$scope.errorMessage = "Customer order could not be updated."
+        		    	$scope.showSuccessBox = false;
+        		    	angular.element(document.querySelector('.loader')).removeClass('show');
+    		    	}, 500);
+    		    });
+            };
     	    
         }); 
