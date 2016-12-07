@@ -1,6 +1,6 @@
 angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
-        		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService) {
+        		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService) { 
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
