@@ -134,17 +134,11 @@ h3.sectionTitle, h4.sectionTitle{
     margin:10px 0;
 }
 
-.errorBox{
-    background: rgb(222,54,65);
-}
+.errorBox{background: rgb(222,54,65);}
 
-.successBox{
-    background: #72d572;
-}
+.successBox{background: #72d572;}
 
-.infoBox{
-    background: #40c4ff;
-}
+.infoBox{background: #40c4ff;}
 
 .submitBtn, .resetBtn{
     padding:5px 40px;
@@ -152,9 +146,7 @@ h3.sectionTitle, h4.sectionTitle{
     margin:0;
 }
 
-.submitBtn + .resetBtn{
-    margin-left:25px;
-}
+.submitBtn + .resetBtn{margin-left:25px;}
 
 /* Searched Results Table CSS */
 .customTable{
@@ -164,13 +156,9 @@ h3.sectionTitle, h4.sectionTitle{
     margin: 0;    
 }
 
-.customTable tbody tr:nth-child(odd){
-    background-color: #ebebeb;
-}
+.customTable tbody tr:nth-child(odd){background-color: #ebebeb;}
 
-.customTable tbody tr.success{
-    background-color:#4CAF50 !important;   
-}
+.customTable tbody tr.success{background-color:#4CAF50 !important;}
 
 .customTable thead th,
 .customTable tbody td,
@@ -181,9 +169,7 @@ h3.sectionTitle, h4.sectionTitle{
     text-align:left;
 }
 
-.customTable thead th a{
-    color: rgba(0, 0, 0, .87);
-}
+.customTable thead th a{color: rgba(0, 0, 0, .87);}
 
 .customTable thead th md-checkbox,
 .customTable tbody td md-checkbox{
@@ -296,9 +282,7 @@ h3.sectionTitle, h4.sectionTitle{
     padding-top: 10px;
 }
 
-.modal .modalFooter .md-button{
-    margin:0 20px 0 0;
-}
+.modal .modalFooter .md-button{margin:0 20px 0 0;}
 
 /* Animate Sections (Searched results, edit form) CSS */
 .editForm, .searchedResults,
@@ -333,9 +317,7 @@ h3.sectionTitle, h4.sectionTitle{
     margin: 10px 0;
 }
 
-.paginationWrapper .pagination{
-    float:right;
-}
+.paginationWrapper .pagination{float:right;}
 
 .pagination>li {float: left;}
 
@@ -389,13 +371,9 @@ md-datepicker {background: #FAFAFA;}
     font-size:13px;
 }
 
-.bottomDashedBorder{
-    border-bottom:2px dashed rgb(63,81,181);
-}
+.bottomDashedBorder{border-bottom:2px dashed rgb(63,81,181);}
 
-.topDashedBorder{
-    border-top:2px dashed rgb(63,81,181);
-}
+.topDashedBorder{border-top:2px dashed rgb(63,81,181);}
 
 .customTable input, .customTable select{
     width:inherit;
@@ -414,29 +392,17 @@ md-datepicker {background: #FAFAFA;}
     color:#fff;
 }
 
-.dashboardPage .md-whiteframe-5dp .md-display-1{    
-   font-size:30px;
-}
+.dashboardPage .md-whiteframe-5dp .md-display-1{font-size:30px;}
 
-.dashboardPage .md-whiteframe-5dp + .md-whiteframe-5dp{    
-    margin-left:50px;
-}
+.dashboardPage .md-whiteframe-5dp + .md-whiteframe-5dp{margin-left:50px;}
 
-.dashboardPage .md-whiteframe-5dp.card-green{
-    background-color: #4CAF50;
-}
+.dashboardPage .md-whiteframe-5dp.card-green{background-color: #4CAF50;}
 
-.dashboardPage .md-whiteframe-5dp.card-purple{
-    background-color: #673AB7;
-}
+.dashboardPage .md-whiteframe-5dp.card-purple{background-color: #673AB7;}
 
-.dashboardPage .md-whiteframe-5dp.card-orange{
-    background-color: #FB8C00;
-}
+.dashboardPage .md-whiteframe-5dp.card-orange{background-color: #FB8C00;}
 
-.dashboardPage .md-whiteframe-5dp.card-red{
-    background-color: #F44336;
-}
+.dashboardPage .md-whiteframe-5dp.card-red{background-color: #F44336;}
 
 .dashboardPage .md-whiteframe-5dp .icon-holder{
     height:65px;
