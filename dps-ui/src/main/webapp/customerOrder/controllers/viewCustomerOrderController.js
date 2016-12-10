@@ -172,7 +172,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             	angular.element(document.querySelector('.loader')).addClass('show');
             	deleteCustomerOrderService.save($scope.deleteOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
-                    	$scope.ordersData = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Customer order deleted successfully"
     				    $scope.showErrorBox = false;
@@ -208,8 +208,6 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	    $scope.setUpdatedCustomerOrderModal = function(index, order){
     	    	$scope.updateOrder = order;
             	$scope.updatedOrderIndex = index;
-            	console.log($scope.updateOrder)
-            	console.log($scope.updatedOrderIndex)
             };
     	    
     	    /* Function to update the selected products */
@@ -217,7 +215,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             	angular.element(document.querySelector('.loader')).addClass('show');
             	updateCustomerOrderService.save($scope.updateOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
-                    	$scope.ordersData = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Order of Customer " + $scope.updateOrder.shipmark + " updated successfully"
     				    $scope.showErrorBox = false;     
