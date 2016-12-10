@@ -94,7 +94,7 @@ public class SupplierOrderController
 		Row row = sheet.createRow(0);
 		
 		Cell cell = row.createCell(0);
-		cell.setCellValue("Supplier Product Code");
+		cell.setCellValue("SC");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(1);
@@ -106,18 +106,30 @@ public class SupplierOrderController
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(3);
-		cell.setCellValue("Quantity");
+		cell.setCellValue("Carton");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(4);
-		cell.setCellValue("Price Per Item");
+		cell.setCellValue("Packageing");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(5);
-		cell.setCellValue("Remark");
+		cell.setCellValue("Price");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(6);
+		cell.setCellValue("CBM");
+		cell.setCellStyle(headerCellStyle);
+		
+		cell = row.createCell(7);
+		cell.setCellValue("Gross Weight");
+		cell.setCellStyle(headerCellStyle);
+		
+		cell = row.createCell(8);
+		cell.setCellValue("Remark");
+		cell.setCellStyle(headerCellStyle);
+		
+		cell = row.createCell(9);
 		cell.setCellValue("Shipmark");
 		cell.setCellStyle(headerCellStyle);
 		
@@ -144,14 +156,26 @@ public class SupplierOrderController
 			cell.setCellStyle(cellStyle);
 			
 			cell = row.createCell(4);
-			cell.setCellValue(det.getPricePerItem().setScale(3, RoundingMode.HALF_UP).toString());
+			cell.setCellValue(det.getPackageing());
 			cell.setCellStyle(cellStyle);
 			
 			cell = row.createCell(5);
-			cell.setCellValue(det.getRemarks());
+			cell.setCellValue(det.getPricePerItem().setScale(3, RoundingMode.HALF_UP).toString());
 			cell.setCellStyle(cellStyle);
 			
 			cell = row.createCell(6);
+			cell.setCellValue(det.getCbm().setScale(3, RoundingMode.HALF_UP).toString());
+			cell.setCellStyle(cellStyle);
+			
+			cell = row.createCell(7);
+			cell.setCellValue(det.getGw().setScale(3, RoundingMode.HALF_UP).toString());
+			cell.setCellStyle(cellStyle);
+			
+			cell = row.createCell(8);
+			cell.setCellValue(det.getRemarks());
+			cell.setCellStyle(cellStyle);
+			
+			cell = row.createCell(9);
 			cell.setCellValue(det.getCustomerDetails());
 			cell.setCellStyle(cellStyle);
 		}
@@ -249,6 +273,9 @@ public class SupplierOrderController
 			ViewSupplierOrderDetailsDTO suppOrderDetDto = new ViewSupplierOrderDetailsDTO();
 			suppOrderDetDto.setProductCode(productMap.get(id).getProductCode());
 			suppOrderDetDto.setProductDescription(productMap.get(id).getDescription());
+			suppOrderDetDto.setCbm(productMap.get(id).getCbm());
+			suppOrderDetDto.setGw(productMap.get(id).getWeight());
+			suppOrderDetDto.setPackageing(productMap.get(id).getCartoonQuantity());
 			
 			for(SupplierProductInfo suppProdInfo : productMap.get(id).getSuppProdInfo())
 			{

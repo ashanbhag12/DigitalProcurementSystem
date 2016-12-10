@@ -120,6 +120,13 @@ public class CustomerOrderController
 		custOrderService.merge(custOrder);
 	}
 	
+	@POST
+	@Path("/invoice")
+	public void generateInvoice(CustomerOrderDTO custOrderDto)
+	{
+		
+	}
+	
 	private CustomerOrder updateAdditionalDetails(CustomerOrderDTO dto, CustomerOrder order)
 	{
 		order.setAdditionalCost(dto.getAdditionalCost());

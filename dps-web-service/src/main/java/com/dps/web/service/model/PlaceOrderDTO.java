@@ -25,6 +25,10 @@ public class PlaceOrderDTO
 	private String supplierProductCode;
 	private String productDescription;
 	private BigDecimal pricePerItem;
+	private Integer packageing;
+	private BigDecimal cbm;
+	private BigDecimal gw;
+	
 
 	public String getProductCode()
 	{
@@ -144,6 +148,36 @@ public class PlaceOrderDTO
 	public void setPricePerItem(BigDecimal pricePerItem)
 	{
 		this.pricePerItem = pricePerItem;
+	}
+
+	public Integer getPackageing()
+	{
+		return packageing;
+	}
+
+	public void setPackageing(Integer packageing)
+	{
+		this.packageing = packageing;
+	}
+
+	public BigDecimal getCbm()
+	{
+		return cbm;
+	}
+
+	public void setCbm(BigDecimal cbm)
+	{
+		this.cbm = cbm;
+	}
+
+	public BigDecimal getGw()
+	{
+		return gw;
+	}
+
+	public void setGw(BigDecimal gw)
+	{
+		this.gw = gw;
 	}
 
 }

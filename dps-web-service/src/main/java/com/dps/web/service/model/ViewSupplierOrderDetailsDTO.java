@@ -11,6 +11,10 @@ public class ViewSupplierOrderDetailsDTO
 	private BigDecimal pricePerItem;
 	private String remarks;
 	private String customerDetails;
+	private Integer packageing;
+	private BigDecimal cbm;
+	private BigDecimal gw;
+	
 	public String getSupplierProductCode()
 	{
 		return supplierProductCode;
@@ -66,6 +70,30 @@ public class ViewSupplierOrderDetailsDTO
 	public void setCustomerDetails(String customerDetails)
 	{
 		this.customerDetails = customerDetails;
+	}
+	public Integer getPackageing()
+	{
+		return packageing;
+	}
+	public void setPackageing(Integer packageing)
+	{
+		this.packageing = packageing;
+	}
+	public BigDecimal getCbm()
+	{
+		return cbm;
+	}
+	public void setCbm(BigDecimal cbm)
+	{
+		this.cbm = cbm;
+	}
+	public BigDecimal getGw()
+	{
+		return gw;
+	}
+	public void setGw(BigDecimal gw)
+	{
+		this.gw = gw;
 	}
 	
 }

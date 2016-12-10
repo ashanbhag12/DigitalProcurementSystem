@@ -156,6 +156,9 @@ public class PlaceOrderController
 				order.setToOrder(quantity >= product.getMoq());
 				order.setIdList(ids.toString());
 				order.setProductDescription(product.getDescription());
+				order.setGw(product.getWeight());
+				order.setCbm(product.getCbm());
+				order.setPackageing(product.getCartoonQuantity());
 				
 				BigDecimal price = Constants.BIG_DECIMAL_ONE;
 				
@@ -320,7 +323,7 @@ public class PlaceOrderController
 			Row row = sheet.createRow(0);
 			
 			Cell cell = row.createCell(0);
-			cell.setCellValue("Supplier Product Code");
+			cell.setCellValue("SC");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(1);
@@ -332,18 +335,30 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(3);
-			cell.setCellValue("Quantity");
+			cell.setCellValue("Carton");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(4);
-			cell.setCellValue("Price Per Item");
+			cell.setCellValue("Packageing");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(5);
-			cell.setCellValue("Remark");
+			cell.setCellValue("Price");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(6);
+			cell.setCellValue("CBM");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(7);
+			cell.setCellValue("Gross Weight");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(8);
+			cell.setCellValue("Remark");
+			cell.setCellStyle(headerCellStyle);
+			
+			cell = row.createCell(9);
 			cell.setCellValue("Shipmark");
 			cell.setCellStyle(headerCellStyle);
 			
@@ -370,14 +385,26 @@ public class PlaceOrderController
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(4);
-				cell.setCellValue(order.getPricePerItem().setScale(3, RoundingMode.HALF_UP).toString());
+				cell.setCellValue(order.getPackageing());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(5);
-				cell.setCellValue(order.getRemarks());
+				cell.setCellValue(order.getPricePerItem().setScale(3, RoundingMode.HALF_UP).toString());
 				cell.setCellStyle(cellStyle);
 				
 				cell = row.createCell(6);
+				cell.setCellValue(order.getCbm().setScale(3, RoundingMode.HALF_UP).toString());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(7);
+				cell.setCellValue(order.getGw().setScale(3, RoundingMode.HALF_UP).toString());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(8);
+				cell.setCellValue(order.getRemarks());
+				cell.setCellStyle(cellStyle);
+				
+				cell = row.createCell(9);
 				cell.setCellValue(order.getCustomerDetails());
 				cell.setCellStyle(cellStyle);
 			}
