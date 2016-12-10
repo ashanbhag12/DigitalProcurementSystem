@@ -73,7 +73,7 @@
             <md-input-container class="md-block" flex="25">
                 <label>*Product Margin</label>
                 <input type='number' required placeholder="0.000" name="defaultMarginPercentage" ng-pattern="/(^-?[0-9]{1,2})+(\.[0-9]{1,3})?$/" 
-	                	ng-model="product.defaultMarginPercentage" ng-blur="calculateProductMargin()" />
+	                	ng-model="product.defaultMarginPercentage" ng-keypress="calculateProductMargin()" />
                 <div ng-messages="addProduct.defaultMarginPercentage.$error" ng-show="addProduct.defaultMarginPercentage.$touched">
                     <div ng-message-exp="['required', 'pattern']">This is required. Can be between -99 & 99 and 3 decimals long.</div>
                 </div>
