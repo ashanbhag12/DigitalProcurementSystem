@@ -19,9 +19,11 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             $scope.editTables = {}; /* Object for inline editing in update order table */
             $scope.accordionList = {}; /* List of Accordions */
             $scope.selectAll = []; /* Model for toggleAll as per list of accordions */
-            $scope.deleteOrder; /* Object for deleted order */
-            $scope.updateOrder; /* Object for update order */
+            $scope.deleteOrder; /* Object for deleted order */            
             $scope.deletedOrderIndex; /* Index for deleted order */
+            $scope.updateOrder; /* Object for update order */
+            $scope.updatedOrderIndex; /* Index for updated order */
+            $scope.disabledUpdateBtn = true; /* Disable the Update button if orderDetails array is empty */
             
             /* Function will be executed after the page is loaded */
             $scope.$on('$viewContentLoaded', function () {  
@@ -83,6 +85,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	            $scope.selectAll[index] = true;    	            
     	            $scope.pdfDisabled[index] = false;
     	            $scope.deleteDisabled[index] = false;
+    	            $scope.disabledUpdateBtn = false;
     	            $scope.accordionList["selectedRows" + index] = [];
     	            angular.forEach($scope.customerOrders[index].lineItems, function (product) {
     	            	product.selected = $scope.selectAll[index]
@@ -93,6 +96,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	            $scope.selectAll[index] = false;
     	            $scope.pdfDisabled[index] = true;
     	            $scope.deleteDisabled[index] = true;
+    	            $scope.disabledUpdateBtn = true;
     	            angular.forEach($scope.customerOrders[index].lineItems, function (product) {
     	            	product.selected = $scope.selectAll[index]
     	                $scope.accordionList["selectedRows" + index] = [];
@@ -104,6 +108,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	    $scope.toggle = function (parentIndex, index, product) {
     	        if (product.selected) {
     	        	$scope.accordionList["selectedRows" + parentIndex].push(1);
+    	        	$scope.disabledUpdateBtn = false;
     	        }
     	        else {
     	        	$scope.accordionList["selectedRows" + parentIndex].pop();
@@ -112,6 +117,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	            $scope.selectAll[parentIndex] = true;
     	            $scope.pdfDisabled[parentIndex] = false;
     	            $scope.deleteDisabled[parentIndex] = false;
+    	            $scope.disabledUpdateBtn = true;
     	        }
     	        else {
     	        	$scope.selectAll[parentIndex] = false;
@@ -122,14 +128,41 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	        	$scope.selectAll[parentIndex] = false;
     	        	$scope.pdfDisabled[parentIndex] = true;
     	        	$scope.deleteDisabled[parentIndex] = true;
+    	        	$scope.disabledUpdateBtn = true;
     	        }
     	        else{
     	        	$scope.pdfDisabled[parentIndex] = false;
     	        	$scope.deleteDisabled[parentIndex] = false;
+    	        	$scope.disabledUpdateBtn = false;
     	        }
     	    };
     	    
-    	    $scope.setCustomerOrderModal = function(index, order){
+            /* Function to edit all the customer product margins */
+            $scope.editAll = function (parentIndex) {
+            	for (var i = 0; i < $scope.customerOrders[parentIndex].lineItems.length; i++) {
+            		$scope.editOrderDetails(parentIndex, i);
+            	}
+            };
+
+            /* Function to save all the customer product margins */
+            $scope.saveAll = function (parentIndex) {
+            	for (var i = 0; i < $scope.customerOrders[parentIndex].lineItems.length; i++) {
+            		$scope.updateOrderDetails(parentIndex, i);
+            	}
+            };
+            
+            $scope.editOrderDetails = function (parentIndex, index) {
+            	$scope.editTables["editTable"+parentIndex][index] = true;
+                $timeout(function () {
+                	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").eq(index).focus();
+                }, 100);
+            };
+
+            $scope.updateOrderDetails = function (parentIndex, index) {
+            	$scope.editTables["editTable"+parentIndex][index] = false;           
+            };
+    	    
+    	    $scope.setDeleteCustomerOrderModal = function(index, order){
             	$scope.deleteOrder = order;
             	$scope.deletedOrderIndex = index;
             };
@@ -155,7 +188,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {
     		    		$scope.showErrorBox = true; 
-        		    	$scope.errorMessage = "Customer order could not be deleted."
+        		    	$scope.errorMessage = "Customer order could not be deleted. Please try again after some time."
         		    	$scope.showSuccessBox = false;
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);
@@ -172,21 +205,35 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     	    	
     	    };
     	    
+    	    $scope.setUpdatedCustomerOrderModal = function(index, order){
+    	    	$scope.updateOrder = order;
+            	$scope.updatedOrderIndex = index;
+            	console.log($scope.updateOrder)
+            	console.log($scope.updatedOrderIndex)
+            };
+    	    
     	    /* Function to update the selected products */
-            $scope.updateCustomerOrder = function(){
+            $scope.updateCustomerOrder = function(){ 
             	angular.element(document.querySelector('.loader')).addClass('show');
             	updateCustomerOrderService.save($scope.updateOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
                     	$scope.ordersData = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
                     	$scope.showSuccessBox = true;
-                    	$scope.successMessage = "Customer order updates successfully"
+                    	$scope.successMessage = "Order of Customer " + $scope.updateOrder.shipmark + " updated successfully"
     				    $scope.showErrorBox = false;     
+                    	$scope.selectAll[$scope.updatedOrderIndex] = false;
+                        for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
+                            $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                        } 
+                        $timeout(function () {/* Open the updated order accordion */
+                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                        }, 100);  
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {
     		    		$scope.showErrorBox = true; 
-        		    	$scope.errorMessage = "Customer order could not be updated."
+        		    	$scope.errorMessage = "Customer order could not be updated. Please try again after some time."
         		    	$scope.showSuccessBox = false;
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);

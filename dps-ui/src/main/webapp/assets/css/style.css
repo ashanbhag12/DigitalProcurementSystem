@@ -541,7 +541,7 @@ md-datepicker {background: #FAFAFA;}
 
 .placeOrderPage + .modal,
 .updateOrderPage + .modal,
-.viewCustomerOrderPage + .modal{
+.viewCustomerOrderPage ~ .modal{
 	min-width:750px;
 	max-width:750px;
 }
