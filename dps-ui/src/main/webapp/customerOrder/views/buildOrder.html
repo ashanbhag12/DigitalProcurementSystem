@@ -67,7 +67,7 @@
                 <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" ng-readonly="true" />
             </md-input-container>
             <md-input-container class="md-block" flex="20">
-                <label>Cartoon</label>
+                <label>Carton</label>
                 <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" required/>
                 <div ng-messages="selectedProductDetails.productQuantity.$error" ng-show="selectedProductDetails.productQuantity.$touched">
                     <div ng-message-exp="['required', 'min']">This is required. Should be more than 0.</div>
@@ -114,7 +114,7 @@
                     </th>
                     <th>Price</th>
                     <th>Pkg./Ctn.</th>
-                    <th>Cartoon</th>
+                    <th>Carton</th>
                     <th>Remarks</th>
                     <th class='alignCenter'>
                     	<md-checkbox type='checkbox' aria-label='Select All Products {{$index}}' class="md-primary"
@@ -151,7 +151,7 @@
                 <tr>
                     <th>Product Code</th>
                     <th>Supplier Initials</th>                    
-                    <th>Cartoon</th>
+                    <th>Carton</th>
                     <th>CPM</th> 
                     <th>Cost</th>
                 </tr>
@@ -167,7 +167,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th class='alignRight' colspan="6">Total Cartoons: {{totalCartoons}} and Grand Total: Rs. {{grandTotal | number:3 }}</th>                    
+                    <th class='alignRight' colspan="6">Total Cartons: {{totalCartoons}} and Grand Total: Rs. {{grandTotal | number:3 }}</th>                    
                 </tr>
             </tfoot>
         </table>
@@ -184,7 +184,7 @@
     <div class="modalTitle">
         <h4>Cancel Order?</h4>
     </div>
-    <div class="modalContent">Canceling the order will reset all the data. 
+    <div class="modalContent">Cancelling the order will reset all the data. 
         Are you sure you want to cancel the order?</div>
     <div class="modalFooter">
         <md-button type="button" class="md-raised md-primary" ng-click="cancelOrder()">YES</md-button>
