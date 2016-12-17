@@ -110,7 +110,7 @@ public class SupplierOrderController
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(4);
-		cell.setCellValue("Packageing");
+		cell.setCellValue("Packaging");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(5);
@@ -122,7 +122,7 @@ public class SupplierOrderController
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(7);
-		cell.setCellValue("Gross Weight");
+		cell.setCellValue("GW");
 		cell.setCellStyle(headerCellStyle);
 		
 		cell = row.createCell(8);
@@ -293,7 +293,7 @@ public class SupplierOrderController
 				{
 					remark = remark.append(suppOrderDet.getCustomerOrderDetails().getRemarks()).append(" ; ");
 				}
-				customerDetails.append(suppOrderDet.getCustomerOrderDetails().getCustomerOrder().getCustomer().getShipmark()).append(" : ");
+				customerDetails.append(suppOrderDet.getCustomerOrderDetails().getCustomerOrder().getCustomer().getShipmark()).append(":");
 				customerDetails.append(suppOrderDet.getCustomerOrderDetails().getQuantity()).append(" ; ");
 				quantity += suppOrderDet.getCustomerOrderDetails().getQuantity();
 			}

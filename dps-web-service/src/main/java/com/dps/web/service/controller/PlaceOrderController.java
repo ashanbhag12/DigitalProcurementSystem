@@ -339,7 +339,7 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(4);
-			cell.setCellValue("Packageing");
+			cell.setCellValue("Packaging");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(5);
@@ -351,7 +351,7 @@ public class PlaceOrderController
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(7);
-			cell.setCellValue("Gross Weight");
+			cell.setCellValue("GW");
 			cell.setCellStyle(headerCellStyle);
 			
 			cell = row.createCell(8);
