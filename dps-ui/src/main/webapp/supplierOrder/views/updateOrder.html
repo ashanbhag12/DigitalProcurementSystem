@@ -3,7 +3,7 @@
     <div class="animateMessages successBox" ng-show="showSuccessBox">{{successMessage}}</div>
     <div class="animateMessages errorBox" ng-show="showErrorBox">{{errorMessage}}</div>
     <div class="accordionWrapper">
-	    <div class="md-accordion" ng-repeat="data in ordersData">
+	    <div class="md-accordion" ng-repeat="data in ordersData | orderBy:data.orderDate:true">
 		    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
 		        <div class="md-toolbar-tools">
 		            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
