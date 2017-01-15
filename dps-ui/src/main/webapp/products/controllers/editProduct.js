@@ -11,11 +11,12 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* set the default sort order */
             $scope.sortBy = 'productCode'; /* set the default sort type */
-            $scope.selectedRows = []; /* Array for toggleAll function */
-            $scope.products = []; /* Array of all Products */            
+            $scope.selectedRows = []; /* Array for toggleAll function */          
+            $scope.products = []; /* Array of all Products */           
             $scope.searchProductCode = ''; /* Code for product search */
             $scope.selectAll = false; /* Set toggle all to false */
             $scope.maskColumns = true; /* Hide the columns */ 
+            $scope.excelDisabled = true; /* Disable the Excel button */
             var scrollOptions = { /* Set offset to scroll to search table */
             	    offset: -185,
             	};
@@ -61,6 +62,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 if ($scope.selectAll) {
                     $scope.selectAll = true;
                     $scope.editDisabled = true;
+                    $scope.excelDisabled = false;
                     $scope.deleteDisabled = false;
                     $scope.selectedRows = [];
                     angular.forEach($scope.products, function (product) {
@@ -72,6 +74,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     $scope.selectAll = false;
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = true;
+                    $scope.excelDisabled = true;
                     angular.forEach($scope.products, function (product) {
                         product.isChecked = $scope.selectAll;
                         $scope.selectedRows = [];
@@ -85,6 +88,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     $scope.selectedRows.push(1);
                     $scope.editDisabled = false;
                     $scope.deleteDisabled = false;
+                    $scope.excelDisabled = false;
                 }
                 else {
                     $scope.selectedRows.pop();
@@ -99,12 +103,15 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 if ($scope.selectedRows.length === 0) {
                     $scope.editDisabled = true;
                     $scope.deleteDisabled = true;
+                    $scope.excelDisabled = true;
                 }
                 else if ($scope.selectedRows.length > 1) {
                     $scope.editDisabled = true;
+                    $scope.excelDisabled = false;
                 }
                 else {
                     $scope.editDisabled = false;
+                    $scope.excelDisabled = false;
                 }
             };
             
@@ -351,5 +358,10 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             	$scope.editDisabled = true;
                 $scope.deleteDisabled = true;
             	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
-            };	
+            };
+            
+            /* Function to export selected products to Excel */
+            $scope.exportToExcel = function(selectedOrder, selectedOrderIndex){
+            		  
+            };
         });

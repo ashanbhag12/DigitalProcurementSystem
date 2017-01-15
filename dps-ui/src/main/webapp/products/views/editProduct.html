@@ -73,6 +73,10 @@
         </table> 
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></div>
+        <div layout='row' layout-align='end center' class='marginT10'>
+        	<input type="image" src="./assets/images/excel.png" alt="Export to Excel" class="excelBtn" title="Export to Excel"
+        	ng-disabled="excelDisabled" ng-class="{'disableControl':excelDisabled}" ng-click="excelDisabled || exportToExcel()" />            
+        </div>
     </div>
     <div class="editForm marginT20" ng-show="editProductForm" id="editProductForm">
         <h3 class="md-headline sectionTitle">Edit Product</h3>
