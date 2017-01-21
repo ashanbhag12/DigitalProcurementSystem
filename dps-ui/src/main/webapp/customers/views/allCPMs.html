@@ -2,10 +2,24 @@
     <h3 class="md-headline sectionTitle">All CPMs</h3>
     <div class="animateMessages errorBox" ng-show="showErrorBox">CPMs could not be retrieved. Please try again after some time</div>
     <div layout="row">
-        <md-input-container class="md-block" flex="25">
-            <label>Product Code</label>
-            <input type='text' name="searchProductCode" ng-model="searchProductCode" ng-keypress="triggerSearchProduct($event)" />
-        </md-input-container>
+	    <div flex="30">
+            <md-autocomplete flex md-input-id="autocompleteProductField"
+                             md-input-name="autocompleteProductField"
+                             md-input-minlength="1"
+                             md-input-maxlength="50"
+                             md-no-cache=false
+                             md-selected-item="searchedProduct"
+                             md-selected-item-change="getProductCPM()"
+                             md-search-text="searchText"
+                             md-items="product in querySearch(searchText)"
+                             md-item-text="product.productCode"
+                             md-floating-label="Search Product"
+                             md-select-on-match=true>
+                <md-item-template>
+                    <span md-highlight-text="searchText">{{product.productCode}}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </div>
         <div flex-offset="5">
             <md-button type="button" class="md-raised md-primary submitBtn" ng-click="getProductCPM()">SEARCH</md-button>
         </div>
