@@ -142,17 +142,18 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             	console.log($scope.updatedOrder)
             	saveUpdateSupplierOrderService.save($scope.ordersData, function(){ /* Success Callback */    		    	
                     $timeout(function () {
-                    	$scope.ordersData = getUpdateSupplierOrderService.query();
+                    	$scope.ordersData = getUpdateSupplierOrderService.query(function(){
+                    		$timeout(function () {/* Open the updated order accordion */
+                            	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                            }, 100); 
+                    	});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Order placed for Supplier " + $scope.updatedOrder.supplierInitials + " updated successfully"
     				    $scope.showErrorBox = false;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
-                        } 
-                        $timeout(function () {/* Open the updated order accordion */
-                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
-                        }, 100);                        
+                        }                                                
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */

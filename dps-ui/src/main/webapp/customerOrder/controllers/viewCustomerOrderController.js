@@ -172,17 +172,18 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             	angular.element(document.querySelector('.loader')).addClass('show');
             	deleteCustomerOrderService.save($scope.deleteOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
-                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){
+                    		$timeout(function () {/* Open the updated order accordion */
+                            	angular.element(document.querySelectorAll(".md-accordion")[$scope.deletedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                            }, 100);                    		
+                    	});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Customer order deleted successfully"
     				    $scope.showErrorBox = false;
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
                         for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
-                        } 
-                        $timeout(function () {/* Open the updated order accordion */
-                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.deletedOrderIndex]).find("md-toolbar").triggerHandler("click");
-                        }, 100);                        
+                        }                                                 
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
@@ -215,17 +216,18 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             	angular.element(document.querySelector('.loader')).addClass('show');
             	updateCustomerOrderService.save($scope.updateOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
-                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)});
+                    	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){
+                    		$timeout(function () {/* Open the updated order accordion */
+                            	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+                            }, 100);                    		
+                    	});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Order of Customer " + $scope.updateOrder.shipmark + " updated successfully"
     				    $scope.showErrorBox = false;     
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
-                        } 
-                        $timeout(function () {/* Open the updated order accordion */
-                        	angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
-                        }, 100);  
+                        }                           
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
