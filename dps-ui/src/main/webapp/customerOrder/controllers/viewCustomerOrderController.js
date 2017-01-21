@@ -223,7 +223,8 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	});
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Order of Customer " + $scope.updateOrder.shipmark + " updated successfully"
-    				    $scope.showErrorBox = false;     
+    				    $scope.showErrorBox = false;  
+                    	$scope.pdfDisabled[$scope.updatedOrderIndex] = true;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
