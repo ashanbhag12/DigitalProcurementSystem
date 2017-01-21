@@ -33,7 +33,7 @@
     </div>    
     <div class="clearfix searchedResults marginT15" ng-show="searchedResults">	    
 	    <div class="accordionWrapper">
-		    <div class="md-accordion" ng-repeat="order in supplierOrders | orderBy:order.orderDate:true">
+		    <div class="md-accordion" ng-repeat="order in supplierOrders">
 			    <md-toolbar ng-click="isAccordionOpen = !isAccordionOpen">
 			        <div class="md-toolbar-tools">
 			            <h3 class="md-title" ng-class="isAccordionOpen ? 'collapse' : 'expand'">
