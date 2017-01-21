@@ -197,7 +197,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
             };
     	    
     	    /* Function to generate invoice without Total Cost (TC) */
-    	    $scope.generateInvoiceWithoutTC = function(){
+    	    $scope.generateImageInvoice = function(){
     	    	
     	    };
     	    

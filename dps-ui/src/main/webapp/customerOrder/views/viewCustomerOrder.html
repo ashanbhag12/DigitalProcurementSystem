@@ -148,8 +148,8 @@
 			        </div>    
 			        <div layout='row' layout-align='end center'>
 			        	<md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setUpdatedCustomerOrderModal($index, order)">UPDATE</md-button>
-			        	<input type="image" src="./assets/images/pdf.png" alt="Generate Invoice without TC" class="pdfBtn marginL25" title="Generate Invoice without TC"
-        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="generateInvoiceWithoutTC()" />
+			        	<input type="image" src="./assets/images/pdf.png" alt="Generate Image Invoice" class="pdfBtn marginL25" title="Generate Image Invoice"
+        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="generateImageInvoice()" />
         	            <input type="image" src="./assets/images/pdf_TC.png" alt="Generate Invoice with TC" class="pdfBtn marginL25" title="Generate Invoice with TC"
         					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="generateInvoice()" />
 			        </div>
