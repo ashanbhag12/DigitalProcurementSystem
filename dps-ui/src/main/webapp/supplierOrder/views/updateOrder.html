@@ -56,7 +56,7 @@
 		                    <td>
 		                        <div ng-hide="editTables.editTable{{$parent.$index}}[$index]">{{order.receivedQuantity || 0}}</div>
 		                        <div ng-show="editTables.editTable{{$parent.$index}}[$index]">
-		                            <input type='number' name="receivedQuantity" ng-model="order.receivedQuantity" min="0" max="999" placeholder="" />  
+		                            <input type='number' name="receivedQuantity" ng-model="order.receivedQuantity" min="0" max="{{order.pendingQuantity}}" placeholder="" />  
 		                        </div>
 		                    </td>
 		                    <td class='alignCenter'>
@@ -75,7 +75,8 @@
 		        <!-- Pagination Directive -->
 		        <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id = "'_' + data.id"></div>      
 		        <div layout='row' layout-align='end center' class='marginT10'>
-		            <md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setSupplierForUpdateOrderModal($index, data)">UPDATE</md-button>
+		            <md-button type="button" class="md-raised md-primary submitBtn" ng-disabled="isInlineEditing[$index]"
+		            ng-class="{'disableControl':isInlineEditing[$index]}" ng-click="showModal('updateOrderModal'); setSupplierForUpdateOrderModal($index, data)">UPDATE</md-button>
 		            <md-button type="button" class="md-raised md-warn md-hue-2 resetBtn" ng-click="cancelUpdate($index)">CANCEL</md-button>            
 		        </div>
 		    </div>

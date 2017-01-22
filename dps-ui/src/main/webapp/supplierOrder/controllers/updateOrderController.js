@@ -15,6 +15,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.selectAll = []; /* model for toggleAll as per list of accordions */
             $scope.ordersData = []; /* All orders object */
             $scope.disabledUpdateBtn = true; /* Disable the Update button if orderDetails array is empty */
+            $scope.isInlineEditing = []; /* Disable the Update button if inline editing is true */
             $scope.updatedOrder; /* Object for updated order */
             $scope.updatedOrderIndex; /* Index for updated order */
             
@@ -28,7 +29,8 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                     for (var i = 0; i < $scope.ordersData.length; i++) {
                     	$scope.accordionList["selectedRows" + i] = [];
                     	$scope.editTables["editTable" + i] = [];
-                    	$scope.selectAll[i] = false;                	
+                    	$scope.selectAll[i] = false;  
+                    	$scope.isInlineEditing[i] = false;
                     	
                     	/* Set variable for inline editing in update order table */
                         for (var j = 0; j < $scope.ordersData[i].orderDetails.length; j++) {
@@ -101,18 +103,20 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.editOrderDetails = function (parentIndex, index) {
             	$scope.editTables["editTable"+parentIndex][index] = true;
                 $timeout(function () {
+                	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").val(0);
                 	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").eq(index).focus();
-                }, 100);
+                }, 100);                
+                $scope.isInlineEditing[parentIndex] = true;
             };
 
             $scope.updateOrderDetails = function (parentIndex, index) {
-            	$scope.editTables["editTable"+parentIndex][index] = false;           
+            	$scope.editTables["editTable"+parentIndex][index] = false;   
+            	$scope.isInlineEditing[parentIndex] = false;
             };
             
             $scope.setSupplierForUpdateOrderModal = function(index, data){
             	$scope.updatedOrder = data;
             	$scope.updatedOrderIndex = index;
-            	console.log($scope.ordersData);
             	
             	/* Set the received quantity field to 0 for unselected products */
                 angular.forEach($scope.ordersData, function (order, orderIndex) {                	
