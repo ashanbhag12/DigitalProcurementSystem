@@ -1,10 +1,15 @@
 package com.dps.web.service.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,7 +27,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -148,6 +156,148 @@ public class ProductController
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Response.Status.OK).build();
+	}
+	
+	@POST
+	@Path("/export")
+	public void exportData(List<ProductDTO> prodDtoList) throws Exception
+	{
+		List<Product> prodList = productService.findAll();
+		Map<Long, Product> productMap = new HashMap<>();
+		
+		for(Product prod : prodList)
+		{
+			productMap.put(prod.getId(), prod);
+		}
+		
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("Products");
+		
+		int rowCount = 0;
+		
+		CellStyle headerCellStyle = PlaceOrderController.createHeaderCellStyle(workbook);
+		Row row = sheet.createRow(rowCount++);
+		
+		int cellCount = 0;
+		for(UploadFields uf : UploadFields.values())
+		{
+			Cell cell = row.createCell(cellCount++);
+			cell.setCellValue(uf.toString());
+			cell.setCellStyle(headerCellStyle);
+		}
+		
+		for(ProductDTO prodDto : prodDtoList)
+		{
+			if(prodDto.getSelected())
+			{
+				row = sheet.createRow(rowCount++);
+				
+				Cell cell = row.createCell(0);
+				cell.setCellValue(prodDto.getProductCode());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(1);
+				cell.setCellValue(prodDto.getDummyCode());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(2);
+				cell.setCellValue(prodDto.getCartoonQuantity());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(3);
+				cell.setCellValue(prodDto.getCbm().toString());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(4);
+				cell.setCellValue(prodDto.getWeight().toString());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(5);
+				cell.setCellValue(prodDto.getDescription());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(6);
+				cell.setCellValue(prodDto.getMoq());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(7);
+				cell.setCellValue(prodDto.getDefaultMarginPercentage().toString());
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(8);
+				cell.setCellValue(prodDto.getIsValid() ? "Valid" : "Not Valid");
+				cell.setCellStyle(headerCellStyle);
+				
+				List<SuppProdInfo> suppProdInfoList = prodDto.getSupplierProductInfoList();
+				
+				cell = row.createCell(9);
+				cell.setCellValue(suppProdInfoList.get(0) != null ? suppProdInfoList.get(0).getSupplierInitials() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(10);
+				cell.setCellValue(suppProdInfoList.get(0) != null ? suppProdInfoList.get(0).getSupplierProductCode() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(11);
+				cell.setCellValue(suppProdInfoList.get(0) != null ? suppProdInfoList.get(0).getSupplierPrice() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(12);
+				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierInitials() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(13);
+				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierProductCode() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(14);
+				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierPrice() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(15);
+				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierInitials() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(16);
+				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierProductCode() : "");
+				cell.setCellStyle(headerCellStyle);
+				
+				cell = row.createCell(17);
+				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierPrice() : "");
+				cell.setCellStyle(headerCellStyle);
+			}
+			
+			for(int i = 0; i < UploadFields.values().length; i++)
+			{
+				sheet.autoSizeColumn(i);
+			}
+			
+			Configurations config = configService.findAll().get(0);
+			
+			String basePath = config.getBasePath();
+			if(!basePath.endsWith(File.separator))
+			{
+				basePath = basePath + File.separator;
+			}
+			
+			String filePath = basePath + "product";
+			
+			File dir = new File(filePath);
+			if(!dir.exists())
+			{
+				dir.mkdir();
+			}
+			
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			String dateStr = df.format(date);
+			
+			filePath = filePath + File.separator + "productlist_" + dateStr  + ".xls";
+			File file = new File(filePath);
+			FileOutputStream out = new FileOutputStream(file);
+			workbook.write(out);
+			out.close();
+		}
 	}
 	
 	@POST

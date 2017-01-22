@@ -438,7 +438,7 @@ public class PlaceOrderController
 		return null;
 	}
 	
-	private CellStyle createHeaderCellStyle(HSSFWorkbook workbook)
+	public static CellStyle createHeaderCellStyle(HSSFWorkbook workbook)
 	{
 		CellStyle cellStyle = workbook.createCellStyle();
 		

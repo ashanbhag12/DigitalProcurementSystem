@@ -77,9 +77,11 @@ public class CustomerOrderController
 		for(CustomerOrderDetailsDTO lineItem : lineItemsDto)
 		{
 			CustomerOrderDetails custOrderDet = custOrdersMap.get(lineItem.getId());
-			custOrderDet.setStatus(CustomerOrderDetailStatus.CANCELLED);
 			
-			if(custOrderDet.getStatus() == CustomerOrderDetailStatus.CANCELLED || custOrderDet.getStatus() == CustomerOrderDetailStatus.CANCELLED)
+			if(lineItem.isSelected())
+				custOrderDet.setStatus(CustomerOrderDetailStatus.CANCELLED);
+			
+			if(custOrderDet.getStatus() == CustomerOrderDetailStatus.CANCELLED || custOrderDet.getStatus() == CustomerOrderDetailStatus.ORDER_COMPLETED)
 			{
 				completedOrder++;
 			}

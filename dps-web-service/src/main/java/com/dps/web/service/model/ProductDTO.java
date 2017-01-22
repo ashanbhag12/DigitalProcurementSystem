@@ -29,6 +29,7 @@ public class ProductDTO
 	private BigDecimal price;
 	private BigDecimal cost;
 	private List<SuppProdInfo> supplierProductInfoList = new ArrayList<>();
+	private Boolean isChecked;
 	
 	public Long getId()
 	{
@@ -141,5 +142,13 @@ public class ProductDTO
 	public void setDummyCode(String dummyCode)
 	{
 		this.dummyCode = dummyCode;
+	}
+	public Boolean getSelected()
+	{
+		return isChecked;
+	}
+	public void setSelected(Boolean selected)
+	{
+		this.isChecked = selected;
 	}
 }
