@@ -131,7 +131,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         "moq" : $scope.productDetails.moq,
                         "supplierProductInfoList" : $scope.productDetails.supplierProductInfoList
                     });
-                    
+            		
                     $scope.calcProductsList.push({
                         "productCode": $scope.productDetails.productCode,
                         "productId": $scope.productDetails.id,
@@ -292,9 +292,22 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                         newProductsList.push(product);            
                     }
                 });
-                $scope.productsList = newProductsList;
+                $scope.productsList = newProductsList;               
+                $scope.calcProductsList = angular.copy($scope.productsList); /* Copy the new productList to calcProductList */     
+                /* Remove unwanted properties from $scope.calcProductsList object */
+                angular.forEach($scope.calcProductsList, function (calcProduct) {
+                	delete calcProduct.cartoonQuantity;
+                	delete calcProduct.moq;
+                	delete calcProduct.supplierProductInfoList;
+                	delete calcProduct.isChecked;
+                });
                 $scope.editDisabled = true;
-                $scope.deleteDisabled = true;
+                $scope.deleteDisabled = true;                
+                $scope.selectAll = false;
+	            angular.forEach($scope.productsList, function (product) {
+	            	product.isChecked = $scope.selectAll;
+	                $scope.selectedRows = [];
+	            });
             };
 
             $scope.submitCart = function () {

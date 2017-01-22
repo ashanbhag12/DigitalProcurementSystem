@@ -14,7 +14,8 @@
                              md-items="product in querySearch(searchText)"
                              md-item-text="product.productCode"
                              md-floating-label="Search Product"
-                             md-select-on-match=true>
+                             md-select-on-match="true"
+                             md-autoselect="true">
                 <md-item-template>
                     <span md-highlight-text="searchText">{{product.productCode}}</span>
                 </md-item-template>

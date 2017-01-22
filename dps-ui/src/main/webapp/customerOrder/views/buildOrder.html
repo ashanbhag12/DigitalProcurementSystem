@@ -31,7 +31,8 @@
                              md-items="product in querySearch(searchText)"
                              md-item-text="product.productCode"
                              md-floating-label="Search Product"
-                             md-select-on-match=true>
+                             md-select-on-match="true"
+                             md-autoselect="true">
                 <md-item-template>
                     <span md-highlight-text="searchText">{{product.productCode}}</span>
                 </md-item-template>
@@ -89,7 +90,7 @@
         <div class="clearfix">
             <h4 class="floatL inlineBlock paddingT5">Products Added: {{productsList.length}}</h4>
             <div class="floatR tableActions">
-                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editAddedProductsListRow()" 
+                <a href="javascript:;" tabindex="-1" class="editBtn" ng-click="editDisabled || editAddedProductsListRow()" 
                    ng-disabled="editDisabled" ng-class="{'disableControl': editDisabled}">Edit</a>
                 <a href="javascript:;" tabindex="-1" class="deleteBtn" ng-click="deleteDisabled || deleteAddedProductsListRow()" 
                    ng-disabled="deleteDisabled" ng-class="{'disableControl':deleteDisabled}">Delete</a>
