@@ -103,7 +103,12 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
             $scope.editOrderDetails = function (parentIndex, index) {
             	$scope.editTables["editTable"+parentIndex][index] = true;
                 $timeout(function () {
-                	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").val(0);
+                	var inputValue = angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").val();
+                	var maxValue = angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").attr("max");
+                	
+                	if(parseFloat(inputValue) > parseFloat(maxValue)){ /* Reset the value if it exceeds maximum value */
+                		angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").val(0);
+                	}
                 	angular.element(document.querySelectorAll(".customTable")[parentIndex]).find("input").eq(index).focus();
                 }, 100);                
                 $scope.isInlineEditing[parentIndex] = true;
