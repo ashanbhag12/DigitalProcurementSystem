@@ -23,6 +23,7 @@ angular.module('placeOrderApp', [])
 	                        $scope.selectedRows.push(1);
 	                    }
 	                });
+	                
 	                /* Set selectAll true if all products are selected */
 	                if ($scope.products.length === $scope.selectedRows.length && $scope.products.length !== 0) {
 	    	            $scope.selectAll = true;	    	            
@@ -69,8 +70,21 @@ angular.module('placeOrderApp', [])
 					    $scope.showErrorBox = false;
 					    /* To reload data in to the table by removing placed order items. */ 
 	                    getPlaceOrderService.query().$promise.then(function(data) {
-	                    	$scope.products = data;
-	                		$scope.selectAll = false;
+	                    	$scope.products = data;	             
+	                    	$scope.selectedRows = []; /* Reset the object */
+	                		/* To select the rows which fulfills MOQ */
+	    	                angular.forEach($scope.products, function (product) {
+	    	                    if (product.toOrder) {
+	    	                        $scope.selectedRows.push(1);
+	    	                    }
+	    	                });	        
+	    	                /* Set selectAll true if all products are selected */
+	    	                if ($scope.products.length === $scope.selectedRows.length && $scope.products.length !== 0) {
+	    	    	            $scope.selectAll = true;	    	            
+	    	    	        }
+	    	                else{
+	    	                	$scope.selectAll = false;
+	    	                }
 	                    });					    
 					    angular.element(document.querySelector('.loader')).removeClass('show');
 	                }, 500);
