@@ -37,7 +37,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoo
                         for (var j = 0; j < $scope.ordersData[i].orderDetails.length; j++) {
                         	$scope.editTables["editTable"+i][j] = false;
                         }
-                    }                  
+                    } 
                 });
             }); 
             
@@ -146,10 +146,14 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoo
             
             $scope.updateOrder = function () {
             	angular.element(document.querySelector('.loader')).addClass('show');
-            	angular.forEach($scope.updatedOrder.orderDetails, function (product) {
-            		delete product.isChecked;
+            	
+            	/* Delete the isChecked property before sending the order */
+                angular.forEach($scope.ordersData, function (order, orderIndex) {  
+	            	angular.forEach(order.orderDetails, function (product) {
+	            		delete product.isChecked;
+		            });
 	            });
-            	console.log($scope.updatedOrder)
+
             	saveUpdateSupplierOrderService.save($scope.ordersData, function(){ /* Success Callback */    		    	
                     $timeout(function () {
                     	$scope.ordersData = getUpdateSupplierOrderService.query(function(){
@@ -181,5 +185,6 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoo
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);
     		    });
+            	
             };
         });
