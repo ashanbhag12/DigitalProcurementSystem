@@ -1,6 +1,6 @@
 angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagination', 'smoothScroll'])
         .controller('editProductController', function ($rootScope, $scope, $timeout, getProductsService, 
-        		modifyProductsService, deleteProductsService, getSuppliersInitialsService, smoothScroll) {
+        		modifyProductsService, deleteProductsService, getSuppliersInitialsService, exportProductsToExcelService, smoothScroll) {
             $scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -124,6 +124,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        		$scope.searchedResults = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
+    	        		console.log($scope.products)
     	        	}, 500);    	        	
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
@@ -351,9 +352,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.cancel = function () {
             	$scope.editProductForm = false;
             	$scope.selectAll = false;
+            	$scope.selectedRows = [];
             	angular.forEach($scope.products, function (product) {
-                    product.isChecked = $scope.selectAll;
-                    $scope.selectedRows = [];
+                    product.isChecked = $scope.selectAll;                    
                 });
             	$scope.editDisabled = true;
                 $scope.deleteDisabled = true;
@@ -361,7 +362,28 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             };
             
             /* Function to export selected products to Excel */
-            $scope.exportToExcel = function(selectedOrder, selectedOrderIndex){
-            		  
+            $scope.exportToExcel = function(){
+            	angular.element(document.querySelector('.modal')).css('display', "none");
+            	angular.forEach($scope.products, function (product) {
+                    product.selected = true;
+                    delete product.isChecked;	
+                });
+            	console.log($scope.products)
+			    response = exportProductsToExcelService.save($scope.products, function(){/* Success Callback */
+			    	$timeout(function () {
+	                    $scope.showSuccessBox = true;
+	                    $scope.successMessage = "Products exported to excel successfully";
+					    $scope.showErrorBox = false;				    
+					    angular.element(document.querySelector('.loader')).removeClass('show');
+	                }, 500);
+			    }, function(error){/* Error Callback */
+			    	console.log(error)
+			    	$scope.showErrorBox = true; 
+			    	$scope.errorMessage = "Products could not be exported to excel. Please try again after some time";
+			    	$scope.showSuccessBox = false;
+			    	$timeout(function () {
+	                    angular.element(document.querySelector('.loader')).removeClass('show');
+	                }, 500);
+			    });  
             };
         });
