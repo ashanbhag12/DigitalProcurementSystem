@@ -147,7 +147,7 @@ public class ProductDTO
 	{
 		return isChecked;
 	}
-	public void setChecked(Boolean selected)
+	public void setIsChecked(Boolean selected)
 	{
 		this.isChecked = selected;
 	}
