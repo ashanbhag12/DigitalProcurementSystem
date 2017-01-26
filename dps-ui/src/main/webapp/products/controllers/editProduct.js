@@ -126,6 +126,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        		$scope.selectedRows = [];
     	        		$scope.showSuccessBox = false; /* Hide the Success Box */
     	                $scope.showErrorBox = false; /* Hide the Error Box */
+    	                $scope.excelDisabled = true; /* Disable the Excel button */
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        		console.log($scope.products)
