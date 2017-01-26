@@ -1,5 +1,6 @@
-angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
-        .controller('updateOrderController', function ($rootScope, $scope, $timeout, getUpdateSupplierOrderService, saveUpdateSupplierOrderService) {
+angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
+        .controller('updateOrderController', function ($rootScope, $scope, $timeout, 
+        		getUpdateSupplierOrderService, saveUpdateSupplierOrderService, smoothScroll) {
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -162,14 +163,21 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination'])
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
-                        }                                                
+                        }                        
+                        smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {
+    		    		$scope.selectAll[$scope.updatedOrderIndex] = false;
+                        for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
+                            $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.updatedOrderIndex] = [];
+                        } 
     		    		$scope.showErrorBox = true; 
         		    	$scope.errorMessage = "Order could not be updated. Please try again after some time."
         		    	$scope.showSuccessBox = false;
+        		    	smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);
     		    });
