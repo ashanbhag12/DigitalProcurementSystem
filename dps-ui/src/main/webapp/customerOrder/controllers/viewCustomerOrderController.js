@@ -53,7 +53,6 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$timeout(function () {
                     		$scope.searchedResults = true;      
                     		$scope.showErrorBox = false;   
-                    		console.log($scope.customerOrders)
                             angular.element(document.querySelector('.loader')).removeClass('show');
                             /* Create array for toggleAll inside accordionList object */
                             for (var i = 0; i < $scope.customerOrders.length; i++) {
@@ -180,10 +179,12 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Customer order deleted successfully"
     				    $scope.showErrorBox = false;
+                    	$scope.deleteDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
                         for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.deletedOrderIndex] = [];
                         }                         
                         smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
@@ -197,6 +198,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
                         for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.deletedOrderIndex] = [];
                         }  
         		    	smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
@@ -236,6 +238,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.updatedOrderIndex] = [];
                         }                          
                         smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
@@ -249,6 +252,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.updatedOrderIndex] = [];
                         } 
                         smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
