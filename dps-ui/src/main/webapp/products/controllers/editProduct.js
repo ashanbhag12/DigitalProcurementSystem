@@ -76,9 +76,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                     $scope.deleteDisabled = true;
                     $scope.excelDisabled = true;
                     angular.forEach($scope.products, function (product) {
-                        product.isChecked = $scope.selectAll;
-                        $scope.selectedRows = [];
+                        product.isChecked = $scope.selectAll;                        
                     });
+                    $scope.selectedRows = [];
                 }
             };
 
@@ -122,6 +122,10 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                 $scope.products = getProductsService.query({code:$scope.searchProductCode}, function(){/* Success Callback */
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
+    	        		$scope.selectAll = false;
+    	        		$scope.selectedRows = [];
+    	        		$scope.showSuccessBox = false; /* Hide the Success Box */
+    	                $scope.showErrorBox = false; /* Hide the Error Box */
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        		console.log($scope.products)
@@ -364,24 +368,24 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             /* Function to export selected products to Excel */
             $scope.exportToExcel = function(){
             	angular.element(document.querySelector('.modal')).css('display', "none");
-            	angular.forEach($scope.products, function (product) {
-                    product.selected = true;
-                    delete product.isChecked;	
-                });
+            	/*angular.forEach($scope.products, function (product) {
+                    console.log(product.isChecked);
+                });*/
             	console.log($scope.products)
 			    response = exportProductsToExcelService.save($scope.products, function(){/* Success Callback */
 			    	$timeout(function () {
 	                    $scope.showSuccessBox = true;
 	                    $scope.successMessage = "Products exported to excel successfully";
 					    $scope.showErrorBox = false;				    
+					    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 					    angular.element(document.querySelector('.loader')).removeClass('show');
 	                }, 500);
-			    }, function(error){/* Error Callback */
-			    	console.log(error)
-			    	$scope.showErrorBox = true; 
-			    	$scope.errorMessage = "Products could not be exported to excel. Please try again after some time";
-			    	$scope.showSuccessBox = false;
+			    }, function(error){/* Error Callback */			    	
 			    	$timeout(function () {
+			    		$scope.showErrorBox = true; 
+				    	$scope.errorMessage = "Products could not be exported to excel. Please try again after some time";
+				    	$scope.showSuccessBox = false;
+			    		smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 	                    angular.element(document.querySelector('.loader')).removeClass('show');
 	                }, 500);
 			    });  
