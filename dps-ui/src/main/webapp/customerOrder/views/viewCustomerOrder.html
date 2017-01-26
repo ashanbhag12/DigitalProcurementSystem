@@ -90,9 +90,9 @@
 			                    <td>{{product.receivedQuantity}}</td>
 							    <td>{{product.status}}</td>
 							    <td>
-			                        <div ng-hide="editTables.editTable{{$parent.$index}}[$index]">{{product.productPrice}}</div>
+			                        <div ng-hide="editTables.editTable{{$parent.$index}}[$index]">{{product.productPrice || 0}}</div>
 			                        <div ng-show="editTables.editTable{{$parent.$index}}[$index]">
-			                            <input type='text' name="receivedQuantity" ng-model="product.productPrice" xmin="0" xmax="999" placeholder="" />  
+			                            <input type='number' name="receivedQuantity" ng-model="product.productPrice" min="1" ng-pattern="/^[0-9]+(\.[0-9]{1,3})?$/" placeholder="Update Price" />  
 			                        </div>
 			                    </td>		                    
 							    <td class='alignCenter'>
