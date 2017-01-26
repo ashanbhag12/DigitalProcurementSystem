@@ -188,7 +188,7 @@ public class ProductController
 		
 		for(ProductDTO prodDto : prodDtoList)
 		{
-			if(prodDto.getSelected())
+			if(prodDto.getIsChecked())
 			{
 				row = sheet.createRow(rowCount++);
 				
