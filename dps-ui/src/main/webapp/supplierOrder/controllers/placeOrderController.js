@@ -88,10 +88,10 @@ angular.module('placeOrderApp', [])
 	                    });					    
 					    angular.element(document.querySelector('.loader')).removeClass('show');
 	                }, 500);
-			    }, function(error){/* Error Callback */
-			    	$scope.showErrorBox = true; 
-			    	$scope.showSuccessBox = false;
+			    }, function(error){/* Error Callback */			    	
 			    	$timeout(function () {
+			    		$scope.showErrorBox = true; 
+				    	$scope.showSuccessBox = false;
 	                    angular.element(document.querySelector('.loader')).removeClass('show');
 	                }, 500);
 			    });
