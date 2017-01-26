@@ -180,10 +180,12 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.showSuccessBox = true;
                     	$scope.successMessage = "Customer order deleted successfully"
     				    $scope.showErrorBox = false;
+                    	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
                         for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
-                        }                                                 
+                        }                         
+                        smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
@@ -191,6 +193,12 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    		$scope.showErrorBox = true; 
         		    	$scope.errorMessage = "Customer order could not be deleted. Please try again after some time."
         		    	$scope.showSuccessBox = false;
+        		    	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
+                    	$scope.selectAll[$scope.deletedOrderIndex] = false;
+                        for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
+                            $scope.editTables["editTable" + $scope.deletedOrderIndex][i] = false;
+                        }  
+        		    	smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);
     		    });
@@ -228,7 +236,8 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
-                        }                           
+                        }                          
+                        smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
     		    }, function(){/* Error Callback */
@@ -236,6 +245,12 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    		$scope.showErrorBox = true; 
         		    	$scope.errorMessage = "Customer order could not be updated. Please try again after some time."
         		    	$scope.showSuccessBox = false;
+        		    	$scope.pdfDisabled[$scope.updatedOrderIndex] = true;
+                    	$scope.selectAll[$scope.updatedOrderIndex] = false;
+                        for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
+                            $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                        } 
+                        smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
         		    	angular.element(document.querySelector('.loader')).removeClass('show');
     		    	}, 500);
     		    });
