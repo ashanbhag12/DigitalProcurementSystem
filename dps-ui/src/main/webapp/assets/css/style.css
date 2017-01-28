@@ -144,6 +144,7 @@ h3.sectionTitle, h4.sectionTitle{
     padding:5px 40px;
     font-size:18px;
     margin:0;
+    vertical-align:top;
 }
 
 .submitBtn + .resetBtn{margin-left:25px;}

@@ -1,6 +1,7 @@
-angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives.dirPagination'])
+angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
-        		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService) { 
+        		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService, 
+        		imageInvoiceService, pdfInvoiceService) { 
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -67,6 +68,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                                 	$scope.editTables["editTable"+i][j] = false;
                                 }
                             } 
+                            console.log($scope.customerOrders)
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
@@ -177,7 +179,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
                             }, 100);                    		
                     	});
                     	$scope.showSuccessBox = true;
-                    	$scope.successMessage = "Customer order deleted successfully"
+                    	$scope.successMessage = "Order for Customer " + $scope.customerShipmark + " deleted successfully";
     				    $scope.showErrorBox = false;
                     	$scope.deleteDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
@@ -192,7 +194,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {
     		    		$scope.showErrorBox = true; 
-        		    	$scope.errorMessage = "Customer order could not be deleted. Please try again after some time."
+        		    	$scope.errorMessage = "Order for Customer " + $scope.customerShipmark + " could not be deleted. Please try again after some time."
         		    	$scope.showSuccessBox = false;
         		    	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
@@ -205,20 +207,11 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    	}, 500);
     		    });
             };
-    	    
-    	    /* Function to generate invoice without Total Cost (TC) */
-    	    $scope.generateImageInvoice = function(){
-    	    	
-    	    };
-    	    
-    	    /* Function to generate invoice */
-	    	$scope.generateInvoice = function(){
-    	    	
-    	    };
-    	    
+    	        	    
     	    $scope.setUpdatedCustomerOrderModal = function(index, order){
     	    	$scope.updateOrder = order;
             	$scope.updatedOrderIndex = index;
+            	console.log($scope.updateOrder)
             };
     	    
     	    /* Function to update the selected products */
@@ -246,7 +239,7 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {
     		    		$scope.showErrorBox = true; 
-        		    	$scope.errorMessage = "Customer order could not be updated. Please try again after some time."
+        		    	$scope.errorMessage = "Customer " + $scope.updateOrder.shipmark + " order could not be updated. Please try again after some time."
         		    	$scope.showSuccessBox = false;
         		    	$scope.pdfDisabled[$scope.updatedOrderIndex] = true;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
@@ -259,5 +252,45 @@ angular.module('viewCustomerOrderApp', ['smoothScroll', 'angularUtils.directives
     		    	}, 500);
     		    });
             };
+            
+            /* Function to generate Image invoice */
+    	    $scope.generateImageInvoice = function(){
+    	    	angular.element(document.querySelector('.loader')).addClass('show');
+    	    	console.log($scope.updateOrder)
+    	    	response = imageInvoiceService.save($scope.updateOrder, function(){/* Success Callback */
+    	    		angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+    	    		$scope.showSuccessBox = true;
+                	$scope.successMessage = "Image invoice of Customer " + $scope.updateOrder.shipmark + " generated successfully"
+				    $scope.showErrorBox = false;                          
+                    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+                    angular.element(document.querySelector('.loader')).removeClass('show');
+    	    	}, function(){/* Error Callback */
+    	    		$scope.showErrorBox = true; 
+    		    	$scope.errorMessage = "Image invoice of Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+    		    	$scope.showSuccessBox = false;
+                    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    	angular.element(document.querySelector('.loader')).removeClass('show');
+    	    	});    	    	 
+    	    };
+    	    
+    	    /* Function to generate PDF invoice */
+	    	$scope.generatePDFInvoice = function(){	    		
+	    		angular.element(document.querySelector('.loader')).addClass('show');
+    	    	console.log($scope.updateOrder)
+    	    	response = pdfInvoiceService.save($scope.updateOrder, function(){/* Success Callback */
+    	    		angular.element(document.querySelectorAll(".md-accordion")[$scope.updatedOrderIndex]).find("md-toolbar").triggerHandler("click");
+    	    		$scope.showSuccessBox = true;
+                	$scope.successMessage = "Image invoice of Customer " + $scope.updateOrder.shipmark + " generated successfully"
+				    $scope.showErrorBox = false;                          
+                    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+                    angular.element(document.querySelector('.loader')).removeClass('show');
+    	    	}, function(){/* Error Callback */
+    	    		$scope.showErrorBox = true; 
+    		    	$scope.errorMessage = "Image invoice of Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+    		    	$scope.showSuccessBox = false;
+                    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+    		    	angular.element(document.querySelector('.loader')).removeClass('show');
+    	    	});
+    	    };
     	    
         }); 

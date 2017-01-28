@@ -15,4 +15,12 @@ angular.module('viewCustomerOrderApp')
 	
 	.factory('updateCustomerOrderService', function ($resource) {
 	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/update');
+	})
+	
+	.factory('imageInvoiceService', function ($resource) {
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/imginv');
+	})
+	
+	.factory('pdfInvoiceService', function ($resource) {
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/txtinv');
 	});
