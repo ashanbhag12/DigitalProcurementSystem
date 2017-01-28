@@ -21,6 +21,7 @@ public class CustomerOrderDetailsDTO
 	private Date orderPlacedDate;
 	private Date orderReceivedDate;
 	private Integer receivedQuantity;
+	private Integer lastReceivedQuantity;
 	private String remarks;
 	private BigDecimal productPrice;
 	private boolean isSelected = false;
@@ -112,5 +113,13 @@ public class CustomerOrderDetailsDTO
 	public void setSelected(boolean isSelected)
 	{
 		this.isSelected = isSelected;
+	}
+	public Integer getLastReceivedQuantity()
+	{
+		return lastReceivedQuantity;
+	}
+	public void setLastReceivedQuantity(Integer lastReceivedQuantity)
+	{
+		this.lastReceivedQuantity = lastReceivedQuantity;
 	}
 }

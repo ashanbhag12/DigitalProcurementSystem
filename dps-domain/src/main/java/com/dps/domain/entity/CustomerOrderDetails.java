@@ -78,6 +78,9 @@ public class CustomerOrderDetails extends EntityBase
 	@Column(name="RCVD_QNTY")
 	private Integer receivedQuantity;
 	
+	@Column(name="LAST_RCVD_QNTY")
+	private Integer lastReceivedQuantity;
+	
 	@Column(name="FX_RATE")
 	private BigDecimal exchangeRate;
 	
@@ -231,6 +234,16 @@ public class CustomerOrderDetails extends EntityBase
 	public void setProductPrice(BigDecimal productPrice)
 	{
 		this.productPrice = productPrice;
+	}
+
+	public Integer getLastReceivedQuantity()
+	{
+		return lastReceivedQuantity;
+	}
+
+	public void setLastReceivedQuantity(Integer lastReceivedQuantity)
+	{
+		this.lastReceivedQuantity = lastReceivedQuantity;
 	}
 
 	@Override

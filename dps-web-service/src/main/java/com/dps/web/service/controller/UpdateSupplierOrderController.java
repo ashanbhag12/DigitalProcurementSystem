@@ -108,6 +108,7 @@ public class UpdateSupplierOrderController
 	public void updateOrders(List<SupplierOrderDTO> suppOrderDtoList)
 	{
 		List<JpaEntityId> idList = new ArrayList<>();
+		Date today = new Date();
 		for(SupplierOrderDTO suppOrderDto : suppOrderDtoList)
 		{
 			idList.add(new JpaEntityId(suppOrderDto.getId()));
@@ -141,12 +142,13 @@ public class UpdateSupplierOrderController
 					int receivedQuantity = suppOrderDet.getCustomerOrderDetails().getReceivedQuantity() == null ? 0 : suppOrderDet.getCustomerOrderDetails().getReceivedQuantity();
 					receivedQuantity += suppOrderDetDto.getReceivedQuantity();
 					suppOrderDet.getCustomerOrderDetails().setReceivedQuantity(receivedQuantity);
+					suppOrderDet.getCustomerOrderDetails().setLastReceivedQuantity(suppOrderDetDto.getReceivedQuantity());
+					suppOrderDet.getCustomerOrderDetails().setOrderReceivedDate(today);
 					
 					if(suppOrderDet.getCustomerOrderDetails().getReceivedQuantity() == suppOrderDet.getCustomerOrderDetails().getQuantity())
 					{
 						suppOrderDet.getCustomerOrderDetails().setStatus(CustomerOrderDetailStatus.ORDER_COMPLETED);
 						suppOrderDet.setStatus(SupplierOrderDetailStatus.ITEM_COMPLETELY_RECEIVED);
-						suppOrderDet.getCustomerOrderDetails().setOrderReceivedDate(new Date());
 					}
 					else
 					{
@@ -166,6 +168,10 @@ public class UpdateSupplierOrderController
 				if(custOrderDet.getStatus() == CustomerOrderDetailStatus.ORDER_COMPLETED)
 				{
 					completedCount ++;
+				}
+				if(custOrderDet.getOrderReceivedDate() != today)
+				{
+					custOrderDet.setLastReceivedQuantity(0);
 				}
 			}
 			
