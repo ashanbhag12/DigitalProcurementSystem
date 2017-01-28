@@ -242,29 +242,35 @@ public class ProductController
 				cell.setCellValue(suppProdInfoList.get(0) != null ? suppProdInfoList.get(0).getSupplierPrice() : "");
 				cell.setCellStyle(headerCellStyle);
 				
-				cell = row.createCell(12);
-				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierInitials() : "");
-				cell.setCellStyle(headerCellStyle);
+				if(suppProdInfoList.size() > 1)
+				{
+					cell = row.createCell(12);
+					cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierInitials() : "");
+					cell.setCellStyle(headerCellStyle);
 				
-				cell = row.createCell(13);
-				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierProductCode() : "");
-				cell.setCellStyle(headerCellStyle);
+					cell = row.createCell(13);
+					cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierProductCode() : "");
+					cell.setCellStyle(headerCellStyle);
 				
-				cell = row.createCell(14);
-				cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierPrice() : "");
-				cell.setCellStyle(headerCellStyle);
+					cell = row.createCell(14);
+					cell.setCellValue(suppProdInfoList.get(1) != null ? suppProdInfoList.get(1).getSupplierPrice() : "");
+					cell.setCellStyle(headerCellStyle);
+				}
 				
-				cell = row.createCell(15);
-				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierInitials() : "");
-				cell.setCellStyle(headerCellStyle);
+				if(suppProdInfoList.size() > 2)
+				{
+					cell = row.createCell(15);
+					cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierInitials() : "");
+					cell.setCellStyle(headerCellStyle);
 				
-				cell = row.createCell(16);
-				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierProductCode() : "");
-				cell.setCellStyle(headerCellStyle);
+					cell = row.createCell(16);
+					cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierProductCode() : "");
+					cell.setCellStyle(headerCellStyle);
 				
-				cell = row.createCell(17);
-				cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierPrice() : "");
-				cell.setCellStyle(headerCellStyle);
+					cell = row.createCell(17);
+					cell.setCellValue(suppProdInfoList.get(2) != null ? suppProdInfoList.get(2).getSupplierPrice() : "");
+					cell.setCellStyle(headerCellStyle);
+				}
 			}
 			
 			for(int i = 0; i < UploadFields.values().length; i++)
