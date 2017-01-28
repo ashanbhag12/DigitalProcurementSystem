@@ -347,6 +347,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
         	            $scope.selectedRows = [];
         	            $scope.editDisabled = true;
         	            $scope.deleteDisabled = true;
+        	            $scope.excelDisabled = true; /* Disable the Excel button */
     			        $scope.errorMessage = "Product details could not be updated. Please try again after some time";	            
     		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    		angular.element(document.querySelector('.loader')).removeClass('show');
@@ -368,10 +369,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             
             /* Function to export selected products to Excel */
             $scope.exportToExcel = function(){
-            	angular.element(document.querySelector('.modal')).css('display', "none");
-            	/*angular.forEach($scope.products, function (product) {
-                    console.log(product.isChecked);
-                });*/
+            	angular.element(document.querySelector('.loader')).addClass('show');
             	console.log($scope.products)
 			    response = exportProductsToExcelService.save($scope.products, function(){/* Success Callback */
 			    	$timeout(function () {
