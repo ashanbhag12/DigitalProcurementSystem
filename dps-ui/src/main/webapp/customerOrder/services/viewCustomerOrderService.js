@@ -26,9 +26,9 @@ angular.module('viewCustomerOrderApp')
 	})
 	
 	.factory('imageInvoiceServiceForPreviousOrders', function ($resource) {
-	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/imginv');
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lastimginv');
 	})
 	
 	.factory('pdfInvoiceServiceForPreviousOrders', function ($resource) {
-	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/txtinv');
+	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lasttxtinv');
 	});
