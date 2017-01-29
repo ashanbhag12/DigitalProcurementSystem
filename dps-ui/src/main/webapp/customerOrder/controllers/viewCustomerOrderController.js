@@ -1,7 +1,7 @@
 angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
         		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService, 
-        		imageInvoiceService, pdfInvoiceService) { 
+        		imageInvoiceService, pdfInvoiceService, imageInvoiceServiceForPreviousOrders, pdfInvoiceServiceForPreviousOrders) { 
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -291,6 +291,16 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    	angular.element(document.querySelector('.loader')).removeClass('show');
     	    	});
+    	    };
+    	    
+    	    /* Function to generate Image invoice for previous orders */
+	    	$scope.generateImageInvoiceForPreviousOrders = function(){
+    	    	
+    	    };
+    	    
+    	    /* Function to generate PDF invoice for previous orders */
+    	    $scope.generatePDFInvoiceForPreviousOrders = function(){
+    	    	
     	    };
     	    
         }); 

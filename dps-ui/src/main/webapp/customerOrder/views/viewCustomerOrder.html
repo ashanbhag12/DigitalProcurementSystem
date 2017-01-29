@@ -141,9 +141,9 @@
 			        <div class="clearfix">
 			        	<div class="floatL">
 			        		<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice of Previous Orders" class="pdfBtn" title="Generate Image Invoice of Previous Orders"
-       							ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
+       							ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoiceForPreviousOrders()" />
 							<input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate PDF Invoice of Previous Orders"
-	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
+	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoiceForPreviousOrders()" />
 			        	</div>
 			        	<div class="floatR">
 			        		<md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setUpdatedCustomerOrderModal($index, order)">UPDATE</md-button>
