@@ -89,7 +89,7 @@
 			                    <td>{{product.quantity}}</td>
 			                    <td>{{product.remarks}}</td>
 			                    <td>{{product.lastReceivedQuantity || 0}}</td>
-			                    <td>{{product.receivedQuantity}}</td>
+			                    <td>{{product.receivedQuantity || 0}}</td>
 							    <td>{{product.status}}</td>
 							    <td>
 			                        <div ng-hide="editTables.editTable{{$parent.$index}}[$index]">{{product.productPrice || 0}}</div>
