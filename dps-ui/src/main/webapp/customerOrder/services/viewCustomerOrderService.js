@@ -25,10 +25,10 @@ angular.module('viewCustomerOrderApp')
 	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/txtinv');
 	})
 	
-	.factory('imageInvoiceServiceForPreviousOrders', function ($resource) {
+	.factory('imageInvoiceServiceOfCurrentOrders', function ($resource) {
 	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lastimginv');
 	})
 	
-	.factory('pdfInvoiceServiceForPreviousOrders', function ($resource) {
+	.factory('pdfInvoiceServiceOfCurrentOrders', function ($resource) {
 	    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lasttxtinv');
 	});

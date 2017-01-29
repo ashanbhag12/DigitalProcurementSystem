@@ -65,8 +65,8 @@
 			                    <th ng-hide="maskColumns">Supplier Initials</th>
 			                    <th>Product Qty.</th>			                    
 			                    <th>Remarks</th>
-			                    <th>Last Received Qty.
-			                    <th>Received Qty.</th>
+			                    <th>Total Received Qty.</th>
+			                    <th>Current Received Qty.</th>			                    
 			                    <th>
 			                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'orderStatus';
 			                            sortOrder = !sortOrder">Order Status
@@ -88,8 +88,8 @@
 			                    <td ng-hide="maskColumns">{{product.supplierInitials}}</td> 			                    
 			                    <td>{{product.quantity}}</td>
 			                    <td>{{product.remarks}}</td>
-			                    <td>{{product.lastReceivedQuantity || 0}}</td>
 			                    <td>{{product.receivedQuantity || 0}}</td>
+			                    <td>{{product.lastReceivedQuantity || 0}}</td>			                    
 							    <td>{{product.status}}</td>
 							    <td>
 			                        <div ng-hide="editTables.editTable{{$parent.$index}}[$index]">{{product.productPrice || 0}}</div>
@@ -140,17 +140,17 @@
 			        </form>
 			        <div class="clearfix">
 			        	<div class="floatL">
-			        		<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice of Previous Orders" class="pdfBtn" title="Generate Image Invoice of Previous Orders"
-       							ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoiceForPreviousOrders()" />
-							<input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate PDF Invoice of Previous Orders"
-	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoiceForPreviousOrders()" />
+			        		<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice" class="pdfBtn" title="Generate Image Invoice"
+	        					ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoice()" />
+	        	            <input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice" class="pdfBtn marginL25" title="Generate PDF Invoice"
+	        					ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
 			        	</div>
 			        	<div class="floatR">
 			        		<md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setUpdatedCustomerOrderModal($index, order)">UPDATE</md-button>
-				        	<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice" class="pdfBtn marginL25" title="Generate Image Invoice"
-	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoice()" />
-	        	            <input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice" class="pdfBtn marginL25" title="Generate PDF Invoice"
-	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
+				        	<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate Image Invoice of Current Orders"
+       							ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoiceOfCurrentOrders()" />
+							<input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate PDF Invoice of Current Orders"
+	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoiceOfCurrentOrders()" />
 			        	</div>
 			        </div>
 			    </div>

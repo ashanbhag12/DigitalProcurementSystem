@@ -1,7 +1,7 @@
 angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUtils.directives.dirPagination'])
         .controller('viewCustomerOrderController', function ($scope, $rootScope, $timeout, smoothScroll, getCustomersService,
         		getCustomerOrderService, deleteCustomerOrderService, updateCustomerOrderService, 
-        		imageInvoiceService, pdfInvoiceService, imageInvoiceServiceForPreviousOrders, pdfInvoiceServiceForPreviousOrders) { 
+        		imageInvoiceService, pdfInvoiceService, imageInvoiceServiceOfCurrentOrders, pdfInvoiceServiceOfCurrentOrders) { 
         	$scope.showSuccessBox = false; /* Hide the Success Box */
             $scope.showErrorBox = false; /* Hide the Error Box */
             $scope.successMessage = "";
@@ -307,11 +307,11 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    	});
     	    };
     	    
-    	    /* Function to generate Image invoice for previous orders */
-	    	$scope.generateImageInvoiceForPreviousOrders = function(){
+    	    /* Function to generate Image invoice for Current orders */
+	    	$scope.generateImageInvoiceOfCurrentOrders = function(){
 	    		angular.element(document.querySelector('.loader')).addClass('show');
     	    	console.log($scope.updateOrder)
-    	    	response = imageInvoiceServiceForPreviousOrders.save($scope.updateOrder, function(){/* Success Callback */  	    		
+    	    	response = imageInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */  	    		
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "Image invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
 				    $scope.showErrorBox = false;                          
@@ -326,11 +326,11 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    	}); 
     	    };
     	    
-    	    /* Function to generate PDF invoice for previous orders */
-    	    $scope.generatePDFInvoiceForPreviousOrders = function(){
+    	    /* Function to generate PDF invoice for Current orders */
+    	    $scope.generatePDFInvoiceOfCurrentOrders = function(){
     	    	angular.element(document.querySelector('.loader')).addClass('show');
     	    	console.log($scope.updateOrder)
-    	    	response = pdfInvoiceServiceForPreviousOrders.save($scope.updateOrder, function(){/* Success Callback */
+    	    	response = pdfInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "PDF invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
 				    $scope.showErrorBox = false;                          
