@@ -194,7 +194,7 @@ public class CustomerOrderController
 		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + File.separator + "inv_" + custOrderDto.getShipmark() + "_" +dateStr+".pdf"));
 		document.open();
 		
-		document.add(new Paragraph(dateStr + "\n"));
+		document.add(new Paragraph(dateStr + "\n\n"));
 		
 		for(CustomerOrderDetailsDTO custOrdrDet : custOrderDto.getLineItems())
 		{
@@ -272,7 +272,7 @@ public class CustomerOrderController
 		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportPath + File.separator + "inv_" + custOrderDto.getShipmark() + "_" +dateStr+".pdf"));
 		document.open();
 		
-		document.add(new Paragraph(dateStr + "\n"));
+		document.add(new Paragraph(dateStr + "\n\n"));
 		
 		for(CustomerOrderDetailsDTO custOrdrDet : custOrderDto.getLineItems())
 		{
@@ -410,15 +410,21 @@ public class CustomerOrderController
 		PdfPCell cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
 		
+		table.addCell(cell);
+		
 		gt = gt.add(custOrderDto.getAdditionalCost());
 		
 		cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
 		
+		table.addCell(cell);
+		
 		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
 		
 		cell = createNewCell();
 		cell.addElement(new Paragraph(gt.setScale(2, RoundingMode.HALF_UP).toString()));
+		
+		table.addCell(cell);
 		
 		table.completeRow();
 		
@@ -530,15 +536,21 @@ public class CustomerOrderController
 		PdfPCell cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
 		
+		table.addCell(cell);
+		
 		gt = gt.add(custOrderDto.getAdditionalCost());
 		
 		cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
 		
+		table.addCell(cell);
+		
 		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
 		
 		cell = createNewCell();
 		cell.addElement(new Paragraph(gt.setScale(2, RoundingMode.HALF_UP).toString()));
+		
+		table.addCell(cell);
 		
 		table.completeRow();
 		
