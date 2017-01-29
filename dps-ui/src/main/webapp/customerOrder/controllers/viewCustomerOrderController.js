@@ -196,6 +196,7 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     		    		$scope.showErrorBox = true; 
         		    	$scope.errorMessage = "Order for Customer " + $scope.customerShipmark + " could not be deleted. Please try again after some time."
         		    	$scope.showSuccessBox = false;
+        		    	$scope.deleteDisabled[$scope.deletedOrderIndex] = true;
         		    	$scope.pdfDisabled[$scope.deletedOrderIndex] = true;
                     	$scope.selectAll[$scope.deletedOrderIndex] = false;
                         for (var i = 0; i < $scope.deleteOrder.lineItems.length; i++) {
@@ -217,6 +218,17 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    /* Function to update the selected products */
             $scope.updateCustomerOrder = function(){ 
             	angular.element(document.querySelector('.loader')).addClass('show');
+            	
+            	/* Delete the "selected" property before sending the order */
+            	angular.forEach($scope.customerOrders, function (customerOrder, parentIndex) {  
+	            	angular.forEach(customerOrder.lineItems, function (product, index) {
+                        delete product.selected;
+		            });
+	            	$scope.accordionList["selectedRows" + parentIndex] = [];
+	            	$scope.selectAll[parentIndex] = false;
+	            	$scope.pdfDisabled[parentIndex] = true;
+                	$scope.deleteDisabled[parentIndex] = true;
+	            });
             	updateCustomerOrderService.save($scope.updateOrder, function(){ /* Success Callback */    		    	
                     $timeout(function () {
                     	$scope.customerOrders = getCustomerOrderService.query({customerShipmark:$scope.customerShipmark, startDate:Date.parse($scope.orderStartDate), endDate:Date.parse($scope.orderEndDate)}, function(){
@@ -228,11 +240,13 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
                     	$scope.successMessage = "Order of Customer " + $scope.updateOrder.shipmark + " updated successfully"
     				    $scope.showErrorBox = false;  
                     	$scope.pdfDisabled[$scope.updatedOrderIndex] = true;
-                    	$scope.selectAll[$scope.updatedOrderIndex] = false;
+                    	$scope.deleteDisabled[$scope.updatedOrderIndex] = true;
+                    	$scope.selectAll[$scope.updatedOrderIndex] = false;                    	
+                    	
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
                             $scope.accordionList["selectedRows" + $scope.updatedOrderIndex] = [];
-                        }                          
+                        }                       
                         smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
                     }, 500);
@@ -242,6 +256,7 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
         		    	$scope.errorMessage = "Customer " + $scope.updateOrder.shipmark + " order could not be updated. Please try again after some time."
         		    	$scope.showSuccessBox = false;
         		    	$scope.pdfDisabled[$scope.updatedOrderIndex] = true;
+        		    	$scope.deleteDisabled[$scope.updatedOrderIndex] = true;
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updateOrder.lineItems.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;

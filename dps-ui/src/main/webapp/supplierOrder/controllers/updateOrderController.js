@@ -151,6 +151,8 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoo
 	            	angular.forEach(order.orderDetails, function (product) {
 	            		delete product.isChecked;
 		            });
+	            	$scope.accordionList["selectedRows" + orderIndex] = [];
+	            	$scope.selectAll[orderIndex] = false;
 	            });
 
             	saveUpdateSupplierOrderService.save($scope.ordersData, function(){ /* Success Callback */    		    	
@@ -166,6 +168,7 @@ angular.module('updateOrderApp', ['angularUtils.directives.dirPagination', 'smoo
                     	$scope.selectAll[$scope.updatedOrderIndex] = false;
                         for (var i = 0; i < $scope.updatedOrder.orderDetails.length; i++) {
                             $scope.editTables["editTable" + $scope.updatedOrderIndex][i] = false;
+                            $scope.accordionList["selectedRows" + $scope.updatedOrderIndex] = [];
                         }                        
                         smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                         angular.element(document.querySelector('.loader')).removeClass('show');
