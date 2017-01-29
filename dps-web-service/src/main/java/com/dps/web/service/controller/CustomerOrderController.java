@@ -203,6 +203,12 @@ public class CustomerOrderController
 				Product product = productService.findByCode(custOrdrDet.getProductCode()).get(0);
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				
+				if(custOrdrDet.getReceivedQuantity() == null)
+				{
+					custOrdrDet.setReceivedQuantity(0);
+				}
+				
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
@@ -415,6 +421,11 @@ public class CustomerOrderController
 				PdfPCell cell = createNewCell();
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				
+				if(custOrdrDet.getReceivedQuantity() == null)
+				{
+					custOrdrDet.setReceivedQuantity(0);
+				}
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +price + " " + custOrdrDet.getReceivedQuantity()));
