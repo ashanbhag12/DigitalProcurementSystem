@@ -141,16 +141,16 @@
 			        <div class="clearfix">
 			        	<div class="floatL">
 			        		<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice" class="pdfBtn" title="Generate Image Invoice"
-	        					ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoice()" />
+	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}"  ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoice()" />
 	        	            <input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice" class="pdfBtn marginL25" title="Generate PDF Invoice"
-	        					ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
+	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoice()" />
 			        	</div>
 			        	<div class="floatR">
 			        		<md-button type="button" class="md-raised md-primary submitBtn" ng-click="showModal('updateOrderModal'); setUpdatedCustomerOrderModal($index, order)">UPDATE</md-button>
 				        	<input type="image" src="./assets/images/pdf_img.png" alt="Generate Image Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate Image Invoice of Current Orders"
-       							ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoiceOfCurrentOrders()" />
+       							ng-click="setUpdatedCustomerOrderModal($index, order); generateImageInvoiceOfCurrentOrders()" />
 							<input type="image" src="./assets/images/pdf_TC.png" alt="Generate PDF Invoice of Previous Orders" class="pdfBtn marginL25" title="Generate PDF Invoice of Current Orders"
-	        					ng-disabled="pdfDisabled[$index]" ng-class="{'disableControl':pdfDisabled[$index]}" ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoiceOfCurrentOrders()" />
+	        					ng-click="setUpdatedCustomerOrderModal($index, order); generatePDFInvoiceOfCurrentOrders()" />
 			        	</div>
 			        </div>
 			    </div>
@@ -260,4 +260,4 @@
         <md-button type="button" class="md-raised md-primary" ng-click="hideModal('deleteOrderModal'); deleteCustomerOrder();">YES</md-button>
         <md-button type="button" class="md-raised md-warn md-hue-2" ng-click="hideModal('deleteOrderModal')">NO</md-button>
     </div>
-</div> 
+</div>

@@ -313,13 +313,13 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    	console.log($scope.updateOrder)
     	    	response = imageInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */  	    		
     	    		$scope.showSuccessBox = true;
-                	$scope.successMessage = "Image invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
+                	$scope.successMessage = "Image invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"
 				    $scope.showErrorBox = false;                          
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                     angular.element(document.querySelector('.loader')).removeClass('show');
     	    	}, function(){/* Error Callback */
     	    		$scope.showErrorBox = true; 
-    		    	$scope.errorMessage = "Image invoice for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+    		    	$scope.errorMessage = "Image invoice of current orders for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
     		    	$scope.showSuccessBox = false;
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    	angular.element(document.querySelector('.loader')).removeClass('show');
@@ -332,13 +332,13 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    	console.log($scope.updateOrder)
     	    	response = pdfInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */
     	    		$scope.showSuccessBox = true;
-                	$scope.successMessage = "PDF invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
+                	$scope.successMessage = "PDF invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"
 				    $scope.showErrorBox = false;                          
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                     angular.element(document.querySelector('.loader')).removeClass('show');
     	    	}, function(){/* Error Callback */
     	    		$scope.showErrorBox = true; 
-    		    	$scope.errorMessage = "PDF invoice for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+    		    	$scope.errorMessage = "PDF invoice of current orders for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
     		    	$scope.showSuccessBox = false;
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    	angular.element(document.querySelector('.loader')).removeClass('show');
