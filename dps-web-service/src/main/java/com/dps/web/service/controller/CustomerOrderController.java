@@ -212,16 +212,39 @@ public class CustomerOrderController
 			}
 		}
 		
-		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
-		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+		if(!(custOrderDto.getAdditionalCost() == null && custOrderDto.getAdditionalCostDetails() == null))
+		{
+			if(custOrderDto.getAdditionalCost() == null)
+			{
+				custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalCostDetails() == null)
+			{
+				custOrderDto.setAdditionalCostDetails("");
+			}
+			
+			document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			gt = gt.add(custOrderDto.getAdditionalCost());
+		}
 		
-		document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		gt = gt.add(custOrderDto.getAdditionalCost());
-		
-		document.add(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
+		if(!(custOrderDto.getAdditionalDiscount() == null && custOrderDto.getAdditionalDiscountDetails() == null))
+		{
+			if(custOrderDto.getAdditionalDiscount() == null)
+			{
+				custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalDiscountDetails() == null)
+			{
+				custOrderDto.setAdditionalDiscountDetails("");
+			}
+			
+			document.add(new Paragraph( "\n" + custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			gt = gt.subtract(custOrderDto.getAdditionalDiscount());
+		}
 		
 		document.add(new Paragraph("\n\n" + gt.setScale(2, RoundingMode.HALF_UP).toString()));
 		
@@ -290,16 +313,40 @@ public class CustomerOrderController
 			}
 		}
 		
-		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
-		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+		if(!(custOrderDto.getAdditionalCost() == null && custOrderDto.getAdditionalCostDetails() == null))
+		{
+			if(custOrderDto.getAdditionalCost() == null)
+			{
+				custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalCostDetails() == null)
+			{
+				custOrderDto.setAdditionalCostDetails("");
+			}
+			
+			document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			gt = gt.add(custOrderDto.getAdditionalCost());
+		}
 		
-		document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
+		if(!(custOrderDto.getAdditionalDiscount() == null && custOrderDto.getAdditionalDiscountDetails() == null))
+		{
+			if(custOrderDto.getAdditionalDiscount() == null)
+			{
+				custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalDiscountDetails() == null)
+			{
+				custOrderDto.setAdditionalDiscountDetails("");
+			}
+			
+			document.add(new Paragraph( "\n" + custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			gt = gt.subtract(custOrderDto.getAdditionalDiscount());
+		}
 		
-		gt = gt.add(custOrderDto.getAdditionalCost());
-		
-		document.add(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
 		
 		document.add(new Paragraph("\n\n" + gt.setScale(2, RoundingMode.HALF_UP).toString()));
 		
@@ -404,24 +451,47 @@ public class CustomerOrderController
 			}
 		}
 		
-		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
-		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+		if(!(custOrderDto.getAdditionalCostDetails() == null && custOrderDto.getAdditionalCost() == null))
+		{
+			PdfPCell cell = createNewCell();
+			
+			if(custOrderDto.getAdditionalCost() == null)
+			{
+				custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalCostDetails() == null)
+			{
+				custOrderDto.setAdditionalCostDetails("") ;
+			}
+			cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
+		
+			table.addCell(cell);
+		
+			gt = gt.add(custOrderDto.getAdditionalCost());
+		}
+		
+		if(!(custOrderDto.getAdditionalDiscountDetails() == null && custOrderDto.getAdditionalDiscount() == null))
+		{
+			PdfPCell cell = createNewCell();
+			
+			if(custOrderDto.getAdditionalDiscount() == null)
+			{
+				custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalDiscountDetails() == null)
+			{
+				custOrderDto.setAdditionalDiscountDetails("") ;
+			}
+			cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			table.addCell(cell);
+			
+			gt = gt.subtract(custOrderDto.getAdditionalDiscount());
+		}
 		
 		PdfPCell cell = createNewCell();
-		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		table.addCell(cell);
-		
-		gt = gt.add(custOrderDto.getAdditionalCost());
-		
-		cell = createNewCell();
-		cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		table.addCell(cell);
-		
-		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
-		
-		cell = createNewCell();
 		cell.addElement(new Paragraph(gt.setScale(2, RoundingMode.HALF_UP).toString()));
 		
 		table.addCell(cell);
@@ -530,24 +600,49 @@ public class CustomerOrderController
 			}
 		}
 		
-		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
-		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+		
+		
+		if(!(custOrderDto.getAdditionalCostDetails() == null && custOrderDto.getAdditionalCost() == null))
+		{
+			PdfPCell cell = createNewCell();
+			
+			if(custOrderDto.getAdditionalCost() == null)
+			{
+				custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalCostDetails() == null)
+			{
+				custOrderDto.setAdditionalCostDetails("") ;
+			}
+			cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
+		
+			table.addCell(cell);
+		
+			gt = gt.add(custOrderDto.getAdditionalCost());
+		}
+		
+		if(!(custOrderDto.getAdditionalDiscountDetails() == null && custOrderDto.getAdditionalDiscount() == null))
+		{
+			PdfPCell cell = createNewCell();
+			
+			if(custOrderDto.getAdditionalDiscount() == null)
+			{
+				custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+			}
+			
+			if(custOrderDto.getAdditionalDiscountDetails() == null)
+			{
+				custOrderDto.setAdditionalDiscountDetails("") ;
+			}
+			cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
+			
+			table.addCell(cell);
+			
+			gt = gt.subtract(custOrderDto.getAdditionalDiscount());
+		}
 		
 		PdfPCell cell = createNewCell();
-		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		table.addCell(cell);
-		
-		gt = gt.add(custOrderDto.getAdditionalCost());
-		
-		cell = createNewCell();
-		cell.addElement(new Paragraph(custOrderDto.getAdditionalDiscountDetails() + " : " + custOrderDto.getAdditionalDiscount().setScale(2, RoundingMode.HALF_UP).toString()));
-		
-		table.addCell(cell);
-		
-		gt = gt.subtract(custOrderDto.getAdditionalDiscount());
-		
-		cell = createNewCell();
 		cell.addElement(new Paragraph(gt.setScale(2, RoundingMode.HALF_UP).toString()));
 		
 		table.addCell(cell);
