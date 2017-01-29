@@ -212,6 +212,9 @@ public class CustomerOrderController
 			}
 		}
 		
+		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
+		
 		document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
 		
 		gt = gt.add(custOrderDto.getAdditionalCost());
@@ -286,6 +289,9 @@ public class CustomerOrderController
 				gt = gt.add(cost);
 			}
 		}
+		
+		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
 		
 		document.add(new Paragraph( "\n" + custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
 		
@@ -397,6 +403,9 @@ public class CustomerOrderController
 				table.addCell(cell);
 			}
 		}
+		
+		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
 		
 		PdfPCell cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
@@ -514,6 +523,9 @@ public class CustomerOrderController
 				table.addCell(cell);
 			}
 		}
+		
+		custOrderDto.setAdditionalCost(Constants.BIG_DECIMAL_ZERO);
+		custOrderDto.setAdditionalDiscount(Constants.BIG_DECIMAL_ZERO);
 		
 		PdfPCell cell = createNewCell();
 		cell.addElement(new Paragraph(custOrderDto.getAdditionalCostDetails() + " : " + custOrderDto.getAdditionalCost().setScale(2, RoundingMode.HALF_UP).toString()));
