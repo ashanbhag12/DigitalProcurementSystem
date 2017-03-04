@@ -56,8 +56,8 @@ angular.module('DPSApp', ['ngMaterial', 'ngMessages', 'ngResource', 'ui.router',
                         controller: "allCPMsController"
                     })
                     
-                    .state('customerInvoice', {
-                        url: "/customerInvoice",
+                    .state('customerItemization', {
+                        url: "/customerItemization",
                         templateUrl: "customers/views/customerInvoice.html",
                         controller: "customerInvoiceController"
                     })
