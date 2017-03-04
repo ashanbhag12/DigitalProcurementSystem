@@ -1,4 +1,4 @@
-angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoothScroll'])
+angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoothScroll', 'ngMessages'])
         .controller('buildOrderController', function ($scope, $rootScope, $timeout, $q, smoothScroll, getCustomersForBuildOrderService, 
         		getSuppliersForBuildOrderService, getProductsForBuildOrderService, buildOrderCalculateService, saveOrderService) {
 
@@ -351,6 +351,7 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             	$scope.addedProductsSection = true;
             	$scope.orderSummarySection = false;
             	$scope.showSuccessBox = false;
+            	$scope.showErrorBox = false;
             };
 
             $scope.saveOrder = function () {    
