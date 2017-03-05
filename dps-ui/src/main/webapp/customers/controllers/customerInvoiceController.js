@@ -354,15 +354,15 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
     	$scope.generateImageInvoice = function(){
     		angular.element(document.querySelector('.loader')).addClass('show');
     		console.log($scope.invoiceSummary);
-	    	response = imageInvoiceService.save($scope.updateOrder, function(){/* Success Callback */  	    		
+	    	response = imageInvoiceService.save($scope.invoiceSummary, function(){/* Success Callback */  	    		
 	    		$scope.showSuccessBox = true;
-            	$scope.successMessage = "Image invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"
+            	$scope.successMessage = "Image itemization for Customer " + $scope.customerShipmark + " generated successfully"
 			    $scope.showErrorBox = false;                          
                 smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                 angular.element(document.querySelector('.loader')).removeClass('show');
 	    	}, function(){/* Error Callback */
 	    		$scope.showErrorBox = true; 
-		    	$scope.errorMessage = "Image invoice of current orders for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+		    	$scope.errorMessage = "Image itemization for Customer " + $scope.customerShipmark + " could not be generated. Please try again after some time."
 		    	$scope.showSuccessBox = false;
                 smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    	angular.element(document.querySelector('.loader')).removeClass('show');
@@ -372,16 +372,16 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
 	    /* Function to generate PDF invoice for Current orders */
 	    $scope.generatePDFInvoice = function(){
 	    	angular.element(document.querySelector('.loader')).addClass('show');
-	    	console.log($scope.updateOrder)
+	    	console.log($scope.invoiceSummary)
 	    	response = pdfInvoiceService.save($scope.updateOrder, function(){/* Success Callback */
 	    		$scope.showSuccessBox = true;
-            	$scope.successMessage = "PDF invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"
+            	$scope.successMessage = "PDF itemization for Customer " + $scope.customerShipmark + " generated successfully"
 			    $scope.showErrorBox = false;                          
                 smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
                 angular.element(document.querySelector('.loader')).removeClass('show');
 	    	}, function(){/* Error Callback */
 	    		$scope.showErrorBox = true; 
-		    	$scope.errorMessage = "PDF invoice of current orders for Customer " + $scope.updateOrder.shipmark + " could not be generated. Please try again after some time."
+		    	$scope.errorMessage = "PDF itemization for Customer " + $scope.customerShipmark + " could not be generated. Please try again after some time."
 		    	$scope.showSuccessBox = false;
                 smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    	angular.element(document.querySelector('.loader')).removeClass('show');
