@@ -312,11 +312,15 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         	angular.element(document.querySelector('.loader')).addClass('show');                                   
             var cartJson = {
             		"customerShipmark" : $scope.customerShipmark,
-            		"orderDate" : $scope.orderDate,
+            		//"orderDate" : $scope.orderDate,
             		"orderItems" : $scope.calcProductsList
-            	}                
+            	} 
+            console.log("data sent to /bill/calculate-----");
+            console.log(cartJson)
             $scope.invoiceSummary = buildInvoiceCalculateService.save(cartJson, function(){/* Success Callback */                	
             	$timeout(function(){
+            		console.log("Success: data returned from /bill/calculate-----");
+            		console.log($scope.invoiceSummary)
             		$scope.invoiceSummarySection = true;
             		angular.forEach($scope.invoiceSummary.orderItems, function(product){
                     	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
@@ -333,6 +337,8 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
             	}, 500)
             }, function(error){/* Error Callback */
             	$timeout(function(){
+            		console.log("Error: data returned from /bill/calculate-----");
+            		console.log($scope.invoiceSummary)
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
                     $scope.errorMessage = "Itemization list could not be saved. Please try again after some time";
                     $scope.showErrorBox = true;

@@ -13,7 +13,7 @@ customerInvoiceApp.factory('getCustomersForInvoiceService', function ($resource)
 })
 
 .factory('buildInvoiceCalculateService', function ($resource) {
-    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/buildorder/calculate');
+    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/bill/calculate');
 })
 
 .factory('imageInvoiceService', function ($resource) {
