@@ -23,4 +23,5 @@
 		<bean id="supplierOrderController" class="com.dps.web.service.controller.SupplierOrderController"></bean>
 		<bean id="allCpmController" class="com.dps.web.service.controller.CustomerProductMarginController"></bean>
 		<bean id="customerOrderController" class="com.dps.web.service.controller.CustomerOrderController"></bean>
+		<bean id="adhocBillController" class="com.dps.web.service.controller.AdhocBillController"></bean>
 </beans>

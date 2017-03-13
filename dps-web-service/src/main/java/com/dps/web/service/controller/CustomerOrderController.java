@@ -203,7 +203,7 @@ public class CustomerOrderController
 				Product product = productService.findByCode(custOrdrDet.getProductCode()).get(0);
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
-				
+				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				if(custOrdrDet.getReceivedQuantity() == null)
 				{
 					custOrdrDet.setReceivedQuantity(0);
@@ -212,7 +212,7 @@ public class CustomerOrderController
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
-				document.add(new Paragraph(custOrdrDet.getReceivedQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + product.getDescription()));
+				document.add(new Paragraph(custOrdrDet.getReceivedQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + costPerItem + " . " + price + " . " + product.getDescription()));
 				
 				gt = gt.add(cost);
 			}
@@ -310,10 +310,12 @@ public class CustomerOrderController
 				Product product = productService.findByCode(custOrdrDet.getProductCode()).get(0);
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
+				
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getLastReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
-				document.add(new Paragraph(custOrdrDet.getLastReceivedQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + product.getDescription()));
+				document.add(new Paragraph(custOrdrDet.getLastReceivedQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + costPerItem + " . " + price + " . " + product.getDescription()));
 				
 				gt = gt.add(cost);
 			}
@@ -421,6 +423,7 @@ public class CustomerOrderController
 				PdfPCell cell = createNewCell();
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				if(custOrdrDet.getReceivedQuantity() == null)
 				{
@@ -428,7 +431,7 @@ public class CustomerOrderController
 				}
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +price + " " + custOrdrDet.getReceivedQuantity()));
+				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +costPerItem + " " + custOrdrDet.getReceivedQuantity() + " " + price));
 				
 				gt = gt.add(cost);
 				
@@ -575,9 +578,10 @@ public class CustomerOrderController
 				PdfPCell cell = createNewCell();
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getLastReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +price + " " + custOrdrDet.getLastReceivedQuantity()));
+				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +costPerItem + " " + custOrdrDet.getLastReceivedQuantity() + " " + price));
 				
 				gt = gt.add(cost);
 				
