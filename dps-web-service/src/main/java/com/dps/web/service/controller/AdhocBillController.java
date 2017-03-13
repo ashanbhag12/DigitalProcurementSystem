@@ -228,11 +228,13 @@ public class AdhocBillController
 				Product product = productService.findByCode(item.getProductCode()).get(0);
 				
 				BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
-				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + product.getDescription()));
+				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + unitPrice + " . " + product.getDescription()));
 				
 				gt = gt.add(cost);
 		}
@@ -335,10 +337,11 @@ public class AdhocBillController
 				PdfPCell cell = createNewCell();
 				
 				BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
-				
+				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +price + " " + item.getQuantity()));
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
+				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +unitPrice + " " + item.getQuantity() + " " + price));
 				
 				gt = gt.add(cost);
 				

@@ -209,6 +209,7 @@ public class CustomerOrderController
 					custOrdrDet.setReceivedQuantity(0);
 				}
 				
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
@@ -311,7 +312,7 @@ public class CustomerOrderController
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getLastReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
@@ -429,6 +430,8 @@ public class CustomerOrderController
 				{
 					custOrdrDet.setReceivedQuantity(0);
 				}
+				
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +costPerItem + " " + custOrdrDet.getReceivedQuantity() + " " + price));
@@ -579,6 +582,7 @@ public class CustomerOrderController
 				
 				BigDecimal cost = findCost(config, custOrdrDet.getProductPrice(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				String costPerItem = cost.setScale(2, RoundingMode.HALF_UP).toString();
+				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				cost = cost.multiply(new BigDecimal(custOrdrDet.getLastReceivedQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +costPerItem + " " + custOrdrDet.getLastReceivedQuantity() + " " + price));
