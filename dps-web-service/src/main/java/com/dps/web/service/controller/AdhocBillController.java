@@ -227,7 +227,8 @@ public class AdhocBillController
 		{
 				Product product = productService.findByCode(item.getProductCode()).get(0);
 				
-				BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				//BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				BigDecimal cost = new BigDecimal(item.getUnitCost().doubleValue());
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
@@ -336,7 +337,8 @@ public class AdhocBillController
 				
 				PdfPCell cell = createNewCell();
 				
-				BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				//BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
+				BigDecimal cost = new BigDecimal(item.getUnitCost().doubleValue());
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
