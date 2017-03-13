@@ -339,8 +339,8 @@ public class AdhocBillController
 				BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cost = cost.multiply(new BigDecimal(item.getQuantity()));
-				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
+				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +unitPrice + " " + item.getQuantity() + " " + price));
 				
 				gt = gt.add(cost);
