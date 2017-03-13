@@ -62,21 +62,18 @@
 	                <input type="text" name="productMOQ" ng-model="productDetails.moq" ng-readonly="true"/>
 	            </md-input-container>
 	        </div>
-	        <div layout="row" layout-align="center stretch">              
+	        <div layout="row" layout-align="start stretch">              
 	            <md-input-container class="md-block" flex="20">
 	                <label>Pkg./Ctn.</label>
 	                <input type="text" name="cartoonQuantity" ng-model="productDetails.cartoonQuantity" ng-readonly="true" />
 	            </md-input-container>
 	            <md-input-container class="md-block" flex="20">
 	                <label>Carton</label>
-	                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" id="productQuantity" required/>
+	                <input min="1" type="number" name="productQuantity" ng-model="productDetails.productQuantity" 
+	                	id="productQuantity" required />
 	                <div ng-messages="selectedProductDetails.productQuantity.$error" ng-show="selectedProductDetails.productQuantity.$touched">
 	                    <div ng-message-exp="['required', 'min']">This is required. Should be more than 0.</div>
 	                </div>
-	            </md-input-container>
-	            <md-input-container class="md-block" flex="40">
-	                <label>Remarks</label>
-	                <textarea name="remarks" ng-model="productDetails.remarks" maxlength="125" ng-keypress="triggerAddProduct($event)"></textarea>
 	            </md-input-container>
 	            <div flex="15" flex-offset="5">
 	                <md-button class="md-raised md-primary submitBtn" ng-click="addProduct()" ng-show="showAddBtn" ng-disabled="selectedProductDetails.$invalid">ADD</md-button>

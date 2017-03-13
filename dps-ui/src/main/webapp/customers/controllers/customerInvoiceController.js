@@ -312,7 +312,7 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         	angular.element(document.querySelector('.loader')).addClass('show');                                   
             var cartJson = {
             		"customerShipmark" : $scope.customerShipmark,
-            		//"orderDate" : $scope.orderDate,
+            		"orderDate" : $scope.orderDate,
             		"orderItems" : $scope.calcProductsList
             	} 
             console.log("data sent to /bill/calculate-----");
@@ -355,8 +355,27 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         	$scope.showSuccessBox = false;
         	$scope.showErrorBox = false;
         };
-        
-        /* Function to generate Image invoice for Current orders */
+        	    
+	    /* Function to generate PDF invoice for Current orders */
+	    $scope.generatePDFInvoice = function(){
+	    	angular.element(document.querySelector('.loader')).addClass('show');
+	    	console.log($scope.invoiceSummary)
+	    	response = pdfInvoiceService.save($scope.invoiceSummary, function(){/* Success Callback */
+	    		$scope.showSuccessBox = true;
+            	$scope.successMessage = "PDF itemization for Customer " + $scope.customerShipmark + " generated successfully"
+			    $scope.showErrorBox = false;                          
+                smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+                angular.element(document.querySelector('.loader')).removeClass('show');
+	    	}, function(){/* Error Callback */
+	    		$scope.showErrorBox = true; 
+		    	$scope.errorMessage = "PDF itemization for Customer " + $scope.customerShipmark + " could not be generated. Please try again after some time."
+		    	$scope.showSuccessBox = false;
+                smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+		    	angular.element(document.querySelector('.loader')).removeClass('show');
+	    	});
+	    };
+	    
+	    /* Function to generate Image invoice for Current orders */
     	$scope.generateImageInvoice = function(){
     		angular.element(document.querySelector('.loader')).addClass('show');
     		console.log($scope.invoiceSummary);
@@ -373,25 +392,6 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
                 smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    	angular.element(document.querySelector('.loader')).removeClass('show');
 	    	}); 
-	    };
-	    
-	    /* Function to generate PDF invoice for Current orders */
-	    $scope.generatePDFInvoice = function(){
-	    	angular.element(document.querySelector('.loader')).addClass('show');
-	    	console.log($scope.invoiceSummary)
-	    	response = pdfInvoiceService.save($scope.updateOrder, function(){/* Success Callback */
-	    		$scope.showSuccessBox = true;
-            	$scope.successMessage = "PDF itemization for Customer " + $scope.customerShipmark + " generated successfully"
-			    $scope.showErrorBox = false;                          
-                smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-                angular.element(document.querySelector('.loader')).removeClass('show');
-	    	}, function(){/* Error Callback */
-	    		$scope.showErrorBox = true; 
-		    	$scope.errorMessage = "PDF itemization for Customer " + $scope.customerShipmark + " could not be generated. Please try again after some time."
-		    	$scope.showSuccessBox = false;
-                smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-		    	angular.element(document.querySelector('.loader')).removeClass('show');
-	    	});
 	    };
         
         $scope.cancelInvoicing = function () {  

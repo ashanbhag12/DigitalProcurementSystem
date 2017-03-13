@@ -16,10 +16,10 @@ customerInvoiceApp.factory('getCustomersForInvoiceService', function ($resource)
     return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/bill/calculate');
 })
 
-.factory('imageInvoiceService', function ($resource) {
-    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lastimginv');
+.factory('pdfInvoiceService', function ($resource) {
+    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/bill/txtinv');
 })
 
-.factory('pdfInvoiceService', function ($resource) {
-    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/customerorder/lasttxtinv');
+.factory('imageInvoiceService', function ($resource) {
+    return $resource('http://localhost:8080/dps-web-service-0.0.1/rest/bill/imginv');
 });
