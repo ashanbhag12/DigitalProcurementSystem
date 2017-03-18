@@ -232,7 +232,7 @@ public class AdhocBillController
 				//cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
-				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + unitPrice + " . " + product.getDescription()));
+				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + unitPrice + " . " + price + " . " + product.getDescription()));
 				
 				gt = gt.add(cost);
 		}
