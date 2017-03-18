@@ -149,25 +149,7 @@ public class BuildOrderController
 				cost = cost.multiply(custProdMargin);
 				cost = cost.multiply(custAddMargin);
 				
-				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
-				
 				cost.setScale(3, BigDecimal.ROUND_HALF_UP);
-				
-				/*price = price.multiply(productMargin);
-				price = price.multiply(custProdMargin);
-				price = price.multiply(custAddMargin);
-				price = price.multiply(fxrt).setScale(3, RoundingMode.HALF_UP);
-				
-				BigDecimal cbmPrice = cbmrt;
-				cbmPrice = cbmPrice.multiply(product.getCbm());
-				cbmPrice = cbmPrice.divide(cartoonQuantity, 3, RoundingMode.HALF_UP);
-				
-				BigDecimal gwPrice = gwrt;
-				gwPrice = gwPrice.multiply(product.getWeight());
-				gwPrice.divide(cartoonQuantity, 3, RoundingMode.HALF_UP);
-				
-				BigDecimal unitPrice = price.add(cbmPrice);
-				unitPrice = unitPrice.add(gwPrice).setScale(3, RoundingMode.HALF_UP);*/
 				
 				item.setUnitCost(cost);
 				

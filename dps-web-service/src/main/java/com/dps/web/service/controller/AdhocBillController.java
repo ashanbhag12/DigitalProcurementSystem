@@ -149,8 +149,6 @@ public class AdhocBillController
 				cost = cost.multiply(custProdMargin);
 				cost = cost.multiply(custAddMargin);
 				
-				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
-				
 				cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 				
 				item.setUnitCost(cost);
@@ -227,12 +225,11 @@ public class AdhocBillController
 		{
 				Product product = productService.findByCode(item.getProductCode()).get(0);
 				
-				//BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				BigDecimal cost = new BigDecimal(item.getUnitCost().doubleValue());
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
-				cost = cost.multiply(new BigDecimal(item.getQuantity()));
+				//cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + price + " . " + unitPrice + " . " + product.getDescription()));
@@ -340,7 +337,7 @@ public class AdhocBillController
 				//BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				BigDecimal cost = new BigDecimal(item.getUnitCost().doubleValue());
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				cost = cost.multiply(new BigDecimal(item.getQuantity()));
+				//cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +unitPrice + " " + item.getQuantity() + " " + price));
@@ -430,6 +427,7 @@ public class AdhocBillController
 		writer.close();
 	}
 	
+	@SuppressWarnings("unused")
 	private BigDecimal findCost(Configurations config, BigDecimal productPrice, Product product, BigDecimal custMargin, BigDecimal custProdMargin)
 	{
 		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
