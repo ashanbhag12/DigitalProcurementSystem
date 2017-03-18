@@ -39,13 +39,15 @@ angular.module('addProductApp', ['ngMessages', 'smoothScroll'])
     	    
     	    /* Function to update Calculate Product Margin */
     	    $scope.calculateProductMargin = function(){
-    	    	$scope.product.defaultMargin = parseFloat($scope.product.defaultMarginPercentage);
-            	if($scope.product.defaultMargin >= 0){
-            		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(6);
-        		}
-            	else{
-            		$scope.product.defaultMargin = (1 - (Math.abs($scope.product.defaultMargin)/100)).toFixed(6);            		
-            	}
+    	    	$timeout(function(){
+	    	    	$scope.product.defaultMargin = parseFloat($scope.product.defaultMarginPercentage);
+	            	if($scope.product.defaultMargin >= 0){
+	            		$scope.product.defaultMargin = (1 / (1 - (Math.abs($scope.product.defaultMargin)/100))).toFixed(6);
+	        		}
+	            	else{
+	            		$scope.product.defaultMargin = (1 - (Math.abs($scope.product.defaultMargin)/100)).toFixed(6);            		
+	            	}
+    	    	},0);
     	    };
 
             $scope.submitForm = function (addProduct) {

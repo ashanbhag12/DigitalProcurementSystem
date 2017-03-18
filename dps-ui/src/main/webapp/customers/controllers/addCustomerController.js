@@ -21,13 +21,15 @@ angular.module('addCustomerApp', ['ngMessages'])
 		    
 		    /* Function to calculate Additional Customer Margin */
 		    $scope.calculateCustomerMargin = function(){
-		    	$scope.customer.additionalMargin = parseFloat($scope.customer.additionalMarginPercentage);
-            	if($scope.customer.additionalMargin >= 0){
-            		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(6);
-        		}
-            	else{
-            		$scope.customer.additionalMargin = (1 - (Math.abs($scope.customer.additionalMargin)/100)).toFixed(6);            		
-            	}
+		    	$timeout(function(){
+		    		$scope.customer.additionalMargin = parseFloat($scope.customer.additionalMarginPercentage);			    	
+	            	if($scope.customer.additionalMargin >= 0){
+	            		$scope.customer.additionalMargin = (1 / (1 - (Math.abs($scope.customer.additionalMargin)/100))).toFixed(6);
+	        		}
+	            	else{
+	            		$scope.customer.additionalMargin = (1 - (Math.abs($scope.customer.additionalMargin)/100)).toFixed(6);            		
+	            	}
+		    	}, 0);		    	
 		    };
 		
 		    $scope.submitForm = function (addCustomer) {
