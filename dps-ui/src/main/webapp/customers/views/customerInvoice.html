@@ -173,11 +173,11 @@
                     <td>{{product.unitCost * product.quantity | number:3 }}</td>                   
                 </tr>
             </tbody>
-            <tfoot>
+            <!--tfoot>
                 <tr>
                     <th class='alignRight' colspan="6">Total Cartons: {{totalCartoons}} and Grand Total: Rs. {{grandTotal | number:3 }}</th>                    
                 </tr>
-            </tfoot>
+            </tfoot-->
         </table>
         <!-- Pagination Directive -->
         <div class="clearfix paginationWrapper" dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="orderSummary"></div>
