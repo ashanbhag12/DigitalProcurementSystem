@@ -26,8 +26,8 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         $scope.sortType = 'productCode'; /* set the default sort type */
         $scope.invoiceDate = new Date(); /* By default set todays date as order date */
         $scope.invoiceSummary = []; /* Object containing all the products added to invoice summary  */
-        $scope.grandTotal = 0;
-		$scope.totalCartoons = 0;
+        //$scope.grandTotal = 0;
+		//$scope.totalCartoons = 0;
         $scope.productDetails = {/* Object to show product details based on auto complete result */
                 "id": "",
             	"productCode": "",
@@ -322,11 +322,11 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
             		console.log("Success: data returned from /bill/calculate-----");
             		console.log($scope.invoiceSummary)
             		$scope.invoiceSummarySection = true;
-            		angular.forEach($scope.invoiceSummary.orderItems, function(product){
+            		/*angular.forEach($scope.invoiceSummary.orderItems, function(product){
                     	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
                     	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
-                    });
-            		$scope.grandTotal = ($scope.grandTotal).toFixed(6);
+                    });*/
+            		//$scope.grandTotal = ($scope.grandTotal).toFixed(6);
                     smoothScroll(document.getElementById('invoiceSummarySection')); /* Scroll to the invoice summary section */
                     $scope.successMessage = "Itemization list saved successfully";
                     $scope.showErrorBox = false;
@@ -354,6 +354,8 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         	$scope.invoiceSummarySection = false;
         	$scope.showSuccessBox = false;
         	$scope.showErrorBox = false;
+        	$scope.selectedRows = [];
+        	$scope.selectAll = false;
         };
         	    
 	    /* Function to generate PDF invoice for Current orders */
