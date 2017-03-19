@@ -229,7 +229,7 @@ public class AdhocBillController
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
-				//cost = cost.multiply(new BigDecimal(item.getQuantity()));
+				cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				
 				document.add(new Paragraph(item.getQuantity() + " . " + product.getCartoonQuantity() + " . " +  product.getProductCode() + " . " + unitPrice + " . " + price + " . " + product.getDescription()));
@@ -334,10 +334,9 @@ public class AdhocBillController
 				
 				PdfPCell cell = createNewCell();
 				
-				//BigDecimal cost = findCost(config, item.getUnitCost(), product, cust.getAdditionalMargin(),custProdPrefs.get(product.getId()));
 				BigDecimal cost = new BigDecimal(item.getUnitCost().doubleValue());
 				String unitPrice = cost.setScale(2, RoundingMode.HALF_UP).toString();
-				//cost = cost.multiply(new BigDecimal(item.getQuantity()));
+				cost = cost.multiply(new BigDecimal(item.getQuantity()));
 				cost = cost.multiply(new BigDecimal(product.getCartoonQuantity()));
 				String price = cost.setScale(2, RoundingMode.HALF_UP).toString();
 				cell.addElement(new Paragraph(product.getProductCode() + "  " + product.getCartoonQuantity() + "\n" +unitPrice + " " + item.getQuantity() + " " + price));
@@ -425,39 +424,6 @@ public class AdhocBillController
 		document.close();
 		writer.flush();
 		writer.close();
-	}
-	
-	@SuppressWarnings("unused")
-	private BigDecimal findCost(Configurations config, BigDecimal productPrice, Product product, BigDecimal custMargin, BigDecimal custProdMargin)
-	{
-		BigDecimal cost = Constants.BIG_DECIMAL_ONE;
-		
-		cost = cost.multiply(config.getExchangeRate());
-		cost = cost.multiply(productPrice);
-		
-		BigDecimal cost1 = Constants.BIG_DECIMAL_ONE;
-		cost1 = cost1.multiply(product.getCbm());
-		cost1 = cost1.multiply(config.getPricePerCbm());
-		cost1 = cost1.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
-		
-		BigDecimal cost2 = Constants.BIG_DECIMAL_ONE;
-		cost2 = cost2.multiply(product.getWeight());
-		cost2 = cost2.multiply(config.getPricePerWeight());
-		cost2 = cost2.divide(new BigDecimal(product.getCartoonQuantity()), RoundingMode.HALF_UP);
-		
-		cost = cost.add(cost1);
-		cost = cost.add(cost2);
-		
-		if(custProdMargin == null)
-		{
-			custProdMargin = Constants.BIG_DECIMAL_ONE;
-		}
-		
-		cost = cost.multiply(product.getDefaultMargin());
-		cost = cost.multiply(custProdMargin);
-		cost = cost.multiply(custMargin);
-		
-		return cost;
 	}
 	
 	private PdfPCell createNewCell()
