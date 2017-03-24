@@ -9,6 +9,9 @@ angular.module('allCPMsApp', ['angularUtils.directives.dirPagination', 'smoothSc
             $scope.querySearch = querySearch; /* Call the querySearch function for auto complete */
             var scrollOptions = { /* Set offset to scroll to search table */
             	    offset: -175,
+            	    callbackAfter: function(element) {
+            	    	angular.element(document.getElementsByName("searchTableText")).focus();
+            		}
             	};
 
             /* Function will be executed after the page is loaded */
@@ -46,7 +49,7 @@ angular.module('allCPMsApp', ['angularUtils.directives.dirPagination', 'smoothSc
         	        		$scope.searchedResults = true;
         	                $scope.showErrorBox = false;
         	        		angular.element(document.querySelector('.loader')).removeClass('show');
-        	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
+        	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */        	        		
         	        	}, 500);
         	        }, function(){ /* Error Callback */
         	        	$timeout(function(){

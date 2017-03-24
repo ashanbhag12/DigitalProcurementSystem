@@ -19,6 +19,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             $scope.excelDisabled = true; /* Disable the Excel button */
             var scrollOptions = { /* Set offset to scroll to search table */
             	    offset: -185,
+            	    callbackAfter: function(element) {
+            	    	angular.element(document.getElementsByName("searchTableText")).focus();
+            		}
             	};
             
             /* Function will be executed after the page is loaded */
