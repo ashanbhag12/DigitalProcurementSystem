@@ -20,6 +20,9 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.editProductDetailsRow = {}; /* Object for inline editing in Order Summary table */
             var scrollOptions = { /* Set offset to scroll to search table */
             	    offset: -175,
+            	    callbackAfter: function(element) {
+            	    	angular.element(document.getElementsByName("searchTableText")).focus();
+            		}
             	};
 
             /* Function will be executed after the page is loaded */
