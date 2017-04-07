@@ -195,12 +195,16 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                 $scope.suppliers = getSuppliersService.query({name:$scope.searchSupplierName,initials:$scope.searchSupplierInitials}, function(){/* Success Callback */
     	        	$timeout(function(){
     	        		$scope.searchedResults = true;
+    	        		$scope.showSuccessBox = false;
+    		            $scope.showErrorBox = false;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        	}, 500);
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
-    	        		$scope.errorMessage = "Supplier not found. Please try again";
+    	        		$scope.errorMessage = "Supplier not found. Please try again after some time";
+    	        		$scope.showSuccessBox = false;
+    		            $scope.showErrorBox = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        	}, 500);
     	        });
