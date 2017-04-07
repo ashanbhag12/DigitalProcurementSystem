@@ -238,11 +238,15 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark}, function(){/* Success Callback */
 	        	$timeout(function(){	        		
 	        		$scope.searchedResults = true;
+	        		$scope.showSuccessBox = false;
+		            $scope.showErrorBox = false;
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
 	        	}, 500);
 	        }, function(){ /* Error Callback */
 	        	$timeout(function(){
+	        		$scope.showSuccessBox = false;
+		            $scope.showErrorBox = true;
 	        		$scope.errorMessage = "Customer could not be found. Please try again after some time";
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        	}, 500);
