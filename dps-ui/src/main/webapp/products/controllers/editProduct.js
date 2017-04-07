@@ -136,6 +136,8 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        	}, 500);    	        	
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
+    	        		$scope.showSuccessBox = false; /* Hide the Success Box */
+    	                $scope.showErrorBox = true; /* Hide the Error Box */
     	        		$scope.errorMessage = "Product not found. Please try again after some time";
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
