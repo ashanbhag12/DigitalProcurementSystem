@@ -95,6 +95,9 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
                         $scope.supplier.initials = supplier.initials;
                         $scope.supplier.phoneNumber = supplier.phoneNumber;
                         $scope.supplier.emailId = supplier.emailId;
+                        $timeout(function () {
+                        	angular.element(document.getElementsByName("name")).focus();
+                        }, 500);                        
                     }
                 });
             };
@@ -118,6 +121,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
 		    		            $scope.showErrorBox = false;
 		    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    		            angular.element(document.querySelector('.loader')).removeClass('show');
+		    		            angular.element(document.getElementsByName("searchTableText")).focus();
 		        	        }, 500);
 	                	}, function(){/* Error Callback */
 	                		angular.element(document.querySelector('.modal')).css('display', "none");     
@@ -172,6 +176,7 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
     			        $scope.successMessage = "Supplier details updated successfully";		            
     		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    		angular.element(document.getElementsByName("searchTableText")).focus();
     		    	}, 500);
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {		   
@@ -220,5 +225,6 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
             	$scope.editDisabled = true;
                 $scope.deleteDisabled = true;
             	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
+            	angular.element(document.getElementsByName("searchTableText")).focus();
             };
         });

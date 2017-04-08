@@ -127,6 +127,9 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	                $scope.customer.city = customer.city;
 	                $scope.customer.state = customer.state;
 	                $scope.customer.zip = customer.zip;
+	                $timeout(function () {
+                    	angular.element(document.getElementsByName("name")).focus();
+                    }, 500);
 	            }
 	        });
 	    };
@@ -149,6 +152,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    			        $scope.successMessage = "Customers deleted successfully";
 	    		            $scope.showErrorBox = false;
 	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+	    		            angular.element(document.getElementsByName("searchTableText")).focus();
 	        	        }, 500);
 	            	}, function(error){/* Error Callback */
 	            		angular.element(document.querySelector('.modal')).css('display', "none");     
@@ -215,6 +219,7 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 			        $scope.successMessage = "Customer details updated successfully";		            
 		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 		    		angular.element(document.querySelector('.loader')).removeClass('show');
+		    		angular.element(document.getElementsByName("searchTableText")).focus();
 		    	}, 500);
 		    }, function(error){/* Error Callback */
 		    	$timeout(function () {		   
@@ -263,5 +268,6 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
         	$scope.editDisabled = true;
             $scope.deleteDisabled = true;
         	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
+        	angular.element(document.getElementsByName("searchTableText")).focus();
         };
 });

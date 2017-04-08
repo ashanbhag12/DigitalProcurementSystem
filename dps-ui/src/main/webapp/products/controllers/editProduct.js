@@ -223,6 +223,9 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         }else{
                         	$scope.product.isValid = "false";
                         }
+                        $timeout(function () {
+                        	angular.element(document.getElementsByName("productCode")).focus();
+                        }, 500);
                     }
                 });
             };
@@ -247,6 +250,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	    	    			        $scope.successMessage = "Products deleted successfully";
     	    	    		            $scope.showErrorBox = false;
     	    	    		            angular.element(document.querySelector('.loader')).removeClass('show');
+    	    	    		            angular.element(document.getElementsByName("searchTableText")).focus();
     	                        	}, 500);
     	                        }, function(){ /* Error callback */
     	                        	$timeout(function () {
@@ -345,6 +349,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     			        $scope.successMessage = "Product details updated successfully";		            
     		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
     		    		angular.element(document.querySelector('.loader')).removeClass('show');
+    		    		angular.element(document.getElementsByName("searchTableText")).focus();
     		    	}, 500);
     		    }, function(){/* Error Callback */
     		    	$timeout(function () {		   
@@ -372,6 +377,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             	$scope.editDisabled = true;
                 $scope.deleteDisabled = true;
             	smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
+            	angular.element(document.getElementsByName("searchTableText")).focus();
             };
             
             /* Function to export selected products to Excel */
@@ -385,6 +391,7 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
 					    $scope.showErrorBox = false;				    
 					    smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
 					    angular.element(document.querySelector('.loader')).removeClass('show');
+					    angular.element(document.getElementsByName("searchTableText")).focus();
 	                }, 500);
 			    }, function(error){/* Error Callback */			    	
 			    	$timeout(function () {
