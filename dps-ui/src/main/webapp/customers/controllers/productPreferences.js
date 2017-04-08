@@ -80,6 +80,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
                             $scope.searchedResults = true;
+                            $scope.showErrorBox = false;
                             angular.element(document.querySelector('.loader')).removeClass('show');
                             angular.forEach($scope.products.customerProductPrices, function (product, index) {
                         		$scope.updateProductDetails(index, product);
