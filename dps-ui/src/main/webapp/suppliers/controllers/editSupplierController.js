@@ -202,6 +202,9 @@ angular.module('editSupplierApp', ['ngMessages', 'angularUtils.directives.dirPag
     	        		$scope.searchedResults = true;
     	        		$scope.showSuccessBox = false;
     		            $scope.showErrorBox = false;
+    		            $scope.selectedRows = [];
+    		            $scope.editDisabled = true;
+        	            $scope.deleteDisabled = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        	}, 500);

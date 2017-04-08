@@ -176,64 +176,66 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	     * Note: no break; concept for angularJs forEach */
 	   
 	    $scope.update = function () {
-	    	var keepGoing = true;
-	        angular.forEach($scope.customers, function (customer) {
-	        	if(keepGoing) {
-	        		if (customer.isChecked) {
-	        			$scope.updateCustomerMargin();
-	        			angular.element(document.querySelector('.loader')).addClass('show');
-	                    customer.name = $scope.customer.name;
-	                    customer.phoneNumber = $scope.customer.phoneNumber;
-	                    customer.emailId = $scope.customer.emailId;
-	                    customer.shipmark = $scope.customer.shipmark;
-	                    customer.originalShipmark = $scope.customer.originalShipmark;
-	                    customer.additionalMarginPercentage = $scope.customer.additionalMarginPercentage;
-	                    customer.additionalMargin = $scope.customer.additionalMargin;
-	                    customer.flatNo = $scope.customer.flatNo;
-	                    customer.building = $scope.customer.building;
-	                    customer.street = $scope.customer.street;
-	                    customer.locality = $scope.customer.locality;
-	                    customer.city = $scope.customer.city;
-	                    customer.state = $scope.customer.state;
-	                    customer.zip = $scope.customer.zip;
-	                    delete customer.isChecked;	                    
-	                    keepGoing = false;
-	                    $scope.selectedRows = [];
-	                    $scope.updateCustomerJson = angular.toJson(customer);	
-	                }  
-	        	}
-	        });
-	        
-	        /* Service call to update customer */
-		    response = modifyCustomersService.save($scope.updateCustomerJson, function(){/* Success Callback */		    	
-		    	$timeout(function () {		   
-		    		/* WS call to get all Customers */
-			    	$scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
-			        $scope.editCustomerForm = false;
-			        $scope.showSuccessBox = true;
-			        $scope.showErrorBox = false;
-			        $scope.selectAll = false;
-    	            $scope.selectedRows = [];
-    	            $scope.editDisabled = true;
-    	            $scope.deleteDisabled = true;
-			        $scope.successMessage = "Customer details updated successfully";		            
-		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-		    		angular.element(document.querySelector('.loader')).removeClass('show');
-		    		angular.element(document.getElementsByName("searchTableText")).focus();
-		    	}, 500);
-		    }, function(error){/* Error Callback */
-		    	$timeout(function () {		   
-			    	$scope.showSuccessBox = false;
-			    	$scope.showErrorBox = true;
-			    	$scope.selectAll = false;
-    	            $scope.selectedRows = [];
-    	            $scope.editDisabled = true;
-    	            $scope.deleteDisabled = true;
-			        $scope.errorMessage = "Customer details could not be updated. Please try again after some time";	            
-		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-		    		angular.element(document.querySelector('.loader')).removeClass('show');
-		    	}, 500);
-		    });
+	    	$scope.updateCustomerMargin();
+	    	$timeout(function(){
+	    		var keepGoing = true;
+		        angular.forEach($scope.customers, function (customer) {
+		        	if(keepGoing) {
+		        		if (customer.isChecked) {	        			
+		        			angular.element(document.querySelector('.loader')).addClass('show');
+		                    customer.name = $scope.customer.name;
+		                    customer.phoneNumber = $scope.customer.phoneNumber;
+		                    customer.emailId = $scope.customer.emailId;
+		                    customer.shipmark = $scope.customer.shipmark;
+		                    customer.originalShipmark = $scope.customer.originalShipmark;
+		                    customer.additionalMarginPercentage = $scope.customer.additionalMarginPercentage;
+		                    customer.additionalMargin = $scope.customer.additionalMargin;
+		                    customer.flatNo = $scope.customer.flatNo;
+		                    customer.building = $scope.customer.building;
+		                    customer.street = $scope.customer.street;
+		                    customer.locality = $scope.customer.locality;
+		                    customer.city = $scope.customer.city;
+		                    customer.state = $scope.customer.state;
+		                    customer.zip = $scope.customer.zip;
+		                    delete customer.isChecked;	                    
+		                    keepGoing = false;
+		                    $scope.selectedRows = [];
+		                    $scope.updateCustomerJson = angular.toJson(customer);	
+		                }  
+		        	}
+		        });
+		        
+		        /* Service call to update customer */
+			    response = modifyCustomersService.save($scope.updateCustomerJson, function(){/* Success Callback */		    	
+			    	$timeout(function () {		   
+			    		/* WS call to get all Customers */
+				    	$scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark});
+				        $scope.editCustomerForm = false;
+				        $scope.showSuccessBox = true;
+				        $scope.showErrorBox = false;
+				        $scope.selectAll = false;
+	    	            $scope.selectedRows = [];
+	    	            $scope.editDisabled = true;
+	    	            $scope.deleteDisabled = true;
+				        $scope.successMessage = "Customer details updated successfully";		            
+			            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+			    		angular.element(document.querySelector('.loader')).removeClass('show');
+			    		angular.element(document.getElementsByName("searchTableText")).focus();
+			    	}, 500);
+			    }, function(error){/* Error Callback */
+			    	$timeout(function () {		   
+				    	$scope.showSuccessBox = false;
+				    	$scope.showErrorBox = true;
+				    	$scope.selectAll = false;
+	    	            $scope.selectedRows = [];
+	    	            $scope.editDisabled = true;
+	    	            $scope.deleteDisabled = true;
+				        $scope.errorMessage = "Customer details could not be updated. Please try again after some time";	            
+			            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+			    		angular.element(document.querySelector('.loader')).removeClass('show');
+			    	}, 500);
+			    });
+	    	},50);	    	
 	    };
 	
 	    /* Function to search for Customers */
@@ -241,10 +243,13 @@ angular.module('editCustomerApp', ['ngMessages', 'angularUtils.directives.dirPag
 	    	angular.element(document.querySelector('.loader')).addClass('show'); 
 	        /* Service Call to retrieve searched customer */
 	        $scope.customers = getCustomersService.query({name:$scope.searchCustomerName,shipmark:$scope.searchCustomerShipmark}, function(){/* Success Callback */
-	        	$timeout(function(){	        		
+	        	$timeout(function(){	        	
+	        		$scope.selectedRows = [];
 	        		$scope.searchedResults = true;
 	        		$scope.showSuccessBox = false;
 		            $scope.showErrorBox = false;
+		            $scope.editDisabled = true;
+    	            $scope.deleteDisabled = true;
 	        		angular.element(document.querySelector('.loader')).removeClass('show');
 	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
 	        	}, 500);

@@ -130,6 +130,8 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
     	        		$scope.showSuccessBox = false; /* Hide the Success Box */
     	                $scope.showErrorBox = false; /* Hide the Error Box */
     	                $scope.excelDisabled = true; /* Disable the Excel button */
+    	                $scope.editDisabled = true;
+                        $scope.deleteDisabled = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
     	        		console.log($scope.products)
@@ -286,85 +288,88 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
              * Note: no break; concept for angularJs forEach */
             
             $scope.update = function () {
-            	var keepGoing = true;
-                angular.forEach($scope.products, function (product) {
-                	if(keepGoing) {
-                		if (product.isChecked) {
-                			$scope.updateProductMargin();
-                			angular.element(document.querySelector('.loader')).addClass('show');
-                			
-                			/* So that supplierProductInfoList is of size 3, having 3 objs */
-                			product.supplierProductInfoList = [{
-								                    			"supplierInitials": "",
-								                    			"supplierProductCode": "",
-								                    			"supplierPrice": ""
-								                    		}, {
-								                    			"supplierInitials": "",
-								                    			"supplierProductCode": "",
-								                    			"supplierPrice": ""
-								                    		}, {
-								                    			"supplierInitials": "",
-								                    			"supplierProductCode": "",
-								                    			"supplierPrice": ""
-								                    		}],
-                			
-							product.dummyCode = $scope.product.dummyCode;
-                            product.productCode = $scope.product.productCode;
-                            product.cartoonQuantity = $scope.product.cartoonQuantity;
-                            product.cbm = $scope.product.cbm;
-                            product.weight = $scope.product.weight;
-                            product.description = $scope.product.description;
-                            product.moq = $scope.product.moq;
-                            product.defaultMargin = $scope.product.defaultMargin;
-                            product.defaultMarginPercentage = $scope.product.defaultMarginPercentage;
-                            product.supplierProductInfoList[0].supplierInitials = $scope.product.supplierProductInfoList[0].supplierInitials;
-                            product.supplierProductInfoList[0].supplierProductCode = $scope.product.supplierProductInfoList[0].supplierProductCode;
-                            product.supplierProductInfoList[0].supplierPrice = $scope.product.supplierProductInfoList[0].supplierPrice;
-                            product.supplierProductInfoList[1].supplierInitials = $scope.product.supplierProductInfoList[1].supplierInitials;
-                            product.supplierProductInfoList[1].supplierProductCode = $scope.product.supplierProductInfoList[1].supplierProductCode;
-                            product.supplierProductInfoList[1].supplierPrice = $scope.product.supplierProductInfoList[1].supplierPrice;
-                            product.supplierProductInfoList[2].supplierInitials = $scope.product.supplierProductInfoList[2].supplierInitials;
-                            product.supplierProductInfoList[2].supplierProductCode = $scope.product.supplierProductInfoList[2].supplierProductCode;
-                            product.supplierProductInfoList[2].supplierPrice = $scope.product.supplierProductInfoList[2].supplierPrice;
-                            product.isValid = $scope.product.isValid;   
-                            delete product.isChecked;	
-                            keepGoing = false;
-                            $scope.updateProductJson = angular.toJson(product); 
-                        }                    
-                	}
-                });
-                
-                /* Service call to update product */
-    		    response = modifyProductsService.save($scope.updateProductJson, function(){/* Success Callback */
-    		    	$timeout(function () {		   
-    		    		/* WS call to get all Products */
-    	    		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
-    	    		    $scope.editProductForm = false;
-    	                $scope.showSuccessBox = true;
-    	                $scope.showErrorBox = false;
-    			        $scope.selectAll = false;
-        	            $scope.selectedRows = [];
-        	            $scope.editDisabled = true;
-        	            $scope.deleteDisabled = true;
-    			        $scope.successMessage = "Product details updated successfully";		            
-    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-    		    		angular.element(document.querySelector('.loader')).removeClass('show');
-    		    		angular.element(document.getElementsByName("searchTableText")).focus();
-    		    	}, 500);
-    		    }, function(){/* Error Callback */
-    		    	$timeout(function () {		   
-    			    	$scope.showSuccessBox = false;
-    			    	$scope.showErrorBox = true;
-    			    	$scope.selectAll = false;
-        	            $scope.selectedRows = [];
-        	            $scope.editDisabled = true;
-        	            $scope.deleteDisabled = true;
-        	            $scope.excelDisabled = true; /* Disable the Excel button */
-    			        $scope.errorMessage = "Product details could not be updated. Please try again after some time";	            
-    		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
-    		    		angular.element(document.querySelector('.loader')).removeClass('show');
-    		    	}, 500);
-    		    });
+            	$scope.updateProductMargin();
+            	$timeout(function(){
+            		var keepGoing = true;
+                    angular.forEach($scope.products, function (product) {
+                    	if(keepGoing) {
+                    		if (product.isChecked) {
+                    			
+                    			angular.element(document.querySelector('.loader')).addClass('show');
+                    			
+                    			/* So that supplierProductInfoList is of size 3, having 3 objs */
+                    			product.supplierProductInfoList = [{
+    								                    			"supplierInitials": "",
+    								                    			"supplierProductCode": "",
+    								                    			"supplierPrice": ""
+    								                    		}, {
+    								                    			"supplierInitials": "",
+    								                    			"supplierProductCode": "",
+    								                    			"supplierPrice": ""
+    								                    		}, {
+    								                    			"supplierInitials": "",
+    								                    			"supplierProductCode": "",
+    								                    			"supplierPrice": ""
+    								                    		}],
+                    			
+    							product.dummyCode = $scope.product.dummyCode;
+                                product.productCode = $scope.product.productCode;
+                                product.cartoonQuantity = $scope.product.cartoonQuantity;
+                                product.cbm = $scope.product.cbm;
+                                product.weight = $scope.product.weight;
+                                product.description = $scope.product.description;
+                                product.moq = $scope.product.moq;
+                                product.defaultMargin = $scope.product.defaultMargin;
+                                product.defaultMarginPercentage = $scope.product.defaultMarginPercentage;
+                                product.supplierProductInfoList[0].supplierInitials = $scope.product.supplierProductInfoList[0].supplierInitials;
+                                product.supplierProductInfoList[0].supplierProductCode = $scope.product.supplierProductInfoList[0].supplierProductCode;
+                                product.supplierProductInfoList[0].supplierPrice = $scope.product.supplierProductInfoList[0].supplierPrice;
+                                product.supplierProductInfoList[1].supplierInitials = $scope.product.supplierProductInfoList[1].supplierInitials;
+                                product.supplierProductInfoList[1].supplierProductCode = $scope.product.supplierProductInfoList[1].supplierProductCode;
+                                product.supplierProductInfoList[1].supplierPrice = $scope.product.supplierProductInfoList[1].supplierPrice;
+                                product.supplierProductInfoList[2].supplierInitials = $scope.product.supplierProductInfoList[2].supplierInitials;
+                                product.supplierProductInfoList[2].supplierProductCode = $scope.product.supplierProductInfoList[2].supplierProductCode;
+                                product.supplierProductInfoList[2].supplierPrice = $scope.product.supplierProductInfoList[2].supplierPrice;
+                                product.isValid = $scope.product.isValid;   
+                                delete product.isChecked;	
+                                keepGoing = false;
+                                $scope.updateProductJson = angular.toJson(product); 
+                            }                    
+                    	}
+                    });
+                    
+                    /* Service call to update product */
+        		    response = modifyProductsService.save($scope.updateProductJson, function(){/* Success Callback */
+        		    	$timeout(function () {		   
+        		    		/* WS call to get all Products */
+        	    		    $scope.products = getProductsService.query({code:$scope.searchProductCode});
+        	    		    $scope.editProductForm = false;
+        	                $scope.showSuccessBox = true;
+        	                $scope.showErrorBox = false;
+        			        $scope.selectAll = false;
+            	            $scope.selectedRows = [];
+            	            $scope.editDisabled = true;
+            	            $scope.deleteDisabled = true;
+        			        $scope.successMessage = "Product details updated successfully";		            
+        		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+        		    		angular.element(document.querySelector('.loader')).removeClass('show');
+        		    		angular.element(document.getElementsByName("searchTableText")).focus();
+        		    	}, 500);
+        		    }, function(){/* Error Callback */
+        		    	$timeout(function () {		   
+        			    	$scope.showSuccessBox = false;
+        			    	$scope.showErrorBox = true;
+        			    	$scope.selectAll = false;
+            	            $scope.selectedRows = [];
+            	            $scope.editDisabled = true;
+            	            $scope.deleteDisabled = true;
+            	            $scope.excelDisabled = true; /* Disable the Excel button */
+        			        $scope.errorMessage = "Product details could not be updated. Please try again after some time";	            
+        		            smoothScroll(document.getElementsByTagName('body')); /* Scroll to the top of the page */
+        		    		angular.element(document.querySelector('.loader')).removeClass('show');
+        		    	}, 500);
+        		    });
+            	},50);            	
             };
             
             $scope.cancel = function () {
