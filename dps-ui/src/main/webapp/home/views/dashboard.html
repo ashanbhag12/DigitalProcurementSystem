@@ -4,28 +4,28 @@
         <md-whiteframe class="md-whiteframe-5dp card-green" flex="25" layout layout-align="center center">
             <div flex="40" class="icon-holder currency"></div>
             <div flex="60" class="alignCenter">
-                <div class="md-display-1">{{dashboard.exchangeRate || 0 | currency:"Rs."}}</div>
+                <div class="md-display-1">{{dashboard.exchangeRate | currency:"Rs."}}</div>
                 <div class="marginT10">ER</div>
             </div>
         </md-whiteframe>
         <md-whiteframe class="md-whiteframe-5dp card-purple" flex="25" layout layout-align="center center">
             <div flex="40" class="icon-holder products"></div>
             <div flex="60" class="alignCenter">
-                <div class="md-display-1">{{dashboard.productsCount || 0}}</div>
+                <div class="md-display-1">{{dashboard.productsCount}}</div>
                 <div class="marginT10">Products</div>
             </div>
         </md-whiteframe>
         <md-whiteframe class="md-whiteframe-5dp card-orange" flex="25" layout layout-align="center center">
             <div flex="40" class="icon-holder person"></div>
             <div flex="60" class="alignCenter">
-                <div class="md-display-1">{{dashboard.customerCount || 0}}</div>
+                <div class="md-display-1">{{dashboard.customerCount}}</div>
                 <div class="marginT10">Customers</div>
             </div>
         </md-whiteframe>
         <md-whiteframe class="md-whiteframe-5dp card-red" flex="25" layout layout-align="center center">
             <div flex="40" class="icon-holder person"></div>
             <div flex="60" class="alignCenter">
-                <div class="md-display-1">{{dashboard.supplierCount || 0}}</div>
+                <div class="md-display-1">{{dashboard.supplierCount}}</div>
                 <div class="marginT10">Suppliers</div>
             </div>
         </md-whiteframe>
