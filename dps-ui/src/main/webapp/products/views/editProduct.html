@@ -33,6 +33,13 @@
                             <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
                     </th>
+                    <th>
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'dummyProductCode';
+                            sortOrder = !sortOrder">DPC
+                            <span ng-show="sortBy == 'dummyProductCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'dummyProductCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
                     <th>Price</th>
                     <th>Pkg./Ctn.</th>
                     <th>CBM</th>                    
@@ -53,6 +60,7 @@
             <tbody>
                 <tr dir-paginate="product in products | orderBy:sortBy:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
                     <td>{{product.productCode}}</td>
+                    <td>{{product.dummyCode}}</td>
                     <td>{{getSupplierPrices(product.supplierProductInfoList)}}</td>
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>                    
