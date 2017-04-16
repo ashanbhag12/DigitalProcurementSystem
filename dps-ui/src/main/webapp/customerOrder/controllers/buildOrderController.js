@@ -319,11 +319,12 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
                 	}                
                 $scope.orderSummary = buildOrderCalculateService.save(cartJson, function(){/* Success Callback */                	
                 	$timeout(function(){
+                		console.log($scope.orderSummary)
                 		$scope.orderSummarySection = true;
                 		$scope.grandTotal = 0;
                 		$scope.totalCartoons = 0;
                 		angular.forEach($scope.orderSummary.orderItems, function(product){
-                        	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
+                        	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity * product.catronQuantity); 
                         	$scope.totalCartoons =  $scope.totalCartoons + product.quantity; 
                         });
                 		$scope.grandTotal = ($scope.grandTotal).toFixed(6);
