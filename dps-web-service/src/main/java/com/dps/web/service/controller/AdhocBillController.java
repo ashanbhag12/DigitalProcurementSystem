@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dps.commons.domain.Constants;
@@ -68,6 +69,8 @@ public class AdhocBillController
 	
 	@Autowired
 	private CustomerOrderService custOrderService;
+	
+	private static final Logger logger = Logger.getLogger(AdhocBillController.class);
 	
 	@POST
 	@Path("/calculate")
@@ -145,9 +148,17 @@ public class AdhocBillController
 				cost = cost.add(cost1);
 				cost = cost.add(cost2);
 				
+				logger.info("product margin " + productMargin);
 				cost = cost.multiply(productMargin);
+				logger.info("post product margin cost" + cost);
+				
+				logger.info("customer product margin " + custProdMargin);
 				cost = cost.multiply(custProdMargin);
+				logger.info("post customer product margin cost" + cost);
+				
+				logger.info("customer margin " + custAddMargin);
 				cost = cost.multiply(custAddMargin);
+				logger.info("post customer margin cost" + cost);
 				
 				cost.setScale(3, BigDecimal.ROUND_HALF_UP);
 				

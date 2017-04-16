@@ -116,6 +116,8 @@ public class BuildOrderController
 				BigDecimal custProdMargin = custProdPrefs.get(item.getProductId()) != null ? custProdPrefs.get(item.getProductId()) : Constants.BIG_DECIMAL_ONE;
 				BigDecimal productMargin = prodMap.get(item.getProductId()).getDefaultMargin();
 				
+				item.setCatronQuantity(product.getCartoonQuantity());
+				
 				BigDecimal price = Constants.BIG_DECIMAL_ONE;
 				
 				for(SupplierProductInfo spi : product.getSuppProdInfo())

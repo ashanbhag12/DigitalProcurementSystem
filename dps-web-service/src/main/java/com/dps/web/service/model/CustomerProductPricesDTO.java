@@ -16,6 +16,7 @@ public class CustomerProductPricesDTO
 {
 	private String productCode;
 	private String supplierProductCode;
+	private String dummyProductCode;
 	private BigDecimal productPrice; 
 	private BigDecimal productMargin;
 	private BigDecimal productMarginPercentage;
@@ -190,5 +191,15 @@ public class CustomerProductPricesDTO
 	public void setSupplierProductCode(String supplierProductCode)
 	{
 		this.supplierProductCode = supplierProductCode;
+	}
+
+	public String getDummyProductCode()
+	{
+		return dummyProductCode;
+	}
+
+	public void setDummyProductCode(String dummyProductCode)
+	{
+		this.dummyProductCode = dummyProductCode;
 	}
 }

@@ -23,6 +23,7 @@ public class BuildOrderDTO
 	private BigDecimal custProdDiscount;
 	private BigDecimal custProdDiscountPercent;
 	private Boolean isMoqSatisfied = Boolean.FALSE;
+	private Integer catronQuantity;
 
 	public String getProductCode()
 	{
@@ -114,4 +115,14 @@ public class BuildOrderDTO
 		this.custProdDiscountPercent = custProdDiscountPercent;
 	}
 
+	public Integer getCatronQuantity()
+	{
+		return catronQuantity;
+	}
+
+	public void setCatronQuantity(Integer catronQuantity)
+	{
+		this.catronQuantity = catronQuantity;
+	}
+	
 }

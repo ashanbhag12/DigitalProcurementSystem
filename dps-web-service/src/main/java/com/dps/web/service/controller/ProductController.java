@@ -366,6 +366,26 @@ public class ProductController
 					product.setMoq(((Double)values.get(UploadFields.MOQ)).intValue());
 					BigDecimal margin = values.get(UploadFields.DEFAULT_MARGIN) != null ? new BigDecimal(values.get(UploadFields.DEFAULT_MARGIN).toString()) : Constants.BIG_DECIMAL_ZERO;
 					product.setDiscountPrcentage(margin);
+					
+					if(margin.doubleValue() > 0)
+					{
+						double pect = margin.doubleValue()/100;
+						pect = 1-pect;
+						pect = 1/pect;
+						product.setDefaultMargin(new BigDecimal(pect));
+					}
+					else if(margin.doubleValue() < 0)
+					{
+						double pect = margin.doubleValue()*-1;
+						pect = pect/100;
+						pect = 1-pect;
+						product.setDefaultMargin(new BigDecimal(pect));
+					}
+					else
+					{
+						product.setDefaultMargin(new BigDecimal(1));
+					}
+					
 					product.setDefaultMargin(ControllerUtils.computeAbsoluteDiscount(margin));
 					product.setIsValid("Valid".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)) || "Y".equalsIgnoreCase((String)values.get(UploadFields.IS_VALID)));
 					product.setIsValid(Boolean.TRUE);
@@ -552,13 +572,33 @@ public class ProductController
 		prod.setCartoonQuantity(prodDto.getCartoonQuantity());
 		prod.setCbm(prodDto.getCbm());
 		prod.setDefaultMargin(prodDto.getDefaultMargin());
+		prod.setDiscountPrcentage(prodDto.getDefaultMarginPercentage());
+		
+		if(prodDto.getDefaultMarginPercentage().doubleValue() > 0)
+		{
+			double pect = prodDto.getDefaultMarginPercentage().doubleValue()/100;
+			pect = 1-pect;
+			pect = 1/pect;
+			prod.setDefaultMargin(new BigDecimal(pect));
+		}
+		else if(prodDto.getDefaultMarginPercentage().doubleValue() < 0)
+		{
+			double pect = prodDto.getDefaultMarginPercentage().doubleValue()*-1;
+			pect = pect/100;
+			pect = 1-pect;
+			prod.setDefaultMargin(new BigDecimal(pect));
+		}
+		else
+		{
+			prod.setDefaultMargin(new BigDecimal(1));
+		}
+		
 		prod.setDescription(prodDto.getDescription());
 		prod.setIsValid(prodDto.getIsValid());
 		prod.setMoq(prodDto.getMoq());
-		//prod.setPrice(prodDto.getPrice());
 		prod.setProductCode(prodDto.getProductCode());
 		prod.setWeight(prodDto.getWeight());
-		prod.setDiscountPrcentage(prodDto.getDefaultMarginPercentage());
+		
 		prod.setDummyCode(prodDto.getDummyCode());
 		
 		return prod;
