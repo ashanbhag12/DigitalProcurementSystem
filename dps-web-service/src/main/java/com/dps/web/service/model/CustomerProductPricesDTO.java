@@ -202,4 +202,23 @@ public class CustomerProductPricesDTO
 	{
 		this.dummyProductCode = dummyProductCode;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "CustomerProductPricesDTO [productCode=" + productCode
+				+ ", supplierProductCode=" + supplierProductCode
+				+ ", dummyProductCode=" + dummyProductCode + ", productPrice="
+				+ productPrice + ", productMargin=" + productMargin
+				+ ", productMarginPercentage=" + productMarginPercentage
+				+ ", customerProductMargin=" + customerProductMargin
+				+ ", customerProductMarginPercentage="
+				+ customerProductMarginPercentage + ", cost=" + cost
+				+ ", productDescription=" + productDescription
+				+ ", cartoonQuantity=" + cartoonQuantity + ", grossWeight="
+				+ grossWeight + ", cbm=" + cbm + ", calculatedCost="
+				+ calculatedCost + ", originalCost=" + originalCost
+				+ ", toExport=" + toExport + ", supplierInitials="
+				+ supplierInitials + "]";
+	}
 }

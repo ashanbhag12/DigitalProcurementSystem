@@ -37,7 +37,7 @@ public class SupplierOrderServiceImpl extends BaseServiceImpl<SupplierOrder> imp
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<Long, SupplierOrder>(1);
+		cache = new CacheImpl<Long, SupplierOrder>(0);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class ConfigurationsServiceImpl extends BaseServiceImpl<Configurations> i
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(1);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)

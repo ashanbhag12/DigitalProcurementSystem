@@ -33,7 +33,7 @@ public class LoginServiceImpl  extends BaseServiceImpl<Login> implements LoginSe
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(1);
+		cache = new CacheImpl<>(0);
 	}
 
 }

@@ -36,7 +36,7 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(50);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)

@@ -36,7 +36,7 @@ public class SupplierServiceImpl extends BaseServiceImpl<Supplier> implements Su
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(5);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)

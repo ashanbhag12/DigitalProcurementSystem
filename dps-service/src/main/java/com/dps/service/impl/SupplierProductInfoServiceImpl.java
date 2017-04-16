@@ -34,7 +34,7 @@ public class SupplierProductInfoServiceImpl extends BaseServiceImpl<SupplierProd
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(50);
+		cache = new CacheImpl<>(0);
 	}
 
 }

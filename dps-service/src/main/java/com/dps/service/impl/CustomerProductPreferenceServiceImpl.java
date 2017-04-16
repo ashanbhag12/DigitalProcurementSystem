@@ -38,7 +38,7 @@ public class CustomerProductPreferenceServiceImpl extends BaseServiceImpl<Custom
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(10);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)

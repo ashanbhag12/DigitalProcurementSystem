@@ -36,7 +36,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(100);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)

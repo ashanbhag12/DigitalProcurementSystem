@@ -151,4 +151,17 @@ public class ProductDTO
 	{
 		this.isChecked = selected;
 	}
+	@Override
+	public String toString()
+	{
+		return "ProductDTO [id=" + id + ", productCode=" + productCode
+				+ ", cartoonQuantity=" + cartoonQuantity + ", cbm=" + cbm
+				+ ", weight=" + weight + ", description=" + description
+				+ ", dummyCode=" + dummyCode + ", moq=" + moq + ", isValid="
+				+ isValid + ", defaultMargin=" + defaultMargin
+				+ ", defaultMarginPercentage=" + defaultMarginPercentage
+				+ ", price=" + price + ", cost=" + cost
+				+ ", supplierProductInfoList=" + supplierProductInfoList
+				+ ", isChecked=" + isChecked + "]";
+	}
 }

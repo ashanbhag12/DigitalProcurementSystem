@@ -37,7 +37,7 @@ public class CustomerOrderDetailsServiceImpl extends BaseServiceImpl<CustomerOrd
 	@Override
 	protected void initializeCache()
 	{
-		cache = new CacheImpl<>(1);
+		cache = new CacheImpl<>(0);
 	}
 
 	/* (non-Javadoc)
