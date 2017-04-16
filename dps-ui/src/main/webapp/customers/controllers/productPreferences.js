@@ -8,7 +8,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
             $scope.errorMessage = "";
             $scope.searchedResults = false; /* Hide the search results container */
             $scope.sortOrder = false; /* Set the default sort order */
-            $scope.sortType = 'productCode'; /* Set the default sort type */
+            $scope.sortBy = 'productCode'; /* Set the default sort type */
             $scope.maskColumns = true; /* Hide the columns */
             $scope.products = [];     
             $scope.selectedRows = []; /* Array for toggleAll function */
@@ -79,6 +79,7 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     /* Service Call to retrieve all products */
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
+                    		console.log( $scope.products)
                             $scope.searchedResults = true;
                             $scope.showErrorBox = false;
                             angular.element(document.querySelector('.loader')).removeClass('show');

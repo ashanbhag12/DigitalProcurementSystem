@@ -43,12 +43,19 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="javascript:;" tabindex="-1" ng-click="sortType = 'productCode';
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'productCode';
                             sortOrder = !sortOrder">Product Code
-                            <span ng-show="sortType == 'productCode' && sortOrder">&#9662;</span>
-                            <span ng-show="sortType == 'productCode' && !sortOrder">&#9652;</span>
+                            <span ng-show="sortBy == 'productCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'productCode' && !sortOrder">&#9652;</span>
                         </a>
-                    </th>  
+                    </th>
+                    <th>
+                        <a href="javascript:;" tabindex="-1" ng-click="sortBy = 'dummyProductCode';
+                            sortOrder = !sortOrder">DPC
+                            <span ng-show="sortBy == 'dummyProductCode' && sortOrder">&#9662;</span>
+                            <span ng-show="sortBy == 'dummyProductCode' && !sortOrder">&#9652;</span>
+                        </a>
+                    </th>
                     <th ng-hide="maskColumns">Price</th>
                     <th>Pkg./Ctn.</th>
                     <th>CBM</th>
@@ -67,7 +74,8 @@
             </thead>
             <tbody>
                 <tr dir-paginate="product in products.customerProductPrices | orderBy:sortType:sortOrder | filter:searchTable | itemsPerPage:15 track by $index">
-                    <td>{{product.productCode}}</td>                    
+                    <td>{{product.productCode}}</td>         
+                    <td>{{product.dummyProductCode}}</td>           
                     <td ng-hide="maskColumns">{{product.productPrice}}</td>    
                     <td>{{product.cartoonQuantity}}</td>
                     <td>{{product.cbm}}</td>
