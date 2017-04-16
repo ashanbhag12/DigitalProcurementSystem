@@ -54,9 +54,19 @@ angular.module('buildOrderApp', ['angularUtils.directives.dirPagination', 'smoot
             });
 
             $scope.showSearchSection = function () {
-                if ($scope.customerShipmark !== undefined) {
+                if ($scope.customerShipmark !== undefined) {                    
+                    $scope.productsList = [];
+                    $scope.calcProductsList = [];
+                    $scope.orderSummary = [];
+                    $scope.productDetails = {};
                     $scope.searchProductSection = true;
                     $scope.orderSummarySection = false;
+                    $scope.productDetailsSection = false; /* Hide the Products details section */
+                    $scope.addedProductsSection = false; /* Hide the products' added table */
+                    $scope.showSuccessBox = false; /* Hide the success box */
+                    $scope.showErrorBox = false; /* Hide the error box */
+                    $scope.successMessage = ""; /* Set success message to blank */
+                    $scope.errorMessage = ""; /* Set error message to blank */
                 }
             };
             
