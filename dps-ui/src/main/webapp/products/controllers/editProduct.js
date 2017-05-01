@@ -134,7 +134,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
                         $scope.deleteDisabled = true;
     	        		angular.element(document.querySelector('.loader')).removeClass('show');
     	        		smoothScroll(document.getElementsByClassName("searchedResults"), scrollOptions); /* Scroll to the table */
-    	        		console.log($scope.products)
     	        	}, 500);    	        	
     	        }, function(){ /* Error Callback */
     	        	$timeout(function(){
@@ -388,7 +387,6 @@ angular.module('editProductApp', ['ngMessages', 'angularUtils.directives.dirPagi
             /* Function to export selected products to Excel */
             $scope.exportToExcel = function(){
             	angular.element(document.querySelector('.loader')).addClass('show');
-            	console.log($scope.products)
 			    response = exportProductsToExcelService.save($scope.products, function(){/* Success Callback */
 			    	$timeout(function () {
 	                    $scope.showSuccessBox = true;

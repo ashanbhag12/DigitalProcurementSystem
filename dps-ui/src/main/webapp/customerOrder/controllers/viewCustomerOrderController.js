@@ -68,7 +68,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
                                 	$scope.editTables["editTable"+i][j] = false;
                                 }
                             } 
-                            console.log($scope.customerOrders)
                         }, 500);
                     }, function(error){/* Error Callback */
                     	$timeout(function () {
@@ -213,7 +212,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    $scope.setUpdatedCustomerOrderModal = function(index, order){
     	    	$scope.updateOrder = order;
             	$scope.updatedOrderIndex = index;
-            	console.log($scope.updateOrder)
             };
     	    
     	    /* Function to update the selected products */
@@ -272,7 +270,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
             /* Function to generate Image invoice */
     	    $scope.generateImageInvoice = function(){
     	    	angular.element(document.querySelector('.loader')).addClass('show');
-    	    	console.log($scope.updateOrder)
     	    	response = imageInvoiceService.save($scope.updateOrder, function(){/* Success Callback */  	    		
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "Image invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
@@ -291,7 +288,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    /* Function to generate PDF invoice */
 	    	$scope.generatePDFInvoice = function(){	    		
 	    		angular.element(document.querySelector('.loader')).addClass('show');
-    	    	console.log($scope.updateOrder)
     	    	response = pdfInvoiceService.save($scope.updateOrder, function(){/* Success Callback */
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "PDF invoice for Customer " + $scope.updateOrder.shipmark + " generated successfully"
@@ -310,7 +306,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    /* Function to generate Image invoice for Current orders */
 	    	$scope.generateImageInvoiceOfCurrentOrders = function(){
 	    		angular.element(document.querySelector('.loader')).addClass('show');
-    	    	console.log($scope.updateOrder)
     	    	response = imageInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */  	    		
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "Image invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"
@@ -329,7 +324,6 @@ angular.module('viewCustomerOrderApp', ['ngMessages', 'smoothScroll', 'angularUt
     	    /* Function to generate PDF invoice for Current orders */
     	    $scope.generatePDFInvoiceOfCurrentOrders = function(){
     	    	angular.element(document.querySelector('.loader')).addClass('show');
-    	    	console.log($scope.updateOrder)
     	    	response = pdfInvoiceServiceOfCurrentOrders.save($scope.updateOrder, function(){/* Success Callback */
     	    		$scope.showSuccessBox = true;
                 	$scope.successMessage = "PDF invoice of current orders for Customer " + $scope.updateOrder.shipmark + " generated successfully"

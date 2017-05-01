@@ -80,7 +80,6 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
         $scope.getProductDetails = function () {
             if ($scope.searchedProduct !== null) {
             	angular.element(document.querySelector('.loader')).addClass('show');  
-            	console.log($scope.productDetails)
                 $timeout(function () {
                 	$scope.productDetails.id = $scope.searchedProduct.id;
                 	$scope.productDetails.productCode = $scope.searchedProduct.productCode;
@@ -315,12 +314,8 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
             		"orderDate" : $scope.invoiceDate,
             		"orderItems" : $scope.calcProductsList
             	} 
-            console.log("data sent to /bill/calculate-----");
-            console.log(cartJson)
             $scope.invoiceSummary = buildInvoiceCalculateService.save(cartJson, function(){/* Success Callback */                	
             	$timeout(function(){
-            		console.log("Success: data returned from /bill/calculate-----");
-            		console.log($scope.invoiceSummary)
             		$scope.invoiceSummarySection = true;
             		/*angular.forEach($scope.invoiceSummary.orderItems, function(product){
                     	$scope.grandTotal =  $scope.grandTotal + (product.unitCost * product.quantity); 
@@ -337,8 +332,6 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
             	}, 500)
             }, function(error){/* Error Callback */
             	$timeout(function(){
-            		console.log("Error: data returned from /bill/calculate-----");
-            		console.log($scope.invoiceSummary)
                     smoothScroll(document.getElementsByTagName('body')); /* Scroll to top of the page */
                     $scope.errorMessage = "Itemization list could not be saved. Please try again after some time";
                     $scope.showErrorBox = true;
@@ -361,8 +354,6 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
 	    /* Function to generate PDF invoice for Current orders */
 	    $scope.generatePDFInvoice = function(){
 	    	angular.element(document.querySelector('.loader')).addClass('show'); 
-	    	console.log("Invoice object-------")
-	    	console.log($scope.invoiceSummary)
 	    	response = pdfItemizationService.save($scope.invoiceSummary, function(){/* Success Callback */
 	    		$scope.showSuccessBox = true;
             	$scope.successMessage = "PDF itemization for Customer " + $scope.customerShipmark + " generated successfully"
@@ -381,12 +372,7 @@ angular.module("customerInvoiceApp", ['angularUtils.directives.dirPagination', '
 	    /* Function to generate Image invoice for Current orders */
     	$scope.generateImageInvoice = function(){
     		angular.element(document.querySelector('.loader')).addClass('show');
-    		console.log($scope.invoiceSummary);
-    		angular.forEach($scope.invoiceSummary.orderItems, function (product) {
-                console.log("sfs "+product.unitCost);
-            });
 	    	response = imageItemizationService.save($scope.invoiceSummary, function(){/* Success Callback */ 
-	    		console.log(response)
 	    		$scope.showSuccessBox = true;
             	$scope.successMessage = "Image itemization for Customer " + $scope.customerShipmark + " generated successfully"
 			    $scope.showErrorBox = false;                          

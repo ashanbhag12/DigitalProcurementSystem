@@ -79,7 +79,6 @@ angular.module('productPreferencesApp', ['angularUtils.directives.dirPagination'
                     /* Service Call to retrieve all products */
                     $scope.products = getProductPreferencesService.get({shipmark : $scope.customerShipmark}, function(){/* Success callback */
                     	$timeout(function () {
-                    		console.log( $scope.products)
                             $scope.searchedResults = true;
                             $scope.showErrorBox = false;
                             angular.element(document.querySelector('.loader')).removeClass('show');
