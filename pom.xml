@@ -28,7 +28,7 @@
 		<slf4j-version>1.7.7</slf4j-version>
 		<spring-version>4.0.6.RELEASE</spring-version>
 		<spring-asm-version>3.1.4.RELEASE</spring-asm-version>
-		<spring-security-version>3.2.4.RELEASE</spring-security-version>
+		<spring-security-version>5.3.1.RELEASE</spring-security-version>
 		<spring-hibernate-version>2.0.8</spring-hibernate-version>
 		<spring-mock-version>2.0.8</spring-mock-version>
 		<slf4j-simple-version>1.7.7</slf4j-simple-version>
